@@ -1,4 +1,8 @@
 "use client";
+import { I18nextProvider } from "react-i18next";
+
+import { i18n } from "./i18n";
+
 
 import { PosthogPageview } from "@/ui/layout/posthog-pageview";
 import { Analytics as DubAnalytics } from "@dub/analytics/react";
@@ -21,7 +25,8 @@ if (typeof window !== "undefined") {
 
 export default function RootProviders({ children }: { children: ReactNode }) {
   return (
-    <PostHogProvider client={posthog}>
+    <I18nextProvider i18n={i18n}>
+<PostHogProvider client={posthog}>
       <PlausibleProvider
         domain="dub.co"
         revenue
@@ -40,5 +45,6 @@ export default function RootProviders({ children }: { children: ReactNode }) {
         </KeyboardShortcutProvider>
       </TooltipProvider>
     </PostHogProvider>
+</I18nextProvider>
   );
 }
