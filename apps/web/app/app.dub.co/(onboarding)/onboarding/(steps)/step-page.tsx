@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Icon } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { Crown } from "lucide-react";
@@ -17,6 +18,8 @@ export function StepPage({
   paidPlanRequired?: boolean;
   className?: string;
 }>) {
+const { t } = useTranslation("app.dub.co/(onboarding)/onboarding/(steps)");
+
   return (
     <div
       className={cn(
@@ -28,9 +31,7 @@ export function StepPage({
       {Icon && <StepIcon icon={Icon} />}
       {paidPlanRequired && (
         <div className="mt-6 flex items-center gap-1.5 rounded-full bg-gray-200/50 px-2.5 py-0.5 text-xs font-medium text-gray-700 shadow-inner">
-          <Crown className="size-3" />
-          Paid plan required
-        </div>
+          <Crown className="size-3" />{t('paid-plan-required')}</div>
       )}
       <h1 className="mt-4 text-center text-2xl font-medium leading-tight">
         {title}

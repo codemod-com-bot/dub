@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { getProgram } from "@/lib/fetchers/get-program";
 import { prisma } from "@dub/prisma";
 import { Logo } from "@dub/ui";
@@ -45,6 +46,8 @@ export default async function SuccessPage({
   params: { programSlug: string };
   searchParams: { applicationId?: string; enrollmentId?: string };
 }) {
+const { t } = useTranslation("partners.dub.co/(apply)/apply/[programSlug]/application/success");
+
   const program = await getProgram({ slug: programSlug });
 
   if (!program) {
@@ -86,31 +89,27 @@ export default async function SuccessPage({
       />
       <div className="p-6">
         <div className="grid grid-cols-1 gap-5 sm:pt-20">
-          <h1 className="text-4xl font-semibold">
-            Application {hasPartnerProfile ? "submitted" : "saved"}
+          <h1 className="text-4xl font-semibold">{t('application-title')}{hasPartnerProfile ? "submitted" : "saved"}
           </h1>
           <div className="flex flex-col gap-4 text-base text-neutral-700">
             {hasPartnerProfile && (
-              <p>
-                Your application has been submitted for review.
-                {application && (
-                  <>
-                    {" "}
-                    You'll receive an update at{" "}
-                    <strong className="font-semibold">
-                      {application.email}
-                    </strong>
-                    .
-                  </>
+              <p>{t('application-submitted-review-message')}{application && (
+                  <><Trans
+i18nKey="application-update-email-message"
+values={{ _application_email_: <>
+                      {application.email}</> }}
+components={{"0": 
+                    <strong className="font-semibold" />}}
+/></>
                 )}
               </p>
             )}
             {!hasPartnerProfile && (
-              <p>
-                Complete your account setup on{" "}
-                <strong className="font-semibold">Dub Partners</strong> to
-                finish submitting your application.
-              </p>
+              <p><Trans
+i18nKey="account-setup-completion-message"
+components={{"0": 
+                <strong className="font-semibold" />}}
+/></p>
             )}
           </div>
         </div>

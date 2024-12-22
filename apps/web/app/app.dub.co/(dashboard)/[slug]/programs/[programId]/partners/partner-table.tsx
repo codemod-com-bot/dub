@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import usePartnersCount from "@/lib/swr/use-partners-count";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -40,6 +42,8 @@ import { partnersColumns, useColumnVisibility } from "./use-column-visibility";
 import { usePartnerFilters } from "./use-partner-filters";
 
 export function PartnerTable() {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/programs/[programId]/partners");
+
   const { programId } = useParams();
   const { id: workspaceId } = useWorkspace();
   const { queryParams, searchParams, getQueryString } = useRouterStuff();
@@ -128,7 +132,7 @@ export function PartnerTable() {
             <div className="flex items-center gap-2">
               {country && (
                 <img
-                  alt=""
+                  alt={t('empty-string')}
                   src={`https://flag.vercel.app/m/${country}.svg`}
                   className="h-3 w-4"
                 />
@@ -256,7 +260,7 @@ export function PartnerTable() {
         <Table {...tableProps} table={table} />
       ) : (
         <AnimatedEmptyState
-          title="No partners found"
+          title={t('no-partners-found')}
           description={
             isFiltered
               ? "No partners found for the selected filters."
@@ -275,6 +279,8 @@ export function PartnerTable() {
 }
 
 function RowMenuButton({ row }: { row: Row<EnrolledPartnerProps> }) {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/programs/[programId]/partners");
+
   const router = useRouter();
   const { slug, programId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -288,7 +294,7 @@ function RowMenuButton({ row }: { row: Row<EnrolledPartnerProps> }) {
           <Command.List className="flex w-screen flex-col gap-1 p-1.5 text-sm sm:w-auto sm:min-w-[130px]">
             <MenuItem
               icon={MoneyBill2}
-              label="View sales"
+              label={t('view-sales')}
               onSelect={() => {
                 router.push(
                   `/${slug}/programs/${programId}/sales?partnerId=${row.original.id}`,

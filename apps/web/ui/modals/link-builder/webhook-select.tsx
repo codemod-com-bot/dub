@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useWebhooks from "@/lib/swr/use-webhooks";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Button, Combobox, useKeyboardShortcut, Webhook } from "@dub/ui";
@@ -79,6 +80,8 @@ export function WebhookSelect() {
 }
 
 const NoWebhooksFound = () => {
+const { t } = useTranslation("../ui/modals/link-builder");
+
   const router = useRouter();
   const { slug } = useWorkspace();
 
@@ -87,15 +90,13 @@ const NoWebhooksFound = () => {
       <div className="flex items-center justify-center rounded-2xl border border-gray-200 bg-gray-50 p-3">
         <Webhook className="size-6 text-gray-700" />
       </div>
-      <p className="mt-2 font-medium text-gray-950">No webhooks found</p>
-      <p className="mx-auto mt-1 w-full max-w-[180px] text-gray-700">
-        Add a webhook to receive a click event when someone clicks your link.
-      </p>
+      <p className="mt-2 font-medium text-gray-950">{t('no-webhooks-found')}</p>
+      <p className="mx-auto mt-1 w-full max-w-[180px] text-gray-700">{t('add-a-webhook-to-receive-a-click-event-when-someone-clicks-your-link')}</p>
       <div>
         <Button
           className="mt-1 h-8"
           onClick={() => router.push(`/${slug}/settings/webhooks`)}
-          text="Add webhook"
+          text={t('add-webhook')}
         />
       </div>
     </div>

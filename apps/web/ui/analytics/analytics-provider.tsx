@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import {
   ANALYTICS_VIEWS,
@@ -89,6 +91,8 @@ export default function AnalyticsProvider({
   demoPage?: boolean;
   dashboardProps?: AnalyticsDashboardProps;
 }>) {
+const { t } = useTranslation("../ui/analytics");
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { id: workspaceId, slug, conversionEnabled } = useWorkspace();
@@ -264,7 +268,7 @@ export default function AnalyticsProvider({
         ) {
           toast.custom(() => (
             <UpgradeRequiredToast
-              title="Upgrade for more analytics"
+              title={t('upgrade-for-more-analytics')}
               message={errorMessage}
             />
           ));

@@ -1,0 +1,22 @@
+{
+  "invite-partner": "Invite partner",
+  "all": "\"All\"",
+  "top-partners": "\"Top partners\"",
+  "approved": "\"Approved\"",
+  "pending": "\"Pending\"",
+  "empty-string": "\"\"",
+  "no-partners-found": "\"No partners found\"",
+  "view-sales": "\"View sales\"",
+  "email": "Email",
+  "panic@thedis.co": "\"panic@thedis.co\"",
+  "referral-link": "Referral link",
+  "settings": "Settings",
+  "preview": "Preview",
+  "invited-you-to-join-dub-partners": "invited you to join Dub Partners",
+  "uses-dub-partners-to-power-their-partnership-programs-and-wants-to-partner-with-great-people-like-yourself": "uses Dub Partners to power their partnership programs and wants to partner with great people like yourself!",
+  "accept-invite": "\"Accept invite\"",
+  "from-system@dub.co": "<0>From:</0>system@dub.co",
+  "subject-youve-been-invited-to-dub-partners": "<0>Subject:</0>You've been invited to Dub Partners",
+  "cancel": "\"Cancel\"",
+  "send-invite": "\"Send invite\""
+}

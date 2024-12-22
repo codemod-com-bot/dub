@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { PartnerSaleResponse } from "@/lib/types";
 import { Gift, LoadingSpinner } from "@dub/ui";
 import { cn, currencyFormatter } from "@dub/utils";
@@ -11,6 +12,8 @@ export function SalesList({
   isLoading: boolean;
   hasPartnerProfile: boolean;
 }) {
+const { t } = useTranslation("app.dub.co/embed");
+
   return sales ? (
     sales.length ? (
       <div className="mt-2.5 rounded-md border border-neutral-200">
@@ -46,10 +49,7 @@ export function SalesList({
           ))}
         </div>
         {!hasPartnerProfile && (
-          <p className="px-8 py-4 text-center text-xs text-neutral-500">
-            To withdraw your earnings or view all of your sales, create a free
-            Dub partner account below.
-          </p>
+          <p className="px-8 py-4 text-center text-xs text-neutral-500">{t('withdraw-earnings-view-sales-create-free-dub-partner-account')}</p>
         )}
       </div>
     ) : (
@@ -65,13 +65,12 @@ export function SalesList({
 }
 
 const EmptyState = () => {
+const { t } = useTranslation("app.dub.co/embed");
+
   return (
     <div className="mt-2.5 flex h-40 w-full flex-col items-center justify-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50">
       <Gift className="size-6 text-neutral-400" />
-      <p className="max-w-60 text-pretty text-center text-xs text-neutral-400">
-        No sales yet. When you refer a friend and they make a purchase, they'll
-        show up here.
-      </p>
+      <p className="max-w-60 text-pretty text-center text-xs text-neutral-400">{t('no-sales-yet-refer-friend-purchase-show-up-here')}</p>
     </div>
   );
 };

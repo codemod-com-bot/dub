@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { EnrolledPartnerProps } from "@/lib/types";
 import { buttonVariants } from "@dub/ui";
@@ -13,6 +14,8 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 
 export function TopPartners() {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/programs/[programId]");
+
   const { slug, programId } = useParams();
   const { id: workspaceId } = useWorkspace();
 
@@ -26,9 +29,7 @@ export function TopPartners() {
   return (
     <div className="rounded-md border border-neutral-200">
       <div className="flex items-center justify-between border-b border-neutral-200 p-5">
-        <h2 className="text-base font-semibold text-neutral-900">
-          Top partners
-        </h2>
+        <h2 className="text-base font-semibold text-neutral-900">{t('top-partners')}</h2>
 
         <Link
           href={`/${slug}/programs/${programId}/partners?sortBy=earnings&sortOrder=desc`}
@@ -36,9 +37,7 @@ export function TopPartners() {
             buttonVariants({ variant: "secondary" }),
             "flex h-7 items-center rounded-lg border px-2 text-sm",
           )}
-        >
-          View all
-        </Link>
+        >{t('view-all')}</Link>
       </div>
       <div className="p-3">
         <div className="h-px min-h-64">
@@ -92,9 +91,7 @@ export function TopPartners() {
               ))}
             </div>
           ) : (
-            <div className="flex size-full items-center justify-center text-sm text-neutral-500">
-              No partners found
-            </div>
+            <div className="flex size-full items-center justify-center text-sm text-neutral-500">{t('no-partners-found')}</div>
           )}
         </div>
       </div>

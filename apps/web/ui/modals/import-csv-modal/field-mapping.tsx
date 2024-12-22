@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { generateCsvMapping } from "@/lib/ai/generate-csv-mapping";
 import { Button, IconMenu, InfoTooltip, Popover, Tooltip } from "@dub/ui";
@@ -70,6 +72,8 @@ function FieldRow({
   field: keyof typeof mappableFields;
   isStreaming: boolean;
 }) {
+const { t } = useTranslation("../ui/modals/import-csv-modal");
+
   const { label, required } = mappableFields[field];
 
   const { control, watch, fileColumns, firstRows } = useCsvContext();
@@ -169,7 +173,7 @@ function FieldRow({
                   <div className="flex w-full grow items-center justify-between gap-1">
                     <span className="flex-1 truncate whitespace-nowrap text-left text-gray-800">
                       {field.value || (
-                        <span className="text-gray-600">Select column...</span>
+                        <span className="text-gray-600">{t('select-column')}</span>
                       )}
                     </span>
                     {isLoading ? (
@@ -188,7 +192,7 @@ function FieldRow({
         <Tooltip
           content={
             <div className="block px-4 py-3 text-sm">
-              <span className="font-medium text-gray-950">Example values:</span>
+              <span className="font-medium text-gray-950">{t('example-values')}</span>
               <ul className="mt-0.5">
                 {examples?.map((example, idx) => (
                   <li

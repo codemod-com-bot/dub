@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation, Trans } from "react-i18next";
+
 
 import { InlineSnippet } from "@dub/ui";
 import { createHref, STAGGER_CHILD_VARIANTS } from "@dub/utils";
@@ -9,6 +11,8 @@ import { useState } from "react";
 import { useDebounce } from "use-debounce";
 
 export default function PlaceholderContent() {
+const { t } = useTranslation("[domain]");
+
   const { domain } = useParams() as { domain: string };
   const [loading, setLoading] = useState(true);
   const onLoad = () => {
@@ -51,14 +55,17 @@ export default function PlaceholderContent() {
         <motion.h1
           className="font-display text-4xl font-bold text-gray-800 transition-colors sm:text-5xl"
           variants={STAGGER_CHILD_VARIANTS}
-        >
-          Welcome to {process.env.NEXT_PUBLIC_APP_NAME}
+        >{t('welcome-to')}{process.env.NEXT_PUBLIC_APP_NAME}
         </motion.h1>
         <motion.p
           className="max-w-xl text-gray-600 transition-colors sm:text-lg"
           variants={STAGGER_CHILD_VARIANTS}
         >
-          <InlineSnippet>{domain}</InlineSnippet> is a custom domain on{" "}
+          <InlineSnippet>{domain}</InlineSnippet><Trans
+i18nKey="custom-domain-link-management-platform"
+values={{ _process_env_NEXT_PUBLIC_APP_NAME_: <>
+            {process.env.NEXT_PUBLIC_APP_NAME}</> }}
+components={{"0": 
           <a
             className="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text font-semibold text-transparent decoration-rose-600 hover:underline"
             href={createHref("/", domain, {
@@ -67,11 +74,8 @@ export default function PlaceholderContent() {
               utm_campaign: domain,
               utm_content: "Dub.co",
             })}
-          >
-            {process.env.NEXT_PUBLIC_APP_NAME}
-          </a>{" "}
-          - the link management platform for modern marketing teams.
-        </motion.p>
+           />}}
+/></motion.p>
         <motion.a
           variants={STAGGER_CHILD_VARIANTS}
           href={createHref("/home", domain, {
@@ -81,9 +85,7 @@ export default function PlaceholderContent() {
             utm_content: "Create Your Free Branded Link",
           })}
           className="rounded-full bg-gray-800 px-10 py-2 font-medium text-white transition-colors hover:bg-black"
-        >
-          Create Your Free Branded Link
-        </motion.a>
+        >{t('create-your-free-branded-link')}</motion.a>
       </motion.div>
     </motion.div>
   );

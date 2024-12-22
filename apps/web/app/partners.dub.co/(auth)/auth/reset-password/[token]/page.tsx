@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ResetPasswordForm } from "@/ui/auth/reset-password-form";
 import EmptyState from "@/ui/shared/empty-state";
 import { prisma } from "@dub/prisma";
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export default async function ResetPasswordPage({ params: { token } }: Props) {
+const { t } = useTranslation("partners.dub.co/(auth)/auth/reset-password/[token]");
+
   const validToken = await isValidToken(token);
 
   if (!validToken) {
@@ -19,8 +22,8 @@ export default async function ResetPasswordPage({ params: { token } }: Props) {
       <div className="my-10 md:mt-16 lg:mt-20">
         <EmptyState
           icon={InputPassword}
-          title="Invalid Reset Token"
-          description="The password reset token is invalid or expired. Please request a new one."
+          title={t('invalid-reset-token')}
+          description={t('password-reset-token-invalid-or-expired')}
         />
       </div>
     );
@@ -29,12 +32,8 @@ export default async function ResetPasswordPage({ params: { token } }: Props) {
   return (
     <div className="mx-auto my-10 w-full max-w-md md:mt-16 lg:mt-20">
       <div className="rounded-lg border border-neutral-200 bg-white p-8 pb-10">
-        <h1 className="text-lg font-medium text-neutral-800">
-          Reset your password
-        </h1>
-        <p className="mt-3 text-sm text-gray-500">
-          Enter a new password for your account.
-        </p>
+        <h1 className="text-lg font-medium text-neutral-800">{t('reset-your-password')}</h1>
+        <p className="mt-3 text-sm text-gray-500">{t('enter-new-password-for-account')}</p>
         <div className="mt-8 text-left">
           <ResetPasswordForm />
         </div>

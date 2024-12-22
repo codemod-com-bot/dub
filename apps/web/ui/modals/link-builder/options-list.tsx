@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { AlertCircleFill, CheckCircleFill, X } from "@/ui/shared/icons";
 import { Tooltip, useMediaQuery } from "@dub/ui";
 import { LoadingSpinner } from "@dub/ui/icons";
@@ -98,6 +99,8 @@ function LinkCloakingToggleBadge({
   toggle: (typeof TOGGLES)[number];
   onRemove: () => void;
 }) {
+const { t } = useTranslation("../ui/modals/link-builder");
+
   const { watch } = useFormContext<LinkFormData>();
   const [url, domain] = watch(["url", "domain"]);
   const [debouncedUrl] = useDebounce(url, 500);
@@ -154,26 +157,23 @@ function LinkCloakingToggleBadge({
                   className="h-[500px] w-[888px]"
                 />
               </div>
-              <p>Your link will be successfully cloaked.</p>
+              <p>{t('your-link-will-be-successfully-cloaked')}</p>
             </div>
           ) : (
-            <span>
-              We will try to cloak it with{" "}
+            <span><Trans
+i18nKey="we-will-try-to-cloak-it-with-next-js-rewrites-but-it-might-not-work-as-expected-learn-more"
+components={{"0": 
               <a
                 href="https://nextjs.org/docs/pages/api-reference/functions/next-response#rewrite"
                 target="_blank"
                 className="text-gray-500 underline underline-offset-2 hover:text-gray-700"
-              >
-                Next.js Rewrites
-              </a>
-              , but it might not work as expected.{" "}
+               />, "1": 
               <a
                 href="https://dub.co/help/article/link-cloaking"
                 target="_blank"
                 className="text-gray-500 underline underline-offset-2 hover:text-gray-700"
-              >
-                Learn more.
-              </a>
+               />}}
+/>
             </span>
           )}
         </div>

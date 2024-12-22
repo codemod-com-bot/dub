@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { vaidateAuthorizeRequest } from "@/lib/api/oauth/actions";
 import { getSession } from "@/lib/auth";
 import z from "@/lib/zod";
@@ -25,6 +26,8 @@ export default async function Authorize({
 }: {
   searchParams?: z.infer<typeof authorizeRequestSchema>;
 }) {
+const { t } = useTranslation("app.dub.co/(auth)/oauth/authorize");
+
   const session = await getSession();
 
   if (!session) {
@@ -38,7 +41,7 @@ export default async function Authorize({
     return (
       <EmptyState
         icon={CubeSettings}
-        title="Invalid OAuth Request"
+        title={t('invalid-oauth-request')}
         description={error}
       />
     );
@@ -67,26 +70,30 @@ export default async function Authorize({
           </a>
         </div>
 
-        <p className="text-md">
-          <span className="font-bold">{integration.name}</span> is requesting
-          API access to a workspace on Dub.
-        </p>
-        <span className="text-xs text-gray-500">
-          Built by{" "}
+        <p className="text-md"><Trans
+i18nKey="integration-name-requesting-api-access"
+values={{ _integration_name_: <>{integration.name}</> }}
+components={{"0": 
+          <span className="font-bold" />}}
+/></p>
+        <span className="text-xs text-gray-500"><Trans
+i18nKey="built-by-integration-developer-link"
+values={{ _integration_developer_: <>
+            {integration.developer}</> }}
+components={{"0": 
           <a
             href={integration.website}
             target="_blank"
             rel="noreferrer"
             className="underline"
-          >
-            {integration.developer}
-          </a>
+           />}}
+/>
         </span>
 
         {!integration.verified && (
           <div className="flex items-center gap-2 rounded-md bg-yellow-50 p-2 text-sm text-yellow-700">
             <CircleWarning className="size-4" />
-            <span>Dub hasn't verified this app</span>
+            <span>{t('dub-app-not-verified')}</span>
           </div>
         )}
       </div>

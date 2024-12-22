@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { DUB_WORDMARK, linkConstructor, pluralize, timeAgo } from "@dub/utils";
 import {
   Body,
@@ -64,10 +65,12 @@ export default function LinksImported({
   workspaceSlug: string;
   domains: string[];
 }) {
+const { t } = useTranslation("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>Your {provider} links have been imported</Preview>
+      <Preview>{t('your-provider-links-have-been-imported', { provider })}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -75,37 +78,31 @@ export default function LinksImported({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t('dub')}
                 className="mx-auto my-0"
               />
             </Section>
-            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Your {provider} links have been imported
-            </Heading>
-            <Text className="text-sm leading-6 text-black">
-              We have successfully{" "}
-              <strong>
-                imported {Intl.NumberFormat("en-us").format(count)} links
-              </strong>{" "}
-              from {provider} into your Dub.co workspace,{" "}
+            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">{t('your-provider-links-have-been-imported-2', { provider })}</Heading>
+            <Text className="text-sm leading-6 text-black"><Trans
+i18nKey="we-have-successfully-imported-links-from-provider-into-dub-workspace"
+values={{ provider, workspaceName }}
+components={{"0": 
+              <strong />, "1": 
               <Link
                 href={`https://app.dub.co/${workspaceSlug}`}
                 className="font-medium text-blue-600 no-underline"
-              >
-                {workspaceName}↗
-              </Link>{" "}
-              , for the {pluralize("domain", domains.length)}{" "}
-              <strong>{domains.join(", ")}</strong>.
-            </Text>
+               />}}
+/>{pluralize("domain", domains.length)}<Trans
+i18nKey="domains-joined"
+values={{ _domains_join_: <>{domains.join(", ")}</> }}
+components={{"0": 
+              <strong />}}
+/></Text>
             {links.length > 0 && (
               <Section>
                 <Row className="pb-2">
-                  <Column align="left" className="text-sm text-gray-500">
-                    Link
-                  </Column>
-                  <Column align="right" className="text-sm text-gray-500">
-                    Created
-                  </Column>
+                  <Column align="left" className="text-sm text-gray-500">{t('link')}</Column>
+                  <Column align="right" className="text-sm text-gray-500">{t('created')}</Column>
                 </Row>
                 {links.map(({ domain, key, createdAt }, index) => (
                   <div key={index}>
@@ -133,21 +130,17 @@ export default function LinksImported({
                 <Link
                   className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                   href={`https://app.dub.co/${workspaceSlug}`}
-                >
-                  View {Intl.NumberFormat("en-us").format(count - 5)} more links
-                </Link>
+                >{t('view-more-links')}{Intl.NumberFormat("en-us").format(count - 5)}{t('more-links')}</Link>
               </Section>
             )}
-            <Text className="text-sm leading-6 text-black">
-              If you haven't already{" "}
+            <Text className="text-sm leading-6 text-black"><Trans
+i18nKey="if-you-havent-configured-your-domains"
+components={{"0": 
               <Link
                 href="https://dub.co/help/article/how-to-add-custom-domain#step-2-configure-your-domain"
                 className="font-medium text-blue-600 no-underline"
-              >
-                configured your {pluralize("domain", domains.length)}
-              </Link>
-              , you will need to do it before you can start using your links.
-            </Text>
+               />}}
+/></Text>
             <Footer email={email} />
           </Container>
         </Body>

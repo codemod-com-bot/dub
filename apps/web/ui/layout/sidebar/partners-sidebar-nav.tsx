@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import usePartnerAnalytics from "@/lib/swr/use-partner-analytics";
 import useProgramEnrollment from "@/lib/swr/use-program-enrollment";
@@ -192,6 +194,8 @@ export function PartnersSidebarNav({
 }
 
 function ProgramInfo() {
+const { t } = useTranslation("../ui/layout/sidebar");
+
   const { programSlug } = useParams() as {
     programSlug?: string;
   };
@@ -220,7 +224,7 @@ function ProgramInfo() {
   return programEnrollment ? (
     <div className="animate-fade-in grid gap-6 border-t border-neutral-300/80 px-3 py-5 text-xs leading-none">
       <div>
-        <div className="text-neutral-500">My link</div>
+        <div className="text-neutral-500">{t('my-link')}</div>
         <div className="mt-2 flex items-center gap-1">
           <div className="flex h-7 grow items-center rounded-md bg-black/5 px-2 text-neutral-800">
             {programEnrollment.link?.shortLink.replace("https://", "")}
@@ -256,7 +260,7 @@ function ProgramInfo() {
         </div>
       </div>
       <div>
-        <div className="text-neutral-500">Performance</div>
+        <div className="text-neutral-500">{t('performance')}</div>
         <div className="mt-2 grid grid-cols-2 gap-2">
           {items.map(({ href, icon: Icon, label, value }, index) => (
             <Link

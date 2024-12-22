@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
@@ -20,10 +21,12 @@ export default function VerifyEmail({
   email: string;
   code: string;
 }) {
+const { t } = useTranslation("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>Your Dub.co Verification Code</Preview>
+      <Preview>{t('your-dub-co-verification-code')}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -31,24 +34,18 @@ export default function VerifyEmail({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t('dub')}
                 className="mx-auto my-0"
               />
             </Section>
-            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Please confirm your email address
-            </Heading>
-            <Text className="mx-auto text-sm leading-6">
-              Enter this code on the Dub verify page to complete your sign up:
-            </Text>
+            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">{t('please-confirm-your-email-address')}</Heading>
+            <Text className="mx-auto text-sm leading-6">{t('enter-this-code-on-the-dub-verify-page-to-complete-your-sign-up')}</Text>
             <Section className="my-8">
               <div className="mx-auto w-fit rounded-xl px-6 py-3 text-center font-mono text-2xl font-semibold tracking-[0.25em]">
                 {code}
               </div>
             </Section>
-            <Text className="text-sm leading-6 text-black">
-              This code expires in 10 minutes.
-            </Text>
+            <Text className="text-sm leading-6 text-black">{t('this-code-expires-in-10-minutes')}</Text>
             <Footer email={email} />
           </Container>
         </Body>

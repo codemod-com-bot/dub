@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { constructMetadata } from "@dub/utils";
 import BanLink from "./components/ban-link";
 import ImpersonateUser from "./components/impersonate-user";
@@ -9,30 +10,28 @@ export const metadata = constructMetadata({
 });
 
 export default function AdminPage() {
+const { t } = useTranslation("admin.dub.co/(dashboard)");
+
   return (
     <div className="mx-auto flex w-full max-w-screen-sm flex-col divide-y divide-gray-200 overflow-auto bg-white">
       <div className="flex flex-col space-y-4 px-5 py-10">
-        <h2 className="text-xl font-semibold">Impersonate User</h2>
-        <p className="text-sm text-gray-500">Get a login link for a user</p>
+        <h2 className="text-xl font-semibold">{t('impersonate-user')}</h2>
+        <p className="text-sm text-gray-500">{t('get-a-login-link-for-a-user')}</p>
         <ImpersonateUser />
       </div>
       <div className="flex flex-col space-y-4 px-5 py-10">
-        <h2 className="text-xl font-semibold">Impersonate Workspace</h2>
-        <p className="text-sm text-gray-500">
-          Get a login link for the owner of a workspace
-        </p>
+        <h2 className="text-xl font-semibold">{t('impersonate-workspace')}</h2>
+        <p className="text-sm text-gray-500">{t('get-a-login-link-for-the-owner-of-a-workspace')}</p>
         <ImpersonateWorkspace />
       </div>
       <div className="flex flex-col space-y-4 px-5 py-10">
-        <h2 className="text-xl font-semibold">Refresh Domain</h2>
-        <p className="text-sm text-gray-500">
-          Remove and re-add domain from Vercel
-        </p>
+        <h2 className="text-xl font-semibold">{t('refresh-domain')}</h2>
+        <p className="text-sm text-gray-500">{t('remove-and-re-add-domain-from-vercel')}</p>
         <RefreshDomain />
       </div>
       <div className="flex flex-col space-y-4 px-5 py-10">
-        <h2 className="text-xl font-semibold">Ban Link</h2>
-        <p className="text-sm text-gray-500">Ban a dub.sh link</p>
+        <h2 className="text-xl font-semibold">{t('ban-link')}</h2>
+        <p className="text-sm text-gray-500">{t('ban-a-dub-sh-link')}</p>
         <BanLink />
       </div>
     </div>

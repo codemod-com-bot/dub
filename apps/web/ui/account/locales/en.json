@@ -1,0 +1,17 @@
+{
+  "subscribed-to-product-updates": "Subscribed to product updates",
+  "your-user-id": "Your User ID",
+  "unique-account-identifier-on-dub": "This is your unique account identifier on Dub.",
+  "delete-account": "Delete Account",
+  "permanently-delete-your": "Permanently delete your",
+  "account-all-of-your-workspaces-links-and-their-respective-stats-this-action-cannot-be-undone-please-proceed-with-caution": "account, all of your workspaces, links and their respective stats. This action cannot be undone - please proceed with caution.",
+  "delete-account-quote": "\"Delete Account\"",
+  "your-avatar": "Your Avatar",
+  "this-is-your-avatar-image-on": "This is your avatar image on",
+  "end-of-avatar-image": ".",
+  "square-image-recommended-accepted-file-types": "Square image recommended. Accepted file types: .png, .jpg. Max file size: 2MB.",
+  "save-changes": "\"Save changes\"",
+  "your-default-workspace": "Your Default Workspace",
+  "choose-workspace-to-show-by-default": "Choose the workspace to show by default when you sign in.",
+  "learn-more-about-default-workspaces": "Learn more about how default workspaces work"
+}

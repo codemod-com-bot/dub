@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import useLink from "@/lib/swr/use-link";
 import useLinks from "@/lib/swr/use-links";
 import { LinkProps } from "@/lib/types";
@@ -38,6 +39,8 @@ export function PartnerLinkSelector({
   domain?: string;
   error?: boolean;
 }) {
+const { t } = useTranslation("../ui/partners");
+
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 500);
 
@@ -102,15 +105,17 @@ export function PartnerLinkSelector({
       {selectedLink?.url && showDestinationUrl && (
         <div className="ml-2 mt-2 flex items-center gap-1 text-xs text-gray-500">
           <ArrowTurnRight2 className="size-3 shrink-0" />
-          <span className="min-w-0 truncate">
-            Destination URL:{" "}
+          <span className="min-w-0 truncate"><Trans
+i18nKey="destination-url-link"
+values={{ _selectedLink_url_: <>
+              {selectedLink.url}</> }}
+components={{"0": 
             <a
               href={selectedLink.url}
               target="_blank"
               className="underline-offset-2 hover:underline"
-            >
-              {selectedLink.url}
-            </a>
+             />}}
+/>
           </span>
         </div>
       )}

@@ -1,8 +1,11 @@
+import { useTranslation } from "react-i18next";
 import { Globe } from "@dub/ui/icons";
 import { StepPage } from "../../step-page";
 import { Form } from "./form";
 
 export default function Custom() {
+const { t } = useTranslation("app.dub.co/(onboarding)/onboarding/(steps)/domain/custom");
+
   return (
     <StepPage
       icon={Globe}
@@ -12,9 +15,7 @@ export default function Custom() {
           href="https://dub.co/help/article/choosing-a-custom-domain"
           target="_blank"
           className="underline transition-colors hover:text-gray-700"
-        >
-          Read our guide for best practices
-        </a>
+        >{t('read-our-guide-for-best-practices')}</a>
       }
     >
       <Form />

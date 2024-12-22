@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { OAUTH_SCOPE_DESCRIPTIONS } from "@/lib/api/oauth/constants";
 import { Check } from "lucide-react";
@@ -8,6 +10,8 @@ interface ScopesProps {
 }
 
 export const ScopesRequested = ({ scopes }: ScopesProps) => {
+const { t } = useTranslation("app.dub.co/(auth)/oauth/authorize");
+
   // Add default scopes if not present
   if (!scopes.includes("user.read")) {
     scopes.push("user.read");
@@ -34,7 +38,7 @@ export const ScopesRequested = ({ scopes }: ScopesProps) => {
 
   return (
     <>
-      <span className="text-gray-600">Grant permissions:</span>
+      <span className="text-gray-600">{t('grant-permissions')}</span>
       <ul className="text-md space-y-1">
         {scopeWithDescriptions.map((scope) => {
           return (

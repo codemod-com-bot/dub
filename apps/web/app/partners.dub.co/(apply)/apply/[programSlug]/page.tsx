@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { getProgram } from "@/lib/fetchers/get-program";
 import { programLanderSchema } from "@/lib/zod/schemas/program-lander";
 import { BLOCK_COMPONENTS } from "@/ui/partners/lander-blocks";
@@ -13,6 +14,8 @@ export default async function ApplyPage({
 }: {
   params: { programSlug: string };
 }) {
+const { t } = useTranslation("partners.dub.co/(apply)/apply/[programSlug]");
+
   const program = await getProgram({ slug: programSlug });
 
   if (!program || !program.landerData) {
@@ -43,27 +46,19 @@ export default async function ApplyPage({
               "font-mono text-xs font-medium uppercase text-[var(--brand)]",
               "animate-slide-up-fade [--offset:5px] [animation-duration:1s] [animation-fill-mode:both]",
             )}
-          >
-            Affiliate Program
-          </span>
+          >{t('affiliate-program')}</span>
           <h1
             className={cn(
               "text-4xl font-semibold",
               "animate-slide-up-fade [--offset:5px] [animation-delay:100ms] [animation-duration:1s] [animation-fill-mode:both]",
             )}
-          >
-            Join the {program.name} affiliate program
-          </h1>
+          >{t('join-the')}{program.name}{t('affiliate-program-continuation')}</h1>
           <p
             className={cn(
               "text-base text-neutral-700",
               "animate-slide-up-fade [--offset:5px] [animation-delay:200ms] [animation-duration:1s] [animation-fill-mode:both]",
             )}
-          >
-            Share {program.name} with your audience and for each subscription
-            generated through your referral, you'll earn a share of the revenue
-            on any plans they purchase.
-          </p>
+          >{t('share')}{program.name}{t('share-with-your-audience')}</p>
           {/* <p className="text-xs text-neutral-500">
               Read our{" "}
               <a

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import DeleteAccountSection from "@/ui/account/delete-account";
 import UpdateDefaultWorkspace from "@/ui/account/update-default-workspace";
@@ -11,12 +13,14 @@ import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
 export default function SettingsPageClient() {
+const { t } = useTranslation("app.dub.co/(dashboard)/account/settings");
+
   const { data: session, update, status } = useSession();
 
   return (
     <>
       <Form
-        title="Your Name"
+        title={t('your-name')}
         description={`This will be your display name on ${APP_NAME}.`}
         inputAttrs={{
           name: "name",
@@ -45,7 +49,7 @@ export default function SettingsPageClient() {
         }
       />
       <Form
-        title="Your Email"
+        title={t('your-email')}
         description={`This will be the email you use to log in to ${APP_NAME} and receive notifications.`}
         inputAttrs={{
           name: "email",

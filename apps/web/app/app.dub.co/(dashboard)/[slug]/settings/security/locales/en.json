@@ -1,0 +1,18 @@
+{
+  "saml-single-sign-on": "SAML Single Sign-On",
+  "set-up-saml-single-sign-on-sso-to-allow-your-team-to-sign-in-to": "Set up SAML Single Sign-On (SSO) to allow your team to sign in to",
+  "with-your-identity-provider": "with your identity provider.",
+  "remove": "\"Remove\"",
+  "edit": "Edit",
+  "configure": "\"Configure\"",
+  "saml-sso-is-only-available-on-enterprise-plans-upgrade-to-get-started": "\"SAML SSO is only available on Enterprise plans. Upgrade to get started.\"",
+  "learn-more-about-saml-sso": "Learn more about SAML SSO.",
+  "directory-sync": "Directory Sync",
+  "automatically-provision-and-deprovision-users-from-your-identity-provider": "Automatically provision and deprovision users from your identity provider.",
+  "view-configuration": "\"View configuration\"",
+  "remove-duplicate": "\"Remove\"",
+  "edit-duplicate": "Edit",
+  "configure-duplicate": "\"Configure\"",
+  "scim-directory-sync-is-only-available-on-enterprise-plans-upgrade-to-get-started": "\"SCIM Directory Sync is only available on Enterprise plans. Upgrade to get started.\"",
+  "learn-more-about-scim-directory-sync": "Learn more about SCIM Directory Sync."
+}

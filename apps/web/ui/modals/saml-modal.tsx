@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useSAML from "@/lib/swr/use-saml";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { SAMLProviderProps } from "@/lib/types";
@@ -26,6 +27,8 @@ function SAMLModal({
   showSAMLModal: boolean;
   setShowSAMLModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const { id } = useWorkspace();
   const [selectedProvider, setSelectedProvider] = useState<
     SAMLProviderProps["saml"] | undefined
@@ -49,11 +52,9 @@ function SAMLModal({
         <div className="rounded-full border border-gray-200 p-3">
           <Lock className="h-5 w-5 text-gray-600" />
         </div>
-        <h3 className="text-lg font-medium">Configure SAML</h3>
-        <p className="text-center text-sm text-gray-500">
-          Select a provider to configure SAML for your{" "}
-          {process.env.NEXT_PUBLIC_APP_NAME} workspace.
-        </p>
+        <h3 className="text-lg font-medium">{t('configure-saml')}</h3>
+        <p className="text-center text-sm text-gray-500">{t('select-provider-configure-saml')}
+          {process.env.NEXT_PUBLIC_APP_NAME}{t('workspace')}</p>
       </div>
 
       <div className="flex flex-col space-y-6 bg-gray-50 px-4 py-8 text-left sm:px-16">
@@ -88,9 +89,7 @@ function SAMLModal({
         >
           <div>
             <div className="flex items-center space-x-1">
-              <h2 className="text-sm font-medium text-gray-900">
-                SAML Provider
-              </h2>
+              <h2 className="text-sm font-medium text-gray-900">{t('saml-provider')}</h2>
               <InfoTooltip content="Your SAML provider is the service you use to manage your users." />
             </div>
             <select
@@ -103,9 +102,7 @@ function SAMLModal({
               }
               className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
             >
-              <option disabled selected>
-                Select a provider
-              </option>
+              <option disabled selected>{t('select-provider')}</option>
               {SAML_PROVIDERS.map((provider) => (
                 <option
                   key={provider.saml}
@@ -122,17 +119,13 @@ function SAMLModal({
                 href={`https://dub.co/help/article/${selectedProvider}-saml`}
                 target="_blank"
                 className="ml-2 mt-2 block text-sm text-gray-500 underline"
-              >
-                Read the guide on {currentProvider.name} SSO
-              </a>
+              >{t('read-guide-on')}{currentProvider.name}{t('sso')}</a>
             ) : (
               <a
                 href="https://dub.co/help/category/saml-sso"
                 target="_blank"
                 className="ml-2 mt-2 block text-sm text-gray-500 underline"
-              >
-                Learn more about SAML SSO
-              </a>
+              >{t('learn-more-about-saml-sso')}</a>
             )}
           </div>
 
@@ -165,9 +158,7 @@ function SAMLModal({
                   ) : (
                     <>
                       <UploadCloud className="h-5 w-5 text-gray-500 transition-all duration-75 group-hover:scale-110 group-active:scale-95" />
-                      <p className="mt-2 text-sm text-gray-500">
-                        Choose an .xml file to upload
-                      </p>
+                      <p className="mt-2 text-sm text-gray-500">{t('choose-xml-file-upload')}</p>
                     </>
                   )}
                 </label>
@@ -213,7 +204,7 @@ function SAMLModal({
                   name="metadataUrl"
                   autoFocus={!isMobile}
                   type="url"
-                  placeholder="https://"
+                  placeholder={t('https-url')}
                   autoComplete="off"
                   required
                   className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
@@ -221,7 +212,7 @@ function SAMLModal({
               </div>
             ))}
           <Button
-            text="Save changes"
+            text={t('save-changes')}
             disabled={!selectedProvider}
             loading={submitting}
           />

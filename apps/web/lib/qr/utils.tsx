@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import qrcodegen from "./codegen";
 import {
   DEFAULT_BGCOLOR,
@@ -135,6 +136,8 @@ export function convertImageSettingsToPixels(
 }
 
 export function QRCodeSVG(props: QRPropsSVG) {
+const { t } = useTranslation("../lib/qr");
+
   const {
     value,
     size = DEFAULT_SIZE,
@@ -185,7 +188,7 @@ export function QRCodeSVG(props: QRPropsSVG) {
       image = (
         <img
           src={imageSettings.src}
-          alt="Logo"
+          alt={t('logo')}
           style={{
             position: "absolute",
             left: `${imgLeft}px`,

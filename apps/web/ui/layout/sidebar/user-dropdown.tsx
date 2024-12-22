@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { Avatar, Icon, Popover, User } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -8,6 +10,8 @@ import Link from "next/link";
 import { ComponentPropsWithoutRef, ElementType, useState } from "react";
 
 export default function UserDropdown() {
+const { t } = useTranslation("../ui/layout/sidebar");
+
   const { data: session } = useSession();
   const [openPopover, setOpenPopover] = useState(false);
 
@@ -32,7 +36,7 @@ export default function UserDropdown() {
           )}
           <UserOption
             as={Link}
-            label="Account"
+            label={t('account')}
             icon={User}
             href="/account/settings"
             onClick={() => setOpenPopover(false)}
@@ -40,7 +44,7 @@ export default function UserDropdown() {
           <UserOption
             as="button"
             type="button"
-            label="Logout"
+            label={t('logout')}
             icon={LogOut}
             onClick={() =>
               signOut({

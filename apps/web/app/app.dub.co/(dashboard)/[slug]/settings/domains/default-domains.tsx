@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation, Trans } from "react-i18next";
+
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useDefaultDomains from "@/lib/swr/use-default-domains";
@@ -42,6 +44,8 @@ function DubDomainsIcon(domain: string) {
 }
 
 export function DefaultDomains() {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/settings/domains");
+
   const { id, plan, role, flags } = useWorkspace();
   const permissionsError = clientAccessCheck({
     action: "domains.write",
@@ -61,18 +65,16 @@ export function DefaultDomains() {
   return (
     <div className="my-10 grid gap-5 border-t border-gray-200 py-10">
       <div>
-        <h2 className="text-xl font-semibold tracking-tight text-black">
-          Default Domains
-        </h2>
-        <p className="mt-3 text-sm text-gray-500">
-          Leverage default branded domains from Dub for specific links.{" "}
+        <h2 className="text-xl font-semibold tracking-tight text-black">{t('default-domains')}</h2>
+        <p className="mt-3 text-sm text-gray-500"><Trans
+i18nKey="leverage-default-branded-domains"
+components={{"0": 
           <Link
             href="https://dub.co/help/article/default-dub-domains"
             target="_blank"
             className="underline transition-colors hover:text-gray-800"
-          >
-            Learn more.
-          </Link>
+           />}}
+/>
         </p>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-3">
@@ -101,7 +103,7 @@ export function DefaultDomains() {
                   permissionsError ||
                   (slug === "dub.link" && plan === "free" ? (
                     <TooltipContent
-                      title="You can only use dub.link on a Pro plan and above. Upgrade to Pro to use this domain."
+                      title={t('pro-plan-requirement')}
                       cta="Upgrade to Pro"
                       href={`/${slug}/upgrade`}
                     />
@@ -135,7 +137,7 @@ export function DefaultDomains() {
                         if (error.message.includes("Upgrade to Pro")) {
                           toast.custom(() => (
                             <UpgradeRequiredToast
-                              title="You've discovered a Pro feature!"
+                              title={t('pro-feature-discovery')}
                               message={error.message}
                             />
                           ));

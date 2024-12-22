@@ -1,0 +1,12 @@
+{
+  "password": "Password",
+  "set-password-dub-account": "You can set a password to use with your Dub account.",
+  "account-managed-by-provider": "Your account is managed by <0>{{_user_provider_}}</0>.",
+  "create-account-password": "\"Create account password\"",
+  "manage-your-account-password-on": "Manage your account password on",
+  "current-password-suffix": ".",
+  "current-password": "Current Password",
+  "new-password": "New Password",
+  "password-requirements": "Password requirements",
+  "update-password": "\"Update Password\""
+}

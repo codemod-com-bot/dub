@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useUsage from "@/lib/swr/use-usage";
 import { EmptyState, LoadingSpinner } from "@dub/ui";
 import { Bars, TimeSeriesChart, XAxis, YAxis } from "@dub/ui/charts";
@@ -31,6 +32,8 @@ const resourceEmptyStates: Record<
 };
 
 export function UsageChart() {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/settings/billing");
+
   const searchParams = useSearchParams();
   const resource =
     RESOURCES.find((r) => r === searchParams.get("tab")) ?? "events";
@@ -117,7 +120,7 @@ export function UsageChart() {
         )
       ) : (
         <div className="flex size-full items-center justify-center text-sm text-neutral-500">
-          {loading ? <LoadingSpinner /> : <p>Failed to load usage data</p>}
+          {loading ? <LoadingSpinner /> : <p>{t('failed-to-load-usage-data')}</p>}
         </div>
       )}
     </div>

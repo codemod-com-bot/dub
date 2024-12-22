@@ -1,0 +1,13 @@
+{
+  "user-api-keys-replaced-by-workspace-api-keys": "User API Keys have been replaced by Workspace API Keys.",
+  "recommend-creating-new-workspace-api-key": "We recommend creating a new <0>Workspace API Key</0> for more granular control over your resources such as Links, Tags, Domains, Analytics, etc. <1>Read the announcement.</1>",
+  "your-api-keys": "Your API Keys",
+  "api-keys-allow-access-with-caution": "These API keys allow other apps to access your account. Use it with caution – do not share your API key with others, or expose it in the browser or other client-side code",
+  "fetching-api-keys": "Fetching API keys...",
+  "name": "Name",
+  "key": "Key",
+  "last-used": "Last used",
+  "no-api-keys-found-create-one-above": "No API keys found. Create one above.",
+  "created": "Created",
+  "delete-api-key": "\"Delete API Key\""
+}

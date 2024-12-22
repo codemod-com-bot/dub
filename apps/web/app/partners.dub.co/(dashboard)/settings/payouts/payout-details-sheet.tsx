@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { SHEET_MAX_ITEMS } from "@/lib/partners/constants";
 import usePartnerProfile from "@/lib/swr/use-partner-profile";
 import { PartnerPayoutResponse, PartnerSaleResponse } from "@/lib/types";
@@ -36,6 +37,8 @@ function PayoutDetailsSheetContent({
   payout,
   setIsOpen,
 }: PayoutDetailsSheetProps) {
+const { t } = useTranslation("partners.dub.co/(dashboard)/settings/payouts");
+
   const { partner } = usePartnerProfile();
 
   const {
@@ -167,9 +170,7 @@ function PayoutDetailsSheetContent({
     <>
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
-          <Sheet.Title className="text-xl font-semibold">
-            Payout details
-          </Sheet.Title>
+          <Sheet.Title className="text-xl font-semibold">{t('payout-details')}</Sheet.Title>
           <Sheet.Close asChild>
             <Button
               variant="outline"
@@ -179,9 +180,7 @@ function PayoutDetailsSheetContent({
           </Sheet.Close>
         </div>
         <div className="flex flex-col gap-4 p-6">
-          <div className="text-base font-medium text-neutral-900">
-            Invoice details
-          </div>
+          <div className="text-base font-medium text-neutral-900">{t('invoice-details')}</div>
           <div className="grid grid-cols-2 gap-3 text-sm">
             {Object.entries(invoiceData).map(([key, value]) => (
               <Fragment key={key}>
@@ -205,9 +204,7 @@ function PayoutDetailsSheetContent({
                       buttonVariants({ variant: "secondary" }),
                       "flex h-7 items-center rounded-lg border px-2 text-sm",
                     )}
-                  >
-                    View all
-                  </Link>
+                  >{t('view-all')}</Link>
                 </div>
               )}
             </>
@@ -221,7 +218,7 @@ function PayoutDetailsSheetContent({
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Close"
+            text={t('close')}
             className="w-fit"
           />
         </div>

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import AddEditWebhookForm from "@/ui/webhooks/add-edit-webhook-form";
@@ -12,6 +14,8 @@ export default function NewWebhookPageClient({
 }: {
   newSecret: string;
 }) {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/settings/webhooks/new");
+
   const { slug, flags, plan, conversionEnabled } = useWorkspace();
 
   const needsHigherPlan =
@@ -33,7 +37,7 @@ export default function NewWebhookPageClient({
           className="flex items-center gap-x-1"
         >
           <ChevronLeft className="size-4" />
-          <p className="text-sm font-medium text-gray-500">Back to webhooks</p>
+          <p className="text-sm font-medium text-gray-500">{t('back-to-webhooks')}</p>
         </Link>
       </MaxWidthWrapper>
 

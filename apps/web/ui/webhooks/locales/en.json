@@ -1,0 +1,22 @@
+{
+  "back-to-webhooks": "Back to webhooks",
+  "send-test-event": "\"Send test event\"",
+  "copy-webhook-id": "\"Copy Webhook ID\"",
+  "delete-webhook": "\"Delete webhook\"",
+  "response": "Response",
+  "http-status-code": "HTTP status code",
+  "request": "Request",
+  "no-events": "\"No events\"",
+  "no-events-logged-for-webhook": "\"No events have been logged for this webhook. Events will appear as they are logged.\"",
+  "name": "Name",
+  "webhook-name": "\"Webhook name\"",
+  "url": "URL",
+  "webhook-url": "\"Webhook URL\"",
+  "signing-secret": "Signing secret",
+  "workspace-level-events": "Workspace level events",
+  "workspace-level-events-description": "These events are triggered at the workspace level.",
+  "link-level-events-high-traffic": "Link level events <0>High traffic</0>",
+  "link-level-events-description": "These events are triggered at the link level.",
+  "choose-links-for-events": "Choose links we should send events for",
+  "select-links": "Select links..."
+}

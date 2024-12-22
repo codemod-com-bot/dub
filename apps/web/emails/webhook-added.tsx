@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
@@ -33,10 +34,12 @@ export default function WebhookAdded({
     name: string;
   };
 }) {
+const { t } = useTranslation("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>New webhook added</Preview>
+      <Preview>{t('new-webhook-added')}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -44,35 +47,32 @@ export default function WebhookAdded({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub.co"
+                alt={t('dub-co')}
                 className="mx-auto my-0"
               />
             </Section>
-            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              New webhook added
-            </Heading>
-            <Text className="text-sm leading-6 text-black">
-              Webhook with the name <strong>{webhook.name}</strong> has been
-              added to your Dub.co workspace {workspace.name}.
-            </Text>
+            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">{t('new-webhook-added-whitespace')}</Heading>
+            <Text className="text-sm leading-6 text-black"><Trans
+i18nKey="webhook-added-to-dub-co-workspace"
+values={{ _webhook_name_: <>{webhook.name}</> }}
+components={{"0": <strong />}}
+/>{workspace.name}{t('whitespace')}</Text>
             <Section className="mb-8 mt-4 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={`https://app.dub.co/${workspace.slug}/settings/webhooks`}
-              >
-                View Webhook
-              </Link>
+              >{t('view-webhook-whitespace')}</Link>
             </Section>
-            <Text className="text-sm leading-6 text-black">
-              If you did not create this webhook, you can{" "}
+            <Text className="text-sm leading-6 text-black"><Trans
+i18nKey="delete-webhook-link"
+values={{ _strong_delete_this_webhook_strong_: <>
+                <strong>delete this webhook</strong></> }}
+components={{"0": 
               <Link
                 href={`https://app.dub.co/${workspace.slug}/settings/webhooks`}
                 className="text-black underline"
-              >
-                <strong>delete this webhook</strong>
-              </Link>{" "}
-              from your account.
-            </Text>
+               />}}
+/></Text>
             <Footer email={email} />
           </Container>
         </Body>

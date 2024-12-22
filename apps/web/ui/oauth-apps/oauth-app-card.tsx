@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { OAuthAppProps } from "@/lib/types";
 import { BlurImage, TokenAvatar } from "@dub/ui";
@@ -5,6 +6,8 @@ import { formatDate } from "@dub/utils";
 import Link from "next/link";
 
 export default function OAuthAppCard(oAuthApp: OAuthAppProps) {
+const { t } = useTranslation("../ui/oauth-apps");
+
   const { slug } = useWorkspace();
 
   return (
@@ -28,11 +31,12 @@ export default function OAuthAppCard(oAuthApp: OAuthAppProps) {
         </div>
         <div>
           <p className="font-semibold text-gray-700">{oAuthApp.name}</p>
-          <div className="flex items-center gap-1 text-sm text-gray-500">
-            Last updated
-            <span className="font-medium text-gray-700">
-              {formatDate(oAuthApp.updatedAt, { year: undefined })}
-            </span>
+          <div className="flex items-center gap-1 text-sm text-gray-500"><Trans
+i18nKey="last-updated"
+values={{ _formatDate_oAuthApp_updatedAt_year_undefined_: <>
+              {formatDate(oAuthApp.updatedAt, { year: undefined })}</> }}
+components={{"0": <span className="font-medium text-gray-700" />}}
+/>
           </div>
         </div>
       </div>

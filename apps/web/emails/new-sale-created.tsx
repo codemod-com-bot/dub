@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { currencyFormatter, DUB_WORDMARK, getPrettyUrl } from "@dub/utils";
 import {
   Body,
@@ -45,6 +46,8 @@ export default function NewSaleCreated({
     earnings: number;
   };
 }) {
+const { t } = useTranslation("../emails");
+
   const linkToSale = `https://partners.dub.co/${partner.id}/${program.id}/sales`;
 
   const earningsInDollars = currencyFormatter(sale.earnings / 100, {
@@ -60,8 +63,7 @@ export default function NewSaleCreated({
   return (
     <Html>
       <Head />
-      <Preview>
-        You just made a {earningsInDollars} sale via your referral link{" "}
+      <Preview>{t('you-just-made-a-{earnings-in-dollars}-sale-via-your-referral-link', { earningsInDollars })}
         {getPrettyUrl(partner.referralLink)}
       </Preview>
       <Tailwind>
@@ -75,37 +77,30 @@ export default function NewSaleCreated({
               />
             </Section>
 
-            <Heading className="mx-0 p-0 text-lg font-medium text-black">
-              You just made a {earningsInDollars} referral sale!
-            </Heading>
+            <Heading className="mx-0 p-0 text-lg font-medium text-black">{t('you-just-made-a-{earnings-in-dollars}-referral-sale', { earningsInDollars })}</Heading>
 
-            <Text className="text-sm leading-6 text-gray-600">
-              Congratulations! Someone made a{" "}
-              <strong className="text-black">{saleAmountInDollars}</strong>{" "}
-              purchase on <strong className="text-black">{program.name}</strong>{" "}
-              using your referral link (
-              <a
+            <Text className="text-sm leading-6 text-gray-600"><Trans
+i18nKey="congratulations-someone-made-a-{sale-amount-in-dollars}-purchase-on-{program-name}-using-your-referral-link"
+values={{ _saleAmountInDollars_: <>{saleAmountInDollars}</>, _program_name_: <>{program.name}</>, _getPrettyUrl_partner_referralLink_: <>
+                {getPrettyUrl(partner.referralLink)}</> }}
+components={{"0": 
+              <strong className="text-black" />, "1": <strong className="text-black" />, "2": <a
                 href={partner.referralLink}
                 className="text-semibold font-medium text-black underline"
-              >
-                {getPrettyUrl(partner.referralLink)}
-              </a>
-              ).
-            </Text>
-            <Text className="text-sm leading-6 text-gray-600">
-              Your received{" "}
-              <strong className="text-black">{earningsInDollars}</strong> in
-              commission for this sale and it will be included in your next
-              payout.
-            </Text>
+               />}}
+/></Text>
+            <Text className="text-sm leading-6 text-gray-600"><Trans
+i18nKey="your-received-{earnings-in-dollars}-in-commission-for-this-sale-and-it-will-be-included-in-your-next-payout"
+values={{ _earningsInDollars_: <>{earningsInDollars}</> }}
+components={{"0": 
+              <strong className="text-black" />}}
+/></Text>
 
             <Section className="mb-12 mt-8">
               <Link
                 className="rounded-md bg-neutral-900 px-4 py-3 text-[12px] font-medium text-white no-underline"
                 href={linkToSale}
-              >
-                View sale
-              </Link>
+              >{t('view-sale')}</Link>
             </Section>
             <Footer email={email} />
           </Container>

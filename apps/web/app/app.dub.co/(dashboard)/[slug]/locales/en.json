@@ -1,0 +1,19 @@
+{
+  "no-tags-found": "No tags found",
+  "add-tags-to-organize-your-links": "Add tags to organize your links",
+  "add-tag": "\"Add tag\"",
+  "no-domains-found": "No domains found",
+  "add-custom-domain-to-match-your-brand": "Add a custom domain to match your brand",
+  "add-domain": "\"Add domain\"",
+  "import-links": "Import Links",
+  "import-from-bitly": "\"Import from Bitly\"",
+  "bitly-logo": "\"Bitly logo\"",
+  "import-from-rebrandly": "\"Import from Rebrandly\"",
+  "rebrandly-logo": "\"Rebrandly logo\"",
+  "import-from-short-io": "\"Import from Short.io\"",
+  "short-io-logo": "\"Short.io logo\"",
+  "import-from-csv": "\"Import from CSV\"",
+  "export-links": "Export Links",
+  "export-as-csv": "\"Export as CSV\"",
+  "workspace-exceeded-monthly-links-limit": "\"Your workspace has exceeded its monthly links limit. We're still collecting data on your existing links, but you need to upgrade to add more links.\""
+}

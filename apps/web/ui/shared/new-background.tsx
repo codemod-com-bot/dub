@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { cn } from "@dub/utils";
 import Image from "next/image";
@@ -6,6 +8,8 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export function NewBackground(props: { showAnimation?: boolean }) {
+const { t } = useTranslation("../ui/shared");
+
   const pathname = usePathname();
   const [isGridLoaded, setIsGridLoaded] = useState(false);
   const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
@@ -26,7 +30,7 @@ export function NewBackground(props: { showAnimation?: boolean }) {
         <Image
           src="https://assets.dub.co/misc/welcome-background-grid.svg"
           onLoad={() => setIsGridLoaded(true)}
-          alt=""
+          alt={t('empty-string-fragment-0')}
           width={1750}
           height={1046}
           className="absolute inset-0"
@@ -34,7 +38,7 @@ export function NewBackground(props: { showAnimation?: boolean }) {
         <Image
           src="https://assets.dub.co/misc/welcome-background.svg"
           onLoad={() => setIsBackgroundLoaded(true)}
-          alt=""
+          alt={t('empty-string-fragment-1')}
           width={1750}
           height={1046}
           className={cn(

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import usePartnerProfile from "@/lib/swr/use-partner-profile";
 import { PartnerPayoutResponse } from "@/lib/types";
@@ -21,6 +23,8 @@ import useSWR from "swr";
 import { PayoutDetailsSheet } from "./payout-details-sheet";
 
 export function PayoutTable() {
+const { t } = useTranslation("partners.dub.co/(dashboard)/settings/payouts");
+
   const { partner } = usePartnerProfile();
   const { queryParams, searchParams, getQueryString } = useRouterStuff();
 
@@ -164,8 +168,8 @@ export function PayoutTable() {
           <Table {...table} />
         ) : (
           <AnimatedEmptyState
-            title="No payouts found"
-            description="No payouts have been initiated for this program yet."
+            title={t('no-payouts-found')}
+            description={t('no-payouts-initiated-for-this-program-yet')}
             cardContent={() => (
               <>
                 <MoneyBill2 className="size-4 text-neutral-700" />

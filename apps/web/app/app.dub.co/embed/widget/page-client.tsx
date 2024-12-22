@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { PartnerSaleResponse } from "@/lib/types";
 import { Link, Program } from "@dub/prisma/client";
@@ -43,6 +45,8 @@ export function EmbedWidgetPageClient({
   earnings: number;
   hasPartnerProfile: boolean;
 }) {
+const { t } = useTranslation("app.dub.co/embed/widget");
+
   const [copied, copyToClipboard] = useCopyToClipboard();
   const [selectedTab, setSelectedTab] = useState<Tab>("invite");
 
@@ -94,9 +98,7 @@ export function EmbedWidgetPageClient({
                 <div className="mr-2 flex size-8 items-center justify-center rounded-full bg-white/20">
                   <GiftFill className="size-4 shrink-0 text-white" />
                 </div>
-              </div>
-              Refer a friend and earn
-            </h2>
+              </div>{t('refer-a-friend-and-earn')}</h2>
           </div>
         </AnimatedSizeContainer>
         <AnimatedSizeContainer
@@ -109,9 +111,7 @@ export function EmbedWidgetPageClient({
               selectedTab === "rewards" && "h-0 opacity-0",
             )}
           >
-            <p className="pt-2 text-sm text-white/80">
-              Earn additional credits and cash when you refer a friend and they
-              sign up for {program?.name}
+            <p className="pt-2 text-sm text-white/80">{t('earn-additional-credits-and-cash-when-you-refer-a-friend-and-they-sign-up-for')}{program?.name}
             </p>
           </div>
         </AnimatedSizeContainer>
@@ -143,7 +143,7 @@ export function EmbedWidgetPageClient({
           {selectedTab === "invite" && (
             <>
               <div className="flex flex-col gap-2">
-                <span className="text-sm text-neutral-500">Invite link</span>
+                <span className="text-sm text-neutral-500">{t('invite-link')}</span>
                 <input
                   type="text"
                   readOnly
@@ -206,9 +206,7 @@ export function EmbedWidgetPageClient({
 
           {selectedTab === "rewards" && (
             <>
-              <h2 className="text-sm font-semibold text-neutral-900">
-                Activity
-              </h2>
+              <h2 className="text-sm font-semibold text-neutral-900">{t('activity')}</h2>
               <motion.div
                 initial={{ height: 150, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
@@ -224,9 +222,7 @@ export function EmbedWidgetPageClient({
                   earnings={earnings}
                 />
                 <div className="mt-4">
-                  <h2 className="text-sm font-semibold text-neutral-900">
-                    Recent sales
-                  </h2>
+                  <h2 className="text-sm font-semibold text-neutral-900">{t('recent-sales')}</h2>
                   <SalesList
                     sales={sales}
                     isLoading={isLoading}
@@ -243,9 +239,7 @@ export function EmbedWidgetPageClient({
                           buttonVariants({ variant: "primary" }),
                           "mt-3 flex h-10 items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm",
                         )}
-                      >
-                        Withdraw earnings
-                      </a>
+                      >{t('withdraw-earnings')}</a>
                     ) : (
                       <a
                         href="https://partners.dub.co/register"
@@ -254,9 +248,7 @@ export function EmbedWidgetPageClient({
                           buttonVariants({ variant: "primary" }),
                           "mt-3 flex h-10 items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm",
                         )}
-                      >
-                        Create partner account
-                      </a>
+                      >{t('create-partner-account')}</a>
                     ))}
                 </div>
               </motion.div>
@@ -272,7 +264,7 @@ export function EmbedWidgetPageClient({
             target="_blank"
             className="flex items-center justify-center gap-1 rounded-lg bg-white p-2 pb-2.5 transition-colors"
           >
-            <p className="text-sm text-neutral-500">Powered by</p>
+            <p className="text-sm text-neutral-500">{t('powered-by')}</p>
             <Wordmark className="h-4" />
           </a>
         </div>

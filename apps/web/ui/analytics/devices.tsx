@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   SINGULAR_ANALYTICS_ENDPOINTS,
   TRIGGER_DISPLAY,
@@ -14,6 +15,8 @@ import DeviceIcon from "./device-icon";
 import { useAnalyticsFilterOption } from "./utils";
 
 export default function Devices() {
+const { t } = useTranslation("../ui/analytics");
+
   const { queryParams, searchParams } = useRouterStuff();
 
   const { selectedTab } = useContext(AnalyticsContext);
@@ -78,7 +81,7 @@ export default function Devices() {
             />
           ) : (
             <div className="flex h-[300px] items-center justify-center">
-              <p className="text-sm text-gray-600">No data available</p>
+              <p className="text-sm text-gray-600">{t('no-data-available')}</p>
             </div>
           )
         ) : (

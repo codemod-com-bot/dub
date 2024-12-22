@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation, Trans } from "react-i18next";
+
 
 import useLinks from "@/lib/swr/use-links";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -12,6 +14,8 @@ import { LaterButton } from "../../later-button";
 import { useOnboardingProgress } from "../../use-onboarding-progress";
 
 export function DomainSelector() {
+const { t } = useTranslation("app.dub.co/(onboarding)/onboarding/(steps)/domain");
+
   const { loading: isWorkspaceLoading, flags } = useWorkspace();
   const { continueTo, isLoading, isSuccessful } = useOnboardingProgress();
 
@@ -27,20 +31,18 @@ export function DomainSelector() {
     <>
       <div className="animate-fade-in mx-auto grid w-full max-w-[312px] gap-4 sm:max-w-2xl sm:grid-cols-2">
         <DomainOption
-          title="Connect a custom domain"
+          title={t('connect-a-custom-domain')}
           example="acme.com"
           onClick={() => setSelectedOption("custom")}
           isSelected={selectedOption === "custom"}
         />
         <DomainOption
           title={
-            <>
-              Claim a free{" "}
-              <span className="rounded border border-green-800/10 bg-lime-100 p-1 font-mono text-xs">
-                .link
-              </span>{" "}
-              domain
-            </>
+            <><Trans
+i18nKey="claim-a-free-domain-link"
+components={{"0": 
+              <span className="rounded border border-green-800/10 bg-lime-100 p-1 font-mono text-xs" />}}
+/></>
           }
           example="acme.link"
           onClick={() => setSelectedOption("register")}
@@ -54,7 +56,7 @@ export function DomainSelector() {
           variant="primary"
           onClick={() => continueTo(`domain/${selectedOption}`)}
           loading={isLoading || isSuccessful}
-          text="Continue"
+          text={t('continue')}
         />
         <LaterButton next="invite" className="mt-4" />
       </div>
@@ -75,6 +77,8 @@ function DomainOption({
   isSelected: boolean;
   paidPlanRequired?: boolean;
 }) {
+const { t } = useTranslation("app.dub.co/(onboarding)/onboarding/(steps)/domain");
+
   const { links } = useLinks({ sort: "createdAt", pageSize: 1 });
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -116,7 +120,7 @@ function DomainOption({
             {previewImage && (
               <img
                 src={previewImage}
-                alt=""
+                alt={t('empty-string')}
                 className="size-full object-cover"
               />
             )}
@@ -128,9 +132,7 @@ function DomainOption({
       </span>
       {paidPlanRequired && (
         <span className="flex items-center justify-center gap-1 text-center text-xs font-normal text-gray-500/80">
-          <Crown className="size-4" />
-          Paid plan required
-        </span>
+          <Crown className="size-4" />{t('paid-plan-required')}</span>
       )}
     </div>
   );

@@ -1,0 +1,7 @@
+{
+  "create-a-dub-partner-account": "Create a Dub Partner account",
+  "already-have-an-account-sign-in-link": "Already have an account? <0>Sign in</0>",
+  "verify-your-email-address": "Verify your email address",
+  "enter-six-digit-verification-code": "Enter the six digit verification code sent to <0>{{_truncate_email_30_}}</0>",
+  "already-have-an-account-sign-in-link-duplicate": "Already have an account? <0>Sign in</0>"
+}

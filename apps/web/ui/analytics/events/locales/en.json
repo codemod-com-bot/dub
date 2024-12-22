@@ -1,0 +1,15 @@
+{
+  "copy-event-id": "\"Copy event ID\"",
+  "copy-click-id": "\"Copy click ID\"",
+  "real-time-events-stream": "\"Real-time Events Stream\"",
+  "filter": "Filter",
+  "qr-scan": "\"QR scan\"",
+  "qr-scan-whitespace": "QR scan",
+  "link-click": "\"Link click\"",
+  "link-click-whitespace": "Link click",
+  "unknown-whitespace": "Unknown",
+  "usd": "USD",
+  "no-events-recorded": "\"No events recorded\"",
+  "download-as-csv": "\"Download as CSV\"",
+  "upgrade-to-business-plan-enable-csv-downloads": "\"Upgrade to our Business Plan to enable CSV downloads for events in your workspace.\""
+}

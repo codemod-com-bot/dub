@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { DUB_WORDMARK, capitalize, getNextPlan, nFormatter } from "@dub/utils";
 import {
   Body,
@@ -29,6 +30,8 @@ export default function LinksLimitAlert({
   email: string;
   workspace: Partial<WorkspaceProps>;
 }) {
+const { t } = useTranslation("../emails");
+
   const { slug, name, linksUsage, linksLimit, plan } = workspace as {
     slug: string;
     name: string;
@@ -42,10 +45,7 @@ export default function LinksLimitAlert({
   return (
     <Html>
       <Head />
-      <Preview>
-        Your Dub workspace, {name} has used {percentage.toString()}% of its
-        links limit for the month.
-      </Preview>
+      <Preview>{t('your-dub-workspace-name-has-used', { name })}{percentage.toString()}{t('percentage-of-links-limit-for-the-month')}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -53,68 +53,52 @@ export default function LinksLimitAlert({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t('dub')}
                 className="mx-auto my-0"
               />
             </Section>
-            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Dub.co Links Limit Alert
-            </Heading>
-            <Text className="text-sm leading-6 text-black">
-              Your Dub.co workspace,{" "}
+            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">{t('dub-co-links-limit-alert')}</Heading>
+            <Text className="text-sm leading-6 text-black"><Trans
+i18nKey="your-dub-co-workspace-has-used-percentage-of-monthly-links-limit"
+values={{ _strong_name_strong_: <>
+                <strong>{name}</strong></> }}
+components={{"0": 
               <Link
                 href={`https://app.dub.co/${slug}`}
                 className="text-black underline"
-              >
-                <strong>{name}</strong>
-              </Link>{" "}
-              has used <strong>{percentage.toString()}%</strong> of the monthly
-              links limit included in the {capitalize(plan)} plan. You have
-              created a total of{" "}
-              <strong>{nFormatter(linksUsage, { full: true })} links</strong>{" "}
-              (out of a maximum of {nFormatter(linksLimit, { full: true })}{" "}
-              links) in your current billing cycle.
-            </Text>
+               />, "1": <strong />}}
+/>{capitalize(plan)}<Trans
+i18nKey="you-have-created-total-links-out-of-maximum-links"
+components={{"0": 
+              <strong />}}
+/>{nFormatter(linksLimit, { full: true })}{t('links-in-your-current-billing-cycle')}</Text>
 
             {plan === "business-max" || plan === "enterprise" ? (
-              <Text className="text-sm leading-6 text-black">
-                Since you're on the {capitalize(plan)} plan, you will still be
-                able to create links even after you hit your limit. We're
-                planning to introduce on-demand billing for overages in the
-                future, but for now, you can continue to create links without
-                any interruption.
-              </Text>
+              <Text className="text-sm leading-6 text-black">{t('since-you-are-on-the-plan')}{capitalize(plan)}{t('you-can-continue-to-create-links-without-interruption')}</Text>
             ) : percentage === 100 ? (
-              <Text className="text-sm leading-6 text-black">
-                All your existing links will continue to work, and we are still
-                collecting data on them, but you'll need to upgrade the{" "}
+              <Text className="text-sm leading-6 text-black"><Trans
+i18nKey="existing-links-will-continue-to-work-upgrade-plan"
+components={{"0": 
                 <Link
                   href={nextPlan.link}
                   className="font-medium text-blue-600 no-underline"
-                >
-                  {nextPlan.name} plan
-                </Link>{" "}
-                add more links.
-              </Text>
+                 />}}
+/></Text>
             ) : (
-              <Text className="text-sm leading-6 text-black">
-                Once you hit your limit, you'll need to upgrade to the{" "}
+              <Text className="text-sm leading-6 text-black"><Trans
+i18nKey="once-you-hit-your-limit-upgrade-plan"
+components={{"0": 
                 <Link
                   href={nextPlan.link}
                   className="font-medium text-blue-600 no-underline"
-                >
-                  {nextPlan.name} plan
-                </Link>{" "}
-                to add more links.
-              </Text>
+                 />}}
+/></Text>
             )}
             <Section className="mb-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={`https://app.dub.co/${slug}/upgrade`}
-              >
-                Upgrade my plan
-              </Link>
+              >{t('upgrade-my-plan')}</Link>
             </Section>
             <Footer email={email} />
           </Container>

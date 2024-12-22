@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import usePartnerProfile from "@/lib/swr/use-partner-profile";
 import useProgramEnrollments from "@/lib/swr/use-program-enrollments";
@@ -37,6 +39,8 @@ const LINKS = [
 ];
 
 export function PartnerProgramDropdown() {
+const { t } = useTranslation("../ui/layout/sidebar");
+
   const { programSlug } = useParams() as { programSlug?: string };
 
   const { partner } = usePartnerProfile();
@@ -109,9 +113,7 @@ export function PartnerProgramDropdown() {
                     className={cn(
                       "truncate text-xs capitalize leading-tight text-neutral-600",
                     )}
-                  >
-                    Partner
-                  </div>
+                  >{t('partner')}</div>
                 </div>
               </Link>
               <div className="mt-0.5 flex flex-col gap-0.5">
@@ -225,6 +227,8 @@ function ProgramList({
   selectedProgram?: ProgramProps;
   setOpenPopover: (open: boolean) => void;
 }) {
+const { t } = useTranslation("../ui/layout/sidebar");
+
   const pathname = usePathname();
 
   const href = useCallback(
@@ -238,7 +242,7 @@ function ProgramList({
   return (
     <div>
       <div className="flex items-center justify-between pb-1">
-        <p className="px-1 text-xs font-medium text-neutral-500">Programs</p>
+        <p className="px-1 text-xs font-medium text-neutral-500">{t('programs')}</p>
       </div>
       <div className="flex flex-col gap-0.5">
         {programs.map(({ slug, name, logo }) => {
@@ -271,9 +275,7 @@ function ProgramList({
                   className={cn(
                     "truncate text-xs capitalize leading-tight text-neutral-600",
                   )}
-                >
-                  Program
-                </div>
+                >{t('program')}</div>
               </div>
               {selectedProgram?.slug === slug ? (
                 <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-black">

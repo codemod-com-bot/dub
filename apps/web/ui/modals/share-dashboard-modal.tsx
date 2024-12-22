@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { DashboardProps, LinkProps } from "@/lib/types";
 import z from "@/lib/zod";
@@ -45,6 +46,8 @@ function ShareDashboardModalInner({
   domain,
   _key: key,
 }: ShareDashboardModalProps) {
+const { t } = useTranslation("../ui/modals");
+
   const { id: workspaceId } = useWorkspace();
   const [isRemoving, setIsRemoving] = useState(false);
 
@@ -182,9 +185,7 @@ function ShareDashboardModalInner({
 
   return (
     <>
-      <h3 className="border-b border-gray-200 px-4 py-4 text-lg font-medium sm:px-6">
-        Share dashboard
-      </h3>
+      <h3 className="border-b border-gray-200 px-4 py-4 text-lg font-medium sm:px-6">{t('share-dashboard')}</h3>
       <div className="bg-gray-50 px-6 pb-6 pt-4">
         <LinkCard link={link} isError={Boolean(linkError)} />
         <AnimatedSizeContainer
@@ -195,9 +196,7 @@ function ShareDashboardModalInner({
             <>
               <label className="flex cursor-pointer items-center justify-between gap-2 pt-6">
                 <span className="flex items-center gap-2 text-sm text-gray-600">
-                  <Globe className="size-4" />
-                  Enable public sharing
-                </span>
+                  <Globe className="size-4" />{t('enable-public-sharing')}</span>
                 <Switch
                   checked={checked}
                   fn={(checked) => (checked ? handleCreate() : handleRemove())}
@@ -226,19 +225,15 @@ function ShareDashboardModalInner({
                           <Tick className="h-4 w-4 text-gray-500" />
                         ) : (
                           <Copy className="h-4 w-4 text-gray-500" />
-                        )}
-                        Copy link
-                      </button>
+                        )}{t('copy-link')}</button>
                     </div>
                     <form
                       className="grid w-full gap-3 px-px pt-4"
                       onSubmit={handleSubmit(handleUpdate)}
                     >
-                      <p className="text-base font-medium">Settings</p>
+                      <p className="text-base font-medium">{t('settings')}</p>
                       <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm text-gray-600">
-                          Search engine indexing
-                        </p>
+                        <p className="text-sm text-gray-600">{t('search-engine-indexing')}</p>
                         <Switch
                           checked={watch("doIndex")}
                           fn={(checked) => {
@@ -249,9 +244,7 @@ function ShareDashboardModalInner({
                         />
                       </div>
                       <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm text-gray-600">
-                          Password protection
-                        </p>
+                        <p className="text-sm text-gray-600">{t('password-protection')}</p>
                         <Switch
                           checked={watch("password") !== null}
                           fn={(checked) => {
@@ -273,7 +266,7 @@ function ShareDashboardModalInner({
                         type="submit"
                         loading={isSubmitting}
                         disabled={!isDirty}
-                        text="Save changes"
+                        text={t('save-changes')}
                         className="h-9"
                       />
                     </form>
@@ -301,10 +294,12 @@ function LinkCard({
   link: LinkProps | undefined;
   isError: boolean;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   return (
     <div className="flex items-center gap-3 rounded-lg border border-neutral-300 bg-white p-3">
       {isError ? (
-        <span className="text-sm text-gray-400">Failed to load link</span>
+        <span className="text-sm text-gray-400">{t('failed-to-load-link')}</span>
       ) : link === undefined ? (
         <>
           <div className="m-px size-9 animate-pulse rounded-full bg-gray-200" />
@@ -351,9 +346,7 @@ function LinkCard({
                   {getPrettyUrl(link.url)}
                 </a>
               ) : (
-                <span className="truncate text-gray-400">
-                  No URL configured
-                </span>
+                <span className="truncate text-gray-400">{t('no-url-configured')}</span>
               )}
             </div>
           </div>

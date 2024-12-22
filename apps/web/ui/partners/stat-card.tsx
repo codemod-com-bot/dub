@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { MiniAreaChart } from "@dub/ui";
 import { LoadingSpinner } from "@dub/ui/icons";
 import { currencyFormatter, nFormatter } from "@dub/utils";
@@ -27,6 +28,8 @@ export function StatCard({
   color,
   href,
 }: StatCardProps) {
+const { t } = useTranslation("../ui/partners");
+
   return (
     <Wrapper
       href={href}
@@ -58,9 +61,7 @@ export function StatCard({
         ) : (
           <div className="flex size-full items-center justify-center">
             {error ? (
-              <span className="text-sm text-neutral-500">
-                Failed to load data.
-              </span>
+              <span className="text-sm text-neutral-500">{t('failed-to-load-data')}</span>
             ) : (
               <LoadingSpinner />
             )}

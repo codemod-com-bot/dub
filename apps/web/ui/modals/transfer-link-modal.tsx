@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useWorkspace from "@/lib/swr/use-workspace";
 import useWorkspaces from "@/lib/swr/use-workspaces";
 import { LinkProps } from "@/lib/types";
@@ -46,6 +47,8 @@ function TransferLinkModalInner({
   setShowTransferLinkModal,
   props,
 }: TransferLinkModalProps) {
+const { t } = useTranslation("../ui/modals");
+
   const { id } = useWorkspace();
   const { workspaces } = useWorkspaces();
   const [transferring, setTransferring] = useState(false);
@@ -102,11 +105,8 @@ function TransferLinkModalInner({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 text-center sm:px-16">
         <LinkLogo apexDomain={apexDomain} />
-        <h3 className="text-lg font-medium">Transfer {shortlink}</h3>
-        <p className="text-sm text-gray-500">
-          Transfer this link and its analytics to another {APP_NAME} workspace.
-          Link tags will not be transferred.
-        </p>
+        <h3 className="text-lg font-medium">{t('transfer-shortlink', { shortlink })}</h3>
+        <p className="text-sm text-gray-500">{t('transfer-link-analytics-another-app-name-workspace', { APP_NAME })}</p>
       </div>
 
       <div className="flex flex-col space-y-28 bg-gray-50 px-4 py-8 text-left sm:space-y-3 sm:rounded-b-2xl sm:px-16">
@@ -135,7 +135,7 @@ function TransferLinkModalInner({
         <Button
           disabled={!selectedWorkspace || !isDubDomain(domain)}
           loading={transferring}
-          text="Confirm transfer"
+          text={t('confirm-transfer')}
         />
       </div>
     </form>

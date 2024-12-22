@@ -1,0 +1,13 @@
+{
+  "create-your-dub-partner-profile": "Create your Dub Partner profile",
+  "full-name-required": "Full Name<0>(required)</0>",
+  "email-required": "Email<0>(required)</0>",
+  "display-image-required": "Display Image<0>(required)</0>",
+  "upload-image": "Upload image",
+  "recommended-size-160x160px": "Recommended size: 160x160px",
+  "country-required": "Country<0>(required)</0>",
+  "description": "Description",
+  "content-description": "\"Tell us about the kind of content you create – e.g. tech, travel, fashion, etc.\"",
+  "create-partner-account": "\"Create partner account\"",
+  "select-country": "\"Select country\""
+}

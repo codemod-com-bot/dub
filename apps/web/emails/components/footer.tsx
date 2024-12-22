@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { Hr, Link, Tailwind, Text } from "@react-email/components";
 
 export default function Footer({
@@ -9,20 +10,20 @@ export default function Footer({
   marketing?: boolean;
   notificationSettingsUrl?: string;
 }) {
+const { t } = useTranslation("../emails/components");
+
   if (marketing) {
     return (
       <Tailwind>
         <Hr className="mx-0 my-6 w-full border border-gray-200" />
-        <Text className="text-[12px] leading-6 text-gray-500">
-          We send out product update emails once a month – no spam, no nonsense.
-          <br />
-          Don't want to get these emails?{" "}
+        <Text className="text-[12px] leading-6 text-gray-500">{t('we-send-out-product-update-emails-once-a-month-no-spam-no-nonsense')}<br /><Trans
+i18nKey="dont-want-to-get-these-emails-unsubscribe-here"
+components={{"0": 
           <Link
             className="text-gray-700 underline"
             href="https://app.dub.co/account/settings"
-          >
-            Unsubscribe here.
-          </Link>
+           />}}
+/>
         </Text>
       </Tailwind>
     );
@@ -31,22 +32,21 @@ export default function Footer({
   return (
     <Tailwind>
       <Hr className="mx-0 my-6 w-full border border-gray-200" />
-      <Text className="text-[12px] leading-6 text-gray-500">
-        This email was intended for <span className="text-black">{email}</span>.
-        If you were not expecting this email, you can ignore this email. If you
-        are concerned about your account's safety, please reply to this email to
-        get in touch with us.
-      </Text>
+      <Text className="text-[12px] leading-6 text-gray-500"><Trans
+i18nKey="this-email-was-intended-for-email-if-you-were-not-expecting-this-email"
+values={{ _email_: <>{email}</> }}
+components={{"0": <span className="text-black" />}}
+/></Text>
 
       {notificationSettingsUrl && (
-        <Text className="text-[12px] leading-6 text-gray-500">
-          Don’t want to get these emails?{" "}
+        <Text className="text-[12px] leading-6 text-gray-500"><Trans
+i18nKey="dont-want-to-get-these-emails-adjust-your-notification-settings"
+components={{"0": 
           <Link
             className="text-gray-700 underline"
             href={notificationSettingsUrl}
-          >
-            Adjust your notification settings
-          </Link>
+           />}}
+/>
         </Text>
       )}
     </Tailwind>

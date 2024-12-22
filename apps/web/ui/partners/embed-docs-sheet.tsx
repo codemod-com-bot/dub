@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { X } from "@/ui/shared/icons";
 import { Button, Sheet, TabSelect, useRouterStuff } from "@dub/ui";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -10,15 +11,15 @@ interface EmbedDocsSheetProps {
 type Tab = "react" | "html";
 
 function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
+const { t } = useTranslation("../ui/partners");
+
   const [tab, setTab] = useState<Tab>("react");
 
   return (
     <>
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
-          <Sheet.Title className="text-xl font-semibold">
-            Embed docs
-          </Sheet.Title>
+          <Sheet.Title className="text-xl font-semibold">{t('embed-docs')}</Sheet.Title>
           <Sheet.Close asChild>
             <Button
               variant="outline"
@@ -54,17 +55,15 @@ function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
             )}
           </div>
 
-          <p className="mt-10 text-sm text-neutral-500">
-            View detailed{" "}
+          <p className="mt-10 text-sm text-neutral-500"><Trans
+i18nKey="view-detailed-installation-guides"
+components={{"0": 
             <a
               href="https://dub.co/docs/sdks/client-side/embed"
               target="_blank"
               className="underline transition-colors duration-75 hover:text-neutral-600"
-            >
-              installation guides
-            </a>{" "}
-            to add Dub Embed to your website.
-          </p>
+             />}}
+/></p>
         </div>
       </div>
       <div className="flex grow flex-col justify-end">
@@ -73,7 +72,7 @@ function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Close"
+            text={t('close')}
             className="w-fit"
           />
         </div>

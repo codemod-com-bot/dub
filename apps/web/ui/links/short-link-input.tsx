@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation, Trans } from "react-i18next";
+
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { LinkProps } from "@/lib/types";
@@ -400,6 +402,8 @@ function DefaultDomainPrompt({
   url?: string;
   onChange: (domain: string) => void;
 }) {
+const { t } = useTranslation("../ui/links");
+
   if (!url || !domain) return null;
 
   const apexDomain = getApexDomain(url);
@@ -417,10 +421,11 @@ function DefaultDomainPrompt({
       type="button"
     >
       <ArrowTurnRight2 className="size-3.5" />
-      <p>
-        Use <strong className="font-semibold">{domainSlug}</strong> domain
-        instead?
-      </p>
+      <p><Trans
+i18nKey="use-domain-slug-instead"
+values={{ _domainSlug_: <>{domainSlug}</> }}
+components={{"0": <strong className="font-semibold" />}}
+/></p>
     </button>
   );
 }

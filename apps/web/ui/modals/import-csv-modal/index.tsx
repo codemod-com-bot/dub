@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import {
@@ -92,6 +94,8 @@ function ImportCsvModal({
   showImportCsvModal: boolean;
   setShowImportCsvModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const { t } = useTranslation("../ui/modals/import-csv-modal");
+
   const router = useRouter();
   const { slug } = useParams() as { slug?: string };
   const { queryParams } = useRouterStuff();
@@ -150,19 +154,16 @@ function ImportCsvModal({
           <ArrowRight className="size-5 text-gray-600" />
           <Logo className="size-10" />
         </div>
-        <h3 className="text-lg font-medium">Import Links From a CSV File</h3>
-        <p className="text-balance text-center text-sm text-gray-500">
-          Easily import all your links into {process.env.NEXT_PUBLIC_APP_NAME}{" "}
-          with just a few clicks.
-        </p>
+        <h3 className="text-lg font-medium">{t('import-links-from-a-csv-file')}</h3>
+        <p className="text-balance text-center text-sm text-gray-500">{t('easily-import-all-your-links-into')}{process.env.NEXT_PUBLIC_APP_NAME}{t('with-just-a-few-clicks')}</p>
       </div>
 
       <div className="relative">
         {page === "confirm-import" && (
           <div className="absolute inset-x-0 -top-6 mx-4 grid grid-cols-[1fr_min-content_1fr] items-center gap-x-4 gap-y-2 rounded-md border border-gray-200 bg-white p-2 text-center text-sm font-medium uppercase text-gray-600 sm:mx-12">
-            <p>CSV data column</p>
+            <p>{t('csv-data-column')}</p>
             <ArrowRight className="size-4 text-gray-500" />
-            <p>Dub data field</p>
+            <p>{t('dub-data-field')}</p>
           </div>
         )}
 
@@ -252,7 +253,7 @@ function ImportCsvModal({
                   <>
                     <FieldMapping />
                     <Button
-                      text="Confirm import"
+                      text={t('confirm-import')}
                       loading={isSubmitting}
                       disabled={!isValid}
                     />
@@ -265,9 +266,7 @@ function ImportCsvModal({
                         setFileColumns(null);
                         setFirstRows(null);
                       }}
-                    >
-                      Choose another file
-                    </button>
+                    >{t('choose-another-file')}</button>
                   </>
                 )}
               </form>

@@ -1,0 +1,6 @@
+{
+  "invalid-reset-token": "\"Invalid Reset Token\"",
+  "password-reset-token-invalid-or-expired": "\"The password reset token is invalid or expired. Please request a new one.\"",
+  "reset-your-password": "Reset your password",
+  "enter-new-password-for-your-account": "Enter new password for your account."
+}

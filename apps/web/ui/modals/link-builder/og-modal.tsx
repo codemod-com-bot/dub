@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Link } from "@/ui/shared/icons";
 import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
@@ -51,6 +52,8 @@ function OGModalInner({
   showOGModal: boolean;
   setShowOGModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const { t } = useTranslation("../ui/modals/link-builder");
+
   const { id: workspaceId, mutate, exceededAI } = useWorkspace();
 
   const { generatingMetatags } = useContext(LinkModalContext);
@@ -108,7 +111,7 @@ function OGModalInner({
       if (error.message.includes("Upgrade to Pro")) {
         toast.custom(() => (
           <UpgradeRequiredToast
-            title="You've exceeded your AI usage limit"
+            title={t('youve-exceeded-your-ai-usage-limit-1')}
             message={error.message}
           />
         ));
@@ -155,7 +158,7 @@ function OGModalInner({
       if (error.message.includes("Upgrade to Pro")) {
         toast.custom(() => (
           <UpgradeRequiredToast
-            title="You've exceeded your AI usage limit"
+            title={t('youve-exceeded-your-ai-usage-limit-2')}
             message={error.message}
           />
         ));
@@ -213,11 +216,11 @@ function OGModalInner({
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h3 className="text-lg font-medium">Link Preview</h3>
+              <h3 className="text-lg font-medium">{t('link-preview')}</h3>
               <ProBadgeTooltip
                 content={
                   <SimpleTooltipContent
-                    title="Customize how your links look when shared on social media to improve click-through rates."
+                    title={t('customize-link-appearance-social-media')}
                     cta="Learn more."
                     href="https://dub.co/help/article/custom-social-media-cards"
                   />
@@ -227,17 +230,15 @@ function OGModalInner({
             <div className="max-md:hidden">
               <Tooltip
                 content={
-                  <div className="px-2 py-1 text-xs text-gray-700">
-                    Press{" "}
-                    <strong className="font-medium text-gray-950">L</strong> to
-                    open this quickly
-                  </div>
+                  <div className="px-2 py-1 text-xs text-gray-700"><Trans
+i18nKey="press-l-to-open-quickly"
+components={{"0": 
+                    <strong className="font-medium text-gray-950" />}}
+/></div>
                 }
                 side="right"
               >
-                <kbd className="flex size-6 cursor-default items-center justify-center rounded-md border border-gray-200 font-sans text-xs text-gray-950">
-                  L
-                </kbd>
+                <kbd className="flex size-6 cursor-default items-center justify-center rounded-md border border-gray-200 font-sans text-xs text-gray-950">{t('letter-l')}</kbd>
               </Tooltip>
             </div>
           </div>
@@ -245,9 +246,7 @@ function OGModalInner({
           <div className="scrollbar-hide -m-1 mt-6 flex max-h-[calc(100dvh-250px)] flex-col gap-6 overflow-y-auto p-1">
             <div>
               <div className="flex items-center justify-between">
-                <span className="block text-sm font-medium text-gray-700">
-                  Image
-                </span>
+                <span className="block text-sm font-medium text-gray-700">{t('image-label')}</span>
                 <div className="flex items-center gap-2">
                   {image && (
                     <button
@@ -257,9 +256,7 @@ function OGModalInner({
                         setValue("image", null, { shouldDirty: true });
                         setValue("proxy", false, { shouldDirty: true });
                       }}
-                    >
-                      Remove
-                    </button>
+                    >{t('remove-label')}</button>
                   )}
                   <ButtonTooltip
                     onClick={() => setShowPromptModal(true)}
@@ -316,8 +313,8 @@ function OGModalInner({
                 className="mt-2"
                 content={
                   <>
-                    <p>Drag and drop or click to upload.</p>
-                    <p className="mt-1">Recommended: 1200 x 630 pixels</p>
+                    <p>{t('drag-drop-or-click-to-upload')}</p>
+                    <p className="mt-1">{t('recommended-image-size')}</p>
                   </>
                 }
               />
@@ -326,7 +323,7 @@ function OGModalInner({
             {/* Title */}
             <div>
               <div className="flex items-center justify-between">
-                <p className="block text-sm font-medium text-gray-700">Title</p>
+                <p className="block text-sm font-medium text-gray-700">{t('title-label')}</p>
                 <div className="flex items-center gap-2">
                   <p className="text-sm text-gray-500">
                     {title?.length || 0}/120
@@ -362,7 +359,7 @@ function OGModalInner({
                   minRows={2}
                   maxLength={120}
                   className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Add a title..."
+                  placeholder={t('add-a-title-placeholder')}
                   value={title || ""}
                   onChange={(e) => {
                     setValue("title", e.target.value, { shouldDirty: true });
@@ -376,9 +373,7 @@ function OGModalInner({
             {/* Description */}
             <div>
               <div className="flex items-center justify-between">
-                <p className="block text-sm font-medium text-gray-700">
-                  Description
-                </p>
+                <p className="block text-sm font-medium text-gray-700">{t('description-label')}</p>
                 <div className="flex items-center gap-2">
                   <p className="text-sm text-gray-500">
                     {description?.length || 0}/240
@@ -416,7 +411,7 @@ function OGModalInner({
                   minRows={3}
                   maxLength={240}
                   className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Add a description..."
+                  placeholder={t('add-a-description-placeholder')}
                   value={description || ""}
                   onChange={(e) => {
                     setValue("description", e.target.value, {
@@ -444,16 +439,14 @@ function OGModalInner({
                     );
                     setShowOGModal(false);
                   }}
-                >
-                  Reset to default
-                </button>
+                >{t('reset-to-default-label')}</button>
               )}
             </div>
             <div className="flex items-center gap-2">
               <Button
                 type="button"
                 variant="secondary"
-                text="Cancel"
+                text={t('cancel-button')}
                 className="h-9 w-fit"
                 onClick={() => {
                   reset();
@@ -463,7 +456,7 @@ function OGModalInner({
               <Button
                 type="submit"
                 variant="primary"
-                text="Save changes"
+                text={t('save-changes-button')}
                 className="h-9 w-fit"
                 disabled={!isDirty}
               />

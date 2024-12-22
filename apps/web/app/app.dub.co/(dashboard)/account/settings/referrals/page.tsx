@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { getSession } from "@/lib/auth/utils";
 import { dub } from "@/lib/dub";
 import LayoutLoader from "@/ui/layout/layout-loader";
@@ -16,14 +17,16 @@ export default function ReferralsPage() {
   );
 }
 async function ReferralsPageRSC() {
+const { t } = useTranslation("app.dub.co/(dashboard)/account/settings/referrals");
+
   const session = await getSession();
   const referralLinkId = session?.user.referralLinkId;
 
   if (!referralLinkId)
     return (
       <AnimatedEmptyState
-        title="Refer a friend"
-        description="Activate your referral link to share the word about Dub and earn cash rewards"
+        title={t('refer-a-friend')}
+        description={t('activate-your-referral-link-to-share-the-word-about-dub-and-earn-cash-rewards')}
         cardContent={
           <>
             <Hyperlink className="size-4 text-neutral-700" />

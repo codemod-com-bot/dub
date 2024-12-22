@@ -1,0 +1,14 @@
+{
+  "continue-with-github": "\"Continue with Github\"",
+  "continue-with-google": "\"Continue with Google\"",
+  "panic-at-thedis-co": "\"panic@thedis.co\"",
+  "password-optional": "\"Password (optional)\"",
+  "forgot-password": "Forgot password?",
+  "workspace-slug": "Workspace Slug",
+  "my-team": "\"my-team\"",
+  "continue-with-saml-sso": "\"Continue with SAML SSO\"",
+  "you-signed-in-with": "You signed in with",
+  "last-time": " last time",
+  "or": "or",
+  "continue-with-another-method": "Continue with another method"
+}

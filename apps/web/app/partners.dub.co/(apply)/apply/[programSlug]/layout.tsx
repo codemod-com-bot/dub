@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { getProgram } from "@/lib/fetchers/get-program";
 import { prisma } from "@dub/prisma";
 import { Prisma } from "@dub/prisma/client";
@@ -53,6 +54,8 @@ export default async function ApplyLayout({
   children,
   params: { programSlug },
 }: PropsWithChildren<{ params: { programSlug: string } }>) {
+const { t } = useTranslation("partners.dub.co/(apply)/apply/[programSlug]");
+
   const program = await getProgram({ slug: programSlug });
 
   if (!program || !program.landerData) {
@@ -66,25 +69,20 @@ export default async function ApplyLayout({
         {children}
         {/* Footer */}
         <footer className="mt-14 flex flex-col items-center gap-4 py-6 text-center text-xs text-neutral-500">
-          <span className="flex items-center gap-1.5">
-            Powered by <Wordmark className="h-3.5" />
+          <span className="flex items-center gap-1.5">{t('powered-by')}<Wordmark className="h-3.5" />
           </span>
           <span className="flex items-center gap-2">
             <a
               href="https://dub.co/legal/terms"
               target="_blank"
               className="transition-colors duration-75 hover:text-neutral-600"
-            >
-              Terms of Service
-            </a>
+            >{t('terms-of-service')}</a>
             <span className="text-base text-neutral-200">&bull;</span>
             <a
               href="https://dub.co/legal/privacy"
               target="_blank"
               className="transition-colors duration-75 hover:text-neutral-600"
-            >
-              Privacy Policy
-            </a>
+            >{t('privacy-policy')}</a>
           </span>
         </footer>
       </div>
@@ -93,7 +91,7 @@ export default async function ApplyLayout({
       <div className="absolute inset-0 flex h-fit w-full items-center justify-center">
         <img
           src="https://assets.dub.co/misc/program-apply-grid.svg"
-          alt=""
+          alt={t('empty-string')}
           width={1280}
           height={480}
           className="[mask-image:radial-gradient(70%_100%_at_50%_0%,black_30%,transparent)]"

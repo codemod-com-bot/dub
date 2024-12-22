@@ -1,7 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { Switch, useOptimisticUpdate } from "@dub/ui";
 import { APP_NAME } from "@dub/utils";
 
 export default function UpdateSubscription() {
+const { t } = useTranslation("../ui/account");
+
   const { data, isLoading, update } = useOptimisticUpdate<{
     subscribed: boolean;
   }>("/api/user/subscribe", {
@@ -30,7 +33,7 @@ export default function UpdateSubscription() {
           update(() => subscribe(checked), { subscribed: checked });
         }}
       />
-      <p className="text-sm text-gray-500">Subscribed to product updates</p>
+      <p className="text-sm text-gray-500">{t('subscribed-to-product-updates')}</p>
     </div>
   );
 }

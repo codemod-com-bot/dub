@@ -1,0 +1,13 @@
+{
+  "or": "or",
+  "continue-with-google": "\"Continue with Google\"",
+  "continue-with-github": "\"Continue with GitHub\"",
+  "work-email": "\"Work Email\"",
+  "password": "\"Password\"",
+  "didnt-receive-a-code": "Didn't receive a code?",
+  "resend": "Resend",
+  "code-sent-successfully": "Code sent successfully.",
+  "failed-to-send-code": "Failed to send code.",
+  "seconds-s": "{{seconds}}s",
+  "invalid-code-please-try-again": "Invalid code. Please try again."
+}

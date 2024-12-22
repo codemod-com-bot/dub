@@ -1,0 +1,12 @@
+{
+  "integrations": "Integrations",
+  "uninstall-integration": "\"Uninstall Integration\"",
+  "uninstall-stripe-integration-message": "\"You cannot uninstall the Stripe integration from here. Please visit the Stripe dashboard to uninstall the app.\"",
+  "installed-by": "INSTALLED BY",
+  "developer": "DEVELOPER",
+  "website": "WEBSITE",
+  "manage": "Manage",
+  "enable": "\"Enable\"",
+  "enable-dub-conversions-message": "\"To use this integration, you need to have Dub Conversions enabled for your workspace.\"",
+  "overview": "Overview"
+}

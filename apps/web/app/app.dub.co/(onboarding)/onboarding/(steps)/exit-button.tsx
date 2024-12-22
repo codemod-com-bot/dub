@@ -1,9 +1,13 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { ExpandingArrow, LoadingSpinner } from "@dub/ui/icons";
 import { useOnboardingProgress } from "../use-onboarding-progress";
 
 export function ExitButton() {
+const { t } = useTranslation("app.dub.co/(onboarding)/onboarding/(steps)");
+
   const { finish, isLoading, isSuccessful } = useOnboardingProgress();
 
   return (
@@ -15,9 +19,7 @@ export function ExitButton() {
     >
       {(isLoading || isSuccessful) && (
         <LoadingSpinner className="mr-1 size-3" />
-      )}
-      Skip onboarding
-      <ExpandingArrow className="size-3" />
+      )}{t('skip-onboarding')}<ExpandingArrow className="size-3" />
     </button>
   );
 }

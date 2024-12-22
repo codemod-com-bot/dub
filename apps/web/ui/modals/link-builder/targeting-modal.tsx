@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
 import {
   Button,
@@ -36,6 +37,8 @@ function TargetingModal({
   showTargetingModal: boolean;
   setShowTargetingModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const { t } = useTranslation("../ui/modals/link-builder");
+
   const id = useId();
 
   const {
@@ -119,21 +122,19 @@ function TargetingModal({
           }}
         >
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium">Targeting</h3>
+            <h3 className="text-lg font-medium">{t('targeting')}</h3>
             <div className="max-md:hidden">
               <Tooltip
                 content={
-                  <div className="px-2 py-1 text-xs text-gray-700">
-                    Press{" "}
-                    <strong className="font-medium text-gray-950">G</strong> to
-                    open this quickly
-                  </div>
+                  <div className="px-2 py-1 text-xs text-gray-700"><Trans
+i18nKey="press-g-to-open-quickly"
+components={{"0": 
+                    <strong className="font-medium text-gray-950" />}}
+/></div>
                 }
                 side="right"
               >
-                <kbd className="flex size-6 cursor-default items-center justify-center gap-1 rounded-md border border-gray-200 font-sans text-xs text-gray-950">
-                  G
-                </kbd>
+                <kbd className="flex size-6 cursor-default items-center justify-center gap-1 rounded-md border border-gray-200 font-sans text-xs text-gray-950">{t('g-key')}</kbd>
               </Tooltip>
             </div>
           </div>
@@ -142,13 +143,11 @@ function TargetingModal({
             {/* Geo */}
             <div>
               <div className="flex items-center gap-2">
-                <span className="block text-sm font-medium text-gray-700">
-                  Geo Targeting
-                </span>
+                <span className="block text-sm font-medium text-gray-700">{t('geo-targeting')}</span>
                 <ProBadgeTooltip
                   content={
                     <SimpleTooltipContent
-                      title="Redirect your users to different links based on their location."
+                      title={t('redirect-users-based-on-location')}
                       cta="Learn more about geo targeting."
                       href="https://dub.co/help/article/geo-targeting"
                     />
@@ -199,7 +198,7 @@ function TargetingModal({
                               ) : undefined
                             }
                             caret={true}
-                            placeholder="Country"
+                            placeholder={t('country')}
                             searchPlaceholder="Search countries..."
                             buttonProps={{
                               className: cn(
@@ -215,7 +214,7 @@ function TargetingModal({
                         <input
                           type="text"
                           id={`${id}-${key}`}
-                          placeholder="https://example.com"
+                          placeholder={t('example-url')}
                           className="z-0 h-full grow rounded-r-md border border-gray-300 text-sm placeholder-gray-400 focus:z-[1] focus:border-gray-500 focus:ring-gray-500"
                           value={value}
                           onChange={(e) => {
@@ -264,7 +263,7 @@ function TargetingModal({
                 <Button
                   type="button"
                   variant="secondary"
-                  text="Add location"
+                  text={t('add-location')}
                   className="h-9"
                   onClick={() => {
                     setValue(
@@ -284,13 +283,11 @@ function TargetingModal({
                 <label
                   htmlFor={`${id}-ios-url`}
                   className="block text-sm font-medium text-gray-700"
-                >
-                  iOS Targeting
-                </label>
+                >{t('ios-targeting')}</label>
                 <ProBadgeTooltip
                   content={
                     <SimpleTooltipContent
-                      title="Redirect your iOS users to a different link."
+                      title={t('redirect-ios-users-to-different-link')}
                       cta="Learn more about device targeting."
                       href="https://dub.co/help/article/device-targeting"
                     />
@@ -300,7 +297,7 @@ function TargetingModal({
               <div className="mt-2 rounded-md shadow-sm">
                 <input
                   id={`${id}-ios-url`}
-                  placeholder="https://apps.apple.com/app/1611158928"
+                  placeholder={t('ios-app-url')}
                   className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   {...register("ios", {
                     onBlur: (e) => {
@@ -324,13 +321,11 @@ function TargetingModal({
                 <label
                   htmlFor={`${id}-android-url`}
                   className="block text-sm font-medium text-gray-700"
-                >
-                  Android Targeting
-                </label>
+                >{t('android-targeting')}</label>
                 <ProBadgeTooltip
                   content={
                     <SimpleTooltipContent
-                      title="Redirect your Android users to a different link."
+                      title={t('redirect-android-users-to-different-link')}
                       cta="Learn more about device targeting."
                       href="https://dub.co/help/article/device-targeting"
                     />
@@ -340,7 +335,7 @@ function TargetingModal({
               <div className="mt-2 rounded-md shadow-sm">
                 <input
                   id={`${id}-android-url`}
-                  placeholder="https://play.google.com/store/apps/details?id=com.disney.disneyplus"
+                  placeholder={t('android-app-url')}
                   className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   {...register("android", {
                     onBlur: (e) => {
@@ -371,16 +366,14 @@ function TargetingModal({
                     setValueParent("geo", null, { shouldDirty: true });
                     setShowTargetingModal(false);
                   }}
-                >
-                  Remove targeting
-                </button>
+                >{t('remove-targeting')}</button>
               )}
             </div>
             <div className="flex items-center gap-2">
               <Button
                 type="button"
                 variant="secondary"
-                text="Cancel"
+                text={t('cancel')}
                 className="h-9 w-fit"
                 onClick={() => {
                   reset();

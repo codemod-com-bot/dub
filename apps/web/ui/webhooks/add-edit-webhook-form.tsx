@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation, Trans } from "react-i18next";
+
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useLinks from "@/lib/swr/use-links";
@@ -39,6 +41,8 @@ export default function AddEditWebhookForm({
   webhook: WebhookProps | null;
   newSecret?: string;
 }) {
+const { t } = useTranslation("../ui/webhooks");
+
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const { slug: workspaceSlug, id: workspaceId, flags, role } = useWorkspace();
@@ -124,7 +128,7 @@ export default function AddEditWebhookForm({
       >
         <div>
           <label htmlFor="name" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">Name</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('name')}</h2>
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
             <input
@@ -139,7 +143,7 @@ export default function AddEditWebhookForm({
               onChange={(e) => setData({ ...data, name: e.target.value })}
               autoFocus
               autoComplete="off"
-              placeholder="Webhook name"
+              placeholder={t('webhook-name')}
               disabled={!canManageWebhook}
             />
           </div>
@@ -147,7 +151,7 @@ export default function AddEditWebhookForm({
 
         <div>
           <label htmlFor="url" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">URL</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('url')}</h2>
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
             <input
@@ -161,7 +165,7 @@ export default function AddEditWebhookForm({
               value={url}
               onChange={(e) => setData({ ...data, url: e.target.value })}
               autoComplete="off"
-              placeholder="Webhook URL"
+              placeholder={t('webhook-url')}
               disabled={!canManageWebhook}
             />
           </div>
@@ -169,9 +173,7 @@ export default function AddEditWebhookForm({
 
         <div className="space-y-2">
           <label className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">
-              Signing secret
-            </h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('signing-secret')}</h2>
             <InfoTooltip content="A secret token used to sign the webhook payload." />
           </label>
           <div className="flex items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-1">
@@ -186,12 +188,8 @@ export default function AddEditWebhookForm({
 
         <div className="rounded-md border border-gray-200 p-4">
           <label htmlFor="triggers" className="flex flex-col gap-1">
-            <h2 className="text-sm font-medium text-gray-900">
-              Workspace level events
-            </h2>
-            <span className="text-xs text-gray-500">
-              These events are triggered at the workspace level.
-            </span>
+            <h2 className="text-sm font-medium text-gray-900">{t('workspace-level-events')}</h2>
+            <span className="text-xs text-gray-500">{t('workspace-level-events-description')}</span>
           </label>
           <div className="mt-3 flex flex-col gap-2">
             {WORKSPACE_LEVEL_WEBHOOK_TRIGGERS.map((trigger) => (
@@ -223,15 +221,13 @@ export default function AddEditWebhookForm({
 
         <div className="rounded-md border border-gray-200 p-4">
           <label htmlFor="triggers" className="flex flex-col gap-1">
-            <h2 className="text-sm font-medium text-gray-900">
-              Link level events{" "}
-              <span className="rounded bg-yellow-100 px-1 py-0.5 text-xs font-medium text-yellow-800">
-                High traffic
-              </span>
+            <h2 className="text-sm font-medium text-gray-900"><Trans
+i18nKey="link-level-events-high-traffic"
+components={{"0": 
+              <span className="rounded bg-yellow-100 px-1 py-0.5 text-xs font-medium text-yellow-800" />}}
+/>
             </h2>
-            <span className="text-xs text-gray-500">
-              These events are triggered at the link level.
-            </span>
+            <span className="text-xs text-gray-500">{t('link-level-events-description')}</span>
           </label>
           <div className="mt-3 flex flex-col gap-2">
             {LINK_LEVEL_WEBHOOK_TRIGGERS.map((trigger) => (
@@ -262,9 +258,7 @@ export default function AddEditWebhookForm({
 
           {enableLinkSelection || linkIds.length ? (
             <div className="mt-4">
-              <h2 className="text-sm font-medium text-gray-900">
-                Choose links we should send events for
-              </h2>
+              <h2 className="text-sm font-medium text-gray-900">{t('choose-links-for-events')}</h2>
               <div className="mt-3">
                 <LinksSelector
                   selectedLinkIds={linkIds}
@@ -318,6 +312,8 @@ function LinksSelector({
   setSelectedLinkIds: (ids: string[]) => void;
   disabled?: boolean;
 }) {
+const { t } = useTranslation("../ui/webhooks");
+
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 500);
 
@@ -371,7 +367,7 @@ function LinksSelector({
       }}
     >
       {selectedLinkIds.length === 0 ? (
-        <div className="py-0.5">Select links...</div>
+        <div className="py-0.5">{t('select-links')}</div>
       ) : selectedLinks && selectedOptions ? (
         <div className="flex flex-wrap gap-2">
           {selectedOptions.slice(0, 10).map((option) => (

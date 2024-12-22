@@ -1,0 +1,10 @@
+{
+  "impersonate-user": "Impersonate User",
+  "get-a-login-link-for-a-user": "Get a login link for a user",
+  "impersonate-workspace": "Impersonate Workspace",
+  "get-a-login-link-for-the-owner-of-a-workspace": "Get a login link for the owner of a workspace",
+  "refresh-domain": "Refresh Domain",
+  "remove-and-re-add-domain-from-vercel": "Remove and re-add domain from Vercel",
+  "ban-link": "Ban Link",
+  "ban-a-dub-sh-link": "Ban a dub.sh link"
+}

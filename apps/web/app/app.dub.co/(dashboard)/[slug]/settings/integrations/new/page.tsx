@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import AddEditIntegrationForm from "@/ui/oauth-apps/add-edit-integration-form";
 import { MaxWidthWrapper } from "@dub/ui";
 import { ChevronLeft } from "lucide-react";
@@ -9,6 +10,8 @@ export default function NewIntegrationsPage({
 }: {
   params: { slug: string };
 }) {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/settings/integrations/new");
+
   // this is only available for Dub workspace for now
   // we might open this up to other workspaces in the future
   if (params.slug !== "dub") {
@@ -21,9 +24,7 @@ export default function NewIntegrationsPage({
         className="flex items-center gap-x-1"
       >
         <ChevronLeft className="size-4" />
-        <p className="text-sm font-medium text-gray-500">
-          Back to integrations
-        </p>
+        <p className="text-sm font-medium text-gray-500">{t('back-to-integrations')}</p>
       </Link>
 
       <AddEditIntegrationForm

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { sendTestWebhookEvent } from "@/lib/actions/send-test-webhook";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { WebhookProps, WebhookTrigger } from "@/lib/types";
@@ -28,6 +29,8 @@ function SendTestWebhookModal({
   setShowSendTestWebhookModal: Dispatch<SetStateAction<boolean>>;
   webhook: WebhookProps | undefined;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const workspace = useWorkspace();
   const [selectedTrigger, setSelectedTrigger] =
     useState<InputSelectItemProps | null>(null);
@@ -56,10 +59,8 @@ function SendTestWebhookModal({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 text-center sm:px-16">
         <Logo />
-        <h3 className="text-lg font-medium">Send test webhook event</h3>
-        <p className="text-center text-sm text-gray-500">
-          Choose a webhook event to send to your receiver endpoint
-        </p>
+        <h3 className="text-lg font-medium">{t('send-test-webhook-event')}</h3>
+        <p className="text-center text-sm text-gray-500">{t('choose-a-webhook-event-to-send-to-your-receiver-endpoint')}</p>
       </div>
       <form
         onSubmit={async (e) => {
@@ -87,7 +88,7 @@ function SendTestWebhookModal({
           />
           <Button
             disabled={!selectedTrigger}
-            text="Send test webhook"
+            text={t('send-test-webhook')}
             loading={isExecuting}
           />
         </div>

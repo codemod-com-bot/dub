@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import useWorkspaces from "@/lib/swr/use-workspaces";
 import { ModalContext } from "@/ui/modals/modal-provider";
@@ -7,13 +9,15 @@ import { FREE_WORKSPACES_LIMIT } from "@dub/utils";
 import { useContext } from "react";
 
 export default function CreateWorkspaceButton() {
+const { t } = useTranslation("../ui/workspaces");
+
   const { setShowAddWorkspaceModal } = useContext(ModalContext);
   const { freeWorkspaces, exceedingFreeWorkspaces } = useWorkspaces();
 
   return (
     <div>
       <Button
-        text="Create workspace"
+        text={t('create-workspace')}
         disabledTooltip={
           exceedingFreeWorkspaces ? (
             <TooltipContent

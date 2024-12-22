@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import usePartnerProgramInvites from "@/lib/swr/use-partner-program-invites";
 import useProgramEnrollments from "@/lib/swr/use-program-enrollments";
@@ -9,6 +11,8 @@ import { MaxWidthWrapper } from "@dub/ui";
 import { CircleDollar, GridIcon } from "@dub/ui/icons";
 
 export function PartnersDashboardPageClient() {
+const { t } = useTranslation("partners.dub.co/(dashboard)/programs");
+
   const { programEnrollments, isLoading } = useProgramEnrollments();
   const { programInvites } = usePartnerProgramInvites();
 
@@ -16,8 +20,8 @@ export function PartnersDashboardPageClient() {
     <MaxWidthWrapper>
       {programEnrollments?.length == 0 && programInvites?.length == 0 ? (
         <AnimatedEmptyState
-          title="No programs found"
-          description="Enroll in programs to start earning."
+          title={t('no-programs-found')}
+          description={t('enroll-in-programs-to-start-earning')}
           cardContent={
             <>
               <GridIcon className="size-4 text-neutral-700" />

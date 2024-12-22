@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { updateNotificationPreference } from "@/lib/actions/update-notification-preference";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -32,6 +34,8 @@ const notifications: {
 ];
 
 export default function NotificationsSettingsPageClient() {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/settings/notifications");
+
   const { id: workspaceId } = useWorkspace();
   const { executeAsync } = useAction(updateNotificationPreference);
 
@@ -72,14 +76,8 @@ export default function NotificationsSettingsPageClient() {
   return (
     <div>
       <div className="max-w-screen-sm pb-8">
-        <h2 className="text-xl font-semibold tracking-tight text-black">
-          Workspace Notifications
-        </h2>
-        <p className="mt-3 text-sm text-gray-500">
-          Adjust your personal notification preferences and choose which updates
-          you want to receive. These settings will only be applied to your
-          personal account.
-        </p>
+        <h2 className="text-xl font-semibold tracking-tight text-black">{t('workspace-notifications')}</h2>
+        <p className="mt-3 text-sm text-gray-500">{t('adjust-personal-notification-preferences')}</p>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-3">
         {notifications.map(({ type, icon: Icon, title, description }) => (

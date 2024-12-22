@@ -1,0 +1,16 @@
+{
+  "create-program": "Create program",
+  "summary": "Summary",
+  "earn-10-dollars-for-each-conversion": "Earn $10.00 for each conversion, and again for every conversion of the customers lifetime.",
+  "commission": "Commission",
+  "set-partner-reward": "Set how the partner will get rewarded",
+  "payout": "Payout",
+  "set-partner-payout": "Set how much the partner will get rewarded",
+  "payout-model": "Payout model",
+  "flat": "Flat",
+  "percentage": "Percentage",
+  "amount": "Amount",
+  "minimum-payout": "Minimum payout",
+  "minimum-payout-is-100-dollars": "Minimum payout is $100",
+  "save-changes": "\"Save changes\""
+}

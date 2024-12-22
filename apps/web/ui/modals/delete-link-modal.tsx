@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { LinkProps } from "@/lib/types";
 import { Button, LinkLogo, Modal, useMediaQuery } from "@dub/ui";
@@ -33,6 +34,8 @@ function DeleteLinkModalInner({
   setShowDeleteLinkModal,
   props,
 }: DeleteLinkModalProps) {
+const { t } = useTranslation("../ui/modals");
+
   const { id } = useWorkspace();
   const [deleting, setDeleting] = useState(false);
   const apexDomain = getApexDomain(props.url);
@@ -53,11 +56,8 @@ function DeleteLinkModalInner({
     <>
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 text-center sm:px-16">
         <LinkLogo apexDomain={apexDomain} />
-        <h3 className="text-lg font-medium">Delete {shortlink}</h3>
-        <p className="text-sm text-gray-500">
-          Warning: Deleting this link will remove all of its analytics. This
-          action cannot be undone – proceed with caution.
-        </p>
+        <h3 className="text-lg font-medium">{t('delete-shortlink', { shortlink })}</h3>
+        <p className="text-sm text-gray-500">{t('warning-deleting-link-analytics')}</p>
       </div>
 
       <form
@@ -86,10 +86,11 @@ function DeleteLinkModalInner({
         className="flex flex-col space-y-3 bg-gray-50 px-4 py-8 text-left sm:px-16"
       >
         <div>
-          <label htmlFor="verification" className="block text-sm text-gray-700">
-            To verify, type <span className="font-semibold">{shortlink}</span>{" "}
-            below
-          </label>
+          <label htmlFor="verification" className="block text-sm text-gray-700"><Trans
+i18nKey="verify-type-shortlink-below"
+values={{ _shortlink_: <>{shortlink}</> }}
+components={{"0": <span className="font-semibold" />}}
+/></label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
               type="text"
@@ -104,7 +105,7 @@ function DeleteLinkModalInner({
           </div>
         </div>
 
-        <Button variant="danger" text="Confirm delete" loading={deleting} />
+        <Button variant="danger" text={t('confirm-delete')} loading={deleting} />
       </form>
     </>
   );

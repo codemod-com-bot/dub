@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Button, FileUpload } from "@dub/ui";
@@ -7,6 +9,8 @@ import { toast } from "sonner";
 import { mutate } from "swr";
 
 export default function UploadLogo() {
+const { t } = useTranslation("../ui/workspaces");
+
   const { id, logo, isOwner } = useWorkspace();
 
   const [image, setImage] = useState<string | null>();
@@ -45,10 +49,8 @@ export default function UploadLogo() {
       className="rounded-lg border border-gray-200 bg-white"
     >
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
-        <h2 className="text-xl font-medium">Workspace Logo</h2>
-        <p className="text-sm text-gray-500">
-          This is your workspace's logo on {process.env.NEXT_PUBLIC_APP_NAME}.
-        </p>
+        <h2 className="text-xl font-medium">{t('workspace-logo')}</h2>
+        <p className="text-sm text-gray-500">{t('this-is-your-workspace-logo-on')}{process.env.NEXT_PUBLIC_APP_NAME}{t('workspace-logo-newline')}</p>
         <div className="mt-1">
           <FileUpload
             accept="images"
@@ -66,13 +68,10 @@ export default function UploadLogo() {
       </div>
 
       <div className="flex items-center justify-between space-x-4 rounded-b-lg border-t border-gray-200 bg-gray-50 p-3 sm:px-10">
-        <p className="text-sm text-gray-500">
-          Square image recommended. Accepted file types: .png, .jpg. Max file
-          size: 2MB.
-        </p>
+        <p className="text-sm text-gray-500">{t('square-image-recommended-accepted-file-types')}</p>
         <div className="shrink-0">
           <Button
-            text="Save changes"
+            text={t('save-changes')}
             loading={uploading}
             disabled={!isOwner || !image || logo === image}
             {...(!isOwner && {

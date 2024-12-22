@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { UtmTemplateProps } from "@/lib/types";
@@ -19,6 +21,8 @@ export function UTMTemplatesButton({
 }: {
   onLoad: (params: Record<string, string>) => void;
 }) {
+const { t } = useTranslation("../ui/modals/link-builder");
+
   const { isMobile } = useMediaQuery();
   const { id: workspaceId } = useWorkspace();
 
@@ -61,9 +65,7 @@ export function UTMTemplatesButton({
               <LoadingSpinner className="size-4" />
             </div>
           ) : (
-            <div className="flex w-full items-center justify-center p-2 text-center text-xs text-gray-500 md:w-32">
-              Failed to load templates
-            </div>
+            <div className="flex w-full items-center justify-center p-2 text-center text-xs text-gray-500 md:w-32">{t('failed-to-load-templates')}</div>
           )}
         </AnimatedSizeContainer>
       }
@@ -90,13 +92,13 @@ function UTMTemplateList({
   data: UtmTemplateProps[];
   onLoad: (params: Record<string, string>) => void;
 }) {
+const { t } = useTranslation("../ui/modals/link-builder");
+
   const { setValue } = useFormContext();
 
   return data.length ? (
     <div className="scrollbar-hide grid max-h-64 overflow-y-auto p-1 md:min-w-48">
-      <span className="block pb-2 pl-2.5 pt-2 text-xs font-medium text-gray-500">
-        UTM Templates
-      </span>
+      <span className="block pb-2 pl-2.5 pt-2 text-xs font-medium text-gray-500">{t('utm-templates')}</span>
       {data.map((template) => (
         <UTMTemplateOption
           key={template.id}
@@ -116,9 +118,7 @@ function UTMTemplateList({
       ))}
     </div>
   ) : (
-    <div className="flex items-center justify-center p-3 text-center text-xs text-gray-500">
-      No templates found
-    </div>
+    <div className="flex items-center justify-center p-3 text-center text-xs text-gray-500">{t('no-templates-found')}</div>
   );
 }
 

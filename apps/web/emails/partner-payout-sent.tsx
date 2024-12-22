@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { currencyFormatter, DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
@@ -41,6 +42,8 @@ export default function PartnerPayoutSent({
     endDate: string;
   };
 }) {
+const { t } = useTranslation("../emails");
+
   const linkToPayout = `https://partners.dub.co/settings/payouts?payoutId=${payout.id}`;
 
   const saleAmountInDollars = currencyFormatter(payout.amount / 100, {
@@ -51,7 +54,7 @@ export default function PartnerPayoutSent({
   return (
     <Html>
       <Head />
-      <Preview>You've been paid!</Preview>
+      <Preview>{t('youve-been-paid')}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -63,28 +66,23 @@ export default function PartnerPayoutSent({
               />
             </Section>
 
-            <Heading className="mx-0 p-0 text-lg font-medium text-black">
-              You've been paid!
-            </Heading>
+            <Heading className="mx-0 p-0 text-lg font-medium text-black">{t('youve-been-paid-2')}</Heading>
 
-            <Text className="text-sm leading-6 text-gray-600">
-              <strong className="text-black">{program.name}</strong> has sent
-              you <strong className="text-black">{saleAmountInDollars}</strong>{" "}
-              for affiliate sales made from{" "}
-              <strong className="text-black">{payout.startDate}</strong> to{" "}
-              <strong className="text-black">{payout.endDate}</strong>.
-            </Text>
-            <Text className="text-sm leading-6 text-gray-600">
-              The funds are on their way to your account.
-            </Text>
+            <Text className="text-sm leading-6 text-gray-600"><Trans
+i18nKey="strong-program-name-sent-affiliate-sales"
+values={{ _program_name_: <>{program.name}</>, _saleAmountInDollars_: <>{saleAmountInDollars}</>, _payout_startDate_: <>{payout.startDate}</>, _payout_endDate_: <>{payout.endDate}</> }}
+components={{"0": 
+              <strong className="text-black" />, "1": <strong className="text-black" />, "2": 
+              <strong className="text-black" />, "3": 
+              <strong className="text-black" />}}
+/></Text>
+            <Text className="text-sm leading-6 text-gray-600">{t('funds-on-their-way-to-account')}</Text>
 
             <Section className="mb-12 mt-8">
               <Link
                 className="rounded-md bg-neutral-900 px-4 py-3 text-[12px] font-medium text-white no-underline"
                 href={linkToPayout}
-              >
-                View payout
-              </Link>
+              >{t('view-payout')}</Link>
             </Section>
             <Footer email={email} />
           </Container>

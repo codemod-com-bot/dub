@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { sendInviteReferralEmail } from "@/lib/actions/send-invite-referral-email";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -20,6 +22,8 @@ function InviteReferralModal({
   showInviteReferralModal: boolean;
   setShowInviteReferralModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const [email, setEmail] = useState("");
   const { id: workspaceId } = useWorkspace();
   const { isMobile } = useMediaQuery();
@@ -41,10 +45,8 @@ function InviteReferralModal({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 sm:px-16">
         <Logo />
-        <h3 className="text-lg font-medium">Invite via Email</h3>
-        <p className="text-center text-sm text-gray-500">
-          Invite a friend or colleague to use Dub with your referral link.
-        </p>
+        <h3 className="text-lg font-medium">{t('invite-via-email')}</h3>
+        <p className="text-center text-sm text-gray-500">{t('invite-friend-or-colleague')}</p>
       </div>
       <form
         onSubmit={async (e) => {
@@ -54,15 +56,13 @@ function InviteReferralModal({
         className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 text-left sm:px-16"
       >
         <div>
-          <label htmlFor="email" className="block text-sm text-gray-700">
-            Email
-          </label>
+          <label htmlFor="email" className="block text-sm text-gray-700">{t('email-label')}</label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
               type="email"
               name="email"
               id="email"
-              placeholder="panic@thedis.co"
+              placeholder={t('panic-email')}
               autoFocus={!isMobile}
               autoComplete="off"
               required
@@ -71,11 +71,9 @@ function InviteReferralModal({
               className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
             />
           </div>
-          <p className="mt-2 text-xs text-gray-500">
-            Your name and email address will be shared in this invitation.
-          </p>
+          <p className="mt-2 text-xs text-gray-500">{t('name-and-email-sharing-notice')}</p>
         </div>
-        <Button loading={isExecuting} text="Send invite" />
+        <Button loading={isExecuting} text={t('send-invite-button')} />
       </form>
     </Modal>
   );

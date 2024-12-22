@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useSCIM from "@/lib/swr/use-scim";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { SAMLProviderProps } from "@/lib/types";
@@ -29,6 +30,8 @@ function SCIMModal({
   showSCIMModal: boolean;
   setShowSCIMModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const { id } = useWorkspace();
   const [submitting, setSubmitting] = useState(false);
   const { scim, provider, configured, mutate } = useSCIM();
@@ -106,13 +109,11 @@ function SCIMModal({
         >
           <div>
             <div className="flex items-center space-x-1">
-              <h2 className="text-sm font-medium text-gray-900">
-                Directory Provider
-              </h2>
+              <h2 className="text-sm font-medium text-gray-900">{t('directory-provider')}</h2>
               <InfoTooltip
                 content={
                   <SimpleTooltipContent
-                    title="Your directory provider is the IDP you use to manage your users."
+                    title={t('your-directory-provider-idp')}
                     cta={selectedProvider ? "Read the guide." : "Learn more."}
                     href={`https://dub.co/help/${
                       currentProvider
@@ -133,9 +134,7 @@ function SCIMModal({
               }
               className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
             >
-              <option disabled selected>
-                Select a provider
-              </option>
+              <option disabled selected>{t('select-a-provider')}</option>
               {SAML_PROVIDERS.map((provider) => (
                 <option
                   key={provider.scim}
@@ -151,9 +150,7 @@ function SCIMModal({
                 href={`https://dub.co/help/article/${currentProvider.saml}-scim`}
                 target="_blank"
                 className="ml-2 mt-2 block text-sm text-gray-500 underline"
-              >
-                Read the guide on {currentProvider.name} SCIM
-              </a>
+              >{t('read-the-guide-on')}{currentProvider.name}{t('scim')}</a>
             )}
           </div>
 
@@ -168,7 +165,7 @@ function SCIMModal({
                   <InfoTooltip
                     content={
                       <SimpleTooltipContent
-                        title="Your directory provider is the IDP you use to manage your users."
+                        title={t('your-directory-provider-idp-duplicate-1')}
                         cta="Read the guide."
                         href={`https://dub.co/help/article/${currentProvider.saml}-scim`}
                       />
@@ -208,7 +205,7 @@ function SCIMModal({
                   <InfoTooltip
                     content={
                       <SimpleTooltipContent
-                        title="Your directory provider is the IDP you use to manage your users."
+                        title={t('your-directory-provider-idp-duplicate-2')}
                         cta="Read the guide."
                         href={`https://dub.co/help/article/${currentProvider.saml}-scim`}
                       />
@@ -255,7 +252,7 @@ function SCIMModal({
             </div>
           )}
           <Button
-            text="Save changes"
+            text={t('save-changes')}
             loading={submitting}
             disabled={!currentProvider || currentProvider.scim === provider}
           />

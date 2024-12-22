@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { submitOAuthAppForReview } from "@/lib/actions/submit-oauth-app-for-review";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { OAuthAppProps } from "@/lib/types";
@@ -25,6 +26,8 @@ function SubmitOAuthAppModal({
   setShowSubmitOAuthAppModal: Dispatch<SetStateAction<boolean>>;
   oAuthApp: Pick<OAuthAppProps, "id" | "name" | "logo" | "slug"> | undefined;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const workspace = useWorkspace();
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
 
@@ -62,14 +65,9 @@ function SubmitOAuthAppModal({
           <Logo />
         )}
 
-        <h3 className="text-lg font-medium">
-          Submit {oAuthApp.name} for review
-        </h3>
+        <h3 className="text-lg font-medium">{t('submit')}{oAuthApp.name}{t('for-review')}</h3>
 
-        <p className="text-center text-sm text-gray-500">
-          Please provide any additional information or comments for us to review
-          your app.
-        </p>
+        <p className="text-center text-sm text-gray-500">{t('please-provide-additional-information-or-comments')}</p>
       </div>
 
       <form

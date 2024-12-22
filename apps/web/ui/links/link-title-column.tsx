@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import useDomain from "@/lib/swr/use-domain";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -149,6 +151,8 @@ function UnverifiedTooltip({
   _key,
   children,
 }: PropsWithChildren<{ domain: string; _key: string }>) {
+const { t } = useTranslation("../ui/links");
+
   const { slug } = useWorkspace();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -162,7 +166,7 @@ function UnverifiedTooltip({
         <Tooltip
           content={
             <TooltipContent
-              title="Your branded links won't work until you verify your domain."
+              title={t('your-branded-links-wont-work-until-you-verify-your-domain')}
               cta="Verify your domain"
               href={`/${slug}/settings/domains`}
             />
@@ -230,6 +234,8 @@ function SettingsBadge({ link }: { link: ResponseLink }) {
 }
 
 function CommentsBadge({ comments }: { comments: string }) {
+const { t } = useTranslation("../ui/links");
+
   return (
     <div className="hidden sm:block">
       <HoverCard.Root openDelay={0}>
@@ -242,7 +248,7 @@ function CommentsBadge({ comments }: { comments: string }) {
             <div className="divide-y-gray-200 divide-y text-sm">
               <div className="flex items-center gap-2 px-4 py-3">
                 <Page2 className="size-3.5" />
-                <span className="text-gray-500">Link comments</span>
+                <span className="text-gray-500">{t('link-comments')}</span>
               </div>
               <p className="max-w-[300px] px-5 py-3 text-gray-700">
                 {comments}

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { PayoutResponse } from "@/lib/types";
 import { usePayoutDetailsSheet } from "@/ui/partners/payout-details-sheet";
@@ -14,6 +15,8 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 
 export function PendingPayouts() {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/programs/[programId]");
+
   const { slug, programId } = useParams();
   const { id: workspaceId } = useWorkspace();
 
@@ -35,9 +38,7 @@ export function PendingPayouts() {
   return (
     <div className="rounded-md border border-neutral-200">
       <div className="flex items-center justify-between border-b border-neutral-200 p-5">
-        <h2 className="text-base font-semibold text-neutral-900">
-          Pending payouts
-        </h2>
+        <h2 className="text-base font-semibold text-neutral-900">{t('pending-payouts')}</h2>
 
         <Link
           href={`/${slug}/programs/${programId}/payouts?status=pending`}
@@ -45,9 +46,7 @@ export function PendingPayouts() {
             buttonVariants({ variant: "secondary" }),
             "flex h-7 items-center rounded-lg border px-2 text-sm",
           )}
-        >
-          View all
-        </Link>
+        >{t('view-all')}</Link>
       </div>
       <div className="p-3">
         <div className="h-px min-h-64">
@@ -76,9 +75,7 @@ export function PendingPayouts() {
               ))}
             </div>
           ) : (
-            <div className="flex size-full items-center justify-center text-sm text-neutral-500">
-              No pending payouts found
-            </div>
+            <div className="flex size-full items-center justify-center text-sm text-neutral-500">{t('no-pending-payouts-found')}</div>
           )}
         </div>
       </div>

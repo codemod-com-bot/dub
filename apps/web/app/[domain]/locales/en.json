@@ -1,0 +1,5 @@
+{
+  "welcome-to": "Welcome to",
+  "custom-domain-link-management-platform": "is a custom domain on <0>{{_process_env_NEXT_PUBLIC_APP_NAME_}}</0> - the link management platform for modern marketing teams.",
+  "create-your-free-branded-link": "Create Your Free Branded Link"
+}

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { InstalledIntegrationInfoProps } from "@/lib/types";
 import {
@@ -27,6 +28,8 @@ function UninstallIntegrationModal({
   setShowUninstallIntegrationModal: Dispatch<SetStateAction<boolean>>;
   integration: InstalledIntegrationInfoProps;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const router = useRouter();
   const [removing, setRemoving] = useState(false);
   const { id: workspaceId, logo } = useWorkspace();
@@ -42,7 +45,7 @@ function UninstallIntegrationModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Workspace logo"
+            alt={t('workspace-logo')}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -50,11 +53,8 @@ function UninstallIntegrationModal({
         ) : (
           <Logo />
         )}
-        <h3 className="text-lg font-medium">Uninstall Integration</h3>
-        <p className="text-center text-sm text-gray-500">
-          This will remove the integration from your workspace. Are you sure you
-          want to continue?
-        </p>
+        <h3 className="text-lg font-medium">{t('uninstall-integration')}</h3>
+        <p className="text-center text-sm text-gray-500">{t('this-will-remove-the-integration-from-your-workspace-are-you-sure-you-want-to-continue')}</p>
       </div>
 
       <div className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 text-left sm:px-16">
@@ -76,7 +76,7 @@ function UninstallIntegrationModal({
           </div>
         </div>
         <Button
-          text="Confirm"
+          text={t('confirm')}
           variant="danger"
           autoFocus={!isMobile}
           loading={removing}

@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { invitePartnerAction } from "@/lib/actions/invite-partner";
 import useProgram from "@/lib/swr/use-program";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -25,6 +26,8 @@ interface InvitePartnerFormData {
 }
 
 function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/programs/[programId]/partners");
+
   const { program } = useProgram();
   const { id: workspaceId, slug } = useWorkspace();
   const { isMobile } = useMediaQuery();
@@ -114,9 +117,7 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="flex h-full flex-col">
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
-          <Sheet.Title className="text-xl font-semibold">
-            Invite partner
-          </Sheet.Title>
+          <Sheet.Title className="text-xl font-semibold">{t('invite-partner')}</Sheet.Title>
           <Sheet.Close asChild>
             <Button
               variant="outline"
@@ -129,13 +130,13 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
           <div className="flex flex-col gap-4">
             <div>
               <label htmlFor="email" className="flex items-center space-x-2">
-                <h2 className="text-sm font-medium text-gray-900">Email</h2>
+                <h2 className="text-sm font-medium text-gray-900">{t('email')}</h2>
               </label>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <input
                   {...register("email")}
                   className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="panic@thedis.co"
+                  placeholder={t('panic@thedis.co')}
                   required
                   type="email"
                   autoComplete="off"
@@ -146,16 +147,12 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
 
             <div>
               <div className="flex items-center justify-between">
-                <h2 className="text-sm font-medium text-gray-900">
-                  Referral link
-                </h2>
+                <h2 className="text-sm font-medium text-gray-900">{t('referral-link')}</h2>
                 <a
                   href={`/${slug}/programs/${program?.id}/settings`}
                   target="_blank"
                   className="text-sm text-gray-500 underline-offset-2 hover:underline"
-                >
-                  Settings
-                </a>
+                >{t('settings')}</a>
               </div>
 
               <AnimatedSizeContainer
@@ -193,7 +190,7 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
             </div>
 
             <div className="mt-8">
-              <h2 className="text-sm font-medium text-gray-900">Preview</h2>
+              <h2 className="text-sm font-medium text-gray-900">{t('preview')}</h2>
               <div className="mt-2 overflow-hidden rounded-md border border-neutral-200">
                 <div className="grid gap-4 p-6 pb-10">
                   <BlurImage
@@ -204,32 +201,26 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
                     height={48}
                   />
                   <h3 className="font-medium text-gray-900">
-                    {program?.name || "Dub"} invited you to join Dub Partners
-                  </h3>
+                    {program?.name || "Dub"}{t('invited-you-to-join-dub-partners')}</h3>
                   <p className="text-sm text-gray-500">
-                    {program?.name || "Dub"} uses Dub Partners to power their
-                    partnership programs and wants to partner with great people
-                    like yourself!
-                  </p>
+                    {program?.name || "Dub"}{t('uses-dub-partners-to-power-their-partnership-programs-and-wants-to-partner-with-great-people-like-yourself')}</p>
                   <Button
                     type="button"
-                    text="Accept invite"
+                    text={t('accept-invite')}
                     className="w-fit"
                   />
                 </div>
                 <div className="grid gap-1 border-t border-gray-200 bg-gray-50 px-6 py-4">
-                  <p className="text-sm text-gray-500">
-                    <strong className="font-medium text-gray-900">
-                      From:{" "}
-                    </strong>
-                    system@dub.co
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    <strong className="font-medium text-gray-900">
-                      Subject:{" "}
-                    </strong>
-                    You've been invited to Dub Partners
-                  </p>
+                  <p className="text-sm text-gray-500"><Trans
+i18nKey="from-system@dub.co"
+components={{"0": 
+                    <strong className="font-medium text-gray-900" />}}
+/></p>
+                  <p className="text-sm text-gray-500"><Trans
+i18nKey="subject-youve-been-invited-to-dub-partners"
+components={{"0": 
+                    <strong className="font-medium text-gray-900" />}}
+/></p>
                 </div>
               </div>
             </div>
@@ -242,14 +233,14 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Cancel"
+            text={t('cancel')}
             className="w-fit"
             disabled={isExecuting}
           />
           <Button
             type="submit"
             variant="primary"
-            text="Send invite"
+            text={t('send-invite')}
             className="w-fit"
             loading={isExecuting}
           />

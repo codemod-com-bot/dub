@@ -1,8 +1,11 @@
+import { useTranslation } from "react-i18next";
 import { LaterButton } from "../../later-button";
 import { StepPage } from "../step-page";
 import { PlanSelector } from "./plan-selector";
 
 export default function Plan() {
+const { t } = useTranslation("app.dub.co/(onboarding)/onboarding/(steps)/plan");
+
   return (
     <StepPage
       title="Choose your plan"
@@ -15,10 +18,8 @@ export default function Plan() {
           href="https://dub.co/enterprise"
           target="_blank"
           className="w-full text-center text-sm text-gray-500 transition-colors hover:text-gray-700"
-        >
-          Looking for enterprise?
-        </a>
-        <LaterButton next="finish">I'll pick a plan later</LaterButton>
+        >{t('looking-for-enterprise')}</a>
+        <LaterButton next="finish">{t('ill-pick-a-plan-later')}</LaterButton>
       </div>
     </StepPage>
   );

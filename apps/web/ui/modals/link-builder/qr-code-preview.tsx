@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useDomain from "@/lib/swr/use-domain";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { QRCode } from "@/ui/shared/qr-code";
@@ -19,6 +20,8 @@ import { LinkFormData } from ".";
 import { QRCodeDesign, useLinkQRModal } from "../link-qr-modal";
 
 export function QRCodePreview() {
+const { t } = useTranslation("../ui/modals/link-builder");
+
   const { isMobile } = useMediaQuery();
   const {
     id: workspaceId,
@@ -74,7 +77,7 @@ export function QRCodePreview() {
     <div ref={ref}>
       <LinkQRModal />
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-medium text-gray-700">QR Code</h2>
+        <h2 className="text-sm font-medium text-gray-700">{t('qr-code')}</h2>
         <Button
           type="button"
           variant="outline"
@@ -112,9 +115,7 @@ export function QRCodePreview() {
         ) : (
           <div className="flex size-full flex-col items-center justify-center gap-2">
             <QRCodeIcon className="size-5 text-gray-700" />
-            <p className="max-w-32 text-center text-xs text-gray-700">
-              Enter a short link to generate a QR code
-            </p>
+            <p className="max-w-32 text-center text-xs text-gray-700">{t('enter-a-short-link-to-generate-a-qr-code')}</p>
           </div>
         )}
       </div>

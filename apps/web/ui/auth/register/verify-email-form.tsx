@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { createUserAccountAction } from "@/lib/actions/create-user-account";
 import { AnimatedSizeContainer, Button, useMediaQuery } from "@dub/ui";
@@ -13,6 +15,8 @@ import { useRegisterContext } from "./context";
 import { ResendOtp } from "./resend-otp";
 
 export const VerifyEmailForm = () => {
+const { t } = useTranslation("../ui/auth/register");
+
   const router = useRouter();
   const { isMobile } = useMediaQuery();
   const [code, setCode] = useState("");
@@ -97,9 +101,7 @@ export const VerifyEmailForm = () => {
               }}
             />
             {isInvalidCode && (
-              <p className="mt-2 text-center text-sm text-red-500">
-                Invalid code. Please try again.
-              </p>
+              <p className="mt-2 text-center text-sm text-red-500">{t('invalid-code-please-try-again')}</p>
             )}
 
             <Button

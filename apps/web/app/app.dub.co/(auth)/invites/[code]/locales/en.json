@@ -1,0 +1,7 @@
+{
+  "verifying-invite": "\"Verifying Invite\"",
+  "invalid-invite-link": "\"Invalid Invite Link\"",
+  "invalid-invite-link-message": "\"The invite link you are trying to use is invalid. Please contact the workspace owner for more information.\"",
+  "user-limit-reached": "\"User Limit Reached\"",
+  "workspace-full-message": "\"The workspace you are trying to join is currently full. Please contact the workspace owner for more information.\""
+}

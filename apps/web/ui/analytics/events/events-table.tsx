@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { editQueryString } from "@/lib/analytics/utils";
 import { ClickEvent, Customer, LeadEvent, SaleEvent } from "@/lib/types";
@@ -54,6 +56,8 @@ export default function EventsTable({
   requiresUpgrade?: boolean;
   upgradeOverlay?: ReactNode;
 }) {
+const { t } = useTranslation("../ui/analytics/events");
+
   const { searchParams, queryParams } = useRouterStuff();
   const { setExportQueryString } = useContext(EventsContext);
   const {
@@ -87,16 +91,12 @@ export default function EventsTable({
               {getValue() ? (
                 <>
                   <QRCode className="size-4 shrink-0" />
-                  <span className="truncate" title="QR scan">
-                    QR scan
-                  </span>
+                  <span className="truncate" title={t('qr-scan')}>{t('qr-scan-whitespace')}</span>
                 </>
               ) : (
                 <>
                   <CursorRays className="size-4 shrink-0" />
-                  <span className="truncate" title="Link click">
-                    Link click
-                  </span>
+                  <span className="truncate" title={t('link-click')}>{t('link-click-whitespace')}</span>
                 </>
               )}
             </div>
@@ -355,9 +355,7 @@ export default function EventsTable({
               </span>
             ) : (
               <Tooltip content="We do not record IP addresses for EU users.">
-                <span className="cursor-default truncate underline decoration-dotted">
-                  Unknown
-                </span>
+                <span className="cursor-default truncate underline decoration-dotted">{t('unknown-whitespace')}</span>
               </Tooltip>
             ),
         },
@@ -370,7 +368,7 @@ export default function EventsTable({
           cell: ({ getValue }) => (
             <div className="flex items-center gap-2">
               <span>${nFormatter(getValue() / 100)}</span>
-              <span className="text-neutral-400">USD</span>
+              <span className="text-neutral-400">{t('usd')}</span>
             </div>
           ),
         },
@@ -503,7 +501,7 @@ export default function EventsTable({
     emptyState: (
       <EmptyState
         icon={Magnifier}
-        title="No events recorded"
+        title={t('no-events-recorded')}
         description={`Events will appear here when your links ${tab === "clicks" ? "are clicked on" : `convert to ${tab}`}`}
       />
     ),

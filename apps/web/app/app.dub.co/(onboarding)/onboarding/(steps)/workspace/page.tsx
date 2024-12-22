@@ -1,8 +1,11 @@
+import { useTranslation } from "react-i18next";
 import { GridPlus } from "@dub/ui/icons";
 import { StepPage } from "../step-page";
 import { Form } from "./form";
 
 export default function Workspace() {
+const { t } = useTranslation("app.dub.co/(onboarding)/onboarding/(steps)/workspace");
+
   return (
     <StepPage
       icon={GridPlus}
@@ -12,9 +15,7 @@ export default function Workspace() {
           href="https://dub.co/help/article/what-is-a-workspace"
           target="_blank"
           className="underline transition-colors hover:text-gray-700"
-        >
-          What is a workspace?
-        </a>
+        >{t('what-is-a-workspace')}</a>
       }
     >
       <Form />

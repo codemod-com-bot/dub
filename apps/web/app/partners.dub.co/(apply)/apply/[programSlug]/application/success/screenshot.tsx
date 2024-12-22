@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ProgramProps } from "@/lib/types";
 import { cn, DICEBEAR_AVATAR_URL, truncate } from "@dub/utils";
 import { SVGProps, useId } from "react";
@@ -6,6 +7,8 @@ export function Screenshot({
   program,
   ...rest
 }: { program: Pick<ProgramProps, "name" | "logo"> } & SVGProps<SVGSVGElement>) {
+const { t } = useTranslation("partners.dub.co/(apply)/apply/[programSlug]/application/success");
+
   const id = useId();
 
   return (
@@ -91,9 +94,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="68" y="97.636">
-            Enrolled
-          </tspan>
+          <tspan x="68" y="97.636">{t('enrolled')}</tspan>
         </text>
         <g clipPath={`url(#${id}-e)`}>
           <path fill="currentColor" d="M12 124h216v30H12z" opacity="0.1" />
@@ -130,9 +131,7 @@ export function Screenshot({
             letterSpacing="0em"
             style={{ whiteSpace: "pre" }}
           >
-            <tspan x="46" y="143.727">
-              Overview
-            </tspan>
+            <tspan x="46" y="143.727">{t('overview')}</tspan>
           </text>
         </g>
         <path
@@ -168,9 +167,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="46" y="173.727">
-            Payouts
-          </tspan>
+          <tspan x="46" y="173.727">{t('payouts')}</tspan>
         </text>
         <g
           stroke="#737373"
@@ -189,9 +186,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="46" y="203.727">
-            Events
-          </tspan>
+          <tspan x="46" y="203.727">{t('events')}</tspan>
         </text>
         <path
           stroke="#737373"
@@ -215,9 +210,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="46" y="233.727">
-            Links
-          </tspan>
+          <tspan x="46" y="233.727">{t('links')}</tspan>
         </text>
         <path
           stroke="#737373"
@@ -252,9 +245,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="46" y="263.727">
-            Resources
-          </tspan>
+          <tspan x="46" y="263.727">{t('resources')}</tspan>
         </text>
         <path
           fill="#fff"
@@ -272,9 +263,7 @@ export function Screenshot({
           letterSpacing="-.02em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="367.5" y="72.727">
-            Overview
-          </tspan>
+          <tspan x="367.5" y="72.727">{t('overview-duplicate')}</tspan>
         </text>
         <g clipPath={`url(#${id}-h)`}>
           <rect
@@ -315,9 +304,7 @@ export function Screenshot({
             letterSpacing="0em"
             style={{ whiteSpace: "pre" }}
           >
-            <tspan x="417.5" y="142.091">
-              Refer and Earn
-            </tspan>
+            <tspan x="417.5" y="142.091">{t('refer-and-earn')}</tspan>
           </text>
           <text
             xmlSpace="preserve"
@@ -339,7 +326,7 @@ export function Screenshot({
             x="391.5"
             y="262.045"
           >
-            <tspan>Earn </tspan>
+            <tspan>{t('earn')}</tspan>
             <tspan
               fontWeight="600"
               // Blur to avoid confusing a placeholder number for a real number
@@ -347,8 +334,8 @@ export function Screenshot({
             >
               20%
             </tspan>
-            <tspan> for each conversion, and again </tspan>
-            <tspan fontWeight="600">every month</tspan>
+            <tspan>{t('for-each-conversion-and-again')}</tspan>
+            <tspan fontWeight="600">{t('every-month')}</tspan>
           </text>
           <text
             xmlSpace="preserve"
@@ -359,9 +346,7 @@ export function Screenshot({
             style={{ whiteSpace: "pre" }}
             x="391.5"
             y="289.045"
-          >
-            for the customer's lifetime.
-          </text>
+          >{t('for-the-customers-lifetime')}</text>
           <text
             xmlSpace="preserve"
             fill="#262626"
@@ -370,9 +355,7 @@ export function Screenshot({
             letterSpacing="0em"
             style={{ whiteSpace: "pre" }}
           >
-            <tspan x="391.5" y="334.091">
-              Referral link
-            </tspan>
+            <tspan x="391.5" y="334.091">{t('referral-link')}</tspan>
           </text>
           <path
             fill="#fff"
@@ -389,9 +372,7 @@ export function Screenshot({
             letterSpacing="0em"
             style={{ whiteSpace: "pre" }}
           >
-            <tspan x="403.5" y="371.091">
-              refer.dub.co/steven
-            </tspan>
+            <tspan x="403.5" y="371.091">{t('refer-dub-co-steven')}</tspan>
           </text>
           <path
             stroke="#737373"
@@ -423,9 +404,7 @@ export function Screenshot({
             letterSpacing="0em"
             style={{ whiteSpace: "pre" }}
           >
-            <tspan x="743.521" y="371.091">
-              Invite via email
-            </tspan>
+            <tspan x="743.521" y="371.091">{t('invite-via-email')}</tspan>
           </text>
           <g filter={`url(#${id}-j)`} style={{ mixBlendMode: "overlay" }}>
             <path
@@ -690,9 +669,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="391.5" y="470.591">
-            Earnings
-          </tspan>
+          <tspan x="391.5" y="470.591">{t('earnings')}</tspan>
         </text>
         <text
           xmlSpace="preserve"
@@ -731,9 +708,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="1436.5" y="478.364">
-            Last 24 hours
-          </tspan>
+          <tspan x="1436.5" y="478.364">{t('last-24-hours')}</tspan>
         </text>
         <path
           stroke="#A3A3A3"
@@ -821,9 +796,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="431.5" y="856.864">
-            Oct 1
-          </tspan>
+          <tspan x="431.5" y="856.864">{t('oct-1')}</tspan>
         </text>
         <text
           xmlSpace="preserve"
@@ -832,9 +805,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="605.167" y="856.864">
-            Oct 5
-          </tspan>
+          <tspan x="605.167" y="856.864">{t('oct-5')}</tspan>
         </text>
         <text
           xmlSpace="preserve"
@@ -843,9 +814,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="779.833" y="856.864">
-            Oct 10
-          </tspan>
+          <tspan x="779.833" y="856.864">{t('oct-10')}</tspan>
         </text>
         <text
           xmlSpace="preserve"
@@ -854,9 +823,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="960.5" y="856.864">
-            Oct 15
-          </tspan>
+          <tspan x="960.5" y="856.864">{t('oct-15')}</tspan>
         </text>
         <text
           xmlSpace="preserve"
@@ -865,9 +832,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="1141.17" y="856.864">
-            Oct 20
-          </tspan>
+          <tspan x="1141.17" y="856.864">{t('oct-20')}</tspan>
         </text>
         <text
           xmlSpace="preserve"
@@ -876,9 +841,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="1323.83" y="856.864">
-            Oct 25
-          </tspan>
+          <tspan x="1323.83" y="856.864">{t('oct-25')}</tspan>
         </text>
         <text
           xmlSpace="preserve"
@@ -887,9 +850,7 @@ export function Screenshot({
           letterSpacing="0em"
           style={{ whiteSpace: "pre" }}
         >
-          <tspan x="1506.5" y="856.864">
-            Oct 31
-          </tspan>
+          <tspan x="1506.5" y="856.864">{t('oct-31')}</tspan>
         </text>
         <mask
           id={`${id}-z`}

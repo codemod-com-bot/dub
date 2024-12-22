@@ -1,0 +1,10 @@
+{
+  "no-tokens-found": "\"No tokens found\"",
+  "no-tokens-created-workspace": "\"No tokens have been created for this workspace yet.\"",
+  "secret-keys": "Secret keys",
+  "api-keys-access-workspace": "These API keys allow other apps to access your workspace. Use it with caution – do not share your API key with others, or expose it in the browser or other client-side code. <0>Learn more</0>",
+  "no-tokens-found-duplicate": "\"No tokens found\"",
+  "no-tokens-created-workspace-duplicate": "\"No tokens have been created for this workspace yet.\"",
+  "edit": "\"Edit\"",
+  "delete": "\"Delete\""
+}

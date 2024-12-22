@@ -1,0 +1,23 @@
+{
+  "failed-to-load-usage-data": "Failed to load usage data",
+  "payment-methods": "Payment methods",
+  "manage-your-payment-methods-on-dub": "Manage your payment methods on Dub",
+  "manage": "\"Manage\"",
+  "no-payment-methods-found": "\"No payment methods found\"",
+  "you-havent-added-any-payment-methods-yet": "\"You haven't added any payment methods yet\"",
+  "recommended-for-dub-partners-payouts": "Recommended for Dub Partners payouts",
+  "connect": "\"Connect\"",
+  "plan-and-usage": "Plan and Usage",
+  "you-are-currently-on-the": "You are currently on the",
+  "current-plan": " plan.",
+  "load": "load",
+  "current-billing-cycle": " Current billing cycle: <0>{{billingStart}}-{{billingEnd}}</0>.",
+  "view-invoices": "View invoices",
+  "events-tracked": "\"Events tracked\"",
+  "links-created": "\"Links created\"",
+  "revenue-tracked": "\"Revenue tracked\"",
+  "custom-domains": "\"Custom Domains\"",
+  "tags": "\"Tags\"",
+  "teammates": "\"Teammates\"",
+  "upgrade-to": "Upgrade to"
+}

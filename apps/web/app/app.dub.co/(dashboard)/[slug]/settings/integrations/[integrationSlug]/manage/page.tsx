@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import AddEditIntegrationForm from "@/ui/oauth-apps/add-edit-integration-form";
 import { prisma } from "@dub/prisma";
 import { MaxWidthWrapper } from "@dub/ui";
@@ -10,6 +11,8 @@ export default async function IntegrationManagePage({
 }: {
   params: { slug: string; integrationSlug: string };
 }) {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/settings/integrations/[integrationSlug]/manage");
+
   // this is only available for Dub workspace for now
   // we might open this up to other workspaces in the future
   if (params.slug !== "dub") {
@@ -30,9 +33,7 @@ export default async function IntegrationManagePage({
         className="flex items-center gap-x-1"
       >
         <ChevronLeft className="size-4" />
-        <p className="text-sm font-medium text-gray-500">
-          Back to integrations
-        </p>
+        <p className="text-sm font-medium text-gray-500">{t('back-to-integrations')}</p>
       </Link>
 
       <AddEditIntegrationForm

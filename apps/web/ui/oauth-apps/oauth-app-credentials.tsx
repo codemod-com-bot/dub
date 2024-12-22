@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { CopyButton } from "@dub/ui";
 
@@ -11,6 +13,8 @@ export default function OAuthAppCredentials({
   clientSecret: string | null;
   partialClientSecret: string;
 }) {
+const { t } = useTranslation("../ui/oauth-apps");
+
   if (!clientId) {
     return null;
   }
@@ -18,7 +22,7 @@ export default function OAuthAppCredentials({
   return (
     <div className="flex flex-col space-y-3 text-left">
       <div className="space-y-2">
-        <label className="text-sm font-medium text-gray-500">Client ID</label>
+        <label className="text-sm font-medium text-gray-500">{t('client-id')}</label>
         <div className="grid grid-cols-[1fr,auto] items-center gap-2 rounded-md border border-gray-300 bg-white p-3">
           <p className="truncate font-mono text-sm text-gray-500">{clientId}</p>
           <CopyButton value={clientId} className="rounded-md" />
@@ -27,9 +31,7 @@ export default function OAuthAppCredentials({
 
       {clientSecret && (
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-500">
-            Client Secret
-          </label>
+          <label className="text-sm font-medium text-gray-500">{t('client-secret-label')}</label>
           <div className="flex items-center justify-between rounded-md border border-gray-300 bg-white p-3">
             <p className="text-nowrap font-mono text-sm text-gray-500">
               {clientSecret}
@@ -38,18 +40,13 @@ export default function OAuthAppCredentials({
               <CopyButton value={clientSecret} className="rounded-md" />
             </div>
           </div>
-          <span className="text-xs text-red-400">
-            Be sure to copy your client secret. You won’t be able to see it
-            again.
-          </span>
+          <span className="text-xs text-red-400">{t('client-secret-warning')}</span>
         </div>
       )}
 
       {!clientSecret && partialClientSecret && (
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-500">
-            Client Secret
-          </label>
+          <label className="text-sm font-medium text-gray-500">{t('client-secret-label-duplicate')}</label>
           <div className="flex items-center justify-between rounded-md border border-gray-300 bg-white p-3">
             <p className="text-nowrap font-mono text-sm text-gray-500">
               {partialClientSecret}

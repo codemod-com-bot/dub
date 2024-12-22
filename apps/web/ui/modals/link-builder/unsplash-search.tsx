@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { LoadingSpinner, useMediaQuery } from "@dub/ui";
 import { fetcher } from "@dub/utils";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -13,6 +14,8 @@ export default function UnsplashSearch({
   onImageSelected: (image: string) => void;
   setOpenPopover: Dispatch<SetStateAction<boolean>>;
 }) {
+const { t } = useTranslation("../ui/modals/link-builder");
+
   const [search, setSearch] = useState("");
   const [debouncedQuery] = useDebounce(search, 500);
   const { data } = useSWR<Basic[]>(
@@ -39,7 +42,7 @@ export default function UnsplashSearch({
           type="text"
           name="search"
           id="search"
-          placeholder="Search for an image..."
+          placeholder={t('search-for-an-image')}
           autoFocus={!isMobile}
           autoComplete="off"
           value={search}
@@ -74,25 +77,25 @@ export default function UnsplashSearch({
                   alt={photo.alt_description || "Unsplash image"}
                   className="absolute h-full w-full object-cover"
                 />
-                <p className="absolute bottom-0 left-0 right-0 line-clamp-1 w-full bg-black bg-opacity-10 p-1 text-xs text-white">
-                  by{" "}
+                <p className="absolute bottom-0 left-0 right-0 line-clamp-1 w-full bg-black bg-opacity-10 p-1 text-xs text-white"><Trans
+i18nKey="by-user-link"
+values={{ _photo_user_name_: <>
+                    {photo.user.name}</> }}
+components={{"0": 
                   <a
                     className="underline underline-offset-2"
                     target="_blank"
                     rel="noopener noreferrer"
                     href={`${photo.user.links.html}?utm_source=dub.co&utm_medium=referral`}
-                  >
-                    {photo.user.name}
-                  </a>
+                   />}}
+/>
                 </p>
               </button>
             ))}
           </div>
         ) : (
           <div className="flex h-[90%] items-center justify-center">
-            <p className="text-center text-sm text-gray-500">
-              No results found. <br /> Maybe try tweaking your search query?
-            </p>
+            <p className="text-center text-sm text-gray-500">{t('no-results-found')}<br />{t('suggestion-to-tweak-search')}</p>
           </div>
         )
       ) : (

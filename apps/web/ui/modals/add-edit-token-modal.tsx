@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { ResourceKey, RESOURCES } from "@/lib/api/rbac/resources";
 import {
   getScopesByResourceForRole,
@@ -58,6 +59,8 @@ function AddEditTokenModal({
   onTokenCreated?: (token: string) => void;
   setSelectedToken: Dispatch<SetStateAction<null>>;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const [saving, setSaving] = useState(false);
   const { id: workspaceId, role, isOwner, conversionEnabled } = useWorkspace();
   const [data, setData] = useState<APIKeyProps>(token || newToken);
@@ -167,8 +170,7 @@ function AddEditTokenModal({
         onClose={() => setSelectedToken(null)}
       >
         <h3 className="border-b border-neutral-200 px-4 py-4 text-lg font-medium sm:px-6">
-          {token ? "Edit" : "Create New"} API Key
-        </h3>
+          {token ? "Edit" : "Create New"}{t('api-key')}</h3>
 
         <form
           onSubmit={onSubmit}
@@ -176,7 +178,7 @@ function AddEditTokenModal({
         >
           <div>
             <label htmlFor="name">
-              <h2 className="text-sm font-medium text-gray-900">Name</h2>
+              <h2 className="text-sm font-medium text-gray-900">{t('name')}</h2>
             </label>
             <div className="relative mt-2 rounded-md shadow-sm">
               <input
@@ -194,7 +196,7 @@ function AddEditTokenModal({
           {/* Can't change the type of the token */}
           {!token && (
             <div>
-              <h2 className="text-sm font-medium text-gray-900">Type</h2>
+              <h2 className="text-sm font-medium text-gray-900">{t('type')}</h2>
               <RadioGroup
                 className="mt-2 flex"
                 defaultValue="user"
@@ -209,11 +211,11 @@ function AddEditTokenModal({
                     htmlFor="user"
                     className="flex flex-1 cursor-pointer items-center justify-between space-x-1 p-3 pl-0"
                   >
-                    <p className="text-gray-600">You</p>
+                    <p className="text-gray-600">{t('you')}</p>
                     <InfoTooltip
                       content={
                         <SimpleTooltipContent
-                          title="This API key will be tied to your user account – if you are removed from the workspace, it will be deleted."
+                          title={t('api-key-description')}
                           cta="Learn more"
                           href="https://dub.co/docs/api-reference/tokens"
                         />
@@ -244,7 +246,7 @@ function AddEditTokenModal({
                       },
                     )}
                   >
-                    <p className="text-gray-600">Machine</p>
+                    <p className="text-gray-600">{t('machine')}</p>
                     <InfoTooltip
                       content={
                         <SimpleTooltipContent
@@ -265,7 +267,7 @@ function AddEditTokenModal({
           )}
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-medium text-gray-900">Permissions</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('permissions')}</h2>
 
             <ToggleGroup
               options={scopePresets}
@@ -288,11 +290,13 @@ function AddEditTokenModal({
           </div>
 
           <AnimatedSizeContainer height>
-            <div className="p-1 pt-0 text-sm text-neutral-500">
-              This API key will have{" "}
-              <span className="font-medium text-neutral-700">
-                {scopePresets.find((p) => p.value === preset)?.description}
-              </span>
+            <div className="p-1 pt-0 text-sm text-neutral-500"><Trans
+i18nKey="api-key-scope-description"
+values={{ _scopePresets_find_p_p_value_preset_description_: <>
+                {scopePresets.find((p) => p.value === preset)?.description}</> }}
+components={{"0": 
+              <span className="font-medium text-neutral-700" />}}
+/>
             </div>
             {preset === "restricted" && (
               <div className="flex flex-col divide-y text-sm">
@@ -323,7 +327,7 @@ function AddEditTokenModal({
                       >
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="" />
-                          <div>None</div>
+                          <div>{t('none')}</div>
                         </div>
                         {resource.scopes.map((scope) => (
                           <div
@@ -362,10 +366,12 @@ function AddTokenButton({
   setShowAddEditTokenModal: Dispatch<SetStateAction<boolean>>;
   buttonProps?: Partial<ButtonProps>;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   return (
     <div>
       <Button
-        text="Create API key"
+        text={t('create-api-key')}
         onClick={() => setShowAddEditTokenModal(true)}
         {...buttonProps}
       />

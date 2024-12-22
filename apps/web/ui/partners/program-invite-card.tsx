@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { acceptProgramInviteAction } from "@/lib/actions/partners/accept-program-invite";
 import { PartnerProgramInviteProps } from "@/lib/types";
 import { ProgramCommissionDescription } from "@/ui/partners/program-commission-description";
@@ -12,6 +13,8 @@ export function ProgramInviteCard({
 }: {
   invite: PartnerProgramInviteProps;
 }) {
+const { t } = useTranslation("../ui/partners");
+
   const { executeAsync, isExecuting } = useAction(acceptProgramInviteAction, {
     onSuccess: () => {
       toast.success("Program invite accepted!");
@@ -32,9 +35,7 @@ export function ProgramInviteCard({
         variant="new"
         icon={null}
         className="absolute left-4 top-4 rounded-full py-0.5"
-      >
-        Invited
-      </StatusBadge>
+      >{t('invited')}</StatusBadge>
       <div className="flex size-10 items-center justify-center rounded-full border border-neutral-200 bg-white">
         <BlurImage
           width={96}
@@ -58,7 +59,7 @@ export function ProgramInviteCard({
         </p>
       </div>
       <Button
-        text="Accept invite"
+        text={t('accept-invite')}
         className="h-8"
         loading={isExecuting}
         onClick={() =>

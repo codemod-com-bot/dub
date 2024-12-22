@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { updateSaleStatusAction } from "@/lib/actions/update-sale-status";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { SaleResponse } from "@/lib/types";
@@ -18,6 +19,8 @@ import { toast } from "sonner";
 import { mutate } from "swr";
 
 export function SaleRowMenu({ row }: { row: Row<SaleResponse> }) {
+const { t } = useTranslation("../ui/partners");
+
   const { id: workspaceId } = useWorkspace();
   const { programId } = useParams() as { programId: string };
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +67,7 @@ export function SaleRowMenu({ row }: { row: Row<SaleResponse> }) {
             {["duplicate", "fraud"].includes(row.original.status) ? (
               <MenuItem
                 icon={CircleHalfDottedClock}
-                label="Mark as pending"
+                label={t('mark-as-pending')}
                 onSelect={() => {
                   updateStatus("pending");
                   setIsOpen(false);
@@ -74,7 +77,7 @@ export function SaleRowMenu({ row }: { row: Row<SaleResponse> }) {
               <>
                 <MenuItem
                   icon={Duplicate}
-                  label="Mark as duplicate"
+                  label={t('mark-as-duplicate')}
                   onSelect={() => {
                     updateStatus("duplicate");
                     setIsOpen(false);
@@ -83,7 +86,7 @@ export function SaleRowMenu({ row }: { row: Row<SaleResponse> }) {
                 />
                 <MenuItem
                   icon={ShieldAlert}
-                  label="Mark as fraud"
+                  label={t('mark-as-fraud')}
                   onSelect={() => {
                     updateStatus("fraud");
                     setIsOpen(false);

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { AlertCircleFill } from "@/ui/shared/icons";
 import { Button, useMediaQuery } from "@dub/ui";
@@ -11,6 +13,8 @@ const initialState = {
 };
 
 export default function PasswordForm() {
+const { t } = useTranslation("password/[linkId]");
+
   const { linkId } = useParams() as {
     linkId: string;
   };
@@ -25,9 +29,7 @@ export default function PasswordForm() {
       className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16"
     >
       <div>
-        <label htmlFor="password" className="block text-xs text-gray-600">
-          PASSWORD
-        </label>
+        <label htmlFor="password" className="block text-xs text-gray-600">{t('password')}</label>
         <div className="relative mt-1 rounded-md shadow-sm">
           <input type="hidden" name="linkId" value={linkId} />
           <input
@@ -52,9 +54,7 @@ export default function PasswordForm() {
           )}
         </div>
         {state.error && (
-          <p className="mt-2 text-sm text-red-600" id="slug-error">
-            Incorrect password
-          </p>
+          <p className="mt-2 text-sm text-red-600" id="slug-error">{t('incorrect-password')}</p>
         )}
       </div>
 
@@ -64,6 +64,8 @@ export default function PasswordForm() {
 }
 
 const FormButton = () => {
+const { t } = useTranslation("password/[linkId]");
+
   const { pending } = useFormStatus();
-  return <Button text="Log in" loading={pending} />;
+  return <Button text={t('log-in')} loading={pending} />;
 };

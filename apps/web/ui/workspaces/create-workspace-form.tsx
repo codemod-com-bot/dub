@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { AlertCircleFill } from "@/ui/shared/icons";
 import { Button, InfoTooltip, useMediaQuery } from "@dub/ui";
@@ -23,6 +25,8 @@ export function CreateWorkspaceForm({
   onSuccess?: (data: FormData) => void;
   className?: string;
 }) {
+const { t } = useTranslation("../ui/workspaces");
+
   const { update } = useSession();
   const plausible = usePlausible();
 
@@ -86,9 +90,7 @@ export function CreateWorkspaceForm({
     >
       <div>
         <label htmlFor="name" className="flex items-center space-x-2">
-          <p className="block text-sm font-medium text-gray-700">
-            Workspace Name
-          </p>
+          <p className="block text-sm font-medium text-gray-700">{t('workspace-name')}</p>
           <InfoTooltip
             content={`This is the name of your workspace on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
           />
@@ -100,7 +102,7 @@ export function CreateWorkspaceForm({
             autoFocus={!isMobile}
             autoComplete="off"
             className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-            placeholder="Acme, Inc."
+            placeholder={t('acme-inc')}
             {...register("name", {
               required: true,
               onChange: (e) => setValue("slug", slugify(e.target.value)),
@@ -111,16 +113,13 @@ export function CreateWorkspaceForm({
 
       <div>
         <label htmlFor="slug" className="flex items-center space-x-2">
-          <p className="block text-sm font-medium text-gray-700">
-            Workspace Slug
-          </p>
+          <p className="block text-sm font-medium text-gray-700">{t('workspace-slug')}</p>
           <InfoTooltip
             content={`This is your workspace's unique slug on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
           />
         </label>
         <div className="relative mt-2 flex rounded-md shadow-sm">
-          <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-5 text-gray-500 sm:text-sm">
-            app.{process.env.NEXT_PUBLIC_APP_DOMAIN}
+          <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-5 text-gray-500 sm:text-sm">{t('app-prefix')}{process.env.NEXT_PUBLIC_APP_DOMAIN}
           </span>
           <input
             id="slug"
@@ -132,7 +131,7 @@ export function CreateWorkspaceForm({
                 ? "border-red-300 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
                 : "border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:ring-gray-500"
             } block w-full rounded-r-md focus:outline-none sm:text-sm`}
-            placeholder="acme"
+            placeholder={t('acme-slug')}
             {...register("slug", {
               required: true,
               minLength: 3,
@@ -171,7 +170,7 @@ export function CreateWorkspaceForm({
 
       <Button
         loading={isSubmitting || isSubmitSuccessful}
-        text="Create workspace"
+        text={t('create-workspace')}
       />
     </form>
   );

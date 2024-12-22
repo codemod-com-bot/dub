@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { Avatar, Button, Modal } from "@dub/ui";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -17,6 +18,8 @@ function DeleteAccountModal({
   showDeleteAccountModal: boolean;
   setShowDeleteAccountModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const router = useRouter();
   const { data: session, update } = useSession();
   const [deleting, setDeleting] = useState(false);
@@ -53,11 +56,8 @@ function DeleteAccountModal({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 sm:px-16">
         <Avatar user={session?.user} />
-        <h3 className="text-lg font-medium">Delete Account</h3>
-        <p className="text-center text-sm text-gray-500">
-          Warning: This will permanently delete your account, all your
-          workspaces, and all your short links.
-        </p>
+        <h3 className="text-lg font-medium">{t('delete-account')}</h3>
+        <p className="text-center text-sm text-gray-500">{t('warning-permanently-delete-account-workspaces-short-links')}</p>
       </div>
 
       <form
@@ -72,13 +72,11 @@ function DeleteAccountModal({
         className="flex flex-col space-y-6 bg-gray-50 px-4 py-8 text-left sm:px-16"
       >
         <div>
-          <label htmlFor="verification" className="block text-sm text-gray-700">
-            To verify, type{" "}
-            <span className="font-semibold text-black">
-              confirm delete account
-            </span>{" "}
-            below
-          </label>
+          <label htmlFor="verification" className="block text-sm text-gray-700"><Trans
+i18nKey="verify-type-confirm-delete-account-below"
+components={{"0": 
+            <span className="font-semibold text-black" />}}
+/></label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
               type="text"
@@ -94,7 +92,7 @@ function DeleteAccountModal({
         </div>
 
         <Button
-          text="Confirm delete account"
+          text={t('confirm-delete-account')}
           variant="danger"
           loading={deleting}
         />

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { resendProgramInviteAction } from "@/lib/actions/resend-program-invite";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -22,6 +24,8 @@ import { toast } from "sonner";
 import useSWR, { KeyedMutator } from "swr";
 
 export function ProgramPartnersInvitesPageClient() {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/programs/[programId]/partners/invites");
+
   const { id: workspaceId } = useWorkspace();
   const { programId } = useParams();
 
@@ -101,8 +105,8 @@ export function ProgramPartnersInvitesPageClient() {
         <Table {...tableProps} table={table} />
       ) : (
         <AnimatedEmptyState
-          title="No partner invites found"
-          description="No partner invites have been created for this program yet."
+          title={t('no-partner-invites-found')}
+          description={t('no-partner-invites-created-for-this-program-yet')}
           cardContent={() => (
             <>
               <Users className="size-4 text-neutral-700" />
@@ -122,6 +126,8 @@ function RowMenuButton({
   row: Row<ProgramInviteProps>;
   mutate: KeyedMutator<ProgramInviteProps[]>;
 }) {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/programs/[programId]/partners/invites");
+
   const { id: workspaceId } = useWorkspace();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -144,7 +150,7 @@ function RowMenuButton({
           <Command.List className="flex w-screen flex-col gap-1 p-1.5 text-sm sm:w-auto sm:min-w-[160px]">
             <MenuItem
               icon={isExecuting ? LoadingSpinner : EnvelopeArrowRight}
-              label="Resend invite"
+              label={t('resend-invite')}
               onSelect={async () => {
                 await executeAsync({
                   workspaceId: workspaceId!,

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { DomainProps } from "@/lib/types";
 import { Button, LinkLogo, Modal, useToastWithUndo } from "@dub/ui";
@@ -48,6 +49,8 @@ function ArchiveDomainModal({
   setShowArchiveDomainModal: Dispatch<SetStateAction<boolean>>;
   props: DomainProps;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const toastWithUndo = useToastWithUndo();
 
   const { id: workspaceId } = useWorkspace();
@@ -117,9 +120,7 @@ function ArchiveDomainModal({
             href="https://dub.co/help/article/archiving-domains"
             target="_blank"
             className="text-sm text-gray-500 underline"
-          >
-            Learn more
-          </a>
+          >{t('learn-more')}</a>
         </p>
       </div>
 

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   Button,
   Popover,
@@ -24,6 +25,8 @@ import {
 } from "./links-display-provider";
 
 export default function LinkDisplay() {
+const { t } = useTranslation("../ui/links");
+
   const {
     viewMode,
     setViewMode,
@@ -76,9 +79,7 @@ export default function LinkDisplay() {
           </div>
           <div className="flex h-16 items-center justify-between gap-2 px-4">
             <span className="flex items-center gap-2">
-              <ArrowsOppositeDirectionY className="h-4 w-4 text-gray-800" />
-              Ordering
-            </span>
+              <ArrowsOppositeDirectionY className="h-4 w-4 text-gray-800" />{t('ordering')}</span>
             <div>
               <LinkSort />
             </div>
@@ -87,12 +88,8 @@ export default function LinkDisplay() {
             <div className="flex items-center gap-2">
               <div className="flex w-6 items-center justify-center">
                 <BoxArchive className="size-4 text-gray-800 group-hover:hidden" />
-                <kbd className="hidden rounded border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-500 group-hover:block">
-                  A
-                </kbd>
-              </div>
-              Show archived links
-            </div>
+                <kbd className="hidden rounded border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-500 group-hover:block">{t('a')}</kbd>
+              </div>{t('show-archived-links')}</div>
             <div>
               <Switch
                 checked={showArchived}
@@ -109,9 +106,7 @@ export default function LinkDisplay() {
             </div>
           </div>
           <div className="p-4">
-            <span className="text-xs uppercase text-gray-500">
-              Display Properties
-            </span>
+            <span className="text-xs uppercase text-gray-500">{t('display-properties')}</span>
             <div className="mt-4 flex flex-wrap gap-2">
               {linkDisplayProperties.map((property) => {
                 const active = displayProperties.includes(property.id);
@@ -163,13 +158,13 @@ export default function LinkDisplay() {
                   <Button
                     className="h-8 w-auto px-2"
                     variant="outline"
-                    text="Reset to default"
+                    text={t('reset-to-default')}
                     onClick={reset}
                   />
                   <Button
                     className="h-8 w-auto px-2"
                     variant="primary"
-                    text="Set as default"
+                    text={t('set-as-default')}
                     onClick={persist}
                   />
                 </div>
@@ -195,7 +190,7 @@ export default function LinkDisplay() {
                 </div>
               )}
             </div>
-            <span className="grow text-left">Display</span>
+            <span className="grow text-left">{t('display')}</span>
             <ChevronDown
               className={cn("h-4 w-4 text-gray-400 transition-transform", {
                 "rotate-180": openPopover,

@@ -1,0 +1,15 @@
+{
+  "default-domains": "Default Domains",
+  "leverage-default-branded-domains": "Leverage default branded domains from Dub for specific links. <0>Learn more.</0>",
+  "pro-plan-requirement": "\"You can only use dub.link on a Pro plan and above. Upgrade to Pro to use this domain.\"",
+  "pro-feature-discovery": "\"You've discovered a Pro feature!\"",
+  "domains": "Domains",
+  "learn-more-about-adding-configuring-and-verifying-custom-domains-on-dub": "\"Learn more about how to add, configure, and verify custom domains on Dub.\"",
+  "connect-a-domain-you-own": "\"Connect a domain you own\"",
+  "claim-free-link-domain": "Claim free .link domain",
+  "pro": "Pro",
+  "claimed": "Claimed",
+  "add-domain": "Add domain",
+  "no-domains-found": "\"No domains found\"",
+  "use-custom-domains-for-better-brand-recognition-and-click-through-rates": "\"Use custom domains for better brand recognition and click-through rates\""
+}

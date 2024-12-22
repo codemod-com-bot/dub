@@ -1,0 +1,9 @@
+{
+  "webhooks": "\"Webhooks\"",
+  "webhooks-allow-you-to-receive-http-requests-whenever-a-specific-event-eg-someone-clicked-your-link-occurs-in-dub": "\"Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in Dub.\"",
+  "webhooks-fragment": "Webhooks",
+  "webhooks-allow-you-to-receive-http-requests-whenever-a-specific-event-eg-someone-clicked-your-link-occurs-in-dub-duplicate": "\"Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in Dub.\"",
+  "create-webhook": "\"Create Webhook\"",
+  "you-havent-set-up-any-webhooks-yet": "\"You haven't set up any webhooks yet.\"",
+  "webhooks-allow-you-to-receive-http-requests-whenever-a-specific-event-eg-someone-clicked-your-link-occurs-in-dub-duplicate-2": "\"Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in Dub.\""
+}

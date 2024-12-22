@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   Button,
   Github,
@@ -55,6 +56,8 @@ export default function SurveyForm({
 }: {
   onSubmit: (source: string) => void;
 }) {
+const { t } = useTranslation("../ui/layout/user-survey");
+
   const { isMobile } = useMediaQuery();
 
   const [source, setSource] = useState<string | undefined>(undefined);
@@ -65,9 +68,7 @@ export default function SurveyForm({
   return (
     <div className="grid gap-4">
       <Wordmark className="h-8" />
-      <p className="text-sm font-medium text-gray-800">
-        Where did you hear about Dub?
-      </p>
+      <p className="text-sm font-medium text-gray-800">{t('where-did-you-hear-about-dub')}</p>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -139,7 +140,7 @@ export default function SurveyForm({
                   autoFocus={!isMobile}
                   autoComplete="off"
                   className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Reddit, Indie Hackers, etc."
+                  placeholder={t('reddit-indie-hackers-etc')}
                   value={otherSource}
                   onChange={(e) => setOtherSource(e.target.value)}
                 />
@@ -152,7 +153,7 @@ export default function SurveyForm({
             className="mt-4 h-9"
             variant="primary"
             type="submit"
-            text="Submit"
+            text={t('submit')}
             loading={status === "loading"}
             disabled={
               status === "success" ||

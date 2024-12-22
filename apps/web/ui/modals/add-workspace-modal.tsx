@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Logo, Modal, useRouterStuff } from "@dub/ui";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -17,6 +18,8 @@ function AddWorkspaceModalHelper({
   showAddWorkspaceModal: boolean;
   setShowAddWorkspaceModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const { t } = useTranslation("../ui/modals");
+
   const router = useRouter();
   const pathname = usePathname();
 
@@ -39,14 +42,12 @@ function AddWorkspaceModalHelper({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 sm:px-16">
         <Logo />
-        <h3 className="text-lg font-medium">Create a new workspace</h3>
+        <h3 className="text-lg font-medium">{t('create-a-new-workspace')}</h3>
         <a
           href="https://dub.co/help/article/what-is-a-workspace"
           target="_blank"
           className="-translate-y-2 text-center text-xs text-gray-500 underline underline-offset-4 hover:text-gray-800"
-        >
-          What is a workspace?
-        </a>
+        >{t('what-is-a-workspace')}</a>
       </div>
 
       <CreateWorkspaceForm

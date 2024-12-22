@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import usePartnerPayoutsCount from "@/lib/swr/use-partner-payouts-count";
 import usePartnerProfile from "@/lib/swr/use-partner-profile";
@@ -11,6 +13,8 @@ import { Stripe } from "stripe";
 import useSWR from "swr";
 
 export function PayoutStatsAndSettings() {
+const { t } = useTranslation("partners.dub.co/(dashboard)/settings/payouts");
+
   const { partner } = usePartnerProfile();
   const { payoutsCount } = usePartnerPayoutsCount();
 
@@ -26,7 +30,7 @@ export function PayoutStatsAndSettings() {
       <div className="flex flex-col gap-1.5 p-4">
         <div className="flex justify-between gap-5">
           <div className="p-1">
-            <div className="text-sm text-neutral-500">Upcoming payouts</div>
+            <div className="text-sm text-neutral-500">{t('upcoming-payouts')}</div>
           </div>
           <StripeConnectButton
             text={
@@ -70,7 +74,7 @@ export function PayoutStatsAndSettings() {
       <div className="flex flex-col gap-1.5 p-4">
         <div className="flex justify-between gap-5">
           <div className="p-1">
-            <div className="text-sm text-neutral-500">Total payouts</div>
+            <div className="text-sm text-neutral-500">{t('total-payouts')}</div>
           </div>
         </div>
         <NumberFlow

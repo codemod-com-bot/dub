@@ -1,0 +1,11 @@
+{
+  "invalid-oauth-request": "\"Invalid OAuth Request\"",
+  "integration-name-requesting-api-access": "<0>{{_integration_name_}}</0>is requesting API access to a workspace on Dub.",
+  "built-by-integration-developer-link": "Built by <0>{{_integration_developer_}}</0>",
+  "dub-app-not-verified": "Dub hasn't verified this app",
+  "grant-permissions": "Grant permissions:",
+  "select-a-workspace-to-grant-api-access-to": "Select a workspace to grant API access to",
+  "create-new-workspace": "\"Create new workspace\"",
+  "decline": "\"Decline\"",
+  "authorize": "\"Authorize\""
+}

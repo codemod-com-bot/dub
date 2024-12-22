@@ -1,3 +1,4 @@
+import { useTranslation, Trans } from "react-i18next";
 import { ProgramProps } from "@/lib/types";
 import { cn, currencyFormatter, pluralize } from "@dub/utils";
 
@@ -18,34 +19,23 @@ export function ProgramCommissionDescription({
   amountClassName?: string;
   periodClassName?: string;
 }) {
+const { t } = useTranslation("../ui/partners");
+
   return (
-    <>
-      Earn{" "}
-      <strong className={cn("font-semibold", amountClassName)}>
-        {program.commissionType === "percentage"
-          ? program.commissionAmount + "%"
-          : currencyFormatter(program.commissionAmount / 100, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}{" "}
-      </strong>
-      for each sale
-      {program.isLifetimeRecurring ? (
-        <strong className={cn("font-semibold", periodClassName)}>
-          {" "}
-          for the customer's lifetime.
-        </strong>
+    <><Trans
+i18nKey="earn-commission-for-each-sale"
+components={{"0": 
+      <strong className={cn("font-semibold", amountClassName)} />}}
+/>{program.isLifetimeRecurring ? (
+        <strong className={cn("font-semibold", periodClassName)}>{t('customer-lifetime')}</strong>
       ) : program.recurringCommission &&
         program.recurringDuration &&
         program.recurringDuration > 0 ? (
-        <>
-          , and again{" "}
-          <strong className={cn("font-semibold", periodClassName)}>
-            every {program.recurringInterval || "cycle"} for{" "}
-            {program.recurringDuration
-              ? `${program.recurringDuration} ${pluralize(program.recurringInterval || "cycle", program.recurringDuration)}.`
-              : null}
-          </strong>
+        <><Trans
+i18nKey="recurring-interval-and-duration"
+components={{"0": 
+          <strong className={cn("font-semibold", periodClassName)} />}}
+/>
         </>
       ) : (
         "."

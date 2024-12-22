@@ -1,0 +1,10 @@
+{
+  "no-payouts-found": "\"No payouts found\"",
+  "view-sales": "\"View sales\"",
+  "pending-payouts": "Pending payouts",
+  "confirm-payouts": "\"Confirm payouts\"",
+  "valid-ach-bank-account-payment-method-to-send-payouts": "\"You must have a valid ACH bank account payment method to send payouts.\"",
+  "pending-payouts-whitespace": "Pending payouts",
+  "total-paid": "Total paid",
+  "view-invoices-whitespace": "View invoices"
+}

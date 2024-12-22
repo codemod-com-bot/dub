@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { CheckCircleFill } from "@/ui/shared/icons";
 import { AnimatedSizeContainer, ClientOnly, Popover } from "@dub/ui";
@@ -21,6 +23,8 @@ export const UserSurveyContext = createContext<{ status: UserSurveyStatus }>({
 const HIDDEN_COOKIE_ID = "hideUserSurveyPopup";
 
 export default function UserSurveyButton() {
+const { t } = useTranslation("../ui/layout/user-survey");
+
   const { data: session } = useSession();
   const [hidden, setHidden] = useState(Cookies.get(HIDDEN_COOKIE_ID) === "1");
   const [openPopover, setOpenPopover] = useState(false);
@@ -52,9 +56,7 @@ export default function UserSurveyButton() {
                     "hover:text-neutral-600 data-[state=open]:text-neutral-600",
                     "outline-none focus-visible:ring-2 focus-visible:ring-black/50",
                   )}
-                >
-                  Where did you hear about Dub?
-                </button>
+                >{t('where-did-you-hear-about-dub')}</button>
               </Popover>
             </motion.div>
           )}
@@ -65,6 +67,8 @@ export default function UserSurveyButton() {
 }
 
 export function UserSurveyPopupInner({ hide }: { hide: () => void }) {
+const { t } = useTranslation("../ui/layout/user-survey");
+
   const { update } = useSession();
 
   const [status, setStatus] = useState<UserSurveyStatus>("idle");
@@ -109,7 +113,7 @@ export function UserSurveyPopupInner({ hide }: { hide: () => void }) {
                 className="absolute inset-0 flex flex-col items-center justify-center space-y-3 rounded-lg bg-white text-sm"
               >
                 <CheckCircleFill className="h-8 w-8 text-green-500" />
-                <p className="text-gray-500">Thank you for your response!</p>
+                <p className="text-gray-500">{t('thank-you-for-your-response')}</p>
               </motion.div>
             )}
           </AnimatePresence>

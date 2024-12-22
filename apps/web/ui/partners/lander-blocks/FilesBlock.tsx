@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { programLanderFilesBlockSchema } from "@/lib/zod/schemas/program-lander";
 import { ArrowUpRight, Download } from "@dub/ui/icons";
 import { z } from "zod";
@@ -10,6 +11,8 @@ export function FilesBlock({
   block: z.infer<typeof programLanderFilesBlockSchema>;
   logo: string | null;
 }) {
+const { t } = useTranslation("../ui/partners/lander-blocks");
+
   return (
     <div>
       <BlockTitle title={block.data.title} />
@@ -25,7 +28,7 @@ export function FilesBlock({
               <div className="rounded-full border border-gray-200">
                 <div className="rounded-full border border-white bg-gradient-to-t from-gray-100 p-1 md:p-2">
                   {logo ? (
-                    <img src={logo} alt="" className="size-4 rounded-full" />
+                    <img src={logo} alt={t('empty-string')} className="size-4 rounded-full" />
                   ) : (
                     <Download className="size-4" />
                   )}

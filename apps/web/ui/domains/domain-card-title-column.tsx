@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ArrowTurnRight2, Flag2, Globe } from "@dub/ui/icons";
 import { cn, getPrettyUrl, punycode } from "@dub/utils";
 import { Star } from "lucide-react";
@@ -17,6 +18,8 @@ export function DomainCardTitleColumn({
   primary?: boolean;
   defaultDomain?: boolean;
 }) {
+const { t } = useTranslation("../ui/domains");
+
   return (
     <div className="flex min-w-0 items-center gap-4">
       <div className="hidden rounded-full border border-gray-200 sm:block">
@@ -48,14 +51,10 @@ export function DomainCardTitleColumn({
           </a>
           {primary ? (
             <span className="xs:px-3 xs:py-1 flex items-center gap-1 rounded-full bg-sky-400/[.15] px-1.5 py-0.5 text-xs font-medium text-sky-600">
-              <Flag2 className="hidden h-3 w-3 sm:block" />
-              Primary
-            </span>
+              <Flag2 className="hidden h-3 w-3 sm:block" />{t('primary')}</span>
           ) : defaultDomain && domain === "dub.link" ? (
             <span className="xs:px-3 xs:py-1 flex items-center gap-1 rounded-full bg-yellow-400/[.25] px-1.5 py-0.5 text-xs font-medium text-yellow-600">
-              <Star className="h-3 w-3" fill="currentColor" />
-              Premium
-            </span>
+              <Star className="h-3 w-3" fill="currentColor" />{t('premium')}</span>
           ) : null}
         </div>
         {(!defaultDomain || description) && (
@@ -81,9 +80,7 @@ export function DomainCardTitleColumn({
                       {getPrettyUrl(url)}
                     </a>
                   ) : (
-                    <span className="truncate text-gray-400">
-                      No redirect configured
-                    </span>
+                    <span className="truncate text-gray-400">{t('no-redirect-configured')}</span>
                   )
                 ) : (
                   <div className="h-4 w-16 animate-pulse rounded-md bg-gray-200" />

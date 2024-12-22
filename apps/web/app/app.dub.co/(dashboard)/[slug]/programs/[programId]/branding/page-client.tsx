@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { Palette2, Photo, Post } from "@dub/ui/icons";
@@ -6,10 +8,12 @@ import { Palette2, Photo, Post } from "@dub/ui/icons";
 const emptyStateIcons = [Post, Palette2, Photo];
 
 export function ProgramBrandingPageClient() {
+const { t } = useTranslation("app.dub.co/(dashboard)/[slug]/programs/[programId]/branding");
+
   return (
     <AnimatedEmptyState
-      title="Branding"
-      description="Customize graphics, colors, and more to fit your brand"
+      title={t('branding')}
+      description={t('customize-graphics-colors-and-more-to-fit-your-brand')}
       cardContent={(idx) => {
         const Icon = emptyStateIcons[idx % emptyStateIcons.length];
         return (

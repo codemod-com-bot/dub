@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { LinkLogo, useRouterStuff } from "@dub/ui";
 import { Globe, Hyperlink } from "@dub/ui/icons";
 import { getApexDomain } from "@dub/utils";
@@ -9,6 +10,8 @@ import BarList from "./bar-list";
 import { useAnalyticsFilterOption } from "./utils";
 
 export default function TopLinks() {
+const { t } = useTranslation("../ui/analytics");
+
   const { queryParams, searchParams } = useRouterStuff();
 
   const { selectedTab } = useContext(AnalyticsContext);
@@ -80,7 +83,7 @@ export default function TopLinks() {
             />
           ) : (
             <div className="flex h-[300px] items-center justify-center">
-              <p className="text-sm text-gray-600">No data available</p>
+              <p className="text-sm text-gray-600">{t('no-data-available')}</p>
             </div>
           )
         ) : (

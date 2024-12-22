@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "react-i18next";
+
 
 import { updatePartnerProfileAction } from "@/lib/actions/partners/update-partner-profile";
 import usePartnerProfile from "@/lib/swr/use-partner-profile";
@@ -19,22 +21,22 @@ import ReactTextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 
 export function ProfileSettingsPageClient() {
+const { t } = useTranslation("partners.dub.co/(dashboard)/settings");
+
   const { partner, error } = usePartnerProfile();
 
   return (
     <MaxWidthWrapper>
       <div className="max-w-screen-md rounded-lg border border-neutral-200 bg-white">
         <div className="border-b border-neutral-200 p-6">
-          <h2 className="text-xl font-medium text-neutral-800">About you</h2>
+          <h2 className="text-xl font-medium text-neutral-800">{t('about-you')}</h2>
         </div>
         {partner ? (
           <ProfileForm partner={partner} />
         ) : (
           <div className="flex h-32 w-full items-center justify-center">
             {error ? (
-              <span className="text-sm text-neutral-500">
-                Failed to load profile data
-              </span>
+              <span className="text-sm text-neutral-500">{t('failed-to-load-profile-data')}</span>
             ) : (
               <LoadingSpinner />
             )}
@@ -46,6 +48,8 @@ export function ProfileSettingsPageClient() {
 }
 
 function ProfileForm({ partner }: { partner: PartnerProps }) {
+const { t } = useTranslation("partners.dub.co/(dashboard)/settings");
+
   const {
     register,
     control,
@@ -91,9 +95,7 @@ function ProfileForm({ partner }: { partner: PartnerProps }) {
         <div className="grid grid-cols-1 items-center sm:grid-cols-2">
           <FormRow>
             <label className="contents">
-              <span className="text-sm font-medium text-gray-800">
-                Display Image
-              </span>
+              <span className="text-sm font-medium text-gray-800">{t('display-image')}</span>
               <div className="flex items-center gap-5">
                 <Controller
                   control={control}
@@ -122,12 +124,8 @@ function ProfileForm({ partner }: { partner: PartnerProps }) {
                       buttonVariants({ variant: "secondary" }),
                       "flex h-7 w-fit cursor-pointer items-center rounded-md border px-2 text-xs",
                     )}
-                  >
-                    Upload image
-                  </div>
-                  <p className="mt-1.5 text-xs text-gray-500">
-                    Recommended size: 160x160px
-                  </p>
+                  >{t('upload-image')}</div>
+                  <p className="mt-1.5 text-xs text-gray-500">{t('recommended-size-160x160px')}</p>
                 </div>
               </div>
             </label>
@@ -135,9 +133,7 @@ function ProfileForm({ partner }: { partner: PartnerProps }) {
 
           <FormRow>
             <label className="contents">
-              <span className="text-sm font-medium text-gray-800">
-                Full Name
-              </span>
+              <span className="text-sm font-medium text-gray-800">{t('full-name')}</span>
               <div>
                 <input
                   type="text"
@@ -147,7 +143,7 @@ function ProfileForm({ partner }: { partner: PartnerProps }) {
                       ? "border-red-300 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
                       : "border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:ring-gray-500",
                   )}
-                  placeholder="Acme, Inc."
+                  placeholder={t('acme-inc')}
                   {...register("name", {
                     required: true,
                   })}
@@ -158,9 +154,7 @@ function ProfileForm({ partner }: { partner: PartnerProps }) {
 
           <FormRow>
             <label className="contents">
-              <span className="text-sm font-medium text-gray-800">
-                Description
-              </span>
+              <span className="text-sm font-medium text-gray-800">{t('description')}</span>
               <div>
                 <ReactTextareaAutosize
                   className={cn(
@@ -169,7 +163,7 @@ function ProfileForm({ partner }: { partner: PartnerProps }) {
                       ? "border-red-300 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
                       : "border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:ring-gray-500",
                   )}
-                  placeholder="Tell us about the kind of content you create – e.g. tech, travel, fashion, etc."
+                  placeholder={t('tell-us-about-content')}
                   minRows={3}
                   maxRows={10}
                   onKeyDown={handleKeyDown}
@@ -183,7 +177,7 @@ function ProfileForm({ partner }: { partner: PartnerProps }) {
       <div className="flex justify-end rounded-b-lg border-t border-neutral-200 bg-neutral-100 px-5 py-3.5">
         <Button
           type="submit"
-          text="Save changes"
+          text={t('save-changes')}
           className="h-8 w-fit px-2.5"
           loading={isSubmitting || isExecuting}
         />
