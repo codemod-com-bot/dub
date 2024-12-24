@@ -1,3 +1,4 @@
+import { withNextIntl } from "next-intl/plugin";
 const { PrismaPlugin } = require("@prisma/nextjs-monorepo-workaround-plugin");
 const { withAxiom } = require("next-axiom");
 
@@ -11,7 +12,7 @@ const REDIRECT_SEGMENTS = [
 ];
 
 /** @type {import('next').NextConfig} */
-module.exports = withAxiom({
+module.exports = withNextIntl(withAxiom({
   reactStrictMode: false,
   transpilePackages: ["shiki", "@dub/prisma"],
   experimental: {
@@ -246,4 +247,4 @@ module.exports = withAxiom({
       },
     ];
   },
-});
+}));
