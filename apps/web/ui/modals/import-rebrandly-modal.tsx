@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { ImportedDomainCountProps } from "@/lib/types";
 import {
@@ -32,6 +33,8 @@ function ImportRebrandlyModal({
   showImportRebrandlyModal: boolean;
   setShowImportRebrandlyModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const t = useTranslations("../ui/modals");
+
   const router = useRouter();
   const { id: workspaceId, slug } = useWorkspace();
   const searchParams = useSearchParams();
@@ -100,24 +103,22 @@ function ImportRebrandlyModal({
         <div className="flex items-center space-x-3 py-4">
           <img
             src="https://assets.dub.co/misc/icons/rebrandly.svg"
-            alt="Rebrandly logo"
+            alt={t('rebrandly-logo')}
             className="h-12 w-12"
           />
           <ArrowRight className="h-5 w-5 text-gray-600" />
           <Logo />
         </div>
-        <h3 className="text-lg font-medium">Import Your Rebrandly Links</h3>
-        <p className="text-center text-sm text-gray-500">
-          Easily import all your existing Rebrandly links into{" "}
-          {process.env.NEXT_PUBLIC_APP_NAME} with just a few clicks.
-        </p>
+        <h3 className="text-lg font-medium">{t('import-your-rebrandly-links')}</h3>
+        <p className="text-center text-sm text-gray-500">{t('easily-import-all-your-existing-rebrandly-links')}
+          {process.env.NEXT_PUBLIC_APP_NAME}{t('with-just-a-few-clicks')}</p>
       </div>
 
       <div className="flex flex-col space-y-6 bg-gray-50 px-4 py-8 text-left sm:px-16">
         {isLoading || !workspaceId ? (
           <div className="flex flex-col items-center justify-center space-y-4 bg-none">
             <LoadingSpinner />
-            <p className="text-sm text-gray-500">Connecting to Rebrandly</p>
+            <p className="text-sm text-gray-500">{t('connecting-to-rebrandly')}</p>
           </div>
         ) : domains ? (
           <form
@@ -154,15 +155,14 @@ function ImportRebrandlyModal({
             className="flex flex-col space-y-4"
           >
             <div className="flex flex-col space-y-2">
-              <p className="text-sm font-medium text-gray-700">Domains</p>
+              <p className="text-sm font-medium text-gray-700">{t('domains')}</p>
               {domains.map(({ id, domain, links }) => (
                 <div className="flex items-center justify-between space-x-2 rounded-md border border-gray-200 bg-white px-4 py-2">
                   <div>
                     <p className="font-medium text-gray-800">{domain}</p>
                     {links > 0 && (
                       <p className="text-xs text-gray-500">
-                        {nFormatter(links)} links found
-                      </p>
+                        {nFormatter(links)}{t('links-found')}</p>
                     )}
                   </div>
                   <Switch
@@ -190,8 +190,7 @@ function ImportRebrandlyModal({
               {tagsCount && (
                 <div className="flex items-center justify-between space-x-2 rounded-md py-1 pl-2 pr-4">
                   <p className="text-xs text-gray-500">
-                    {tagsCount} tags found. Import all?
-                  </p>
+                    {t('tags-count-tags-found-import-all', { "tagsCount": tagsCount })}</p>
                   <Switch
                     fn={() => setImportTags(!importTags)}
                     checked={importTags}
@@ -200,7 +199,7 @@ function ImportRebrandlyModal({
               )}
             </div>
             <Button
-              text="Confirm import"
+              text={t('confirm-import')}
               loading={importing}
               disabled={selectedDomains.length === 0}
             />
@@ -233,9 +232,7 @@ function ImportRebrandlyModal({
           >
             <div>
               <div className="flex items-center space-x-2">
-                <h2 className="text-sm font-medium text-gray-900">
-                  Rebrandly API Key
-                </h2>
+                <h2 className="text-sm font-medium text-gray-900">{t('rebrandly-api-key')}</h2>
                 <InfoTooltip
                   content={
                     <SimpleTooltipContent
@@ -251,13 +248,13 @@ function ImportRebrandlyModal({
                 name="apiKey"
                 autoFocus={!isMobile}
                 type="text"
-                placeholder="93467061146a64622df83c12bcc0bffb"
+                placeholder={t('api-key-value')}
                 autoComplete="off"
                 required
                 className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
               />
             </div>
-            <Button text="Confirm API Key" loading={submitting} />
+            <Button text={t('confirm-api-key')} loading={submitting} />
           </form>
         )}
       </div>

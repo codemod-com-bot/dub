@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import useSAML from "@/lib/swr/use-saml";
 import useSCIM from "@/lib/swr/use-scim";
@@ -23,6 +25,8 @@ export default function WorkspaceSecurityClient() {
 }
 
 const SAMLSection = () => {
+const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/security");
+
   const { plan } = useWorkspace();
   const { SAMLModal, setShowSAMLModal } = useSAMLModal();
   const { RemoveSAMLModal, setShowRemoveSAMLModal } = useRemoveSAMLModal();
@@ -68,11 +72,9 @@ const SAMLSection = () => {
       <div className="rounded-lg border border-gray-200 bg-white">
         <div className="relative flex flex-col space-y-6 p-5 sm:p-10">
           <div className="flex flex-col space-y-3">
-            <h2 className="text-xl font-medium">SAML Single Sign-On</h2>
-            <p className="text-sm text-gray-500">
-              Set up SAML Single Sign-On (SSO) to allow your team to sign in to{" "}
-              {process.env.NEXT_PUBLIC_APP_NAME} with your identity provider.
-            </p>
+            <h2 className="text-xl font-medium">{t('saml-single-sign-on')}</h2>
+            <p className="text-sm text-gray-500">{t('set-up-saml-single-sign-on-sso-to-allow-your-team-to-sign-in-to')}
+              {process.env.NEXT_PUBLIC_APP_NAME}{t('with-your-identity-provider')}</p>
           </div>
 
           <div className="mt-2 flex items-center justify-between rounded-md border border-gray-200 px-4 py-3">
@@ -108,7 +110,7 @@ const SAMLSection = () => {
                         className="rounded-md p-2 text-left text-sm font-medium text-red-600 transition-all duration-75 hover:bg-red-600 hover:text-white"
                       >
                         <IconMenu
-                          text="Remove"
+                          text={t('remove')}
                           icon={<ShieldOff className="h-4 w-4" />}
                         />
                       </button>
@@ -126,18 +128,18 @@ const SAMLSection = () => {
                     }}
                     className="rounded-md px-1 py-2 transition-all duration-75 hover:bg-gray-100 active:bg-gray-200"
                   >
-                    <span className="sr-only">Edit</span>
+                    <span className="sr-only">{t('edit')}</span>
                     <ThreeDots className="h-5 w-5 text-gray-500" />
                   </button>
                 </Popover>
               ) : (
                 <Button
-                  text="Configure"
+                  text={t('configure')}
                   disabled={plan !== "enterprise"}
                   {...(plan !== "enterprise" && {
                     disabledTooltip: (
                       <TooltipContent
-                        title="SAML SSO is only available on Enterprise plans. Upgrade to get started."
+                        title={t('saml-sso-is-only-available-on-enterprise-plans-upgrade-to-get-started')}
                         cta="Contact sales"
                         href="https://dub.co/enterprise"
                         target="_blank"
@@ -156,9 +158,7 @@ const SAMLSection = () => {
             href="https://dub.co/help/category/saml-sso"
             target="_blank"
             className="text-sm text-gray-400 underline underline-offset-4 transition-colors hover:text-gray-700"
-          >
-            Learn more about SAML SSO.
-          </a>
+          >{t('learn-more-about-saml-sso')}</a>
         </div>
       </div>
     </>
@@ -166,6 +166,8 @@ const SAMLSection = () => {
 };
 
 const SCIMSection = () => {
+const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/security");
+
   const { plan } = useWorkspace();
   const { SCIMModal, setShowSCIMModal } = useSCIMModal();
   const { RemoveSCIMModal, setShowRemoveSCIMModal } = useRemoveSCIMModal();
@@ -212,11 +214,8 @@ const SCIMSection = () => {
       <div className="rounded-lg border border-gray-200 bg-white">
         <div className="relative flex flex-col space-y-6 p-5 sm:p-10">
           <div className="flex flex-col space-y-3">
-            <h2 className="text-xl font-medium">Directory Sync</h2>
-            <p className="text-sm text-gray-500">
-              Automatically provision and deprovision users from your identity
-              provider.
-            </p>
+            <h2 className="text-xl font-medium">{t('directory-sync')}</h2>
+            <p className="text-sm text-gray-500">{t('automatically-provision-and-deprovision-users-from-your-identity-provider')}</p>
           </div>
 
           <div className="mt-2 flex items-center justify-between rounded-md border border-gray-200 px-4 py-3">
@@ -252,7 +251,7 @@ const SCIMSection = () => {
                         className="rounded-md p-2 text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
                       >
                         <IconMenu
-                          text="View configuration"
+                          text={t('view-configuration')}
                           icon={<FolderSync className="h-4 w-4" />}
                         />
                       </button>
@@ -264,7 +263,7 @@ const SCIMSection = () => {
                         className="rounded-md p-2 text-left text-sm font-medium text-red-600 transition-all duration-75 hover:bg-red-600 hover:text-white"
                       >
                         <IconMenu
-                          text="Remove"
+                          text={t('remove-duplicate')}
                           icon={<ShieldOff className="h-4 w-4" />}
                         />
                       </button>
@@ -282,18 +281,18 @@ const SCIMSection = () => {
                     }}
                     className="rounded-md px-1 py-2 transition-all duration-75 hover:bg-gray-100 active:bg-gray-200"
                   >
-                    <span className="sr-only">Edit</span>
+                    <span className="sr-only">{t('edit-duplicate')}</span>
                     <ThreeDots className="h-5 w-5 text-gray-500" />
                   </button>
                 </Popover>
               ) : (
                 <Button
-                  text="Configure"
+                  text={t('configure-duplicate')}
                   disabled={plan !== "enterprise"}
                   {...(plan !== "enterprise" && {
                     disabledTooltip: (
                       <TooltipContent
-                        title="SCIM Directory Sync is only available on Enterprise plans. Upgrade to get started."
+                        title={t('scim-directory-sync-is-only-available-on-enterprise-plans-upgrade-to-get-started')}
                         cta="Contact sales"
                         href="https://dub.co/enterprise"
                         target="_blank"
@@ -312,9 +311,7 @@ const SCIMSection = () => {
             href="https://dub.co/help/category/saml-sso"
             target="_blank"
             className="text-sm text-gray-400 underline underline-offset-4 transition-colors hover:text-gray-700"
-          >
-            Learn more about SCIM Directory Sync.
-          </a>
+          >{t('learn-more-about-scim-directory-sync')}</a>
         </div>
       </div>
     </>

@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { getProgram } from "@/lib/fetchers/get-program";
 import { notFound } from "next/navigation";
 import { CSSProperties } from "react";
@@ -10,6 +11,8 @@ export default async function ApplicationPage({
 }: {
   params: { programSlug: string };
 }) {
+const t = await getTranslations("partners.dub.co/(apply)/apply/[programSlug]/application");
+
   const program = await getProgram({ slug: programSlug });
 
   if (!program) {
@@ -37,13 +40,9 @@ export default async function ApplicationPage({
       <div className="p-6">
         {/* Hero section */}
         <div className="grid grid-cols-1 gap-5 sm:pt-20">
-          <p className="font-mono text-xs font-medium uppercase text-[var(--brand)]">
-            Affiliate Program
-          </p>
-          <h1 className="text-4xl font-semibold">{program.name} application</h1>
-          <p className="text-base text-neutral-700">
-            Submit your application to join the affiliate program.
-          </p>
+          <p className="font-mono text-xs font-medium uppercase text-[var(--brand)]">{t('affiliate-program')}</p>
+          <h1 className="text-4xl font-semibold">{program.name}{t('application')}</h1>
+          <p className="text-base text-neutral-700">{t('submit-your-application-to-join-the-affiliate-program')}</p>
         </div>
 
         {/* Program details grid */}

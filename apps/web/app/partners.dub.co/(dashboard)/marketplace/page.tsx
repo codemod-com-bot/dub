@@ -1,15 +1,18 @@
+import { useTranslations } from "next-intl";
 import { PageContent } from "@/ui/layout/page-content";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { MaxWidthWrapper } from "@dub/ui";
 import { Folder, Globe } from "@dub/ui/icons";
 
 export default function MarketplacePage() {
+const t = useTranslations("partners.dub.co/(dashboard)/marketplace");
+
   return (
     <PageContent title="Marketplace" hideReferButton>
       <MaxWidthWrapper>
         <AnimatedEmptyState
-          title="Marketplace"
-          description="Explore and discover other partnerships with companies and products."
+          title={t('marketplace')}
+          description={t('explore-and-discover-other-partnerships-with-companies-and-products')}
           cardContent={
             <>
               <Folder className="size-4 text-neutral-700" />

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { LoadingSpinner } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -33,6 +35,8 @@ export default function RefreshDomain() {
 }
 
 const Form = () => {
+const t = useTranslations("admin.dub.co/(dashboard)/components");
+
   const { pending } = useFormStatus();
 
   return (
@@ -48,7 +52,7 @@ const Form = () => {
           "block w-full rounded-md border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500",
           pending && "bg-gray-100",
         )}
-        placeholder="acme.com"
+        placeholder={t('acme-com')}
         aria-invalid="true"
       />
       {pending && (

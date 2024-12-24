@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Grid, useLocalStorage } from "@dub/ui";
 import { LinkBroken } from "@dub/ui/icons";
@@ -5,6 +6,8 @@ import { useRegisterDomainModal } from "../modals/register-domain-modal";
 import { X } from "../shared/icons";
 
 export function FreeDotLinkBanner() {
+const t = useTranslations("../ui/domains");
+
   const { id: workspaceId } = useWorkspace();
   const [show, setShow] = useLocalStorage(
     `show-free-dot-link-banner:${workspaceId}`,
@@ -29,16 +32,12 @@ export function FreeDotLinkBanner() {
             <div className="hidden rounded-full border border-green-600/50 bg-white/50 p-1 shadow-[inset_0_0_1px_1px_#fff] sm:block">
               <LinkBroken className="m-px size-4 text-green-800" />
             </div>
-            <p className="text-sm text-gray-900">
-              Claim a free <span className="font-semibold">.link</span> domain,
-              free for 1 year.{" "}
-              <a
+            <p className="text-sm text-gray-900">{t('claim-a-free-link-domain', { "component0": <span className="font-semibold">{t('claim-a-free-link-domain_component0')}</span>, "component1": <a
                 href="https://dub.co/help/article/free-dot-link-domain"
                 target="_blank"
                 className="text-gray-700 underline transition-colors hover:text-black"
-              >
-                Learn more
-              </a>
+              >{t('claim-a-free-link-domain_component1')}</a> })}
+              
             </p>
           </div>
 
@@ -47,9 +46,7 @@ export function FreeDotLinkBanner() {
               type="button"
               className="whitespace-nowrap rounded-md border border-green-700/50 px-3 py-1 text-sm text-gray-800 transition-colors hover:bg-green-500/10"
               onClick={() => setShowRegisterDomainModal(true)}
-            >
-              Claim Domain
-            </button>
+            >{t('claim-domain')}</button>
           </div>
           <button
             type="button"

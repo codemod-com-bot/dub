@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Background, Footer, Nav, NavMobile } from "@dub/ui";
 import { constructMetadata } from "@dub/utils";
 import { ShieldBan } from "lucide-react";
@@ -11,6 +12,8 @@ export const metadata = constructMetadata({
 });
 
 export default async function BannedPage() {
+const t = await getTranslations("banned");
+
   return (
     <main className="flex min-h-screen flex-col justify-between">
       <NavMobile />
@@ -19,16 +22,12 @@ export default async function BannedPage() {
         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-gray-300 bg-white/30">
           <ShieldBan className="size-6 text-gray-500" />
         </div>
-        <h1 className="font-display text-5xl font-bold">Banned Link</h1>
-        <p className="text-lg text-gray-600">
-          This link has been banned for violating our terms of service.
-        </p>
+        <h1 className="font-display text-5xl font-bold">{t('banned-link')}</h1>
+        <p className="text-lg text-gray-600">{t('banned-link-message')}</p>
         <a
           href="https://dub.co/home"
           className="rounded-full bg-gray-800 px-10 py-2 font-medium text-white transition-colors hover:bg-black"
-        >
-          Create Your Free Branded Link
-        </a>
+        >{t('create-your-free-branded-link')}</a>
       </div>
       <Footer />
       <Background />

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Invite } from "@/lib/zod/schemas/invites";
 import { BlurImage, Logo, Modal } from "@dub/ui";
@@ -22,6 +23,8 @@ function InviteTeammateModal({
   setShowInviteTeammateModal: Dispatch<SetStateAction<boolean>>;
   showSavedInvites: boolean;
 }) {
+const t = useTranslations("../ui/modals");
+
   const { id: workspaceId, plan, logo } = useWorkspace();
 
   // we only need to fetch saved invites if the workspace is on the free plan
@@ -45,7 +48,7 @@ function InviteTeammateModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Invite Teammates"
+            alt={t('invite-teammates')}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -53,18 +56,13 @@ function InviteTeammateModal({
         ) : (
           <Logo />
         )}
-        <h3 className="text-lg font-medium">Invite Teammates</h3>
-        <p className="text-center text-sm text-gray-500">
-          Invite teammates with{" "}
-          <a
+        <h3 className="text-lg font-medium">{t('invite-teammates-simple')}</h3>
+        <p className="text-center text-sm text-gray-500">{t('invite-teammates-with-roles-and-permissions', { "component0": <a
             href="https://dub.co/help/article/workspace-roles"
             target="_blank"
             className="underline hover:text-gray-900"
-          >
-            different roles and permissions
-          </a>
-          . Invitations will be valid for 14 days.
-        </p>
+          >{t('invite-teammates-with-roles-and-permissions_component0')}</a> })}
+          </p>
       </div>
       {isLoading ? (
         <div className="flex items-center justify-center p-8">

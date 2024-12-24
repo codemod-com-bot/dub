@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useWorkspace from "@/lib/swr/use-workspace";
 import {
   Button,
@@ -25,6 +26,8 @@ function AdvancedModal({
   showAdvancedModal: boolean;
   setShowAdvancedModal: Dispatch<SetStateAction<boolean>>;
 }) {
+const t = useTranslations("../ui/modals/link-builder");
+
   const id = useId();
 
   const {
@@ -72,20 +75,15 @@ function AdvancedModal({
         }}
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-medium">Advanced Options</h3>
+          <h3 className="text-lg font-medium">{t('advanced-options')}</h3>
           <div className="max-md:hidden">
             <Tooltip
               content={
-                <div className="px-2 py-1 text-xs text-gray-700">
-                  Press <strong className="font-medium text-gray-950">A</strong>{" "}
-                  to open this quickly
-                </div>
+                <div className="px-2 py-1 text-xs text-gray-700">{t('press-a-to-open-quickly', { "component0": <strong className="font-medium text-gray-950">{t('press-a-to-open-quickly_component0')}</strong> })}</div>
               }
               side="right"
             >
-              <kbd className="flex size-6 cursor-default items-center justify-center gap-1 rounded-md border border-gray-200 font-sans text-xs text-gray-950">
-                A
-              </kbd>
+              <kbd className="flex size-6 cursor-default items-center justify-center gap-1 rounded-md border border-gray-200 font-sans text-xs text-gray-950">{t('a')}</kbd>
             </Tooltip>
           </div>
         </div>
@@ -97,12 +95,11 @@ function AdvancedModal({
               <label
                 htmlFor={`${id}-external-id`}
                 className="flex items-center gap-2 text-sm font-medium text-gray-700"
-              >
-                External ID{" "}
+              >{t('external-id')}
                 <InfoTooltip
                   content={
                     <SimpleTooltipContent
-                      title="A unique identifier for this link in your database."
+                      title={t('unique-identifier-for-link-in-database')}
                       cta="Learn more about external IDs."
                       href="https://d.to/externalId"
                     />
@@ -112,7 +109,7 @@ function AdvancedModal({
               <Tooltip
                 content={
                   <SimpleTooltipContent
-                    title="A unique identifier for this link in your system."
+                    title={t('unique-identifier-for-link-in-system')}
                     cta="Learn more about external IDs."
                     href="https://d.to/externalId"
                   />
@@ -123,7 +120,7 @@ function AdvancedModal({
               <input
                 id={`${id}-external-id`}
                 type="text"
-                placeholder="Eg: 123456"
+                placeholder={t('eg-123456')}
                 className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                 {...register("externalId")}
               />
@@ -141,23 +138,21 @@ function AdvancedModal({
                   setValueParent("externalId", null, { shouldDirty: true });
                   setShowAdvancedModal(false);
                 }}
-              >
-                Remove advanced options
-              </button>
+              >{t('remove-advanced-options')}</button>
             )}
           </div>
           <div className="flex items-center gap-2">
             <Button
               type="button"
               variant="secondary"
-              text="Cancel"
+              text={t('cancel')}
               className="h-9 w-fit"
               onClick={() => setShowAdvancedModal(false)}
             />
             <Button
               type="submit"
               variant="primary"
-              text="Save"
+              text={t('save')}
               className="h-9 w-fit"
               disabled={!isDirty}
             />

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Button, Icon, Popover, useCopyToClipboard } from "@dub/ui";
 import { Copy, Dots } from "@dub/ui/icons";
 import { cn } from "@dub/utils";
@@ -8,6 +9,8 @@ import { toast } from "sonner";
 import { EventDatum } from "./events-table";
 
 export function RowMenuButton({ row }: { row: Row<EventDatum> }) {
+const t = useTranslations("../ui/analytics/events");
+
   const [isOpen, setIsOpen] = useState(false);
   const [, copyToClipboard] = useCopyToClipboard();
   return (
@@ -20,7 +23,7 @@ export function RowMenuButton({ row }: { row: Row<EventDatum> }) {
             {"eventId" in row.original && (
               <MenuItem
                 icon={Copy}
-                label="Copy event ID"
+                label={t('copy-event-id')}
                 onSelect={() => {
                   if (!("eventId" in row.original)) return;
                   const eventId = row.original.eventId as string;
@@ -33,7 +36,7 @@ export function RowMenuButton({ row }: { row: Row<EventDatum> }) {
             )}
             <MenuItem
               icon={Copy}
-              label="Copy click ID"
+              label={t('copy-click-id')}
               onSelect={() => {
                 const clickId = row.original.click_id as string;
                 toast.promise(copyToClipboard(clickId), {

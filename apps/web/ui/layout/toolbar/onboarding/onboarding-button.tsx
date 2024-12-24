@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import useDomainsCount from "@/lib/swr/use-domains-count";
 import useLinksCount from "@/lib/swr/use-links-count";
@@ -28,6 +30,8 @@ function OnboardingButtonInner({
 }: {
   onHideForever: () => void;
 }) {
+const t = useTranslations("../ui/layout/toolbar/onboarding");
+
   const { slug } = useParams() as { slug: string };
 
   const { data: domainsCount, loading: domainsLoading } = useDomainsCount({
@@ -77,12 +81,9 @@ function OnboardingButtonInner({
           <div className="rounded-t-xl bg-black p-4 text-white">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <span className="text-base font-medium">Getting Started</span>
-                <p className="mt-1 text-sm text-gray-300">
-                  Get familiar with Dub by completing the{" "}
-                  <br className="hidden sm:block" />
-                  following tasks
-                </p>
+                <span className="text-base font-medium">{t('getting-started')}</span>
+                <p className="mt-1 text-sm text-gray-300">{t('get-familiar-with-dub-by-completing-the')}
+                  <br className="hidden sm:block" />{t('following-tasks')}</p>
               </div>
               <div className="flex items-center gap-1">
                 <OnboardingMenu
@@ -133,10 +134,9 @@ function OnboardingButtonInner({
         type="button"
         className="animate-slide-up-fade -mt-1 flex h-12 flex-col items-center justify-center rounded-full border border-gray-950 bg-gray-950 px-6 text-xs font-medium leading-tight text-white shadow-md transition-all [--offset:10px] hover:bg-gray-800 hover:ring-4 hover:ring-gray-200"
       >
-        <span>Getting Started</span>
+        <span>{t('getting-started-duplicate')}</span>
         <span className="text-gray-400">
-          {Math.round((completedTasks / tasks.length) * 100)}% complete
-        </span>
+          {Math.round((completedTasks / tasks.length) * 100)}{t('percent-complete')}</span>
       </button>
     </Popover>
   );
@@ -156,6 +156,8 @@ const MiniButton = forwardRef(
 );
 
 function OnboardingMenu({ onHideForever }: { onHideForever: () => void }) {
+const t = useTranslations("../ui/layout/toolbar/onboarding");
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -166,7 +168,7 @@ function OnboardingMenu({ onHideForever }: { onHideForever: () => void }) {
           <Button
             onClick={onHideForever}
             variant="outline"
-            text="Dismiss forever"
+            text={t('dismiss-forever')}
             className="h-9"
           />
         </div>

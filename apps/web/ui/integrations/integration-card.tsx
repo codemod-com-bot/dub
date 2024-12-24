@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import useIntegrations from "@/lib/swr/use-integrations";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -16,6 +18,8 @@ import Link from "next/link";
 export default function IntegrationCard(
   integration: InstalledIntegrationProps,
 ) {
+const t = useTranslations("../ui/integrations");
+
   const { slug } = useWorkspace();
   const { integrations: activeIntegrations } = useIntegrations();
 
@@ -27,9 +31,7 @@ export default function IntegrationCard(
       className="hover:drop-shadow-card-hover relative rounded-xl border border-gray-200 bg-white px-5 py-4 transition-[filter]"
     >
       {installed && (
-        <p className="absolute right-4 top-4 text-xs text-gray-500">
-          INSTALLED
-        </p>
+        <p className="absolute right-4 top-4 text-xs text-gray-500">{t('installed')}</p>
       )}
       <div className="flex items-center gap-x-3">
         <div className="rounded-md border border-gray-200 bg-gradient-to-t from-gray-100 p-2.5">

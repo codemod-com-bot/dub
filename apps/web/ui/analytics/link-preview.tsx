@@ -1,9 +1,12 @@
+import { useTranslations } from "next-intl";
 import { LinkProps } from "@/lib/types";
 import { CopyButton, LinkLogo } from "@dub/ui";
 import { ArrowTurnRight2 } from "@dub/ui/icons";
 import { getApexDomain, getPrettyUrl, linkConstructor } from "@dub/utils";
 
 export default function LinkPreviewTooltip({ data }: { data: LinkProps }) {
+const t = useTranslations("../ui/analytics");
+
   const { domain, key, url } = data;
 
   return (
@@ -50,7 +53,7 @@ export default function LinkPreviewTooltip({ data }: { data: LinkProps }) {
               {getPrettyUrl(url)}
             </a>
           ) : (
-            <span className="truncate text-gray-400">No URL configured</span>
+            <span className="truncate text-gray-400">{t('no-url-configured')}</span>
           )}
         </div>
       </div>

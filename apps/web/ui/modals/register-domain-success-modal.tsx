@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Button, Modal, useRouterStuff } from "@dub/ui";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
@@ -12,6 +13,8 @@ const RegisterDomainSuccess = ({
   showModal,
   setShowModal,
 }: RegisterDomainSuccessProps) => {
+const t = useTranslations("../ui/modals");
+
   const searchParams = useSearchParams();
   const registered = searchParams.get("registered");
 
@@ -27,9 +30,7 @@ const RegisterDomainSuccess = ({
         <ModalHero />
         <div className="px-6 py-8 sm:px-12">
           <div className="relative text-center">
-            <h1 className="text-base font-medium text-gray-950">
-              Congratulations! You've claimed
-            </h1>
+            <h1 className="text-base font-medium text-gray-950">{t('congratulations-youve-claimed')}</h1>
             <p
               className="animate-gradient-move font-display mt-4 bg-clip-text text-xl font-semibold text-transparent"
               style={{
@@ -40,23 +41,19 @@ const RegisterDomainSuccess = ({
             >
               {registered}
             </p>
-            <p className="mt-4 text-sm text-gray-500">
-              Your domain is now registered and ready to use, though it may take
-              some time for the domain configuration to propagate globally.{" "}
-              <a
+            <p className="mt-4 text-sm text-gray-500">{t('your-domain-is-now-registered-and-ready-to-use-though-it-may-take-some-time-for-the-domain-configuration-to-propagate-globally-learn-more', { "component0": <a
                 href="https://dub.co/help/article/free-dot-link-domain#claim-your-domain-and-wait-for-it-to-be-provisioned"
                 target="_blank"
                 className="underline transition-colors hover:text-gray-700"
-              >
-                Learn more.
-              </a>
+              >{t('your-domain-is-now-registered-and-ready-to-use-though-it-may-take-some-time-for-the-domain-configuration-to-propagate-globally-learn-more_component0')}</a> })}
+              
             </p>
           </div>
           <div className="mt-8">
             <Button
               type="button"
               variant="primary"
-              text="Start using your domain"
+              text={t('start-using-your-domain')}
               className="mt-2"
               onClick={() =>
                 queryParams({

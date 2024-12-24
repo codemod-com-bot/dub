@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import useSalesCount from "@/lib/swr/use-sales-count";
 import { ProgramStatsFilter } from "@/ui/partners/program-stats-filter";
@@ -8,6 +10,8 @@ import { Users } from "@dub/ui/icons";
 import { useParams } from "next/navigation";
 
 export function SaleStats() {
+const t = useTranslations("app.dub.co/(dashboard)/[slug]/programs/[programId]/sales");
+
   const { slug, programId } = useParams();
   const { queryParams } = useRouterStuff();
 
@@ -16,7 +20,7 @@ export function SaleStats() {
   return (
     <div className="xs:grid-cols-4 xs:divide-x xs:divide-y-0 grid divide-y divide-neutral-200 overflow-hidden rounded-lg border border-neutral-200">
       <ProgramStatsFilter
-        label="All"
+        label={t('all')}
         href={`/${slug}/programs/${programId}/sales`}
         count={salesCount?.all}
         icon={Users}
@@ -24,7 +28,7 @@ export function SaleStats() {
         error={!!error}
       />
       <ProgramStatsFilter
-        label="Pending"
+        label={t('pending')}
         href={
           queryParams({
             set: { status: "pending" },
@@ -37,7 +41,7 @@ export function SaleStats() {
         error={!!error}
       />
       <ProgramStatsFilter
-        label="Processed"
+        label={t('processed')}
         href={
           queryParams({
             set: { status: "processed" },
@@ -50,7 +54,7 @@ export function SaleStats() {
         error={!!error}
       />
       <ProgramStatsFilter
-        label="Paid"
+        label={t('paid')}
         href={
           queryParams({
             set: { status: "paid" },

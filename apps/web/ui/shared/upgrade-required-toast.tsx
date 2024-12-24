@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Crown } from "lucide-react";
@@ -11,6 +13,8 @@ export const UpgradeRequiredToast = ({
   title: string;
   message: string;
 }) => {
+const t = useTranslations("../ui/shared");
+
   const { slug, nextPlan } = useWorkspace();
 
   return (
@@ -24,8 +28,7 @@ export const UpgradeRequiredToast = ({
         href={slug ? `/${slug}/upgrade?exit=close` : "https://dub.co/pricing"}
         target="_blank"
         className="w-full rounded-md border border-black bg-black px-3 py-1.5 text-center text-sm text-white transition-all hover:bg-gray-800 hover:ring-4 hover:ring-gray-200"
-      >
-        Upgrade to {nextPlan.name}
+      >{t('upgrade-to')}{nextPlan.name}
       </Link>
     </div>
   );

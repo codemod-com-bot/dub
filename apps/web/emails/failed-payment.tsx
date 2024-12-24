@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Project } from "@dub/prisma/client";
 import { DUB_WORDMARK } from "@dub/utils";
 import {
@@ -26,6 +27,8 @@ export default function FailedPayment({
   amountDue: number;
   attemptCount: number;
 }) {
+const t = useTranslations("../emails");
+
   const title = `${
     attemptCount == 2 ? "2nd notice: " : attemptCount == 3 ? "3rd notice: " : ""
   }Your payment for Dub.co failed`;
@@ -41,43 +44,27 @@ export default function FailedPayment({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t('dub')}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              {attemptCount == 2 ? "2nd " : attemptCount == 3 ? "3rd  " : ""}
-              Failed Payment for Dub.co
-            </Heading>
-            <Text className="text-sm leading-6 text-black">
-              Hey{user.name ? `, ${user.name}` : ""}!
-            </Text>
-            <Text className="text-sm leading-6 text-black">
-              Your payment of{" "}
-              <code className="text-purple-600">${amountDue / 100}</code> for
-              your Dub workspace{" "}
-              <code className="text-purple-600">{workspace.name}</code> has
-              failed. Please{" "}
-              <Link
+              {t('failed-payment-attempt')}</Heading>
+            <Text className="text-sm leading-6 text-black">{t('hey')}{user.name ? `, ${user.name}` : ""}{t('exclamation-mark')}</Text>
+            <Text className="text-sm leading-6 text-black">{t('payment-failed-notification', { "component0": <code className="text-purple-600">{t('payment-failed-notification_component0')}{amountDue / 100}</code>, "component1": {t('payment-failed-notification_component1', { "_workspace_name_": _workspace_name_ })}, "component2": <Link
                 href="https://dub.co/help/article/how-to-change-billing-information"
                 className="font-medium text-blue-600 no-underline"
-              >
-                update your payment information
-              </Link>{" "}
-              using the link below:
-            </Text>
+              >{t('payment-failed-notification_component2')}</Link> })}
+              
+              
+              </Text>
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={`https://app.dub.co/${workspace.slug}/settings/billing`}
-              >
-                Update payment information
-              </Link>
+              >{t('update-payment-information')}</Link>
             </Section>
-            <Text className="text-sm leading-6 text-black">
-              If you have any questions, feel free to respond to this email –
-              we're happy to help!
-            </Text>
+            <Text className="text-sm leading-6 text-black">{t('customer-support-offer')}</Text>
             <Footer email={user.email} />
           </Container>
         </Body>

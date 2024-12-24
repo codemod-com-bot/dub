@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import useWorkspaces from "@/lib/swr/use-workspaces";
 import { Button, InputSelect, InputSelectItemProps } from "@dub/ui";
@@ -8,6 +10,8 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 export default function UpdateDefaultWorkspace() {
+const t = useTranslations("../ui/account");
+
   const { data: session, update } = useSession();
   const { workspaces } = useWorkspaces();
 
@@ -74,10 +78,8 @@ export default function UpdateDefaultWorkspace() {
       className="rounded-lg border border-gray-200 bg-white"
     >
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
-        <h2 className="text-xl font-medium">Your Default Workspace</h2>
-        <p className="text-sm text-gray-500">
-          Choose the workspace to show by default when you sign in.
-        </p>
+        <h2 className="text-xl font-medium">{t('your-default-workspace')}</h2>
+        <p className="text-sm text-gray-500">{t('choose-workspace-to-show-by-default')}</p>
         <div className="mt-1 max-w-md">
           <InputSelect
             items={selectOptions}
@@ -93,12 +95,10 @@ export default function UpdateDefaultWorkspace() {
           href="https://dub.co/help/article/how-to-change-default-workspace"
           target="_blank"
           className="text-sm text-gray-500 underline underline-offset-4 hover:text-gray-700"
-        >
-          Learn more about how default workspaces work
-        </a>
+        >{t('learn-more-about-default-workspaces')}</a>
         <div>
           <Button
-            text="Save changes"
+            text={t('save-changes')}
             loading={saving}
             disabled={
               !selectedWorkspace ||

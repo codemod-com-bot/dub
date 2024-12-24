@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { DUB_WORDMARK, nFormatter, smartTruncate } from "@dub/utils";
 import {
   Body,
@@ -61,13 +62,14 @@ export default function ClicksSummary({
     clicks: number;
   }[];
 }) {
+const t = useTranslations("../emails");
+
   const notificationSettingsUrl = `https://app.${appDomain}/${workspaceSlug}/settings/notifications`;
 
   return (
     <Html>
       <Head />
-      <Preview>
-        Your 30-day {appName} summary for {workspaceName}
+      <Preview>{t('your-30-day-app-name-summary-for-workspace-name', { "appName": appName, "workspaceName": workspaceName })}
       </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
@@ -80,16 +82,11 @@ export default function ClicksSummary({
                 className="mx-auto my-0"
               />
             </Section>
-            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Your 30-day {appName} summary for {workspaceName}
+            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">{t('your-30-day-app-name-summary-for-workspace-name-duplicate', { "appName": appName, "workspaceName": workspaceName })}
             </Heading>
-            <Text className="text-sm leading-6 text-black">
-              In the last 30 days, your {appName} workspace,{" "}
-              <strong>{workspaceName}</strong> received{" "}
-              <strong>{nFormatter(totalClicks)} link clicks</strong>. You also
-              created <strong>{createdLinks} new links</strong> during that
-              time.
-            </Text>
+            <Text className="text-sm leading-6 text-black">{t('last-30-days-app-name-workspace-received-link-clicks-created-links', { "appName": appName, "component0": {t('last-30-days-app-name-workspace-received-link-clicks-created-links_component0', { "_workspaceName_": _workspaceName_ })}, "component1": <strong>{nFormatter(totalClicks)}{t('last-30-days-app-name-workspace-received-link-clicks-created-links_component1')}</strong>, "component2": <strong>{t('last-30-days-app-name-workspace-received-link-clicks-created-links_component2', { "createdLinks": createdLinks })}</strong> })}
+              
+              </Text>
             <Section>
               <Row>
                 <Column align="center">
@@ -97,32 +94,24 @@ export default function ClicksSummary({
                     <MousePointerClick className="h-5 w-5 text-blue-600" />
                   </div>
                   <p className="text-sm font-semibold text-black">
-                    {nFormatter(totalClicks)} clicks
-                  </p>
+                    {nFormatter(totalClicks)}{t('clicks')}</p>
                 </Column>
                 <Column align="center">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-200">
                     <Link2 className="h-5 w-5 text-green-600" />
                   </div>
                   <p className="text-sm font-semibold text-black">
-                    {nFormatter(createdLinks)} new links
-                  </p>
+                    {nFormatter(createdLinks)}{t('new-links')}</p>
                 </Column>
               </Row>
             </Section>
             {topLinks.length > 0 && (
               <>
-                <Text className="text-sm leading-6 text-black">
-                  Here are your top {topLinks.length} best performing links:
-                </Text>
+                <Text className="text-sm leading-6 text-black">{t('here-are-your-top')}{topLinks.length}{t('best-performing-links')}</Text>
                 <Section>
                   <Row className="pb-2">
-                    <Column align="left" className="text-sm text-gray-500">
-                      Link
-                    </Column>
-                    <Column align="right" className="text-sm text-gray-500">
-                      Clicks
-                    </Column>
+                    <Column align="left" className="text-sm text-gray-500">{t('link')}</Column>
+                    <Column align="right" className="text-sm text-gray-500">{t('clicks-header')}</Column>
                   </Row>
                   {topLinks.map(({ link, clicks }, index) => {
                     const [domain, ...pathParts] = link.split("/");
@@ -156,33 +145,23 @@ export default function ClicksSummary({
             )}
             {createdLinks === 0 ? (
               <>
-                <Text className="text-sm leading-6 text-black">
-                  It looks like you haven't created any links in the last 30
-                  days. If there's anything that we can do to help, please reply
-                  to this email to get in touch with us.
-                </Text>
+                <Text className="text-sm leading-6 text-black">{t('no-links-created-in-last-30-days')}</Text>
 
                 <Section className="my-8 text-center">
                   <Link
                     className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                     href={`https://app.${appDomain}/${workspaceSlug}`}
-                  >
-                    Start creating links
-                  </Link>
+                  >{t('start-creating-links')}</Link>
                 </Section>
               </>
             ) : (
               <>
-                <Text className="mt-10 text-sm leading-6 text-black">
-                  You can view your full stats by clicking the button below.
-                </Text>
+                <Text className="mt-10 text-sm leading-6 text-black">{t('view-full-stats')}</Text>
                 <Section className="my-8 text-center">
                   <Link
                     className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                     href={`https://app.${appDomain}/${workspaceSlug}/analytics?interval=30d`}
-                  >
-                    View my stats
-                  </Link>
+                  >{t('view-my-stats')}</Link>
                 </Section>
               </>
             )}

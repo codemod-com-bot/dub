@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { approvePartnerAction } from "@/lib/actions/partners/approve-partner";
 import { rejectPartnerAction } from "@/lib/actions/partners/reject-partner";
 import { SHEET_MAX_ITEMS } from "@/lib/partners/constants";
@@ -46,6 +47,8 @@ function PartnerDetailsSheetContent({
   partner,
   setIsOpen,
 }: PartnerDetailsSheetProps) {
+const t = useTranslations("../ui/partners");
+
   const { slug } = useWorkspace();
 
   const badge = PartnerStatusBadges[partner.status];
@@ -60,9 +63,7 @@ function PartnerDetailsSheetContent({
     <>
       <div className="flex grow flex-col">
         <div className="flex items-start justify-between p-6">
-          <Sheet.Title className="text-xl font-semibold">
-            Partner details
-          </Sheet.Title>
+          <Sheet.Title className="text-xl font-semibold">{t('partner-details')}</Sheet.Title>
           <Sheet.Close asChild>
             <Button
               variant="outline"
@@ -103,7 +104,7 @@ function PartnerDetailsSheetContent({
               {partner.country && (
                 <div className="flex min-w-20 items-center gap-2 rounded-full border border-neutral-200 bg-white px-1.5 py-0.5 text-xs text-neutral-700">
                   <img
-                    alt=""
+                    alt={t('empty-string')}
                     src={`https://flag.vercel.app/m/${partner.country}.svg`}
                     className="h-3 w-4 rounded-sm"
                   />
@@ -170,9 +171,7 @@ function PartnerDetailsSheetContent({
                   "flex h-8 items-center justify-center gap-2 rounded-lg border px-2 text-sm",
                 )}
               >
-                <LinesY className="size-4 text-neutral-900" />
-                Analytics
-              </Link>
+                <LinesY className="size-4 text-neutral-900" />{t('analytics')}</Link>
               <Link
                 href={`/${slug}/events?domain=${partner.link.domain}&key=${partner.link.key}`}
                 target="_blank"
@@ -181,9 +180,7 @@ function PartnerDetailsSheetContent({
                   "flex h-8 items-center justify-center gap-2 rounded-lg border px-2 text-sm",
                 )}
               >
-                <CursorRays className="size-4 text-neutral-900" />
-                Events
-              </Link>
+                <CursorRays className="size-4 text-neutral-900" />{t('events')}</Link>
             </div>
           )}
         </div>
@@ -193,17 +190,13 @@ function PartnerDetailsSheetContent({
             <PartnerPayouts partner={partner} />
           ) : (
             <div className="flex flex-col gap-6 text-sm text-neutral-500">
-              <h3 className="text-base font-semibold text-neutral-900">
-                About this partner
-              </h3>
+              <h3 className="text-base font-semibold text-neutral-900">{t('about-this-partner')}</h3>
 
               <div>
-                <h4 className="font-semibold text-neutral-900">Description</h4>
+                <h4 className="font-semibold text-neutral-900">{t('description')}</h4>
                 <p className="mt-1.5">
                   {partner.bio || (
-                    <span className="italic text-neutral-400">
-                      No description provided
-                    </span>
+                    <span className="italic text-neutral-400">{t('no-description-provided')}</span>
                   )}
                 </p>
               </div>
@@ -227,7 +220,7 @@ function PartnerDetailsSheetContent({
             <div className="border-t border-neutral-200 p-5">
               <Button
                 variant="primary"
-                text="Create payout"
+                text={t('create-payout')}
                 onClick={() => setCreatePayoutSheetOpen(true)}
               />
             </div>
@@ -245,6 +238,8 @@ function PartnerApproval({
   partner: EnrolledPartnerProps;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+const t = useTranslations("../ui/partners");
+
   const { id: workspaceId } = useWorkspace();
   const { program } = useProgram();
 
@@ -361,7 +356,7 @@ function PartnerApproval({
           <Button
             type="button"
             variant="primary"
-            text="Approve"
+            text={t('approve')}
             loading={isExecuting}
             onClick={async () => {
               if (!isApproving) {
@@ -435,6 +430,8 @@ function PartnerRejectButton({
 }
 
 function PartnerPayouts({ partner }: { partner: EnrolledPartnerProps }) {
+const t = useTranslations("../ui/partners");
+
   const { slug } = useWorkspace();
   const {
     payouts,
@@ -502,17 +499,15 @@ function PartnerPayouts({ partner }: { partner: EnrolledPartnerProps }) {
               buttonVariants({ variant: "secondary" }),
               "flex h-7 items-center rounded-lg border px-2 text-sm",
             )}
-          >
-            View all
-          </Link>
+          >{t('view-all')}</Link>
         </div>
       )}
     </>
   ) : (
     <AnimatedEmptyState
       className="md:min-h-80"
-      title="No payouts"
-      description="When this partner is eligible for or has received payouts, they will appear here."
+      title={t('no-payouts')}
+      description={t('partner-payouts-info')}
       cardContent={() => (
         <>
           <div className="flex size-7 items-center justify-center rounded-md border border-neutral-200 bg-neutral-50">
