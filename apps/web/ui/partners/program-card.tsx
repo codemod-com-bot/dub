@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import usePartnerAnalytics from "@/lib/swr/use-partner-analytics";
 import { ProgramEnrollmentProps, ProgramProps } from "@/lib/types";
 import { BlurImage, MiniAreaChart, StatusBadge } from "@dub/ui";
@@ -88,6 +89,8 @@ export function ProgramCard({
 }
 
 function ProgramCardEarnings({ program }: { program: ProgramProps }) {
+const t = useTranslations("../ui/partners");
+
   const { data: analytics } = usePartnerAnalytics({
     programId: program.id,
   });
@@ -108,9 +111,7 @@ function ProgramCardEarnings({ program }: { program: ProgramProps }) {
   return (
     <div className="mt-4 grid h-24 grid-cols-[min-content,minmax(0,1fr)] gap-4 rounded-md border border-neutral-100 bg-neutral-50 p-5">
       <div>
-        <div className="whitespace-nowrap text-sm text-neutral-500">
-          Earnings
-        </div>
+        <div className="whitespace-nowrap text-sm text-neutral-500">{t('earnings')}</div>
         {analytics ? (
           <div className="mt-1 text-2xl font-medium leading-none text-neutral-800">
             {currencyFormatter(analytics?.earnings / 100 || 0)}

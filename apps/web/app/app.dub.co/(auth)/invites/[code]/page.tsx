@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { getSession } from "@/lib/auth";
 import EmptyState from "@/ui/shared/empty-state";
 import { prisma } from "@dub/prisma";
@@ -16,13 +18,15 @@ export default function InitesPage({
     code: string;
   };
 }) {
+const t = useTranslations("app.dub.co/(auth)/invites/[code]");
+
   return (
     <div className="flex flex-col items-center justify-center gap-6 text-center">
       <Suspense
         fallback={
           <EmptyState
             icon={LoadingSpinner}
-            title="Verifying Invite"
+            title={t('verifying-invite')}
             description={`${APP_NAME} is verifying your invite link. This might take a few seconds...`}
           />
         }
@@ -34,6 +38,8 @@ export default function InitesPage({
 }
 
 async function VerifyInvite({ code }: { code: string }) {
+const t = await getTranslations("app.dub.co/(auth)/invites/[code]");
+
   const session = await getSession();
 
   if (!session) {
@@ -74,8 +80,8 @@ async function VerifyInvite({ code }: { code: string }) {
     return (
       <EmptyState
         icon={LinkBroken}
-        title="Invalid Invite Link"
-        description="The invite link you are trying to use is invalid. Please contact the workspace owner for more information."
+        title={t('invalid-invite-link')}
+        description={t('invalid-invite-link-message')}
       />
     );
   }
@@ -89,8 +95,8 @@ async function VerifyInvite({ code }: { code: string }) {
     return (
       <EmptyState
         icon={Users6}
-        title="User Limit Reached"
-        description="The workspace you are trying to join is currently full. Please contact the workspace owner for more information."
+        title={t('user-limit-reached')}
+        description={t('workspace-full-message')}
       />
     );
   }

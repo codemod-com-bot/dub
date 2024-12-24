@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { AlertCircleFill } from "@/ui/shared/icons";
 import { Button, useMediaQuery } from "@dub/ui";
@@ -11,6 +13,8 @@ const initialState = {
 };
 
 export default function DashboardPasswordForm() {
+const t = useTranslations("app.dub.co/(share)/share/[dashboardId]");
+
   const { dashboardId } = useParams() as { dashboardId: string };
 
   const [state, formAction] = useFormState(verifyPassword, initialState);
@@ -22,9 +26,7 @@ export default function DashboardPasswordForm() {
       className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16"
     >
       <div>
-        <label htmlFor="password" className="block text-xs text-gray-600">
-          PASSWORD
-        </label>
+        <label htmlFor="password" className="block text-xs text-gray-600">{t('password')}</label>
         <div className="relative mt-1 rounded-md shadow-sm">
           <input type="hidden" name="dashboardId" value={dashboardId} />
           <input
@@ -49,9 +51,7 @@ export default function DashboardPasswordForm() {
           )}
         </div>
         {state.error && (
-          <p className="mt-2 text-sm text-red-600" id="slug-error">
-            Incorrect password
-          </p>
+          <p className="mt-2 text-sm text-red-600" id="slug-error">{t('incorrect-password')}</p>
         )}
       </div>
 
@@ -61,6 +61,8 @@ export default function DashboardPasswordForm() {
 }
 
 const FormButton = () => {
+const t = useTranslations("app.dub.co/(share)/share/[dashboardId]");
+
   const { pending } = useFormStatus();
-  return <Button text="Submit" loading={pending} />;
+  return <Button text={t('submit')} loading={pending} />;
 };

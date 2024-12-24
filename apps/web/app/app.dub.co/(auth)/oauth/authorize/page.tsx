@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { vaidateAuthorizeRequest } from "@/lib/api/oauth/actions";
 import { getSession } from "@/lib/auth";
 import z from "@/lib/zod";
@@ -25,6 +26,8 @@ export default async function Authorize({
 }: {
   searchParams?: z.infer<typeof authorizeRequestSchema>;
 }) {
+const t = await getTranslations("app.dub.co/(auth)/oauth/authorize");
+
   const session = await getSession();
 
   if (!session) {
@@ -38,7 +41,7 @@ export default async function Authorize({
     return (
       <EmptyState
         icon={CubeSettings}
-        title="Invalid OAuth Request"
+        title={t('invalid-oauth-request')}
         description={error}
       />
     );
@@ -68,25 +71,15 @@ export default async function Authorize({
         </div>
 
         <p className="text-md">
-          <span className="font-bold">{integration.name}</span> is requesting
-          API access to a workspace on Dub.
-        </p>
-        <span className="text-xs text-gray-500">
-          Built by{" "}
-          <a
-            href={integration.website}
-            target="_blank"
-            rel="noreferrer"
-            className="underline"
-          >
-            {integration.developer}
-          </a>
+          {t('integration-name-requesting-api-access', { "component0": {t('integration-name-requesting-api-access_component0', { "_integration_name_": _integration_name_ })} })}</p>
+        <span className="text-xs text-gray-500">{t('built-by-integration-developer-link', { "component0": {t('built-by-integration-developer-link_component0', { "_integration_developer_": _integration_developer_ })} })}
+          
         </span>
 
         {!integration.verified && (
           <div className="flex items-center gap-2 rounded-md bg-yellow-50 p-2 text-sm text-yellow-700">
             <CircleWarning className="size-4" />
-            <span>Dub hasn't verified this app</span>
+            <span>{t('dub-not-verified-app')}</span>
           </div>
         )}
       </div>

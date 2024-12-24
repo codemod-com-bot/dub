@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { currencyFormatter, DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
@@ -41,6 +42,8 @@ export default function PartnerPayoutSent({
     endDate: string;
   };
 }) {
+const t = useTranslations("../emails");
+
   const linkToPayout = `https://partners.dub.co/settings/payouts?payoutId=${payout.id}`;
 
   const saleAmountInDollars = currencyFormatter(payout.amount / 100, {
@@ -51,7 +54,7 @@ export default function PartnerPayoutSent({
   return (
     <Html>
       <Head />
-      <Preview>You've been paid!</Preview>
+      <Preview>{t('youve-been-paid')}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -63,28 +66,19 @@ export default function PartnerPayoutSent({
               />
             </Section>
 
-            <Heading className="mx-0 p-0 text-lg font-medium text-black">
-              You've been paid!
-            </Heading>
+            <Heading className="mx-0 p-0 text-lg font-medium text-black">{t('youve-been-paid-whitespace')}</Heading>
 
             <Text className="text-sm leading-6 text-gray-600">
-              <strong className="text-black">{program.name}</strong> has sent
-              you <strong className="text-black">{saleAmountInDollars}</strong>{" "}
-              for affiliate sales made from{" "}
-              <strong className="text-black">{payout.startDate}</strong> to{" "}
-              <strong className="text-black">{payout.endDate}</strong>.
-            </Text>
-            <Text className="text-sm leading-6 text-gray-600">
-              The funds are on their way to your account.
-            </Text>
+              {t('program-name-sale-amount-affiliate-sales-payout-dates', { "component0": {t('program-name-sale-amount-affiliate-sales-payout-dates_component0', { "_program_name_": _program_name_ })}, "component1": {t('program-name-sale-amount-affiliate-sales-payout-dates_component1', { "_saleAmountInDollars_": _saleAmountInDollars_ })}, "component2": {t('program-name-sale-amount-affiliate-sales-payout-dates_component2', { "_payout_startDate_": _payout_startDate_ })}, "component3": {t('program-name-sale-amount-affiliate-sales-payout-dates_component3', { "_payout_endDate_": _payout_endDate_ })} })}
+              
+              </Text>
+            <Text className="text-sm leading-6 text-gray-600">{t('funds-on-their-way')}</Text>
 
             <Section className="mb-12 mt-8">
               <Link
                 className="rounded-md bg-neutral-900 px-4 py-3 text-[12px] font-medium text-white no-underline"
                 href={linkToPayout}
-              >
-                View payout
-              </Link>
+              >{t('view-payout')}</Link>
             </Section>
             <Footer email={email} />
           </Container>

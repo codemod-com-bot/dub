@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { ProBadgeTooltip } from "@/ui/shared/pro-badge-tooltip";
 import {
   Button,
@@ -19,6 +20,8 @@ import { usePasswordModal } from "./password-modal";
 import { useTargetingModal } from "./targeting-modal";
 
 export function MoreDropdown() {
+const t = useTranslations("../ui/modals/link-builder");
+
   const { isMobile } = useMediaQuery();
 
   const { conversionEnabled } = useContext(LinkModalContext);
@@ -135,12 +138,8 @@ export function MoreDropdown() {
                         "mr-1 size-4 text-gray-950",
                         data.externalId && "text-blue-500",
                       )}
-                    />
-                    Advanced Settings
-                  </div>
-                  <kbd className="hidden size-6 cursor-default items-center justify-center rounded-md border border-gray-200 font-sans text-xs text-gray-800 sm:flex">
-                    A
-                  </kbd>
+                    />{t('advanced-settings')}</div>
+                  <kbd className="hidden size-6 cursor-default items-center justify-center rounded-md border border-gray-200 font-sans text-xs text-gray-800 sm:flex">{t('a')}</kbd>
                 </div>
               }
             />

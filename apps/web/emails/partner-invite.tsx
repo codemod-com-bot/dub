@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
@@ -29,10 +30,12 @@ export default function PartnerInvite({
     logo: string | null;
   };
 }) {
+const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>Sign up for {program.name}</Preview>
+      <Preview>{t('sign-up-for')}{program.name}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -45,21 +48,16 @@ export default function PartnerInvite({
             </Section>
 
             <Heading className="mx-0 p-0 text-lg font-medium text-black">
-              {program.name} invited you to join Dub Partners
-            </Heading>
+              {program.name}{t('invited-you-to-join-dub-partners')}</Heading>
 
             <Text className="text-sm leading-6 text-gray-600">
-              {program.name} uses Dub Partners to power their partnership
-              programs and wants to partner with great people like yourself!
-            </Text>
+              {program.name}{t('uses-dub-partners-to-power-their-partnership-programs-and-wants-to-partner-with-great-people-like-yourself')}</Text>
 
             <Section className="mb-12 mt-8">
               <Link
                 className="rounded-md bg-neutral-900 px-4 py-3 text-[12px] font-medium text-white no-underline"
                 href="https://partners.dub.co"
-              >
-                Accept Invite
-              </Link>
+              >{t('accept-invite')}</Link>
             </Section>
             <Footer email={email} />
           </Container>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { IntervalOptions } from "@/lib/analytics/types";
 import useProgramAnalytics from "@/lib/swr/use-program-analytics";
 import useProgramMetrics from "@/lib/swr/use-program-metrics";
@@ -17,6 +18,8 @@ import { LinearGradient } from "@visx/gradient";
 import { useId, useMemo } from "react";
 
 export function OverviewChart() {
+const t = useTranslations("app.dub.co/(dashboard)/[slug]/programs/[programId]");
+
   const id = useId();
   const { searchParamsObj } = useRouterStuff();
 
@@ -55,7 +58,7 @@ export function OverviewChart() {
     <div>
       <div className="flex justify-between">
         <div className="flex flex-col gap-1 p-2">
-          <span className="text-sm text-neutral-500">Revenue</span>
+          <span className="text-sm text-neutral-500">{t('revenue')}</span>
           {!metrics ? (
             <div className="h-9 w-24 animate-pulse rounded-md bg-neutral-200" />
           ) : (
@@ -77,9 +80,7 @@ export function OverviewChart() {
             <LoadingSpinner />
           </div>
         ) : error ? (
-          <div className="flex size-full items-center justify-center text-sm text-neutral-500">
-            Failed to load data
-          </div>
+          <div className="flex size-full items-center justify-center text-sm text-neutral-500">{t('failed-to-load-data')}</div>
         ) : (
           <TimeSeriesChart
             key={`${start?.toString}-${end?.toString()}-${interval?.toString()}`}
@@ -102,7 +103,7 @@ export function OverviewChart() {
                   <div className="grid grid-cols-2 gap-x-6 gap-y-2 px-4 py-3 text-sm">
                     <div className="flex items-center gap-2">
                       <div className="h-2 w-2 rounded-sm bg-violet-500 shadow-[inset_0_0_0_1px_#0003]" />
-                      <p className="capitalize text-gray-600">Revenue</p>
+                      <p className="capitalize text-gray-600">{t('revenue-duplicate')}</p>
                     </div>
                     <p className="text-right font-medium text-gray-900">
                       {currencyFormatter(d.values.saleAmount, {

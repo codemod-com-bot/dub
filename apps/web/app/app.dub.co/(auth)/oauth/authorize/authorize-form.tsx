@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import useWorkspaces from "@/lib/swr/use-workspaces";
 import z from "@/lib/zod";
@@ -24,6 +26,8 @@ export const AuthorizeForm = ({
   code_challenge,
   code_challenge_method,
 }: AuthorizeFormProps) => {
+const t = useTranslations("app.dub.co/(auth)/oauth/authorize");
+
   const { data: session } = useSession();
   const { workspaces } = useWorkspaces();
   const { AddWorkspaceModal, setShowAddWorkspaceModal } =
@@ -113,9 +117,7 @@ export const AuthorizeForm = ({
             value={code_challenge_method}
           />
         )}
-        <p className="text-sm text-gray-500">
-          Select a workspace to grant API access to
-        </p>
+        <p className="text-sm text-gray-500">{t('select-a-workspace-to-grant-api-access-to')}</p>
         <div className="max-w-md py-2">
           <InputSelect
             items={selectOptions}
@@ -126,7 +128,7 @@ export const AuthorizeForm = ({
             noItemsElement={
               <Button
                 icon={<OfficeBuilding className="size-4" />}
-                text="Create new workspace"
+                text={t('create-new-workspace')}
                 variant="outline"
                 onClick={() => setShowAddWorkspaceModal(true)}
                 className="justify-start text-gray-700"
@@ -136,14 +138,14 @@ export const AuthorizeForm = ({
         </div>
         <div className="mt-4 flex justify-between gap-4">
           <Button
-            text="Decline"
+            text={t('decline')}
             type="button"
             onClick={onDecline}
             variant="secondary"
             disabled={submitting}
           />
           <Button
-            text="Authorize"
+            text={t('authorize')}
             type="submit"
             loading={submitting}
             disabled={!selectedWorkspace}

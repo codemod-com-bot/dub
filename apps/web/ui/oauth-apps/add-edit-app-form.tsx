@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -39,6 +41,8 @@ export default function AddOAuthAppForm({
 }: {
   oAuthApp: OAuthAppProps | null;
 }) {
+const t = useTranslations("../ui/oauth-apps");
+
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const { slug: workspaceSlug, id: workspaceId, role } = useWorkspace();
@@ -226,9 +230,7 @@ export default function AddOAuthAppForm({
 
         <div>
           <label htmlFor="name" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">
-              Application name
-            </h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('application-name')}</h2>
             <InfoTooltip content="Application name will be displayed in the OAuth consent screen" />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -244,7 +246,7 @@ export default function AddOAuthAppForm({
               onChange={(e) => setData({ ...data, name: e.target.value })}
               autoFocus
               autoComplete="off"
-              placeholder="My App"
+              placeholder={t('my-app-name')}
               disabled={!canManageApp}
             />
           </div>
@@ -252,9 +254,7 @@ export default function AddOAuthAppForm({
 
         <div>
           <label htmlFor="slug" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">
-              Application slug
-            </h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('application-slug')}</h2>
             <InfoTooltip content="Unique slug for this application on Dub" />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -269,7 +269,7 @@ export default function AddOAuthAppForm({
               value={slug}
               onChange={(e) => setData({ ...data, slug: e.target.value })}
               autoComplete="off"
-              placeholder="my-app"
+              placeholder={t('my-app-slug')}
               disabled={!canManageApp}
             />
           </div>
@@ -277,7 +277,7 @@ export default function AddOAuthAppForm({
 
         <div>
           <label htmlFor="slug" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">Description</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('description')}</h2>
             <InfoTooltip content="Description of your application" />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -290,7 +290,7 @@ export default function AddOAuthAppForm({
                   "cursor-not-allowed bg-gray-50": !canManageApp,
                 },
               )}
-              placeholder="Add a description"
+              placeholder={t('add-a-description')}
               value={description || ""}
               maxLength={120}
               onChange={(e) => {
@@ -303,7 +303,7 @@ export default function AddOAuthAppForm({
 
         <div>
           <label htmlFor="slug" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">Overview</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('overview')}</h2>
             <InfoTooltip content="Provide some details about your integration. This will be displayed on the integration page. Markdown is supported." />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -316,7 +316,7 @@ export default function AddOAuthAppForm({
                   "cursor-not-allowed bg-gray-50": !canManageApp,
                 },
               )}
-              placeholder="## My Awesome Integration"
+              placeholder={t('my-awesome-integration')}
               value={readme || ""}
               maxLength={1000}
               onChange={(e) => {
@@ -329,7 +329,7 @@ export default function AddOAuthAppForm({
 
         <div>
           <label htmlFor="slug" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">Screenshots</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('screenshots')}</h2>
             <InfoTooltip content="You can upload up to 4 screenshots that will be displayed on the integration page." />
           </label>
           <Reorder.Group
@@ -382,9 +382,7 @@ export default function AddOAuthAppForm({
 
         <div>
           <label htmlFor="developer" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">
-              Developer name
-            </h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('developer-name')}</h2>
             <InfoTooltip content="The person or company developing this application" />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -398,7 +396,7 @@ export default function AddOAuthAppForm({
               required
               value={developer}
               onChange={(e) => setData({ ...data, developer: e.target.value })}
-              placeholder="Acme Inc."
+              placeholder={t('acme-inc')}
               disabled={!canManageApp}
             />
           </div>
@@ -406,7 +404,7 @@ export default function AddOAuthAppForm({
 
         <div>
           <label htmlFor="website" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">Website URL</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('website-url')}</h2>
             <InfoTooltip content="URL to the developer's website or documentation" />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -421,7 +419,7 @@ export default function AddOAuthAppForm({
               required
               value={website}
               onChange={(e) => setData({ ...data, website: e.target.value })}
-              placeholder="https://acme.com"
+              placeholder={t('acme-website-url')}
               disabled={!canManageApp}
             />
           </div>
@@ -429,7 +427,7 @@ export default function AddOAuthAppForm({
 
         <div>
           <label htmlFor="installUrl" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">Install URL</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('install-url')}</h2>
             <InfoTooltip content="An optional URL for installing the application" />
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
@@ -448,7 +446,7 @@ export default function AddOAuthAppForm({
                   installUrl: e.target.value ? e.target.value : null,
                 })
               }
-              placeholder="https://acme.com/install"
+              placeholder={t('acme-install-url')}
               disabled={!canManageApp}
             />
           </div>
@@ -460,13 +458,11 @@ export default function AddOAuthAppForm({
               htmlFor="redirectUris"
               className="flex items-center space-x-2"
             >
-              <h2 className="text-sm font-medium text-gray-900">
-                Callback URLs
-              </h2>
+              <h2 className="text-sm font-medium text-gray-900">{t('callback-urls')}</h2>
               <InfoTooltip content="All OAuth redirect URLs, All URLs must use HTTPS, except for localhost." />
             </label>
             <Button
-              text="Add Callback URL"
+              text={t('add-callback-url')}
               variant="secondary"
               className="h-7 w-fit px-2.5 py-1 text-xs"
               onClick={() => setUrls([...urls, { id: nanoid(), value: "" }])}
@@ -484,7 +480,7 @@ export default function AddOAuthAppForm({
                         <div className="relative">
                           <input
                             type="url"
-                            placeholder="https://acme.com/oauth/callback"
+                            placeholder={t('acme-callback-url')}
                             value={url.value}
                             onChange={(e) => {
                               setUrls(
@@ -509,7 +505,7 @@ export default function AddOAuthAppForm({
                               <Button
                                 type="button"
                                 variant="outline"
-                                text="Remove"
+                                text={t('remove')}
                                 onClick={() => {
                                   const newUrls = urls.filter(
                                     (u) => u.id !== url.id,
@@ -538,7 +534,7 @@ export default function AddOAuthAppForm({
 
         <div className="flex items-center justify-between pb-4 pt-2">
           <label htmlFor="pkce" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">Allow PKCE</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t('allow-pkce')}</h2>
             <InfoTooltip content="We strongly recommend using the PKCE flow for increased security. Make sure your application supports it." />
           </label>
           <Switch

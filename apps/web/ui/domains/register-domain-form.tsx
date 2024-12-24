@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useWorkspace from "@/lib/swr/use-workspace";
 import {
   AnimatedSizeContainer,
@@ -36,6 +37,8 @@ export function RegisterDomainForm({
   onSuccess: (domain: string) => void;
   onCancel?: () => void;
 }) {
+const t = useTranslations("../ui/domains");
+
   const workspace = useWorkspace();
   const { isMobile } = useMediaQuery();
   const [isSearching, setIsSearching] = useState(false);
@@ -147,15 +150,13 @@ export function RegisterDomainForm({
       >
         <div>
           <div className="flex items-center gap-2">
-            <p className="block text-sm font-medium text-gray-800">
-              Search domains
-            </p>
+            <p className="block text-sm font-medium text-gray-800">{t('search-domains')}</p>
 
             {workspace.plan === "free" && variant === "modal" && (
               <ProBadgeTooltip
                 content={
                   <SimpleTooltipContent
-                    title="Search for a free .link domain to use for your short links."
+                    title={t('search-for-free-link-domain')}
                     cta="Learn more."
                     href="https://dub.co/help/article/free-dot-link-domain"
                   />
@@ -196,9 +197,7 @@ export function RegisterDomainForm({
                     }
                   }}
                 />
-                <span className="inline-flex items-center rounded-md rounded-l-none bg-white pr-3 font-medium text-gray-500 sm:text-sm">
-                  .link
-                </span>
+                <span className="inline-flex items-center rounded-md rounded-l-none bg-white pr-3 font-medium text-gray-500 sm:text-sm">{t('link')}</span>
               </div>
 
               <AnimatedSizeContainer
@@ -210,28 +209,18 @@ export function RegisterDomainForm({
                     {searchedDomain ? (
                       searchedDomain.available ? (
                         <>
-                          <span className="font-semibold text-gray-800">
-                            {searchedDomain.domain}
-                          </span>{" "}
-                          is available. Claim your free domain before it's gone!
-                        </>
+                          {t('domain-available-claim', { "component0": {t('domain-available-claim_component0', { "_searchedDomain_domain_": _searchedDomain_domain_ })} })}</>
                       ) : (
                         <>
-                          <span className="font-semibold text-gray-800">
-                            {searchedDomain.domain}
-                          </span>{" "}
-                          is{" "}
+                          {t('domain-is-available', { "component0": {t('domain-is-available_component0', { "_searchedDomain_domain_": _searchedDomain_domain_ })} })}
                           {searchedDomain.premium
                             ? "a premium domain, which is not available for free, but you can register it on Dynadot."
                             : "not available."}
                         </>
                       )
                     ) : slug?.trim() ? (
-                      <>
-                        Checking availability for{" "}
-                        <strong className="font-semibold">
-                          {truncate(`${slug}.link`, 25)}
-                        </strong>
+                      <>{t('checking-availability', { "component0": {t('checking-availability_component0', { "_truncate_slug_link_25_": _truncate_slug_link_25_ })} })}
+                        
                       </>
                     ) : (
                       <>&nbsp;</>
@@ -261,9 +250,7 @@ export function RegisterDomainForm({
           !searchedDomain.available &&
           availableDomains.length > 0 && (
             <div>
-              <h2 className="text-sm font-medium text-gray-800">
-                Available alternatives
-              </h2>
+              <h2 className="text-sm font-medium text-gray-800">{t('available-alternatives')}</h2>
               <div className="mt-2 overflow-hidden rounded-lg border border-gray-200">
                 <div className="flex flex-col divide-y divide-gray-200">
                   {availableDomains.map((alternative) => (
@@ -278,7 +265,7 @@ export function RegisterDomainForm({
                         </span>
                       </div>
                       <Button
-                        text="Claim domain"
+                        text={t('claim-domain')}
                         className="h-8 w-fit"
                         onClick={() => registerDomain(alternative.domain)}
                         disabled={
@@ -299,17 +286,12 @@ export function RegisterDomainForm({
           )}
 
         {searchedDomain && (
-          <p className="-my-2 text-pretty text-left text-sm text-gray-400">
-            By claiming your .link domain, you agree to our{" "}
-            <a
+          <p className="-my-2 text-pretty text-left text-sm text-gray-400">{t('claiming-domain-terms', { "component0": <a
               href="https://dub.co/help/article/free-dot-link-domain#terms-and-conditions"
               target="_blank"
               className="underline transition-colors hover:text-gray-700"
-            >
-              terms
-            </a>
-            .
-          </p>
+            >{t('claiming-domain-terms_component0')}</a> })}
+            </p>
         )}
       </div>
       <div
@@ -322,7 +304,7 @@ export function RegisterDomainForm({
           <Button
             type="button"
             variant="secondary"
-            text="Cancel"
+            text={t('cancel')}
             className="h-9 w-fit"
             onClick={onCancel}
           />
@@ -336,13 +318,11 @@ export function RegisterDomainForm({
               "flex h-9 w-full items-center justify-center rounded-md border px-4 text-sm",
               variant === "modal" && "w-fit",
             )}
-          >
-            Register on Dynadot
-          </Link>
+          >{t('register-on-dynadot')}</Link>
         ) : (
           <Button
             type="submit"
-            text="Claim domain"
+            text={t('claim-domain-again')}
             className={cn("h-9", variant === "modal" && "w-fit")}
             disabled={!searchedDomain?.available}
             loading={isRegistering}
@@ -359,14 +339,13 @@ export function RegisterDomainForm({
 }
 
 function UpgradeTooltipContent() {
+const t = useTranslations("../ui/domains");
+
   const { slug } = useWorkspace();
   return (
     <TooltipContent
       title={
-        <>
-          You can only claim a free <span className="font-semibold">.link</span>{" "}
-          domain on a Pro plan and above.
-        </>
+        <>{t('pro-plan-requirement', { "component0": <span className="font-semibold">{t('pro-plan-requirement_component0')}</span> })}</>
       }
       cta="Upgrade to Pro"
       onClick={() => window.open(`/${slug}/upgrade?exit=close`)}
@@ -375,18 +354,17 @@ function UpgradeTooltipContent() {
 }
 
 function DomainSavedToast() {
+const t = useTranslations("../ui/domains");
+
   return (
     <div className="flex items-center gap-1.5 rounded-lg bg-white p-4 text-sm shadow-[0_4px_12px_#0000001a]">
       <CheckCircleFill className="size-5 shrink-0 text-black" />
-      <p className="text-[13px] font-medium text-gray-900">
-        Domain saved. You'll need a pro plan to complete the registration.{" "}
-        <a
+      <p className="text-[13px] font-medium text-gray-900">{t('domain-saved-learn-more', { "component0": <a
           href="https://dub.co/help/article/free-dot-link-domain"
           target="_blank"
           className="text-gray-500 underline transition-colors hover:text-gray-800"
-        >
-          Learn more
-        </a>
+        >{t('domain-saved-learn-more_component0')}</a> })}
+        
       </p>
     </div>
   );

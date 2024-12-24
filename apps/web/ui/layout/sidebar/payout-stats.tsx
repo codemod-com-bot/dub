@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import usePartnerPayoutsCount from "@/lib/swr/use-partner-payouts-count";
 import usePartnerProfile from "@/lib/swr/use-partner-profile";
@@ -11,6 +13,8 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export function PayoutStats() {
+const t = useTranslations("../ui/layout/sidebar");
+
   const { partner } = usePartnerProfile();
   const { payoutsCount } = usePartnerPayoutsCount();
 
@@ -21,14 +25,12 @@ export function PayoutStats() {
           className="group flex items-center gap-1.5 text-sm font-normal text-neutral-500 transition-colors hover:text-neutral-700"
           href="/settings/payouts"
         >
-          <MoneyBills2 className="size-4" />
-          Payouts
-          <ChevronRight className="size-3 text-neutral-400 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-neutral-500" />
+          <MoneyBills2 className="size-4" />{t('payouts-title')}<ChevronRight className="size-3 text-neutral-400 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-neutral-500" />
         </Link>
 
         <div className="mt-4 flex flex-col gap-2">
           <div className="grid gap-1 text-sm">
-            <p className="text-neutral-500">Upcoming payouts</p>
+            <p className="text-neutral-500">{t('upcoming-payouts')}</p>
             <div className="flex items-center gap-2">
               {partner && !partner.payoutsEnabled && (
                 <Tooltip
@@ -58,7 +60,7 @@ export function PayoutStats() {
             </div>
           </div>
           <div className="grid gap-1 text-sm">
-            <p className="text-neutral-500">Total payouts</p>
+            <p className="text-neutral-500">{t('total-payouts')}</p>
             {payoutsCount ? (
               <p className="text-black">
                 {currencyFormatter(
@@ -80,7 +82,7 @@ export function PayoutStats() {
           CONNECT_SUPPORTED_COUNTRIES.includes(partner.country) && (
             <StripeConnectButton
               className="mt-4 h-9 w-full"
-              text="Connect payouts"
+              text={t('connect-payouts')}
             />
           )}
       </div>

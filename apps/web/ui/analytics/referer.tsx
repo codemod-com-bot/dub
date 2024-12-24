@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { SINGULAR_ANALYTICS_ENDPOINTS } from "@/lib/analytics/constants";
 import { BlurImage, useRouterStuff } from "@dub/ui";
 import { ReferredVia } from "@dub/ui/icons";
@@ -11,6 +12,8 @@ import BarList from "./bar-list";
 import { useAnalyticsFilterOption } from "./utils";
 
 export default function Referer() {
+const t = useTranslations("../ui/analytics");
+
   const { queryParams, searchParams } = useRouterStuff();
 
   const { selectedTab } = useContext(AnalyticsContext);
@@ -79,7 +82,7 @@ export default function Referer() {
             />
           ) : (
             <div className="flex h-[300px] items-center justify-center">
-              <p className="text-sm text-gray-600">No data available</p>
+              <p className="text-sm text-gray-600">{t('no-data-available')}</p>
             </div>
           )
         ) : (

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { SimpleTooltipContent, Tooltip } from "@dub/ui";
 import { cn, SELF_SERVE_PAID_PLANS, STAGGER_CHILD_VARIANTS } from "@dub/utils";
 import { motion } from "framer-motion";
@@ -10,6 +11,8 @@ export function PlanFeatures({
   plan: string;
   className?: string;
 }) {
+const t = useTranslations("../ui/workspaces");
+
   const selectedPlan =
     SELF_SERVE_PAID_PLANS.find(
       (p) => p.name.toLowerCase() === plan.toLowerCase(),
@@ -33,9 +36,7 @@ export function PlanFeatures({
           key="business-plan-feature"
           variants={STAGGER_CHILD_VARIANTS}
           className="text-sm text-gray-500"
-        >
-          Everything in Pro, plus:
-        </motion.div>
+        >{t('everything-in-pro-plus')}</motion.div>
       )}
       {selectedPlan.features.map(({ text, footnote }, i) => (
         <motion.div

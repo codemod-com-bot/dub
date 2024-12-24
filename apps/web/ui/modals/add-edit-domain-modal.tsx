@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { DomainProps } from "@/lib/types";
@@ -21,6 +22,8 @@ function AddEditDomainModal({
   setShowAddEditDomainModal: Dispatch<SetStateAction<boolean>>;
   props?: DomainProps;
 }) {
+const t = useTranslations("../ui/modals");
+
   return (
     <Modal
       showModal={showAddEditDomainModal} // TODO change back to showAddEditDomainModal
@@ -29,8 +32,7 @@ function AddEditDomainModal({
       className="max-w-lg"
     >
       <h3 className="border-b border-neutral-200 px-4 py-4 text-lg font-medium sm:px-6">
-        {props ? "Update" : "Add"} Domain
-      </h3>
+        {props ? "Update" : "Add"}{t('domain')}</h3>
       <div className="bg-neutral-50">
         <AddEditDomainForm
           props={props}
@@ -51,6 +53,8 @@ function AddDomainButton({
   setShowAddEditDomainModal: Dispatch<SetStateAction<boolean>>;
   buttonProps?: Partial<ButtonProps>;
 }) {
+const t = useTranslations("../ui/modals");
+
   const { slug, plan, role, domainsLimit, exceededDomains } = useWorkspace();
 
   const permissionsError = clientAccessCheck({
@@ -61,7 +65,7 @@ function AddDomainButton({
   return (
     <div>
       <Button
-        text="Add Domain"
+        text={t('add-domain')}
         disabledTooltip={
           exceededDomains ? (
             <TooltipContent

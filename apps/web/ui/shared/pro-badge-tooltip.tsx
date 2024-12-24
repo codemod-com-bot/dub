@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { BadgeTooltip, InfoTooltip, type TooltipProps } from "@dub/ui";
 import { Crown } from "lucide-react";
@@ -9,13 +10,15 @@ import { Crown } from "lucide-react";
  * For a Pro workspace: an info icon (question mark circle)
  */
 export function ProBadgeTooltip(props: Omit<TooltipProps, "children">) {
+const t = useTranslations("../ui/shared");
+
   const { plan } = useWorkspace();
 
   return plan === "free" ? (
     <BadgeTooltip {...props}>
       <div className="flex items-center space-x-1">
         <Crown size={12} />
-        <p className="uppercase">Pro</p>
+        <p className="uppercase">{t('pro')}</p>
       </div>
     </BadgeTooltip>
   ) : (

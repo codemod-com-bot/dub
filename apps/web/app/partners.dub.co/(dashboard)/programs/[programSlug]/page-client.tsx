@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { IntervalOptions } from "@/lib/analytics/types";
 import usePartnerAnalytics from "@/lib/swr/use-partner-analytics";
@@ -38,6 +40,8 @@ const ProgramOverviewContext = createContext<{
 }>({});
 
 export default function ProgramPageClient() {
+const t = useTranslations("partners.dub.co/(dashboard)/programs/[programSlug]");
+
   const { getQueryString, searchParamsObj } = useRouterStuff();
   const { programSlug } = useParams();
 
@@ -63,9 +67,7 @@ export default function ProgramPageClient() {
           <HeroBackground logo={program?.logo} color={program?.brandColor} />
         )}
         <span className="flex items-center gap-2 text-sm text-neutral-500">
-          <MoneyBill2 className="size-4" />
-          Refer and earn
-        </span>
+          <MoneyBill2 className="size-4" />{t('refer-and-earn')}</span>
         <div className="relative mt-24 text-lg text-neutral-900 sm:max-w-[50%]">
           {program ? (
             <ProgramCommissionDescription program={program} />
@@ -73,9 +75,7 @@ export default function ProgramPageClient() {
             <div className="h-7 w-5/6 animate-pulse rounded-md bg-neutral-200" />
           )}
         </div>
-        <span className="mb-1.5 mt-6 block text-sm text-neutral-800">
-          Referral link
-        </span>
+        <span className="mb-1.5 mt-6 block text-sm text-neutral-800">{t('referral-link')}</span>
         <div className="xs:flex-row relative flex flex-col items-center gap-2">
           {programEnrollment?.link ? (
             <input
@@ -133,25 +133,21 @@ export default function ProgramPageClient() {
         </div>
         <div className="mt-6 grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-3">
           <NumberFlowGroup>
-            <StatCard title="Clicks" event="clicks" />
-            <StatCard title="Leads" event="leads" />
-            <StatCard title="Sales" event="sales" />
+            <StatCard title={t('clicks')} event="clicks" />
+            <StatCard title={t('leads')} event="leads" />
+            <StatCard title={t('sales')} event="sales" />
           </NumberFlowGroup>
         </div>
         <div className="mt-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-medium text-neutral-900">
-              Recent sales
-            </h2>
+            <h2 className="text-base font-medium text-neutral-900">{t('recent-sales')}</h2>
             <Link
               href={`/programs/${programSlug}/sales${getQueryString()}`}
               className={cn(
                 buttonVariants({ variant: "secondary" }),
                 "flex h-8 items-center rounded-lg border px-2 text-sm",
               )}
-            >
-              View all
-            </Link>
+            >{t('view-all')}</Link>
           </div>
           <div className="mt-4">
             <SaleTablePartner limit={10} />
@@ -163,6 +159,8 @@ export default function ProgramPageClient() {
 }
 
 function EarningsChart() {
+const t = useTranslations("partners.dub.co/(dashboard)/programs/[programSlug]");
+
   const id = useId();
 
   const { start, end, interval, color } = useContext(ProgramOverviewContext);
@@ -195,7 +193,7 @@ function EarningsChart() {
     <div>
       <div className="flex flex-col-reverse items-start justify-between gap-4 md:flex-row">
         <div>
-          <span className="block text-sm text-neutral-500">Earnings</span>
+          <span className="block text-sm text-neutral-500">{t('earnings-1')}</span>
           <div className="mt-1.5">
             {total !== undefined ? (
               <NumberFlow
@@ -244,7 +242,7 @@ function EarningsChart() {
                           color ? `bg-[${color}]` : "bg-violet-500",
                         )}
                       />
-                      <p className="capitalize text-gray-600">Earnings</p>
+                      <p className="capitalize text-gray-600">{t('earnings-2')}</p>
                     </div>
                     <p className="text-right font-medium text-gray-900">
                       {currencyFormatter(d.values.earnings, {
@@ -286,9 +284,7 @@ function EarningsChart() {
         ) : (
           <div className="flex size-full items-center justify-center">
             {error ? (
-              <span className="text-sm text-neutral-500">
-                Failed to load earnings data.
-              </span>
+              <span className="text-sm text-neutral-500">{t('failed-to-load-earnings-data')}</span>
             ) : (
               <LoadingSpinner />
             )}
@@ -306,6 +302,8 @@ function StatCard({
   title: string;
   event: "clicks" | "leads" | "sales";
 }) {
+const t = useTranslations("partners.dub.co/(dashboard)/programs/[programSlug]");
+
   const { programSlug } = useParams();
   const { getQueryString } = useRouterStuff();
   const { start, end, interval, color } = useContext(ProgramOverviewContext);
@@ -368,9 +366,7 @@ function StatCard({
         ) : (
           <div className="flex size-full items-center justify-center">
             {error ? (
-              <span className="text-sm text-neutral-500">
-                Failed to load data.
-              </span>
+              <span className="text-sm text-neutral-500">{t('failed-to-load-data')}</span>
             ) : (
               <LoadingSpinner />
             )}

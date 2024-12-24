@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { getAnalytics } from "@/lib/analytics/get-analytics";
 import { getLinkViaEdge } from "@/lib/planetscale";
 import {
@@ -12,6 +13,8 @@ import { NextRequest } from "next/server";
 export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
+const t = await getTranslations("api/og/analytics");
+
   const interMedium = await fetch(
     new URL("@/styles/Inter-Medium.ttf", import.meta.url),
   ).then((res) => res.arrayBuffer());
@@ -45,7 +48,7 @@ export async function GET(req: NextRequest) {
             <img
               tw="rounded-full w-10 h-10"
               src={`${GOOGLE_FAVICON_URL}${getApexDomain(link.url || "dub.co")}`}
-              alt="favicon"
+              alt={t('favicon')}
             />
             <h1 tw="text-4xl font-bold ml-4">
               {linkConstructor({ domain, key, pretty: true })}
@@ -81,7 +84,7 @@ export async function GET(req: NextRequest) {
               <rect width="18" height="18" x="3" y="4" rx="2" />
               <path d="M3 10h18" />
             </svg>
-            <p tw="text-gray-700 ml-2 mt-4">Last 24 hours</p>
+            <p tw="text-gray-700 ml-2 mt-4">{t('last-24-hours')}</p>
           </div>
         </div>
         <div tw="flex flex-col h-full w-full rounded-lg border border-gray-200 bg-white shadow-lg overflow-hidden">
@@ -104,9 +107,7 @@ export async function GET(req: NextRequest) {
                 <path d="M6 20v-4" />
               </svg>
             </div>
-            <p tw="text-lg font-medium uppercase -mt-4 text-gray-600">
-              Total Clicks
-            </p>
+            <p tw="text-lg font-medium uppercase -mt-4 text-gray-600">{t('total-clicks')}</p>
           </div>
 
           <Chart data={data} />

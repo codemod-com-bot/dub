@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { LoadingSpinner } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -37,13 +39,13 @@ export default function ImpersonateWorkspace() {
 }
 
 const Form = () => {
+const t = useTranslations("admin.dub.co/(dashboard)/components");
+
   const { pending } = useFormStatus();
 
   return (
     <div className="relative flex w-full rounded-md shadow-sm">
-      <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-5 text-gray-500 sm:text-sm">
-        app.dub.co
-      </span>
+      <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-5 text-gray-500 sm:text-sm">{t('app-dub-co')}</span>
       <input
         name="slug"
         id="slug"
@@ -55,7 +57,7 @@ const Form = () => {
           "block w-full rounded-r-md border-gray-300 text-sm text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500",
           pending && "bg-gray-100",
         )}
-        placeholder="owd"
+        placeholder={t('owd')}
         aria-invalid="true"
       />
       {pending && (

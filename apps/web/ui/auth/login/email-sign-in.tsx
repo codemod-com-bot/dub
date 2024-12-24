@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { emailSchema } from "@/lib/zod/schemas/auth";
 import { Button, Input, useMediaQuery } from "@dub/ui";
 import { InputPassword } from "@dub/ui/icons";
@@ -11,6 +12,8 @@ import { toast } from "sonner";
 import { errorCodes, LoginFormContext } from "./login-form";
 
 export const EmailSignIn = ({ redirectTo }: { redirectTo?: string }) => {
+const t = useTranslations("../ui/auth/login");
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams?.get("next");
@@ -130,7 +133,7 @@ export const EmailSignIn = ({ redirectTo }: { redirectTo?: string }) => {
             name="email"
             autoFocus={!isMobile && !showPasswordField}
             type="email"
-            placeholder="panic@thedis.co"
+            placeholder={t('panic-at-thedis-co')}
             autoComplete="email"
             required
             value={email}
@@ -151,7 +154,7 @@ export const EmailSignIn = ({ redirectTo }: { redirectTo?: string }) => {
               type="password"
               autoFocus={!isMobile}
               value={password}
-              placeholder="Password (optional)"
+              placeholder={t('password-optional')}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -183,9 +186,7 @@ export const EmailSignIn = ({ redirectTo }: { redirectTo?: string }) => {
         <Link
           href={`/forgot-password?email=${encodeURIComponent(email)}`}
           className="text-center text-xs text-gray-500 transition-colors hover:text-black"
-        >
-          Forgot password?
-        </Link>
+        >{t('forgot-password')}</Link>
       )}
     </>
   );

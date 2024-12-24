@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { Badge, buttonVariants } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -24,6 +26,8 @@ export function AnimatedEmptyState({
   learnMoreClassName?: string;
   className?: string;
 }) {
+const t = useTranslations("../ui/shared");
+
   return (
     <div
       className={cn(
@@ -63,9 +67,7 @@ export function AnimatedEmptyState({
               "flex h-9 items-center whitespace-nowrap rounded-lg border px-4 text-sm",
               learnMoreClassName,
             )}
-          >
-            Learn more
-          </Link>
+          >{t('learn-more')}</Link>
         )}
       </div>
     </div>

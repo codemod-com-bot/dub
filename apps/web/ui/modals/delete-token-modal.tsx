@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { TokenProps } from "@/lib/types";
 import { Button, Key, Modal, Tooltip, useMediaQuery } from "@dub/ui";
@@ -21,6 +22,8 @@ function DeleteTokenModal({
   setShowDeleteTokenModal: Dispatch<SetStateAction<boolean>>;
   token: TokenProps;
 }) {
+const t = useTranslations("../ui/modals");
+
   const { isMobile } = useMediaQuery();
   const { id: workspaceId } = useWorkspace();
   const [removing, setRemoving] = useState(false);
@@ -49,11 +52,8 @@ function DeleteTokenModal({
       className="max-w-md"
     >
       <div className="space-y-2 border-b border-neutral-200 px-4 py-4 sm:px-6">
-        <h3 className="text-lg font-medium">Delete API Key</h3>
-        <p className="text-sm text-gray-500">
-          This will permanently delete the API key for and revoke all access to
-          your account. Are you sure you want to continue?
-        </p>
+        <h3 className="text-lg font-medium">{t('delete-api-key')}</h3>
+        <p className="text-sm text-gray-500">{t('delete-api-key-warning')}</p>
       </div>
 
       <div className="flex flex-col space-y-4 bg-neutral-50 px-4 py-4 sm:px-6">
@@ -95,7 +95,7 @@ function DeleteTokenModal({
         </div>
 
         <Button
-          text="Delete"
+          text={t('delete-word')}
           variant="danger"
           autoFocus={!isMobile}
           loading={removing}

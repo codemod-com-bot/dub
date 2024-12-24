@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { UtmTemplateWithUserProps } from "@/lib/types";
@@ -25,6 +27,8 @@ export function TemplateCard({
 }: {
   template: UtmTemplateWithUserProps;
 }) {
+const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/library/utm");
+
   const { id } = useWorkspace();
 
   const { openMenuTemplateId, setOpenMenuTemplateId } =
@@ -116,7 +120,7 @@ export function TemplateCard({
             content={
               <div className="grid w-full gap-px p-2 sm:w-48">
                 <Button
-                  text="Edit"
+                  text={t('edit-button')}
                   variant="outline"
                   onClick={() => {
                     setOpenPopover(false);
@@ -127,7 +131,7 @@ export function TemplateCard({
                   className="h-9 px-2 font-medium"
                 />
                 <Button
-                  text="Delete"
+                  text={t('delete-button')}
                   variant="danger-outline"
                   onClick={handleDelete}
                   icon={<Delete className="h-4 w-4" />}

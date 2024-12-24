@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useArchiveLinkModal } from "@/ui/modals/archive-link-modal";
 import { useDeleteLinkModal } from "@/ui/modals/delete-link-modal";
 import {
@@ -24,6 +25,8 @@ import { ThreeDots } from "../shared/icons";
 import { LinksListContext, ResponseLink } from "./links-container";
 
 export function LinkControls({ link }: { link: ResponseLink }) {
+const t = useTranslations("../ui/links");
+
   const { slug } = useParams() as { slug?: string };
 
   const { hovered } = useContext(CardList.Card.Context);
@@ -154,7 +157,7 @@ export function LinkControls({ link }: { link: ResponseLink }) {
           <div className="w-full sm:w-48">
             <div className="grid gap-px p-2">
               <Button
-                text="Edit"
+                text={t('edit')}
                 variant="outline"
                 onClick={() => {
                   setOpenPopover(false);
@@ -165,7 +168,7 @@ export function LinkControls({ link }: { link: ResponseLink }) {
                 className="h-9 px-2 font-medium"
               />
               <Button
-                text="QR Code"
+                text={t('qr-code')}
                 variant="outline"
                 onClick={() => {
                   setOpenPopover(false);
@@ -176,7 +179,7 @@ export function LinkControls({ link }: { link: ResponseLink }) {
                 className="h-9 px-2 font-medium"
               />
               <Button
-                text="Duplicate"
+                text={t('duplicate')}
                 variant="outline"
                 onClick={() => {
                   setOpenPopover(false);
@@ -187,7 +190,7 @@ export function LinkControls({ link }: { link: ResponseLink }) {
                 className="h-9 px-2 font-medium"
               />
               <Button
-                text="Copy Link ID"
+                text={t('copy-link-id')}
                 variant="outline"
                 onClick={() => copyLinkId()}
                 icon={
@@ -215,7 +218,7 @@ export function LinkControls({ link }: { link: ResponseLink }) {
                 className="h-9 px-2 font-medium"
               />
               <Button
-                text="Transfer"
+                text={t('transfer')}
                 variant="outline"
                 onClick={() => {
                   setOpenPopover(false);
@@ -227,7 +230,7 @@ export function LinkControls({ link }: { link: ResponseLink }) {
                 {...(!isDubDomain(link.domain) && {
                   disabledTooltip: (
                     <SimpleTooltipContent
-                      title="Since this is a custom domain link, you can only transfer it to another workspace if you transfer the domain as well."
+                      title={t('custom-domain-transfer-warning')}
                       cta="Learn more."
                       href="https://dub.co/help/article/how-to-transfer-domains"
                     />
@@ -236,7 +239,7 @@ export function LinkControls({ link }: { link: ResponseLink }) {
               />
 
               <Button
-                text="Delete"
+                text={t('delete')}
                 variant="danger-outline"
                 onClick={() => {
                   setOpenPopover(false);
@@ -260,10 +263,8 @@ export function LinkControls({ link }: { link: ResponseLink }) {
                   onClick={() => handleBanLink()}
                   className="group flex w-full items-center justify-between rounded-md p-2 text-left text-sm font-medium text-red-600 transition-all duration-75 hover:bg-red-600 hover:text-white"
                 >
-                  <IconMenu text="Ban" icon={<Delete className="h-4 w-4" />} />
-                  <kbd className="hidden rounded bg-red-100 px-2 py-0.5 text-xs font-light text-red-600 transition-all duration-75 group-hover:bg-red-500 group-hover:text-white sm:inline-block">
-                    B
-                  </kbd>
+                  <IconMenu text={t('ban')} icon={<Delete className="h-4 w-4" />} />
+                  <kbd className="hidden rounded bg-red-100 px-2 py-0.5 text-xs font-light text-red-600 transition-all duration-75 group-hover:bg-red-500 group-hover:text-white sm:inline-block">{t('b')}</kbd>
                 </button>
               )}
             </div>

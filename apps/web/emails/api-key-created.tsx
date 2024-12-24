@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { DUB_WORDMARK, formatDate } from "@dub/utils";
 import {
   Body,
@@ -37,10 +38,12 @@ export default function APIKeyCreated({
     permissions: string;
   };
 }) {
+const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>New Workspace API Key Created</Preview>
+      <Preview>{t('new-workspace-api-key-created')}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -48,41 +51,25 @@ export default function APIKeyCreated({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub.co"
+                alt={t('dub-co')}
                 className="mx-auto my-0"
               />
             </Section>
-            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              New Workspace API Key Created
-            </Heading>
-            <Text className="text-sm leading-6 text-black">
-              You've created a new API key for your Dub.co workspace{" "}
-              <strong>{workspace.name}</strong> with the name{" "}
-              <strong>"{token.name}"</strong> on{" "}
-              {formatDate(new Date().toString())}.
-            </Text>
-            <Text className="text-sm leading-6 text-black">
-              Since this is a <strong>{token.type}</strong> token, it has{" "}
-              {token.permissions}.
-            </Text>
+            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">{t('new-workspace-api-key-created-fragment')}</Heading>
+            <Text className="text-sm leading-6 text-black">{t('created-new-api-key-for-dub-co-workspace', { "component0": {t('created-new-api-key-for-dub-co-workspace_component0', { "_workspace_name_": _workspace_name_ })}, "component1": <strong>{t('created-new-api-key-for-dub-co-workspace_component1')}{token.name}{t('created-new-api-key-for-dub-co-workspace_component1')}</strong> })}
+              
+              
+              {formatDate(new Date().toString())}{t('end-of-sentence')}</Text>
+            <Text className="text-sm leading-6 text-black">{t('strong-token-type-token-has', { "component0": {t('strong-token-type-token-has_component0', { "_token_type_": _token_type_ })} })}
+              {token.permissions}{t('end-of-sentence-2')}</Text>
             <Section className="mb-8 mt-4 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={`https://app.dub.co/${workspace.slug}/settings/tokens`}
-              >
-                View API Keys
-              </Link>
+              >{t('view-api-keys')}</Link>
             </Section>
-            <Text className="text-sm leading-6 text-black">
-              If you did not create this API key, you can{" "}
-              <Link
-                href={`https://app.dub.co/${workspace.slug}/settings/tokens`}
-                className="text-black underline"
-              >
-                <strong>delete this key</strong>
-              </Link>{" "}
-              from your account.
-            </Text>
+            <Text className="text-sm leading-6 text-black">{t('if-not-created-api-key-delete-from-account', { "component0": {t('if-not-created-api-key-delete-from-account_component0', { "_strong_delete_this_key_strong_": _strong_delete_this_key_strong_ })} })}
+              </Text>
             <Footer email={email} />
           </Container>
         </Body>
