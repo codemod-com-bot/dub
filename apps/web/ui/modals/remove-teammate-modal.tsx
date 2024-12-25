@@ -2,6 +2,7 @@ import useWorkspace from "@/lib/swr/use-workspace";
 import { UserProps } from "@/lib/types";
 import { Avatar, BlurImage, Button, Logo, Modal, useMediaQuery } from "@dub/ui";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   Dispatch,
@@ -24,6 +25,8 @@ function RemoveTeammateModal({
   user: UserProps;
   invite?: boolean;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const router = useRouter();
   const [removing, setRemoving] = useState(false);
   const { id: workspaceId, name: workspaceName, logo } = useWorkspace();
@@ -40,7 +43,7 @@ function RemoveTeammateModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Workspace logo"
+            alt={t("workspace-logo")}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -69,7 +72,7 @@ function RemoveTeammateModal({
             : session?.user?.email === email
               ? ". You will lose all access to this workspace. "
               : " from your workspace. "}
-          Are you sure you want to continue?
+          {t("are-you-sure-you-want-to-continue")}
         </p>
       </div>
 
@@ -82,7 +85,7 @@ function RemoveTeammateModal({
           </div>
         </div>
         <Button
-          text="Confirm"
+          text={t("confirm")}
           variant="danger"
           autoFocus={!isMobile}
           loading={removing}

@@ -32,6 +32,7 @@ import {
 import { cn, DEFAULT_LINK_PROPS, fetcher, nFormatter } from "@dub/utils";
 import { motion } from "framer-motion";
 import { Archive, ChevronDown, FolderInput, QrCode } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
@@ -48,6 +49,8 @@ import { DomainCardTitleColumn } from "./domain-card-title-column";
 import DomainConfiguration from "./domain-configuration";
 
 export default function DomainCard({ props }: { props: DomainProps }) {
+  const t = useTranslations("../ui/domains");
+
   const { slug: domain, primary, registeredDomain } = props || {};
 
   const isDubProvisioned = !!registeredDomain;
@@ -105,7 +108,7 @@ export default function DomainCard({ props }: { props: DomainProps }) {
             <div className="flex items-center gap-1.5">
               <Wordmark className="h-4" />
               <span className="font-medium text-gray-900">
-                Provisioned by Dub
+                {t("provisioned-by-dub")}
               </span>
             </div>
             <a
@@ -113,7 +116,7 @@ export default function DomainCard({ props }: { props: DomainProps }) {
               target="_blank"
               className="text-gray-500 underline transition-colors hover:text-gray-800"
             >
-              Learn more
+              {t("learn-more")}
             </a>
           </div>
         )}
@@ -136,7 +139,9 @@ export default function DomainCard({ props }: { props: DomainProps }) {
                   <CursorRays className="h-4 w-4 text-gray-700" />
                   <p className="text-xs font-medium text-gray-900">
                     {nFormatter(props.link?.clicks || 0)}
-                    <span className="ml-1 hidden sm:inline-block">clicks</span>
+                    <span className="ml-1 hidden sm:inline-block">
+                      {t("clicks")}
+                    </span>
                   </p>
                 </Link>
               </NumberTooltip>
@@ -229,15 +234,17 @@ export default function DomainCard({ props }: { props: DomainProps }) {
                 <div className="mt-6 flex items-center gap-2 text-pretty rounded-lg bg-green-100/80 p-3 text-sm text-green-600">
                   <CircleCheck className="h-5 w-5 shrink-0" />
                   <div>
-                    Good news! Your DNS records are set up correctly, but it can
-                    take some time for them to propagate globally.{" "}
-                    <Link
-                      href="https://dub.co/help/article/how-to-add-custom-domain#how-long-do-i-have-to-wait-for-my-domain-to-work"
-                      target="_blank"
-                      className="underline transition-colors hover:text-green-800"
-                    >
-                      Learn more.
-                    </Link>
+                    {t("good-news-dns-records-setup", {
+                      component0: (
+                        <Link
+                          href="https://dub.co/help/article/how-to-add-custom-domain#how-long-do-i-have-to-wait-for-my-domain-to-work"
+                          target="_blank"
+                          className="underline transition-colors hover:text-green-800"
+                        >
+                          {t("good-news-dns-records-setup_component0")}
+                        </Link>
+                      ),
+                    })}
                   </div>
                 </div>
               ) : (
@@ -267,6 +274,8 @@ function Menu({
   };
   groupHover: boolean;
 }) {
+  const t = useTranslations("../ui/domains");
+
   const { primary, archived, slug: domain, registeredDomain } = props;
   const isDubProvisioned = !!registeredDomain;
 
@@ -371,10 +380,10 @@ function Menu({
             <div className="w-full sm:w-48">
               <div className="grid gap-px p-2">
                 <p className="mb-1.5 mt-1 flex items-center gap-2 px-1 text-xs font-medium text-gray-500">
-                  Link Settings
+                  {t("link-settings")}
                 </p>
                 <Button
-                  text="Edit Link"
+                  text={t("edit-link")}
                   variant="outline"
                   onClick={() => {
                     setOpenPopover(false);
@@ -387,7 +396,7 @@ function Menu({
                   className="h-9 justify-start px-2 font-medium"
                 />
                 <Button
-                  text="QR Code"
+                  text={t("qr-code")}
                   variant="outline"
                   onClick={() => {
                     setOpenPopover(false);
@@ -400,7 +409,7 @@ function Menu({
                   className="h-9 justify-start px-2 font-medium"
                 />
                 <Button
-                  text="Copy Link ID"
+                  text={t("copy-link-id")}
                   variant="outline"
                   onClick={() => copyLinkId()}
                   icon={
@@ -419,10 +428,10 @@ function Menu({
               <div className="border-t border-gray-200" />
               <div className="grid gap-px p-2">
                 <p className="mb-1.5 mt-1 flex items-center gap-2 px-1 text-xs font-medium text-gray-500">
-                  Domain Settings
+                  {t("domain-settings")}
                 </p>
                 <Button
-                  text="Edit Domain"
+                  text={t("edit-domain")}
                   variant="outline"
                   onClick={() => {
                     setOpenPopover(false);
@@ -433,7 +442,7 @@ function Menu({
                 />
                 {!primary && (
                   <Button
-                    text="Set as Primary"
+                    text={t("set-as-primary")}
                     variant="outline"
                     onClick={() => {
                       setOpenPopover(false);
@@ -445,7 +454,7 @@ function Menu({
                 )}
                 {!isDubProvisioned && (
                   <Button
-                    text="Transfer"
+                    text={t("transfer")}
                     variant="outline"
                     onClick={() => {
                       setOpenPopover(false);
@@ -472,7 +481,7 @@ function Menu({
                 />
                 {!isDubProvisioned && (
                   <Button
-                    text="Delete"
+                    text={t("delete")}
                     variant="danger-outline"
                     onClick={() => {
                       setOpenPopover(false);

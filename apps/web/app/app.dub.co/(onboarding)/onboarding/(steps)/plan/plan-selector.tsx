@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { PlanFeatures } from "@/ui/workspaces/plan-features";
@@ -9,6 +10,8 @@ import NumberFlow from "@number-flow/react";
 import { useEffect, useState } from "react";
 
 export function PlanSelector() {
+  const t = useTranslations("app.dub.co/(onboarding)/onboarding/(steps)/plan");
+
   const [periodTab, setPeriodTab] = useState<"monthly" | "yearly">("yearly");
 
   return (
@@ -20,7 +23,7 @@ export function PlanSelector() {
             {
               value: "yearly",
               label: "Pay yearly",
-              badge: <Badge variant="blue">Save 20%</Badge>,
+              badge: <Badge variant="blue">{t("save-20-percent")}</Badge>,
             },
           ]}
           selected={periodTab}
@@ -52,6 +55,8 @@ function PlanCard({
   plans: (typeof SELF_SERVE_PAID_PLANS)[number][];
   period: "monthly" | "yearly";
 }) {
+  const t = useTranslations("app.dub.co/(onboarding)/onboarding/(steps)/plan");
+
   const [selectedPlanIndex, setSelectedPlanIndex] = useState(0);
   const selectedPlan = plans[selectedPlanIndex];
 
@@ -70,7 +75,7 @@ function PlanCard({
     <div className="flex flex-col rounded-lg border border-gray-200 bg-white p-6">
       <div className="flex items-center gap-2">
         <h2 className="text-lg font-medium text-gray-900">{name}</h2>
-        {name === "Pro" && <Badge variant="blue">Most popular</Badge>}
+        {name === "Pro" && <Badge variant="blue">{t("most-popular")}</Badge>}
       </div>
       <div className="mt-2 text-3xl font-medium text-gray-900">
         <NumberFlow
@@ -85,7 +90,7 @@ function PlanCard({
           continuous
         />
         <span className="ml-1 text-sm font-medium">
-          per month
+          {t("per-month")}
           {period === "yearly" && ", billed yearly"}
         </span>
       </div>

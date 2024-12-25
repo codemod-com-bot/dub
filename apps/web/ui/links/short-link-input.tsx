@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { LinkProps } from "@/lib/types";
@@ -400,6 +402,8 @@ function DefaultDomainPrompt({
   url?: string;
   onChange: (domain: string) => void;
 }) {
+const t = useTranslations("../ui/links");
+
   if (!url || !domain) return null;
 
   const apexDomain = getApexDomain(url);
@@ -417,10 +421,7 @@ function DefaultDomainPrompt({
       type="button"
     >
       <ArrowTurnRight2 className="size-3.5" />
-      <p>
-        Use <strong className="font-semibold">{domainSlug}</strong> domain
-        instead?
-      </p>
+      <p>{t('use-strong-font-semibold-domain-slug-domain-instead', { "component0": {t('use-strong-font-semibold-domain-slug-domain-instead_component0', { "_domainSlug_": _domainSlug_ })} })}</p>
     </button>
   );
 }

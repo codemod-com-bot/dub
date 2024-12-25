@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { scopesToName } from "@/lib/api/tokens/scopes";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -27,6 +28,8 @@ import { useState } from "react";
 import useSWR from "swr";
 
 export default function TokensPageClient() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/tokens");
+
   const { id: workspaceId } = useWorkspace();
   const { pagination, setPagination } = usePagination();
   const [createdToken, setCreatedToken] = useState<string | null>(null);
@@ -157,8 +160,8 @@ export default function TokensPageClient() {
     },
     emptyState: (
       <AnimatedEmptyState
-        title="No tokens found"
-        description="No tokens have been created for this workspace yet."
+        title={t("no-tokens-found")}
+        description={t("no-tokens-created-for-workspace-yet")}
         cardContent={() => (
           <>
             <Key className="size-4 text-neutral-700" />
@@ -178,19 +181,20 @@ export default function TokensPageClient() {
       <AddEditTokenModal />
 
       <h1 className="text-2xl font-semibold tracking-tight text-black">
-        Secret keys
+        {t("secret-keys")}
       </h1>
       <p className="mb-2 mt-2 text-base text-neutral-600">
-        These API keys allow other apps to access your workspace. Use it with
-        caution – do not share your API key with others, or expose it in the
-        browser or other client-side code.{" "}
-        <a
-          href="https://dub.co/docs/api-reference/tokens"
-          target="_blank"
-          className="font-medium underline underline-offset-4 hover:text-black"
-        >
-          Learn more
-        </a>
+        {t("api-keys-access-workspace", {
+          component0: (
+            <a
+              href="https://dub.co/docs/api-reference/tokens"
+              target="_blank"
+              className="font-medium underline underline-offset-4 hover:text-black"
+            >
+              {t("api-keys-access-workspace_component0")}
+            </a>
+          ),
+        })}
       </p>
 
       <div className="flex w-full items-center justify-end pb-4">
@@ -201,8 +205,8 @@ export default function TokensPageClient() {
         <Table {...tableProps} table={table} />
       ) : (
         <AnimatedEmptyState
-          title="No tokens found"
-          description="No tokens have been created for this workspace yet."
+          title={t("no-tokens-found-duplicate")}
+          description={t("no-tokens-created-for-workspace-yet-duplicate")}
           cardContent={() => (
             <>
               <Key className="size-4 text-neutral-700" />
@@ -222,6 +226,8 @@ function RowMenuButton({
   token: TokenProps;
   onEdit: () => void;
 }) {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/tokens");
+
   const [isOpen, setIsOpen] = useState(false);
 
   const { DeleteTokenModal, setShowDeleteTokenModal } = useDeleteTokenModal({
@@ -237,11 +243,11 @@ function RowMenuButton({
         content={
           <Command tabIndex={0} loop className="focus:outline-none">
             <Command.List className="flex w-screen flex-col gap-1 p-1.5 text-sm sm:w-auto sm:min-w-[130px]">
-              <MenuItem icon={PenWriting} label="Edit" onSelect={onEdit} />
+              <MenuItem icon={PenWriting} label={t("edit")} onSelect={onEdit} />
 
               <MenuItem
                 icon={Delete}
-                label="Delete"
+                label={t("delete")}
                 danger={true}
                 onSelect={() => {
                   setIsOpen(false);

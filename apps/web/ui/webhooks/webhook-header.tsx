@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -25,6 +26,8 @@ import { useDeleteWebhookModal } from "../modals/delete-webhook-modal";
 import { useSendTestWebhookModal } from "../modals/send-test-webhook-modal";
 
 export default function WebhookHeader({ webhookId }: { webhookId: string }) {
+  const t = useTranslations("../ui/webhooks");
+
   const router = useRouter();
   const { slug, id: workspaceId, role } = useWorkspace();
   const [copiedWebhookId, copyToClipboard] = useCopyToClipboard();
@@ -73,7 +76,9 @@ export default function WebhookHeader({ webhookId }: { webhookId: string }) {
           className="flex items-center gap-x-1"
         >
           <ChevronLeft className="size-4" />
-          <p className="text-sm font-medium text-gray-500">Back to webhooks</p>
+          <p className="text-sm font-medium text-gray-500">
+            {t("back-to-webhooks")}
+          </p>
         </Link>
         <div className="flex justify-between gap-2 sm:items-center">
           {isLoading || !webhook ? (
@@ -109,7 +114,7 @@ export default function WebhookHeader({ webhookId }: { webhookId: string }) {
             content={
               <div className="grid w-screen gap-px p-2 sm:w-48">
                 <Button
-                  text="Send test event"
+                  text={t("send-test-event")}
                   variant="outline"
                   icon={<Send className="size-4" />}
                   className="h-9 justify-start px-2"
@@ -120,7 +125,7 @@ export default function WebhookHeader({ webhookId }: { webhookId: string }) {
                 />
 
                 <Button
-                  text="Copy Webhook ID"
+                  text={t("copy-webhook-id")}
                   variant="outline"
                   icon={
                     copiedWebhookId ? (
@@ -134,7 +139,7 @@ export default function WebhookHeader({ webhookId }: { webhookId: string }) {
                 />
 
                 <Button
-                  text="Delete webhook"
+                  text={t("delete-webhook")}
                   variant="danger-outline"
                   icon={<Trash className="size-4" />}
                   className="h-9 justify-start px-2"

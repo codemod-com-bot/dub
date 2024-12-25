@@ -10,6 +10,7 @@ import {
 } from "@dub/ui";
 import { Eye, EyeSlash, InputPassword, Shuffle } from "@dub/ui/icons";
 import { cn, nanoid } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -45,6 +46,8 @@ function PasswordModalInner({
 }: {
   setShowPasswordModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { isMobile } = useMediaQuery();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const {
@@ -93,11 +96,13 @@ function PasswordModalInner({
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-medium">Link Password</h3>
+          <h3 className="text-lg font-medium">{t("link-password")}</h3>
           <ProBadgeTooltip
             content={
               <SimpleTooltipContent
-                title="Restrict access to your short links by encrypting it with a password."
+                title={t(
+                  "restrict-access-to-your-short-links-by-encrypting-it-with-a-password",
+                )}
                 cta="Learn more."
                 href="https://dub.co/help/article/password-protected-links"
               />
@@ -108,14 +113,19 @@ function PasswordModalInner({
           <Tooltip
             content={
               <div className="px-2 py-1 text-xs text-gray-700">
-                Press <strong className="font-medium text-gray-950">P</strong>{" "}
-                to open this quickly
+                {t("press-p-to-open-this-quickly", {
+                  component0: (
+                    <strong className="font-medium text-gray-950">
+                      {t("press-p-to-open-this-quickly_component0")}
+                    </strong>
+                  ),
+                })}
               </div>
             }
             side="right"
           >
             <kbd className="flex size-6 cursor-default items-center justify-center rounded-md border border-gray-200 font-sans text-xs text-gray-950">
-              P
+              {t("p-key")}
             </kbd>
           </Tooltip>
         </div>
@@ -124,7 +134,7 @@ function PasswordModalInner({
       <div className="mt-6">
         <div className="flex items-center justify-between">
           <span className="block text-sm font-medium text-gray-700">
-            Password
+            {t("password-key")}
           </span>
           <div className="flex items-center gap-2">
             <ButtonTooltip
@@ -155,7 +165,7 @@ function PasswordModalInner({
         <div className="mt-2 rounded-md shadow-sm">
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="Create password"
+            placeholder={t("create-password")}
             data-1p-ignore
             className={`${
               errors.password
@@ -186,7 +196,7 @@ function PasswordModalInner({
                 setShowPasswordModal(false);
               }}
             >
-              Remove password
+              {t("remove-password")}
             </button>
           )}
         </div>
@@ -194,7 +204,7 @@ function PasswordModalInner({
           <Button
             type="button"
             variant="secondary"
-            text="Cancel"
+            text={t("cancel")}
             className="h-9 w-fit"
             onClick={() => {
               reset();

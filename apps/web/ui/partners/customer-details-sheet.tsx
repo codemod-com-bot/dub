@@ -29,6 +29,7 @@ import {
   getPrettyUrl,
 } from "@dub/utils";
 import { formatDistanceStrict } from "date-fns";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import useSWR from "swr";
@@ -39,6 +40,8 @@ interface CustomerDetailsSheetProps {
 }
 
 function CustomerDetailsSheetContent({ customer }: CustomerDetailsSheetProps) {
+  const t = useTranslations("../ui/partners");
+
   const { id: workspaceId, slug } = useWorkspace();
 
   let { data: customerActivity, isLoading } = useSWR<CustomerActivityResponse>(
@@ -55,7 +58,7 @@ function CustomerDetailsSheetContent({ customer }: CustomerDetailsSheetProps) {
       <div className="flex grow flex-col">
         <div className="flex items-start justify-between p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Customer details
+            {t("customer-details")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button
@@ -101,7 +104,7 @@ function CustomerDetailsSheetContent({ customer }: CustomerDetailsSheetProps) {
                   className="flex min-w-20 items-center gap-2 rounded-full border border-neutral-200 bg-white px-1.5 py-0.5 text-xs text-neutral-700 group-hover:translate-x-0 group-hover:opacity-100"
                 >
                   <img
-                    alt=""
+                    alt={t("empty-string")}
                     src={`https://flag.vercel.app/m/${country}.svg`}
                     className="h-3 w-4 rounded-sm"
                   />

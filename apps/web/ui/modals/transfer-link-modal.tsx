@@ -15,6 +15,7 @@ import {
   isDubDomain,
   linkConstructor,
 } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -46,6 +47,8 @@ function TransferLinkModalInner({
   setShowTransferLinkModal,
   props,
 }: TransferLinkModalProps) {
+  const t = useTranslations("../ui/modals");
+
   const { id } = useWorkspace();
   const { workspaces } = useWorkspaces();
   const [transferring, setTransferring] = useState(false);
@@ -102,10 +105,13 @@ function TransferLinkModalInner({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 text-center sm:px-16">
         <LinkLogo apexDomain={apexDomain} />
-        <h3 className="text-lg font-medium">Transfer {shortlink}</h3>
+        <h3 className="text-lg font-medium">
+          {t("transfer-shortlink", { shortlink: shortlink })}
+        </h3>
         <p className="text-sm text-gray-500">
-          Transfer this link and its analytics to another {APP_NAME} workspace.
-          Link tags will not be transferred.
+          {t("transfer-link-analytics-another-workspace", {
+            APP_NAME: APP_NAME,
+          })}
         </p>
       </div>
 
@@ -135,7 +141,7 @@ function TransferLinkModalInner({
         <Button
           disabled={!selectedWorkspace || !isDubDomain(domain)}
           loading={transferring}
-          text="Confirm transfer"
+          text={t("confirm-transfer")}
         />
       </div>
     </form>

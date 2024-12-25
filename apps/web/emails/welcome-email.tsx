@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function WelcomeEmail({
@@ -21,10 +22,12 @@ export default function WelcomeEmail({
   name: string | null;
   email: string;
 }) {
+  const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>Welcome to Dub.co</Preview>
+      <Preview>{t("welcome-to-dub-co")}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -32,69 +35,80 @@ export default function WelcomeEmail({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t("dub")}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Welcome to Dub.co
+              {t("welcome-to-dub-co-newline")}
             </Heading>
             <Section className="my-8">
-              <Img src={DUB_THUMBNAIL} alt="Dub" className="max-w-[500px]" />
+              <Img
+                src={DUB_THUMBNAIL}
+                alt={t("dub-newline")}
+                className="max-w-[500px]"
+              />
             </Section>
             <Text className="text-sm leading-6 text-black">
-              Thanks for signing up{name && `, ${name}`}!
+              {t("thanks-for-signing-up")}
+              {name && `, ${name}`}
+              {t("exclamation-mark-newline")}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              My name is Steven, and I'm the founder of Dub.co - the modern link
-              management platform for you to create marketing campaigns, link
-              sharing features, and referral programs. We're excited to have you
-              on board!
+              {t("introduction-from-steven")}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              Here are a few things you can do:
+              {t("things-you-can-do")}
             </Text>
             <Text className="ml-1 text-sm leading-4 text-black">
-              ◆ Create a{" "}
-              <Link
-                href="https://app.dub.co?newWorkspace=true"
-                className="font-medium text-blue-600 no-underline"
-              >
-                new workspace
-              </Link>{" "}
-              and{" "}
-              <Link
-                href="https://dub.co/help/article/how-to-add-custom-domain"
-                className="font-medium text-blue-600 no-underline"
-              >
-                add your custom domain
-              </Link>
+              {t("create-new-workspace-and-add-custom-domain", {
+                component0: (
+                  <Link
+                    href="https://app.dub.co?newWorkspace=true"
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {t("create-new-workspace-and-add-custom-domain_component0")}
+                  </Link>
+                ),
+                component1: (
+                  <Link
+                    href="https://dub.co/help/article/how-to-add-custom-domain"
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {t("create-new-workspace-and-add-custom-domain_component1")}
+                  </Link>
+                ),
+              })}
             </Text>
             <Text className="ml-1 text-sm leading-4 text-black">
-              ◆ Create your first{" "}
-              <Link
-                href="https://dub.co/help/article/how-to-create-link"
-                className="font-medium text-blue-600 no-underline"
-              >
-                short link
-              </Link>
+              {t("create-your-first-short-link", {
+                component0: (
+                  <Link
+                    href="https://dub.co/help/article/how-to-create-link"
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {t("create-your-first-short-link_component0")}
+                  </Link>
+                ),
+              })}
             </Text>
             <Text className="ml-1 text-sm leading-4 text-black">
-              ◆ Check out our{" "}
-              <Link
-                href="https://dub.co/api"
-                className="font-medium text-blue-600 no-underline"
-              >
-                API documentation
-              </Link>{" "}
-              for programmatic link generation
+              {t("check-out-api-documentation", {
+                component0: (
+                  <Link
+                    href="https://dub.co/api"
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {t("check-out-api-documentation_component0")}
+                  </Link>
+                ),
+              })}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              Let me know if you have any questions or feedback. I'm always
-              happy to help!
+              {t("questions-or-feedback")}
             </Text>
             <Text className="text-sm font-light leading-6 text-gray-400">
-              Steven from Dub
+              {t("steven-from-dub")}
             </Text>
 
             <Footer email={email} marketing />

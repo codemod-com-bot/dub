@@ -1,8 +1,11 @@
 import { Wordmark } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { NextButton } from "../next-button";
 import TrackSignup from "./track-signup";
 
 export default function Welcome() {
+  const t = useTranslations("app.dub.co/(onboarding)/onboarding/welcome");
+
   return (
     <>
       <TrackSignup />
@@ -23,13 +26,15 @@ export default function Welcome() {
           <Wordmark className="relative h-16" />
         </div>
         <h1 className="animate-slide-up-fade mt-10 text-2xl font-medium [--offset:10px] [animation-delay:250ms] [animation-duration:1s] [animation-fill-mode:both]">
-          Welcome to Dub
+          {t("welcome-to-dub")}
         </h1>
         <p className="animate-slide-up-fade mt-2 text-gray-500 [--offset:10px] [animation-delay:500ms] [animation-duration:1s] [animation-fill-mode:both]">
-          Dub gives you marketing superpowers with short links that stand out.
+          {t(
+            "dub-gives-you-marketing-superpowers-with-short-links-that-stand-out",
+          )}
         </p>
         <div className="animate-slide-up-fade mt-10 w-full [--offset:10px] [animation-delay:750ms] [animation-duration:1s] [animation-fill-mode:both]">
-          <NextButton text="Get started" step="workspace" />
+          <NextButton text={t("get-started")} step="workspace" />
         </div>
       </div>
     </>

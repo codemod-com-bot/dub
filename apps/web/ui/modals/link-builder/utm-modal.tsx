@@ -15,6 +15,7 @@ import {
   getParamsFromURL,
   isValidUrl,
 } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -44,6 +45,8 @@ function UTMModal(props: UTMModalProps) {
 }
 
 function UTMModalInner({ setShowUTMModal }: UTMModalProps) {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { getValues: getValuesParent, setValue: setValueParent } =
     useFormContext<LinkFormData>();
 
@@ -169,11 +172,13 @@ function UTMModalInner({ setShowUTMModal }: UTMModalProps) {
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-medium">UTM Builder</h3>
+          <h3 className="text-lg font-medium">{t("utm-builder")}</h3>
           <InfoTooltip
             content={
               <SimpleTooltipContent
-                title="Add UTM parameters to your short links for conversion tracking."
+                title={t(
+                  "add-utm-parameters-to-your-short-links-for-conversion-tracking",
+                )}
                 cta="Learn more."
                 href="https://dub.co/help/article/utm-builder"
               />
@@ -184,14 +189,19 @@ function UTMModalInner({ setShowUTMModal }: UTMModalProps) {
           <Tooltip
             content={
               <div className="px-2 py-1 text-xs text-gray-700">
-                Press <strong className="font-medium text-gray-950">U</strong>{" "}
-                to open this quickly
+                {t("press-u-to-open-this-quickly", {
+                  component0: (
+                    <strong className="font-medium text-gray-950">
+                      {t("press-u-to-open-this-quickly_component0")}
+                    </strong>
+                  ),
+                })}
               </div>
             }
             side="right"
           >
             <kbd className="flex size-6 cursor-default items-center justify-center rounded-md border border-gray-200 font-sans text-xs text-gray-950">
-              U
+              {t("u-key")}
             </kbd>
           </Tooltip>
         </div>
@@ -224,7 +234,7 @@ function UTMModalInner({ setShowUTMModal }: UTMModalProps) {
       {isValidUrl(url) && (
         <div className="mt-4 grid gap-y-1">
           <span className="block text-sm font-medium text-gray-700">
-            URL Preview
+            {t("url-preview")}
           </span>
           <div className="scrollbar-hide mt-2 overflow-scroll break-words rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-2 font-mono text-xs text-gray-500">
             {url}
@@ -253,7 +263,7 @@ function UTMModalInner({ setShowUTMModal }: UTMModalProps) {
           <Button
             type="button"
             variant="secondary"
-            text="Cancel"
+            text={t("cancel")}
             className="h-9 w-fit"
             onClick={() => {
               reset();
@@ -263,7 +273,7 @@ function UTMModalInner({ setShowUTMModal }: UTMModalProps) {
           <Button
             type="submit"
             variant="primary"
-            text="Save"
+            text={t("save")}
             className="h-9 w-fit"
             disabled={!isDirty}
           />
@@ -278,6 +288,8 @@ function UTMButton({
 }: {
   setShowUTMModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { watch } = useFormContext<LinkFormData>();
   const url = watch("url");
   const enabled = useMemo(
@@ -295,7 +307,7 @@ function UTMButton({
   return (
     <Button
       variant="secondary"
-      text="UTM"
+      text={t("utm")}
       icon={
         <DiamondTurnRight
           className={cn("size-4", enabled && "text-blue-500")}

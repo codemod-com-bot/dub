@@ -1,4 +1,5 @@
 import { Button, ButtonProps, LinkLogo, Modal, useMediaQuery } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   HTMLProps,
@@ -33,6 +34,8 @@ function PromptModal({
   showPromptModal: boolean;
   setShowPromptModal: Dispatch<SetStateAction<boolean>>;
 } & PromptModelProps) {
+  const t = useTranslations("../ui/modals");
+
   const { isMobile } = useMediaQuery();
 
   const [value, setValue] = useState("");
@@ -76,7 +79,7 @@ function PromptModal({
 
         <Button
           variant="primary"
-          text="Submit"
+          text={t("submit")}
           loading={loading}
           {...buttonProps}
         />

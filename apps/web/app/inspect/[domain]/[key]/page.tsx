@@ -13,6 +13,7 @@ import {
   getApexDomain,
 } from "@dub/utils";
 import { unescape } from "html-escaper";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import LinkInspectorCard from "./card";
@@ -49,6 +50,8 @@ export default async function InspectPage({
 }: {
   params: { domain: string; key: string };
 }) {
+  const t = await getTranslations("inspect/[domain]/[key]");
+
   const domain = params.domain;
   const key = decodeURIComponent(params.key).slice(0, -1);
 
@@ -66,11 +69,10 @@ export default async function InspectPage({
         <Nav />
         <div className="z-10 mx-2 my-10 flex max-w-md flex-col space-y-5 px-2.5 text-center sm:mx-auto sm:max-w-lg sm:px-0 lg:mb-16">
           <h1 className="font-display text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl sm:leading-[1.15]">
-            Link Inspector
+            {t("link-inspector")}
           </h1>
           <h2 className="text-lg text-gray-600 sm:text-xl">
-            Inspect a short link on Dub to make sure it's safe to click on. If
-            you think this link is malicious, please report it.
+            {t("inspect-short-link-description")}
           </h2>
 
           <LinkInspectorCard domain={domain} _key={key} url={data.url} />
@@ -83,7 +85,7 @@ export default async function InspectPage({
             target="_blank"
             className="mx-auto mt-2 flex items-center justify-center space-x-2 text-sm text-gray-500 transition-all hover:text-black"
           >
-            Inspect another short link →
+            {t("inspect-another-short-link")}
           </a>
         </div>
         <Footer />

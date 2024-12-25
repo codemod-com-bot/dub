@@ -14,6 +14,7 @@ import {
 } from "@dub/ui";
 import { cn, fetcher, nFormatter } from "@dub/utils";
 import { ArrowRight, ServerOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Dispatch,
@@ -33,6 +34,8 @@ function ImportShortModal({
   showImportShortModal: boolean;
   setShowImportShortModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const router = useRouter();
   const { id: workspaceId, slug } = useWorkspace();
   const searchParams = useSearchParams();
@@ -95,16 +98,19 @@ function ImportShortModal({
         <div className="flex items-center space-x-3 py-4">
           <img
             src="https://assets.dub.co/misc/icons/short.svg"
-            alt="Short.io logo"
+            alt={t("short-io-logo")}
             className="h-10 w-10"
           />
           <ArrowRight className="h-5 w-5 text-gray-600" />
           <Logo />
         </div>
-        <h3 className="text-lg font-medium">Import Your Short.io Links</h3>
+        <h3 className="text-lg font-medium">
+          {t("import-your-short-io-links")}
+        </h3>
         <p className="text-center text-sm text-gray-500">
-          Easily import all your existing Short.io links into{" "}
-          {process.env.NEXT_PUBLIC_APP_NAME} with just a few clicks.
+          {t("easily-import-all-your-existing-short-io-links", {
+            process_env_NEXT_PUBLIC_APP_NAME: process_env_NEXT_PUBLIC_APP_NAME,
+          })}
         </p>
       </div>
 
@@ -112,7 +118,9 @@ function ImportShortModal({
         {isLoading || !workspaceId ? (
           <div className="flex flex-col items-center justify-center space-y-4 bg-none">
             <LoadingSpinner />
-            <p className="text-sm text-gray-500">Connecting to Short.io</p>
+            <p className="text-sm text-gray-500">
+              {t("connecting-to-short-io")}
+            </p>
           </div>
         ) : domains ? (
           domains.length > 0 ? (
@@ -150,14 +158,17 @@ function ImportShortModal({
               className="flex flex-col space-y-4"
             >
               <div className="flex flex-col space-y-2">
-                <p className="text-sm font-medium text-gray-700">Domains</p>
+                <p className="text-sm font-medium text-gray-700">
+                  {t("domains")}
+                </p>
                 {domains.map(({ id, domain, links }) => (
                   <div className="flex items-center justify-between space-x-2 rounded-md border border-gray-200 bg-white px-4 py-2">
                     <div>
                       <p className="font-medium text-gray-800">{domain}</p>
                       {links > 0 && (
                         <p className="text-xs text-gray-500">
-                          {nFormatter(links)} links found
+                          {nFormatter(links)}
+                          {t("links-found")}
                         </p>
                       )}
                     </div>
@@ -184,7 +195,9 @@ function ImportShortModal({
                   </div>
                 ))}
                 <div className="flex items-center justify-between space-x-2 rounded-md py-1 pl-2 pr-4">
-                  <p className="text-xs text-gray-500">Import all tags?</p>
+                  <p className="text-xs text-gray-500">
+                    {t("import-all-tags")}
+                  </p>
                   <Switch
                     fn={() => setImportTags(!importTags)}
                     checked={importTags}
@@ -192,7 +205,7 @@ function ImportShortModal({
                 </div>
               </div>
               <Button
-                text="Confirm import"
+                text={t("confirm-import")}
                 loading={importing}
                 disabled={selectedDomains.length === 0}
               />
@@ -201,8 +214,7 @@ function ImportShortModal({
             <div className="flex flex-col items-center justify-center gap-2">
               <ServerOff className="h-6 w-6 text-gray-500" />
               <p className="max-w-md text-center text-sm text-gray-500">
-                We weren't able to retrieve any links from your Short.io
-                account.
+                {t("unable-to-retrieve-links")}
               </p>
               <a
                 href="mailto:support@dub.co?subject=I%20need%20help%20with%20importing%20my%20Short.io%20links"
@@ -211,7 +223,7 @@ function ImportShortModal({
                   "flex h-8 items-center justify-center rounded-md border px-4 text-sm",
                 )}
               >
-                Contact Support
+                {t("contact-support")}
               </a>
             </div>
           )
@@ -244,7 +256,7 @@ function ImportShortModal({
             <div>
               <div className="flex items-center space-x-2">
                 <h2 className="text-sm font-medium text-gray-900">
-                  Short.io API Key
+                  {t("short-io-api-key")}
                 </h2>
                 <InfoTooltip
                   content={
@@ -261,13 +273,13 @@ function ImportShortModal({
                 name="apiKey"
                 autoFocus={!isMobile}
                 type="text"
-                placeholder="sk_xxxxxxxxxxxxxxxx"
+                placeholder={t("api-key-example")}
                 autoComplete="off"
                 required
                 className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
               />
             </div>
-            <Button text="Confirm API Key" loading={submitting} />
+            <Button text={t("confirm-api-key")} loading={submitting} />
           </form>
         )}
       </div>

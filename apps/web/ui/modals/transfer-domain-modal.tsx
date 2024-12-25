@@ -9,6 +9,7 @@ import {
   Modal,
 } from "@dub/ui";
 import { APP_NAME, DICEBEAR_AVATAR_URL } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -28,6 +29,8 @@ function TransferDomainModal({
   setShowTransferDomainModal: Dispatch<SetStateAction<boolean>>;
   props: DomainProps;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { slug: domain } = props;
 
   const currentWorkspace = useWorkspace();
@@ -84,10 +87,14 @@ function TransferDomainModal({
       >
         <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 text-center sm:px-16">
           <LinkLogo apexDomain={domain} />
-          <h3 className="text-lg font-medium">Transfer {domain}</h3>
+          <h3 className="text-lg font-medium">
+            {t("transfer-{domain}", { domain: domain })}
+          </h3>
           <p className="text-sm text-gray-500">
-            Transfer this domain and its links to another {APP_NAME} workspace.
-            Link tags will not be transferred.
+            {t(
+              "transfer-this-domain-and-its-links-to-another-{app-name}-workspace-link-tags-will-not-be-transferred",
+              { APP_NAME: APP_NAME },
+            )}
           </p>
         </div>
         <div className="flex flex-col space-y-28 bg-gray-50 px-4 py-8 text-left sm:space-y-3 sm:rounded-b-2xl sm:px-16">
@@ -109,7 +116,7 @@ function TransferDomainModal({
           <Button
             disabled={!selectedWorkspace}
             loading={transferring}
-            text="Confirm transfer"
+            text={t("confirm-transfer")}
           />
         </div>
       </form>

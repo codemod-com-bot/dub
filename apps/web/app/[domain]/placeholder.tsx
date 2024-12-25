@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { InlineSnippet } from "@dub/ui";
 import { createHref, STAGGER_CHILD_VARIANTS } from "@dub/utils";
@@ -9,6 +11,8 @@ import { useState } from "react";
 import { useDebounce } from "use-debounce";
 
 export default function PlaceholderContent() {
+const t = useTranslations("[domain]");
+
   const { domain } = useParams() as { domain: string };
   const [loading, setLoading] = useState(true);
   const onLoad = () => {
@@ -51,27 +55,14 @@ export default function PlaceholderContent() {
         <motion.h1
           className="font-display text-4xl font-bold text-gray-800 transition-colors sm:text-5xl"
           variants={STAGGER_CHILD_VARIANTS}
-        >
-          Welcome to {process.env.NEXT_PUBLIC_APP_NAME}
+        >{t('welcome-to-app-name', { "process_env_NEXT_PUBLIC_APP_NAME": process_env_NEXT_PUBLIC_APP_NAME })}
         </motion.h1>
         <motion.p
           className="max-w-xl text-gray-600 transition-colors sm:text-lg"
           variants={STAGGER_CHILD_VARIANTS}
         >
-          <InlineSnippet>{domain}</InlineSnippet> is a custom domain on{" "}
-          <a
-            className="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text font-semibold text-transparent decoration-rose-600 hover:underline"
-            href={createHref("/", domain, {
-              utm_source: "Custom Domain",
-              utm_medium: "Welcome Page",
-              utm_campaign: domain,
-              utm_content: "Dub.co",
-            })}
-          >
-            {process.env.NEXT_PUBLIC_APP_NAME}
-          </a>{" "}
-          - the link management platform for modern marketing teams.
-        </motion.p>
+          {t('inline-snippet-custom-domain-link-management', { "component0": {t('inline-snippet-custom-domain-link-management_component0', { "_domain_": _domain_ })}, "component1": {t('inline-snippet-custom-domain-link-management_component1', { "_process_env_NEXT_PUBLIC_APP_NAME_": _process_env_NEXT_PUBLIC_APP_NAME_ })} })}
+          </motion.p>
         <motion.a
           variants={STAGGER_CHILD_VARIANTS}
           href={createHref("/home", domain, {
@@ -81,9 +72,7 @@ export default function PlaceholderContent() {
             utm_content: "Create Your Free Branded Link",
           })}
           className="rounded-full bg-gray-800 px-10 py-2 font-medium text-white transition-colors hover:bg-black"
-        >
-          Create Your Free Branded Link
-        </motion.a>
+        >{t('create-your-free-branded-link')}</motion.a>
       </motion.div>
     </motion.div>
   );

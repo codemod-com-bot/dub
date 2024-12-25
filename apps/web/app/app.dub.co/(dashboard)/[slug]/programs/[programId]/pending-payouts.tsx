@@ -9,11 +9,16 @@ import {
   DICEBEAR_AVATAR_URL,
   fetcher,
 } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 
 export function PendingPayouts() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]",
+  );
+
   const { slug, programId } = useParams();
   const { id: workspaceId } = useWorkspace();
 
@@ -36,7 +41,7 @@ export function PendingPayouts() {
     <div className="rounded-md border border-neutral-200">
       <div className="flex items-center justify-between border-b border-neutral-200 p-5">
         <h2 className="text-base font-semibold text-neutral-900">
-          Pending payouts
+          {t("pending-payouts")}
         </h2>
 
         <Link
@@ -46,7 +51,7 @@ export function PendingPayouts() {
             "flex h-7 items-center rounded-lg border px-2 text-sm",
           )}
         >
-          View all
+          {t("view-all")}
         </Link>
       </div>
       <div className="p-3">
@@ -77,7 +82,7 @@ export function PendingPayouts() {
             </div>
           ) : (
             <div className="flex size-full items-center justify-center text-sm text-neutral-500">
-              No pending payouts found
+              {t("no-pending-payouts-found")}
             </div>
           )}
         </div>

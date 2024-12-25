@@ -3,6 +3,7 @@ import useWorkspace from "@/lib/swr/use-workspace";
 import { SAMLProviderProps } from "@/lib/types";
 import { BlurImage, Button, Logo, Modal } from "@dub/ui";
 import { SAML_PROVIDERS } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -19,6 +20,8 @@ function RemoveSCIMModal({
   showRemoveSCIMModal: boolean;
   setShowRemoveSCIMModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const [removing, setRemoving] = useState(false);
   const { id: workspaceId, logo } = useWorkspace();
   const { scim, provider, mutate } = useSCIM();
@@ -37,7 +40,7 @@ function RemoveSCIMModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Workspace logo"
+            alt={t("workspace-logo")}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -45,10 +48,9 @@ function RemoveSCIMModal({
         ) : (
           <Logo />
         )}
-        <h3 className="text-lg font-medium">Remove SCIM Directory</h3>
+        <h3 className="text-lg font-medium">{t("remove-scim-directory")}</h3>
         <p className="text-center text-sm text-gray-500">
-          This will remove the currently configured SCIM directory from your
-          workspace. Are you sure you want to continue?
+          {t("remove-scim-directory-confirmation-message")}
         </p>
       </div>
 
@@ -60,14 +62,20 @@ function RemoveSCIMModal({
             className="h-8 w-8"
           />
           <div className="flex flex-col">
-            <h3 className="text-sm font-medium">{currentProvider.name} SCIM</h3>
+            <h3 className="text-sm font-medium">
+              {t("current-provider-scim", {
+                currentProvider_name: currentProvider_name,
+              })}
+            </h3>
             <p className="text-xs text-gray-500">
-              {currentProvider.name} SCIM is configured
+              {t("current-provider-scim-configured", {
+                currentProvider_name: currentProvider_name,
+              })}
             </p>
           </div>
         </div>
         <Button
-          text="Confirm remove"
+          text={t("confirm-remove")}
           variant="danger"
           loading={removing}
           onClick={() => {

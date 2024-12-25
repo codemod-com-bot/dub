@@ -2,6 +2,7 @@ import { getDomainViaEdge } from "@/lib/planetscale/get-domain-via-edge";
 import { Background, Footer, Nav, NavMobile } from "@dub/ui";
 import { CircleHalfDottedClock } from "@dub/ui/icons";
 import { constructMetadata } from "@dub/utils";
+import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 export const runtime = "edge";
@@ -18,6 +19,8 @@ export default async function ExpiredLinkPage({
 }: {
   params: { domain: string };
 }) {
+  const t = await getTranslations("expired/[domain]");
+
   const domain = await getDomainViaEdge(params.domain);
 
   if (domain?.expiredUrl) {
@@ -32,16 +35,17 @@ export default async function ExpiredLinkPage({
         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-gray-300 bg-white/80">
           <CircleHalfDottedClock className="size-6 text-gray-500" />
         </div>
-        <h1 className="font-display text-5xl font-bold">Expired Link</h1>
+        <h1 className="font-display text-5xl font-bold">{t("expired-link")}</h1>
         <p className="text-lg text-gray-600">
-          This link has expired. Please contact the owner of this link to get a
-          new one.
+          {t(
+            "this-link-has-expired-please-contact-the-owner-of-this-link-to-get-a-new-one",
+          )}
         </p>
         <a
           href="https://dub.co/home"
           className="rounded-full bg-gray-800 px-10 py-2 font-medium text-white transition-colors hover:bg-black"
         >
-          Create Your Free Branded Link
+          {t("create-your-free-branded-link")}
         </a>
       </div>
       <Footer />

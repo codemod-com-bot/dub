@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { DUB_WORDMARK } from "@dub/utils";
 import {
   Body,
@@ -29,11 +30,12 @@ export default function WorkspaceInvite({
   workspaceUser: string | null;
   workspaceUserEmail: string | null;
 }) {
+const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>
-        Join {workspaceName} on {appName}
+      <Preview>{t('join-workspace-on-app-name', { "workspaceName": workspaceName, "appName": appName })}
       </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
@@ -46,38 +48,22 @@ export default function WorkspaceInvite({
                 className="mx-auto my-0"
               />
             </Section>
-            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Join {workspaceName} on {appName}
+            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">{t('join-workspace-on-app-name-duplicate', { "workspaceName": workspaceName, "appName": appName })}
             </Heading>
             {workspaceUser && workspaceUserEmail ? (
               <Text className="text-sm leading-6 text-black">
-                <strong>{workspaceUser}</strong> (
-                <Link
-                  className="text-blue-600 no-underline"
-                  href={`mailto:${workspaceUserEmail}`}
-                >
-                  {workspaceUserEmail}
-                </Link>
-                ) has invited you to join the <strong>{workspaceName}</strong>{" "}
-                workspace on {appName}!
-              </Text>
+                {t('invitation-from-workspace-user', { "component0": {t('invitation-from-workspace-user_component0', { "_workspaceUser_": _workspaceUser_ })}, "component1": {t('invitation-from-workspace-user_component1', { "_workspaceUserEmail_": _workspaceUserEmail_ })}, "component2": {t('invitation-from-workspace-user_component2', { "_workspaceName_": _workspaceName_ })}, "appName": appName })}</Text>
             ) : (
-              <Text className="text-sm leading-6 text-black">
-                You have been invited to join the{" "}
-                <strong>{workspaceName}</strong> workspace on {appName}!
-              </Text>
+              <Text className="text-sm leading-6 text-black">{t('invitation-to-join-workspace', { "component0": {t('invitation-to-join-workspace_component0', { "_workspaceName_": _workspaceName_ })}, "appName": appName })}
+                </Text>
             )}
             <Section className="mb-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={url}
-              >
-                Join Workspace
-              </Link>
+              >{t('join-workspace-button')}</Link>
             </Section>
-            <Text className="text-sm leading-6 text-black">
-              or copy and paste this URL into your browser:
-            </Text>
+            <Text className="text-sm leading-6 text-black">{t('copy-url-to-browser')}</Text>
             <Text className="max-w-sm flex-wrap break-words font-medium text-purple-600 no-underline">
               {url.replace(/^https?:\/\//, "")}
             </Text>

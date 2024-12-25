@@ -1,4 +1,5 @@
 import { Modal, useRouterStuff } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { RegisterDomainForm } from "../domains/register-domain-form";
 
@@ -8,6 +9,8 @@ interface RegisterDomainProps {
 }
 
 const RegisterDomain = ({ showModal, setShowModal }: RegisterDomainProps) => {
+  const t = useTranslations("../ui/modals");
+
   const { queryParams } = useRouterStuff();
 
   return (
@@ -17,7 +20,7 @@ const RegisterDomain = ({ showModal, setShowModal }: RegisterDomainProps) => {
       drawerRootProps={{ repositionInputs: false }}
     >
       <h3 className="border-b border-gray-200 px-4 py-4 text-lg font-medium sm:px-6">
-        Claim .link domain
+        {t("claim-link-domain")}
       </h3>
       <div className="scrollbar-hide mt-6 max-h-[calc(100dvh-200px)] overflow-auto overflow-y-scroll">
         <RegisterDomainForm

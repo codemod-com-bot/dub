@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { UserProps } from "@/lib/types";
 import { Avatar, BlurImage, Button, Logo, Modal } from "@dub/ui";
@@ -22,6 +23,8 @@ function EditRoleModal({
   user: UserProps;
   role: "owner" | "member";
 }) {
+const t = useTranslations("../ui/modals");
+
   const [editing, setEditing] = useState(false);
   const { id, name: workspaceName, logo } = useWorkspace();
   const { id: userId, name, email } = user;
@@ -32,7 +35,7 @@ function EditRoleModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Workspace logo"
+            alt={t('workspace-logo')}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -40,13 +43,9 @@ function EditRoleModal({
         ) : (
           <Logo />
         )}
-        <h3 className="text-lg font-medium">Change Teammate Role</h3>
-        <p className="text-center text-sm text-gray-500">
-          This will change <b className="text-gray-800">{name || email}</b>'s
-          role in <b className="text-gray-800">{workspaceName}</b> to{" "}
-          <b className="text-gray-800">{role}</b>. Are you sure you want to
-          continue?
-        </p>
+        <h3 className="text-lg font-medium">{t('change-teammate-role')}</h3>
+        <p className="text-center text-sm text-gray-500">{t('change-role-confirmation-message', { "component0": {t('change-role-confirmation-message_component0', { "_name_email_": _name_email_ })}, "component1": {t('change-role-confirmation-message_component1', { "_workspaceName_": _workspaceName_ })}, "component2": {t('change-role-confirmation-message_component2', { "_role_": _role_ })} })}
+          </p>
       </div>
 
       <div className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 text-left sm:px-16">
@@ -58,7 +57,7 @@ function EditRoleModal({
           </div>
         </div>
         <Button
-          text="Confirm"
+          text={t('confirm-button')}
           loading={editing}
           onClick={() => {
             setEditing(true);

@@ -5,6 +5,7 @@ import { Button, useMediaQuery } from "@dub/ui";
 import { Trash } from "@dub/ui/icons";
 import { capitalize, cn, pluralize } from "@dub/utils";
 import { Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import posthog from "posthog-js";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -30,6 +31,8 @@ export function InviteTeammatesForm({
   invites?: Invite[];
   className?: string;
 }) {
+  const t = useTranslations("../ui/workspaces");
+
   const { id, slug } = useWorkspace();
   const { isMobile } = useMediaQuery();
 
@@ -88,7 +91,7 @@ export function InviteTeammatesForm({
             toast.custom(
               () => (
                 <UpgradeRequiredToast
-                  title="Upgrade required"
+                  title={t("upgrade-required")}
                   message="You've reached the invite limit for your plan. Please upgrade to invite more teammates."
                 />
               ),
@@ -114,7 +117,7 @@ export function InviteTeammatesForm({
               <div className="relative flex rounded-md shadow-sm">
                 <input
                   type="email"
-                  placeholder="panic@thedis.co"
+                  placeholder={t("panic-at-thedis-co")}
                   autoFocus={index === 0 && !isMobile}
                   autoComplete="off"
                   className="z-10 block w-full rounded-l-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
@@ -153,7 +156,7 @@ export function InviteTeammatesForm({
           className="h-9 w-fit"
           variant="secondary"
           icon={<Plus className="size-4" />}
-          text="Add email"
+          text={t("add-email")}
           onClick={() => append({ email: "", role: "member" })}
           disabled={fields.length >= maxTeammates}
         />
@@ -169,19 +172,26 @@ export function InviteTeammatesForm({
 }
 
 function InviteSavedToast({ teammates }: { teammates: number }) {
+  const t = useTranslations("../ui/workspaces");
+
   return (
     <div className="flex items-center gap-1.5 rounded-lg bg-white p-4 text-sm shadow-[0_4px_12px_#0000001a]">
       <CheckCircleFill className="size-5 shrink-0 text-black" />
       <p className="text-[13px] font-medium text-gray-900">
-        {pluralize("Invitation", teammates)} saved. You'll need a pro plan to
-        invite teammates.{" "}
-        <a
-          href="https://dub.co/help/article/how-to-invite-teammates"
-          target="_blank"
-          className="text-gray-500 underline transition-colors hover:text-gray-800"
-        >
-          Learn more
-        </a>
+        {pluralize("Invitation", teammates)}
+        {t("saved-youll-need-a-pro-plan-to-invite-teammates-learn-more", {
+          component0: (
+            <a
+              href="https://dub.co/help/article/how-to-invite-teammates"
+              target="_blank"
+              className="text-gray-500 underline transition-colors hover:text-gray-800"
+            >
+              {t(
+                "saved-youll-need-a-pro-plan-to-invite-teammates-learn-more_component0",
+              )}
+            </a>
+          ),
+        })}
       </p>
     </div>
   );

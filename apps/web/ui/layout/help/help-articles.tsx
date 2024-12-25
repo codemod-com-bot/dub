@@ -3,6 +3,7 @@ import { Command, useCommandState } from "cmdk";
 import Fuse from "fuse.js";
 import { ExternalLink, MessageSquareText } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import posthog from "posthog-js";
 import { Dispatch, SetStateAction, useContext, useMemo, useRef } from "react";
 import Highlighter from "react-highlight-words";
@@ -14,6 +15,8 @@ export function HelpArticles({
 }: {
   setScreen: Dispatch<SetStateAction<"main" | "contact">>;
 }) {
+  const t = useTranslations("../ui/layout/help");
+
   const { data: session } = useSession();
   const commandListRef = useRef<HTMLDivElement>(null);
   const debouncedTrackSearch = useDebouncedCallback((query: string) => {
@@ -28,7 +31,7 @@ export function HelpArticles({
       <div className="p-2 sm:p-4">
         <div className="p-2">
           <h3 className="text-lg font-semibold text-gray-700">
-            👋 How can we help?
+            {t("how-can-we-help")}
           </h3>
         </div>
         <Command label="help-portal" loop shouldFilter={false}>
@@ -41,7 +44,7 @@ export function HelpArticles({
               }, 0);
               debouncedTrackSearch(e.currentTarget.value);
             }}
-            placeholder="Search articles, guides, and more..."
+            placeholder={t("search-articles-guides-and-more")}
             className="w-full border-none p-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-base"
           />
           <Command.List
@@ -55,11 +58,10 @@ export function HelpArticles({
               <MessageSquareText className="h-4 w-4 text-gray-400" />
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium text-blue-600">
-                  Can't find what you're looking for?
+                  {t("cant-find-what-youre-looking-for")}
                 </p>
                 <p className="text-xs text-gray-400">
-                  Send us a message and we'll get back to you as soon as
-                  possible.
+                  {t("send-us-a-message-and-well-get-back-to-you")}
                 </p>
               </div>
             </Command.Empty>
@@ -74,7 +76,7 @@ export function HelpArticles({
             className="flex items-center space-x-2 hover:underline"
           >
             <MessageSquareText className="h-4 w-4" />
-            <p className="text-sm">Contact us</p>
+            <p className="text-sm">{t("contact-us")}</p>
           </button>
         ) : (
           <div />
@@ -84,7 +86,7 @@ export function HelpArticles({
           target="_blank"
           className="flex items-center space-x-2 hover:underline"
         >
-          <p className="text-sm">Help center</p>
+          <p className="text-sm">{t("help-center")}</p>
           <ExternalLink className="h-4 w-4" />
         </a>
       </div>

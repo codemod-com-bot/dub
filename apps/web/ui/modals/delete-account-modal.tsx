@@ -1,5 +1,6 @@
 import { Avatar, Button, Modal } from "@dub/ui";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   Dispatch,
@@ -17,6 +18,8 @@ function DeleteAccountModal({
   showDeleteAccountModal: boolean;
   setShowDeleteAccountModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const router = useRouter();
   const { data: session, update } = useSession();
   const [deleting, setDeleting] = useState(false);
@@ -53,10 +56,9 @@ function DeleteAccountModal({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 sm:px-16">
         <Avatar user={session?.user} />
-        <h3 className="text-lg font-medium">Delete Account</h3>
+        <h3 className="text-lg font-medium">{t("delete-account")}</h3>
         <p className="text-center text-sm text-gray-500">
-          Warning: This will permanently delete your account, all your
-          workspaces, and all your short links.
+          {t("warning-permanently-delete-account")}
         </p>
       </div>
 
@@ -73,11 +75,13 @@ function DeleteAccountModal({
       >
         <div>
           <label htmlFor="verification" className="block text-sm text-gray-700">
-            To verify, type{" "}
-            <span className="font-semibold text-black">
-              confirm delete account
-            </span>{" "}
-            below
+            {t("verify-type-confirm-delete-account", {
+              component0: (
+                <span className="font-semibold text-black">
+                  {t("verify-type-confirm-delete-account_component0")}
+                </span>
+              ),
+            })}
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
@@ -94,7 +98,7 @@ function DeleteAccountModal({
         </div>
 
         <Button
-          text="Confirm delete account"
+          text={t("confirm-delete-account")}
           variant="danger"
           loading={deleting}
         />

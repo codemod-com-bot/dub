@@ -2,6 +2,7 @@ import useSAML from "@/lib/swr/use-saml";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { BlurImage, Button, Logo, Modal } from "@dub/ui";
 import { SAML_PROVIDERS } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -18,6 +19,8 @@ function RemoveSAMLModal({
   showRemoveSAMLModal: boolean;
   setShowRemoveSAMLModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const [removing, setRemoving] = useState(false);
   const { id, logo } = useWorkspace();
   const { saml, provider, mutate } = useSAML();
@@ -31,7 +34,7 @@ function RemoveSAMLModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Workspace logo"
+            alt={t("workspace-logo")}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -39,10 +42,9 @@ function RemoveSAMLModal({
         ) : (
           <Logo />
         )}
-        <h3 className="text-lg font-medium">Remove SAML</h3>
+        <h3 className="text-lg font-medium">{t("remove-saml")}</h3>
         <p className="text-center text-sm text-gray-500">
-          This will remove SAML from your workspace. Are you sure you want to
-          continue?
+          {t("confirm-remove-saml-warning")}
         </p>
       </div>
 
@@ -54,14 +56,16 @@ function RemoveSAMLModal({
             className="h-8 w-8"
           />
           <div className="flex flex-col">
-            <h3 className="text-sm font-medium">{provider} SAML</h3>
+            <h3 className="text-sm font-medium">
+              {t("provider-saml", { provider: provider })}
+            </h3>
             <p className="text-xs text-gray-500">
-              {provider} SAML is configured
+              {t("provider-saml-configured", { provider: provider })}
             </p>
           </div>
         </div>
         <Button
-          text="Confirm remove"
+          text={t("confirm-remove")}
           variant="danger"
           loading={removing}
           onClick={() => {

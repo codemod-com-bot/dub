@@ -22,6 +22,7 @@ import {
 import { Check, Check2, Copy, Download, Hyperlink, Photo } from "@dub/ui/icons";
 import { API_DOMAIN, cn, DUB_QR_LOGO, linkConstructor } from "@dub/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   PropsWithChildren,
@@ -83,6 +84,8 @@ function LinkQRModalInner({
   showLinkQRModal: boolean;
   setShowLinkQRModal: Dispatch<SetStateAction<boolean>>;
 } & LinkQRModalProps) {
+  const t = useTranslations("../ui/modals");
+
   const { id: workspaceId, slug, plan, logo: workspaceLogo } = useWorkspace();
   const id = useId();
   const { isMobile } = useMediaQuery();
@@ -142,19 +145,24 @@ function LinkQRModalInner({
       }}
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">QR Code Design</h3>
+        <h3 className="text-lg font-medium">{t("qr-code-design")}</h3>
         <div className="max-md:hidden">
           <Tooltip
             content={
               <div className="px-2 py-1 text-xs text-gray-700">
-                Press <strong className="font-medium text-gray-950">Q</strong>{" "}
-                to open this quickly
+                {t("press-q-to-open-this-quickly", {
+                  component0: (
+                    <strong className="font-medium text-gray-950">
+                      {t("press-q-to-open-this-quickly_component0")}
+                    </strong>
+                  ),
+                })}
               </div>
             }
             side="right"
           >
             <kbd className="flex size-6 cursor-default items-center justify-center rounded-md border border-gray-200 font-sans text-xs text-gray-950">
-              Q
+              {t("q")}
             </kbd>
           </Tooltip>
         </div>
@@ -164,12 +172,12 @@ function LinkQRModalInner({
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-gray-700">
-              QR Code Preview
+              {t("qr-code-preview")}
             </span>
             <InfoTooltip
               content={
                 <SimpleTooltipContent
-                  title="Customize your QR code to fit your brand."
+                  title={t("customize-your-qr-code-to-fit-your-brand")}
                   cta="Learn more."
                   href="https://dub.co/help/article/custom-qr-codes"
                 />
@@ -237,12 +245,12 @@ function LinkQRModalInner({
             className="text-sm font-medium text-gray-700"
             htmlFor={`${id}-show-logo`}
           >
-            Logo
+            {t("logo")}
           </label>
           <InfoTooltip
             content={
               <SimpleTooltipContent
-                title="Display your logo in the center of the QR code."
+                title={t("display-your-logo-in-the-center-of-the-qr-code")}
                 cta="Learn more."
                 href="https://dub.co/help/article/custom-qr-codes"
               />
@@ -258,7 +266,7 @@ function LinkQRModalInner({
           disabledTooltip={
             plan === "free" ? (
               <TooltipContent
-                title="You need to be on the Pro plan and above to customize your QR Code logo."
+                title={t("need-pro-plan-to-customize-logo")}
                 cta="Upgrade to Pro"
                 href={slug ? `/${slug}/upgrade` : "https://dub.co/pricing"}
               />
@@ -270,7 +278,7 @@ function LinkQRModalInner({
       {/* Color selector */}
       <div>
         <span className="block text-sm font-medium text-gray-700">
-          QR Code Color
+          {t("qr-code-color")}
         </span>
         <div className="mt-2 flex gap-6">
           <div className="relative flex h-9 w-32 shrink-0 rounded-md shadow-sm">
@@ -331,7 +339,7 @@ function LinkQRModalInner({
         <Button
           type="button"
           variant="secondary"
-          text="Cancel"
+          text={t("cancel")}
           className="h-9 w-fit"
           onClick={() => {
             setShowLinkQRModal(false);
@@ -340,7 +348,7 @@ function LinkQRModalInner({
         <Button
           type="submit"
           variant="primary"
-          text="Save changes"
+          text={t("save-changes")}
           className="h-9 w-fit"
         />
       </div>
@@ -356,6 +364,8 @@ function DownloadPopover({
   qrData: ReturnType<typeof getQRData>;
   props: QRLinkProps;
 }>) {
+  const t = useTranslations("../ui/modals");
+
   const anchorRef = useRef<HTMLAnchorElement>(null);
 
   function download(url: string, extension: string) {
@@ -381,7 +391,7 @@ function DownloadPopover({
               className="rounded-md p-2 text-left text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
             >
               <IconMenu
-                text="Download SVG"
+                text={t("download-svg")}
                 icon={<Photo className="h-4 w-4" />}
               />
             </button>
@@ -396,7 +406,7 @@ function DownloadPopover({
               className="rounded-md p-2 text-left text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
             >
               <IconMenu
-                text="Download PNG"
+                text={t("download-png")}
                 icon={<Photo className="h-4 w-4" />}
               />
             </button>
@@ -411,7 +421,7 @@ function DownloadPopover({
               className="rounded-md p-2 text-left text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
             >
               <IconMenu
-                text="Download JPEG"
+                text={t("download-jpeg")}
                 icon={<Photo className="h-4 w-4" />}
               />
             </button>
@@ -440,6 +450,8 @@ function CopyPopover({
   qrData: ReturnType<typeof getQRData>;
   props: QRLinkProps;
 }>) {
+  const t = useTranslations("../ui/modals");
+
   const [openPopover, setOpenPopover] = useState(false);
   const [copiedURL, copyUrlToClipboard] = useCopyToClipboard(2000);
   const [copiedImage, copyImageToClipboard] = useCopyToClipboard(2000);
@@ -474,7 +486,7 @@ function CopyPopover({
             className="rounded-md p-2 text-left text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
           >
             <IconMenu
-              text="Copy Image"
+              text={t("copy-image")}
               icon={
                 copiedImage ? (
                   <Check className="h-4 w-4" />
@@ -502,7 +514,7 @@ function CopyPopover({
             className="rounded-md p-2 text-left text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
           >
             <IconMenu
-              text="Copy URL"
+              text={t("copy-url")}
               icon={
                 copiedURL ? (
                   <Check className="h-4 w-4" />

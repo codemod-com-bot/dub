@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useIntegrations from "@/lib/swr/use-integrations";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -16,6 +17,8 @@ import Link from "next/link";
 export default function IntegrationCard(
   integration: InstalledIntegrationProps,
 ) {
+  const t = useTranslations("../ui/integrations");
+
   const { slug } = useWorkspace();
   const { integrations: activeIntegrations } = useIntegrations();
 
@@ -28,7 +31,7 @@ export default function IntegrationCard(
     >
       {installed && (
         <p className="absolute right-4 top-4 text-xs text-gray-500">
-          INSTALLED
+          {t("installed")}
         </p>
       )}
       <div className="flex items-center gap-x-3">
