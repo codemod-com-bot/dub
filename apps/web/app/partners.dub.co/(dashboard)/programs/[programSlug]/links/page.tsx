@@ -1,4 +1,5 @@
 import { PageContent } from "@/ui/layout/page-content";
+import { useTranslations } from "next-intl";
 
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import {
@@ -10,12 +11,18 @@ import {
 } from "@dub/ui";
 
 export default function ProgramLinks() {
+  const t = useTranslations(
+    "partners.dub.co/(dashboard)/programs/[programSlug]/links",
+  );
+
   return (
     <PageContent title="Links" hideReferButton>
       <MaxWidthWrapper>
         <AnimatedEmptyState
-          title="Links"
-          description="Create additional partner links and view more details about each one"
+          title={t("links")}
+          description={t(
+            "create-additional-partner-links-and-view-more-details-about-each-one",
+          )}
           cardContent={
             <>
               <Hyperlink className="size-4 text-neutral-700" />

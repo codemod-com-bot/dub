@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { sendInviteReferralEmail } from "@/lib/actions/send-invite-referral-email";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -20,6 +21,8 @@ function InviteReferralModal({
   showInviteReferralModal: boolean;
   setShowInviteReferralModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const [email, setEmail] = useState("");
   const { id: workspaceId } = useWorkspace();
   const { isMobile } = useMediaQuery();
@@ -41,9 +44,9 @@ function InviteReferralModal({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 sm:px-16">
         <Logo />
-        <h3 className="text-lg font-medium">Invite via Email</h3>
+        <h3 className="text-lg font-medium">{t("invite-via-email")}</h3>
         <p className="text-center text-sm text-gray-500">
-          Invite a friend or colleague to use Dub with your referral link.
+          {t("invite-a-friend-or-colleague-to-use-dub-with-your-referral-link")}
         </p>
       </div>
       <form
@@ -55,14 +58,14 @@ function InviteReferralModal({
       >
         <div>
           <label htmlFor="email" className="block text-sm text-gray-700">
-            Email
+            {t("email")}
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
               type="email"
               name="email"
               id="email"
-              placeholder="panic@thedis.co"
+              placeholder={t("panic@thedis-co")}
               autoFocus={!isMobile}
               autoComplete="off"
               required
@@ -72,10 +75,10 @@ function InviteReferralModal({
             />
           </div>
           <p className="mt-2 text-xs text-gray-500">
-            Your name and email address will be shared in this invitation.
+            {t("your-name-and-email-address-will-be-shared-in-this-invitation")}
           </p>
         </div>
-        <Button loading={isExecuting} text="Send invite" />
+        <Button loading={isExecuting} text={t("send-invite")} />
       </form>
     </Modal>
   );

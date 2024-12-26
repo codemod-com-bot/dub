@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { requestPasswordResetAction } from "@/lib/actions/request-password-reset";
 import { Button, Input, useMediaQuery } from "@dub/ui";
@@ -8,6 +9,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const ForgotPasswordForm = () => {
+  const t = useTranslations("../ui/auth");
+
   const router = useRouter();
   const { isMobile } = useMediaQuery();
   const searchParams = useSearchParams();
@@ -35,12 +38,14 @@ export const ForgotPasswordForm = () => {
       >
         <div className="flex flex-col gap-8">
           <label>
-            <span className="text-sm font-medium text-gray-700">Email</span>
+            <span className="text-sm font-medium text-gray-700">
+              {t("email")}
+            </span>
             <Input
               type="email"
               autoFocus={!isMobile}
               value={email}
-              placeholder="panic@thedis.co"
+              placeholder={t("panic-at-thedis-co")}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1"
             />

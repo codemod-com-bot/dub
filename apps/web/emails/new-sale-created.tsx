@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { currencyFormatter, DUB_WORDMARK, getPrettyUrl } from "@dub/utils";
 import {
   Body,
@@ -45,6 +46,8 @@ export default function NewSaleCreated({
     earnings: number;
   };
 }) {
+const t = useTranslations("../emails");
+
   const linkToSale = `https://partners.dub.co/${partner.id}/${program.id}/sales`;
 
   const earningsInDollars = currencyFormatter(sale.earnings / 100, {
@@ -60,8 +63,7 @@ export default function NewSaleCreated({
   return (
     <Html>
       <Head />
-      <Preview>
-        You just made a {earningsInDollars} sale via your referral link{" "}
+      <Preview>{t('you-just-made-a-{earningsInDollars}-sale-via-your-referral-link', { "earningsInDollars": earningsInDollars })}
         {getPrettyUrl(partner.referralLink)}
       </Preview>
       <Tailwind>
@@ -75,37 +77,18 @@ export default function NewSaleCreated({
               />
             </Section>
 
-            <Heading className="mx-0 p-0 text-lg font-medium text-black">
-              You just made a {earningsInDollars} referral sale!
-            </Heading>
+            <Heading className="mx-0 p-0 text-lg font-medium text-black">{t('you-just-made-a-{earningsInDollars}-referral-sale', { "earningsInDollars": earningsInDollars })}</Heading>
 
-            <Text className="text-sm leading-6 text-gray-600">
-              Congratulations! Someone made a{" "}
-              <strong className="text-black">{saleAmountInDollars}</strong>{" "}
-              purchase on <strong className="text-black">{program.name}</strong>{" "}
-              using your referral link (
-              <a
-                href={partner.referralLink}
-                className="text-semibold font-medium text-black underline"
-              >
-                {getPrettyUrl(partner.referralLink)}
-              </a>
-              ).
-            </Text>
-            <Text className="text-sm leading-6 text-gray-600">
-              Your received{" "}
-              <strong className="text-black">{earningsInDollars}</strong> in
-              commission for this sale and it will be included in your next
-              payout.
-            </Text>
+            <Text className="text-sm leading-6 text-gray-600">{t('congratulations-someone-made-a-{saleAmountInDollars}-purchase-on-{program.name}-using-your-referral-link', { "component0": {t('congratulations-someone-made-a-{saleAmountInDollars}-purchase-on-{program.name}-using-your-referral-link_component0', { "_saleAmountInDollars_": _saleAmountInDollars_ })}, "component1": {t('congratulations-someone-made-a-{saleAmountInDollars}-purchase-on-{program.name}-using-your-referral-link_component1', { "_program_name_": _program_name_ })}, "component2": {t('congratulations-someone-made-a-{saleAmountInDollars}-purchase-on-{program.name}-using-your-referral-link_component2', { "_getPrettyUrl_partner_referralLink_": _getPrettyUrl_partner_referralLink_ })} })}
+              </Text>
+            <Text className="text-sm leading-6 text-gray-600">{t('your-received-{earningsInDollars}-in-commission-for-this-sale', { "component0": {t('your-received-{earningsInDollars}-in-commission-for-this-sale_component0', { "_earningsInDollars_": _earningsInDollars_ })} })}
+              </Text>
 
             <Section className="mb-12 mt-8">
               <Link
                 className="rounded-md bg-neutral-900 px-4 py-3 text-[12px] font-medium text-white no-underline"
                 href={linkToSale}
-              >
-                View sale
-              </Link>
+              >{t('view-sale')}</Link>
             </Section>
             <Footer email={email} />
           </Container>

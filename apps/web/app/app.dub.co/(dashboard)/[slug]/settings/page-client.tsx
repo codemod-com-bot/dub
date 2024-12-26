@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -12,6 +13,8 @@ import { toast } from "sonner";
 import { mutate } from "swr";
 
 export default function WorkspaceSettingsClient() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings");
+
   const router = useRouter();
   const { id, name, slug, role } = useWorkspace();
 
@@ -25,7 +28,7 @@ export default function WorkspaceSettingsClient() {
   return (
     <>
       <Form
-        title="Workspace Name"
+        title={t("workspace-name")}
         description={`This is the name of your workspace on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
         inputAttrs={{
           name: "name",
@@ -57,7 +60,7 @@ export default function WorkspaceSettingsClient() {
         }
       />
       <Form
-        title="Workspace Slug"
+        title={t("workspace-slug")}
         description={`This is your workspace's unique slug on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
         inputAttrs={{
           name: "slug",

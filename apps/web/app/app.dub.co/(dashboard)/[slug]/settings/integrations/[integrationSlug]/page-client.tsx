@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { getIntegrationInstallUrl } from "@/lib/actions/get-integration-install-url";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -45,6 +46,10 @@ export default function IntegrationPageClient({
 }: {
   integration: InstalledIntegrationInfoProps;
 }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations/[integrationSlug]",
+  );
+
   const { slug, id: workspaceId, conversionEnabled } = useWorkspace();
 
   const [openPopover, setOpenPopover] = useState(false);
@@ -74,7 +79,7 @@ export default function IntegrationPageClient({
         className="flex items-center gap-x-1"
       >
         <ChevronLeft className="size-4" />
-        <p className="text-sm font-medium text-gray-500">Integrations</p>
+        <p className="text-sm font-medium text-gray-500">{t("integrations")}</p>
       </Link>
       <div className="flex justify-between gap-2">
         <div className="flex items-center gap-x-3">
@@ -120,7 +125,7 @@ export default function IntegrationPageClient({
             content={
               <div className="grid w-screen gap-px p-2 sm:w-48">
                 <Button
-                  text="Uninstall Integration"
+                  text={t("uninstall-integration")}
                   variant="danger-outline"
                   icon={<Trash className="size-4" />}
                   className="h-9 justify-start px-2"
@@ -130,7 +135,7 @@ export default function IntegrationPageClient({
                   {...(integration.slug === "stripe" && {
                     disabledTooltip: (
                       <TooltipContent
-                        title="You cannot uninstall the Stripe integration from here. Please visit the Stripe dashboard to uninstall the app."
+                        title={t("uninstall-stripe-integration-message")}
                         cta="Go to Stripe"
                         href="https://dashboard.stripe.com/settings/apps/dub.co"
                         target="_blank"
@@ -163,7 +168,7 @@ export default function IntegrationPageClient({
             <div className="flex items-center gap-2">
               <Avatar user={integration.installed.by} className="size-8" />
               <div className="flex flex-col gap-1">
-                <p className="text-xs text-gray-500">INSTALLED BY</p>
+                <p className="text-xs text-gray-500">{t("installed-by")}</p>
                 <p className="text-sm font-medium text-gray-700">
                   {integration.installed.by.name}
                   <span className="ml-1 font-normal text-gray-500">
@@ -177,7 +182,7 @@ export default function IntegrationPageClient({
           )}
 
           <div className="flex flex-col gap-1">
-            <p className="text-xs text-gray-500">DEVELOPER</p>
+            <p className="text-xs text-gray-500">{t("developer")}</p>
             <div className="flex items-center gap-x-1 text-sm font-medium text-gray-700">
               <OfficeBuilding className="size-3" />
               {integration.developer}
@@ -185,7 +190,7 @@ export default function IntegrationPageClient({
           </div>
 
           <div className="flex flex-col gap-1">
-            <p className="text-xs text-gray-500">WEBSITE</p>
+            <p className="text-xs text-gray-500">{t("website")}</p>
             <a
               href={integration.website}
               className="flex items-center gap-x-1 text-sm font-medium text-gray-700"
@@ -207,7 +212,7 @@ export default function IntegrationPageClient({
                 "flex h-9 items-center rounded-md border px-4 text-sm",
               )}
             >
-              Manage
+              {t("manage")}
             </Link>
           )}
           {!integration.installed && (
@@ -227,14 +232,14 @@ export default function IntegrationPageClient({
                 });
               }}
               loading={getInstallationUrl.isExecuting}
-              text="Enable"
+              text={t("enable")}
               variant="primary"
               icon={<ConnectedDots className="size-4" />}
               {...(integration.id === STRIPE_INTEGRATION_ID &&
                 !conversionEnabled && {
                   disabledTooltip: (
                     <TooltipContent
-                      title="To use this integration, you need to have Dub Conversions enabled for your workspace."
+                      title={t("enable-dub-conversions-message")}
                       cta="Learn more"
                       href="https://d.to/conversions"
                       target="_blank"
@@ -249,7 +254,7 @@ export default function IntegrationPageClient({
       <div className="w-full rounded-lg border border-gray-200 bg-white">
         <div className="flex items-center gap-x-2 border-b border-gray-200 px-6 py-4">
           <BookOpenText className="size-4" />
-          <p className="text-sm font-medium text-gray-700">Overview</p>
+          <p className="text-sm font-medium text-gray-700">{t("overview")}</p>
         </div>
 
         {integration.screenshots && integration.screenshots.length > 0 ? (

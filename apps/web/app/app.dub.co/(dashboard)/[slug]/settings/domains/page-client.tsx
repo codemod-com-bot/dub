@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useDomains from "@/lib/swr/use-domains";
@@ -34,6 +35,8 @@ import { useEffect, useState } from "react";
 import { DefaultDomains } from "./default-domains";
 
 export default function WorkspaceDomainsClient() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/domains");
+
   const {
     id: workspaceId,
     plan,
@@ -105,12 +108,14 @@ export default function WorkspaceDomainsClient() {
         <div className="flex flex-wrap justify-between gap-6">
           <div className="flex items-center gap-x-2">
             <h1 className="text-2xl font-semibold tracking-tight text-black">
-              Domains
+              {t("domains")}
             </h1>
             <InfoTooltip
               content={
                 <TooltipContent
-                  title="Learn more about how to add, configure, and verify custom domains on Dub."
+                  title={t(
+                    "learn-more-about-adding-configuring-and-verifying-custom-domains-on-dub",
+                  )}
                   href="https://dub.co/help/article/how-to-add-custom-domain"
                   target="_blank"
                   cta="Learn more"
@@ -148,7 +153,7 @@ export default function WorkspaceDomainsClient() {
               content={
                 <div className="grid w-screen gap-px p-2 sm:w-fit sm:min-w-[17rem]">
                   <Button
-                    text="Connect a domain you own"
+                    text={t("connect-a-domain-you-own")}
                     variant="outline"
                     icon={<Globe className="h-4 w-4" />}
                     className="h-9 justify-start px-2 text-gray-800"
@@ -157,18 +162,18 @@ export default function WorkspaceDomainsClient() {
                   <Button
                     text={
                       <div className="flex items-center gap-3">
-                        Claim free .link domain
+                        {t("claim-free-link-domain")}
                         {plan === "free" ? (
                           <Badge
                             variant="neutral"
                             className="flex items-center gap-1"
                           >
                             <Crown className="size-3" />
-                            <span className="uppercase">Pro</span>
+                            <span className="uppercase">{t("pro")}</span>
                           </Badge>
                         ) : dotLinkClaimed ? (
                           <span className="rounded-md border border-green-200 bg-green-500/10 px-1 py-0.5 text-xs text-green-900">
-                            Claimed
+                            {t("claimed")}
                           </span>
                         ) : null}
                       </div>
@@ -190,7 +195,7 @@ export default function WorkspaceDomainsClient() {
                 className="h-9 w-fit rounded-lg"
                 text={
                   <div className="flex items-center gap-2">
-                    Add domain{" "}
+                    {t("add-domain")}
                     <ChevronDown className="size-4 transition-transform duration-75 group-data-[state=open]:rotate-180" />
                   </div>
                 }
@@ -234,8 +239,10 @@ export default function WorkspaceDomainsClient() {
               </div>
             ) : (
               <AnimatedEmptyState
-                title="No domains found"
-                description="Use custom domains for better brand recognition and click-through rates"
+                title={t("no-domains-found")}
+                description={t(
+                  "use-custom-domains-for-better-brand-recognition-and-click-through-rates",
+                )}
                 cardContent={
                   <>
                     <Globe className="size-4 text-neutral-700" />

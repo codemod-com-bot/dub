@@ -1,4 +1,5 @@
 import { BlurImage, ClientOnly } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { Suspense } from "react";
 
 const logos = [
@@ -21,6 +22,8 @@ interface AuthLayoutProps {
 }
 
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
+  const t = useTranslations("../ui/layout");
+
   return (
     <div className="grid w-full grid-cols-1 md:grid-cols-5">
       <div className="col-span-1 flex min-h-screen flex-col items-center justify-between border-r border-gray-200 bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur sm:col-span-3">
@@ -32,7 +35,9 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
 
         <div className="grid gap-2 pb-8 pt-4">
           <p className="text-xs text-gray-600">
-            © {new Date().getFullYear()} Dub Technologies, Inc.
+            {t("copyright")}
+            {new Date().getFullYear()}
+            {t("dub-technologies-inc")}
           </p>
           <div className="flex gap-3 text-center text-xs text-gray-500 underline underline-offset-2">
             <a
@@ -40,14 +45,14 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
               target="_blank"
               className="hover:text-gray-800"
             >
-              Privacy Policy
+              {t("privacy-policy")}
             </a>
             <a
               href="https://dub.co/legal/terms"
               target="_blank"
               className="hover:text-gray-800"
             >
-              Terms of Service
+              {t("terms-of-service")}
             </a>
           </div>
         </div>
@@ -56,7 +61,7 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
       <div className="hidden h-full flex-col justify-center space-y-12 overflow-hidden md:col-span-2 md:flex">
         <div className="ml-12 h-1/2 w-[140%] rounded-xl border border-gray-200 p-2 shadow-xl">
           <BlurImage
-            alt="Dub.co Analytics"
+            alt={t("dub-co-analytics")}
             src="https://assets.dub.co/changelog/new-dashboard.jpg"
             width={2400}
             height={1260}

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { updateProgramAction } from "@/lib/actions/update-program";
 import useProgram from "@/lib/swr/use-program";
@@ -60,6 +61,10 @@ type FormData = Pick<
 >;
 
 function ProgramSettingsForm({ program }: { program: ProgramProps }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/settings",
+  );
+
   const { id: workspaceId } = useWorkspace();
   const [isEmbedDocsOpen, setIsEmbedDocsOpen] = useState(false);
 
@@ -130,10 +135,12 @@ function ProgramSettingsForm({ program }: { program: ProgramProps }) {
         })}
       >
         <div className="flex items-center justify-between border-b border-neutral-200 p-6">
-          <h2 className="text-xl font-medium text-neutral-900">Program</h2>
+          <h2 className="text-xl font-medium text-neutral-900">
+            {t("program")}
+          </h2>
           <Button
             type="button"
-            text="Embed widget"
+            text={t("embed-widget")}
             onClick={() => setIsEmbedDocsOpen(true)}
             icon={<Code className="size-4" />}
             className="h-8 w-fit"
@@ -219,7 +226,7 @@ function ProgramSettingsForm({ program }: { program: ProgramProps }) {
                         htmlFor="duration"
                         className="pt-6 text-sm font-medium text-neutral-800"
                       >
-                        Duration
+                        {t("duration")}
                       </label>
                       <div className="relative mt-2 rounded-md shadow-sm">
                         <select
@@ -256,7 +263,7 @@ function ProgramSettingsForm({ program }: { program: ProgramProps }) {
                               )}
                             </option>
                           ))}
-                          <option value={0}>Lifetime</option>
+                          <option value={0}>{t("lifetime")}</option>
                         </select>
                       </div>
                     </div>
@@ -276,15 +283,15 @@ function ProgramSettingsForm({ program }: { program: ProgramProps }) {
                   htmlFor="commissionType"
                   className="text-sm font-medium text-neutral-800"
                 >
-                  Payout model
+                  {t("payout-model")}
                 </label>
                 <div className="relative mt-2 rounded-md shadow-sm">
                   <select
                     className="block w-full rounded-md border-neutral-300 text-neutral-900 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
                     {...register("commissionType", { required: true })}
                   >
-                    <option value="flat">Flat</option>
-                    <option value="percentage">Percentage</option>
+                    <option value="flat">{t("flat")}</option>
+                    <option value="percentage">{t("percentage")}</option>
                   </select>
                 </div>
               </div>
@@ -294,7 +301,7 @@ function ProgramSettingsForm({ program }: { program: ProgramProps }) {
                   htmlFor="amount"
                   className="text-sm font-medium text-neutral-800"
                 >
-                  Amount
+                  {t("amount")}
                 </label>
                 <div className="relative mt-2 rounded-md shadow-sm">
                   {commissionType === "flat" && (
@@ -328,7 +335,7 @@ function ProgramSettingsForm({ program }: { program: ProgramProps }) {
         <div className="flex items-center justify-end rounded-b-lg border-t border-neutral-200 bg-neutral-50 px-6 py-5">
           <div>
             <Button
-              text="Save changes"
+              text={t("save-changes")}
               className="h-8"
               loading={isSubmitting}
               disabled={!isValid || !isDirty}

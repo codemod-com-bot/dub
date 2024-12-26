@@ -12,6 +12,7 @@ import {
 import { Pen2, QRCode as QRCodeIcon } from "@dub/ui/icons";
 import { DUB_QR_LOGO, linkConstructor } from "@dub/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useMemo, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDebounce } from "use-debounce";
@@ -19,6 +20,8 @@ import { LinkFormData } from ".";
 import { QRCodeDesign, useLinkQRModal } from "../link-qr-modal";
 
 export function QRCodePreview() {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { isMobile } = useMediaQuery();
   const {
     id: workspaceId,
@@ -74,7 +77,7 @@ export function QRCodePreview() {
     <div ref={ref}>
       <LinkQRModal />
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-medium text-gray-700">QR Code</h2>
+        <h2 className="text-sm font-medium text-gray-700">{t("qr-code")}</h2>
         <Button
           type="button"
           variant="outline"
@@ -113,7 +116,7 @@ export function QRCodePreview() {
           <div className="flex size-full flex-col items-center justify-center gap-2">
             <QRCodeIcon className="size-5 text-gray-700" />
             <p className="max-w-32 text-center text-xs text-gray-700">
-              Enter a short link to generate a QR code
+              {t("enter-a-short-link-to-generate-a-qr-code")}
             </p>
           </div>
         )}

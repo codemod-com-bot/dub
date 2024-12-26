@@ -1,6 +1,7 @@
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Button, CopyButton, Logo, Modal } from "@dub/ui";
 import { APP_DOMAIN } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -16,6 +17,8 @@ function InviteCodeModal({
   showInviteCodeModal: boolean;
   setShowInviteCodeModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { id, inviteCode, mutate } = useWorkspace();
 
   const inviteLink = useMemo(() => {
@@ -31,9 +34,11 @@ function InviteCodeModal({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 sm:px-16">
         <Logo />
-        <h3 className="text-lg font-medium">Invite Link</h3>
+        <h3 className="text-lg font-medium">{t("invite-link")}</h3>
         <p className="text-center text-sm text-gray-500">
-          Allow other people to join your workspace through the link below.
+          {t(
+            "allow-other-people-to-join-your-workspace-through-the-link-below",
+          )}
         </p>
       </div>
 
@@ -45,7 +50,7 @@ function InviteCodeModal({
           <CopyButton value={inviteLink} className="rounded-md" />
         </div>
         <Button
-          text="Reset invite link"
+          text={t("reset-invite-link")}
           variant="secondary"
           loading={resetting}
           onClick={() => {

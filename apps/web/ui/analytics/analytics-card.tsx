@@ -3,6 +3,7 @@ import { Button, Modal, Popover, TabSelect, useMediaQuery } from "@dub/ui";
 import { CursorRays, InvoiceDollar, UserCheck } from "@dub/ui/icons";
 import { cn } from "@dub/utils";
 import { ChevronsUpDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   ReactNode,
@@ -33,6 +34,8 @@ export function AnalyticsCard<T extends string>({
   }) => ReactNode;
   className?: string;
 }) {
+  const t = useTranslations("../ui/analytics");
+
   const { selectedTab: event } = useContext(AnalyticsContext);
 
   const [showModal, setShowModal] = useState(false);
@@ -132,7 +135,7 @@ export function AnalyticsCard<T extends string>({
               className="group relative flex w-full items-center justify-center py-4"
             >
               <div className="rounded-md border border-gray-200 bg-white px-2.5 py-1 text-sm text-gray-950 group-hover:bg-gray-100 group-active:border-gray-300">
-                View All
+                {t("view-all")}
               </div>
             </button>
           </div>

@@ -1,8 +1,12 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 import { useDeleteAccountModal } from "@/ui/modals/delete-account-modal";
 import { Button } from "@dub/ui";
 
 export default function DeleteAccountSection() {
+  const t = useTranslations("../ui/account");
+
   const { setShowDeleteAccountModal, DeleteAccountModal } =
     useDeleteAccountModal();
 
@@ -10,11 +14,11 @@ export default function DeleteAccountSection() {
     <div className="rounded-lg border border-red-600 bg-white">
       <DeleteAccountModal />
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
-        <h2 className="text-xl font-medium">Delete Account</h2>
+        <h2 className="text-xl font-medium">{t("delete-account")}</h2>
         <p className="text-sm text-gray-500">
-          Permanently delete your {process.env.NEXT_PUBLIC_APP_NAME} account,
-          all of your workspaces, links and their respective stats. This action
-          cannot be undone - please proceed with caution.
+          {t("permanently-delete-account-warning", {
+            process_env_NEXT_PUBLIC_APP_NAME: process_env_NEXT_PUBLIC_APP_NAME,
+          })}
         </p>
       </div>
       <div className="border-b border-red-600" />
@@ -22,7 +26,7 @@ export default function DeleteAccountSection() {
       <div className="flex items-center justify-end p-3 sm:px-10">
         <div>
           <Button
-            text="Delete Account"
+            text={t("delete-account-quote")}
             variant="danger"
             onClick={() => setShowDeleteAccountModal(true)}
           />

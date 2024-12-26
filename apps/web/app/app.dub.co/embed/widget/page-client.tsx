@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { PartnerSaleResponse } from "@/lib/types";
 import { Link, Program } from "@dub/prisma/client";
@@ -43,6 +44,8 @@ export function EmbedWidgetPageClient({
   earnings: number;
   hasPartnerProfile: boolean;
 }) {
+  const t = useTranslations("app.dub.co/embed/widget");
+
   const [copied, copyToClipboard] = useCopyToClipboard();
   const [selectedTab, setSelectedTab] = useState<Tab>("invite");
 
@@ -95,7 +98,7 @@ export function EmbedWidgetPageClient({
                   <GiftFill className="size-4 shrink-0 text-white" />
                 </div>
               </div>
-              Refer a friend and earn
+              {t("refer-a-friend-and-earn")}
             </h2>
           </div>
         </AnimatedSizeContainer>
@@ -110,8 +113,10 @@ export function EmbedWidgetPageClient({
             )}
           >
             <p className="pt-2 text-sm text-white/80">
-              Earn additional credits and cash when you refer a friend and they
-              sign up for {program?.name}
+              {t(
+                "earn-additional-credits-and-cash-when-you-refer-a-friend-and-they-sign-up-for-program-name",
+                { program_name: program_name },
+              )}
             </p>
           </div>
         </AnimatedSizeContainer>
@@ -143,7 +148,9 @@ export function EmbedWidgetPageClient({
           {selectedTab === "invite" && (
             <>
               <div className="flex flex-col gap-2">
-                <span className="text-sm text-neutral-500">Invite link</span>
+                <span className="text-sm text-neutral-500">
+                  {t("invite-link")}
+                </span>
                 <input
                   type="text"
                   readOnly
@@ -207,7 +214,7 @@ export function EmbedWidgetPageClient({
           {selectedTab === "rewards" && (
             <>
               <h2 className="text-sm font-semibold text-neutral-900">
-                Activity
+                {t("activity")}
               </h2>
               <motion.div
                 initial={{ height: 150, opacity: 0 }}
@@ -225,7 +232,7 @@ export function EmbedWidgetPageClient({
                 />
                 <div className="mt-4">
                   <h2 className="text-sm font-semibold text-neutral-900">
-                    Recent sales
+                    {t("recent-sales")}
                   </h2>
                   <SalesList
                     sales={sales}
@@ -244,7 +251,7 @@ export function EmbedWidgetPageClient({
                           "mt-3 flex h-10 items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm",
                         )}
                       >
-                        Withdraw earnings
+                        {t("withdraw-earnings")}
                       </a>
                     ) : (
                       <a
@@ -255,7 +262,7 @@ export function EmbedWidgetPageClient({
                           "mt-3 flex h-10 items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm",
                         )}
                       >
-                        Create partner account
+                        {t("create-partner-account")}
                       </a>
                     ))}
                 </div>
@@ -272,7 +279,7 @@ export function EmbedWidgetPageClient({
             target="_blank"
             className="flex items-center justify-center gap-1 rounded-lg bg-white p-2 pb-2.5 transition-colors"
           >
-            <p className="text-sm text-neutral-500">Powered by</p>
+            <p className="text-sm text-neutral-500">{t("powered-by")}</p>
             <Wordmark className="h-4" />
           </a>
         </div>

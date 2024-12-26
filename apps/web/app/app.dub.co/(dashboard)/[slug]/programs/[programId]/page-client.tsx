@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useProgram from "@/lib/swr/use-program";
 import { ProgramCommissionDescription } from "@/ui/partners/program-commission-description";
@@ -13,6 +14,10 @@ import { SaleTableBusiness } from "./sales/sale-table";
 import { TopPartners } from "./top-partners";
 
 export default function ProgramOverviewPageClient() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]",
+  );
+
   const { slug, programId } = useParams();
   const { getQueryString } = useRouterStuff();
 
@@ -30,7 +35,7 @@ export default function ProgramOverviewPageClient() {
             <Grid className="text-white/5" cellSize={20} />
             <div className="relative flex items-center justify-between p-5">
               <h3 className="text-base font-semibold text-neutral-50">
-                Program
+                {t("program")}
               </h3>
               <Link
                 href={`/${slug}/programs/${programId}/settings`}
@@ -39,7 +44,7 @@ export default function ProgramOverviewPageClient() {
                   "flex h-7 items-center rounded-md border px-2 text-sm",
                 )}
               >
-                Edit Program
+                {t("edit-program")}
               </Link>
             </div>
             <div className="relative flex grow flex-col justify-end">
@@ -68,7 +73,7 @@ export default function ProgramOverviewPageClient() {
       <div className="mt-6">
         <div className="flex items-center justify-between pb-3">
           <h2 className="text-base font-semibold text-neutral-900">
-            Recent sales
+            {t("recent-sales")}
           </h2>
 
           <Link
@@ -78,7 +83,7 @@ export default function ProgramOverviewPageClient() {
               "flex h-8 items-center rounded-lg border px-2 text-sm",
             )}
           >
-            View all
+            {t("view-all")}
           </Link>
         </div>
         <SaleTableBusiness limit={10} />

@@ -1,5 +1,6 @@
 import { X } from "@/ui/shared/icons";
 import { Button, Sheet, TabSelect, useRouterStuff } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { codeToHtml } from "shiki";
 
@@ -10,6 +11,8 @@ interface EmbedDocsSheetProps {
 type Tab = "react" | "html";
 
 function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
+  const t = useTranslations("../ui/partners");
+
   const [tab, setTab] = useState<Tab>("react");
 
   return (
@@ -17,7 +20,7 @@ function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Embed docs
+            {t("embed-docs")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button
@@ -55,15 +58,17 @@ function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
           </div>
 
           <p className="mt-10 text-sm text-neutral-500">
-            View detailed{" "}
-            <a
-              href="https://dub.co/docs/sdks/client-side/embed"
-              target="_blank"
-              className="underline transition-colors duration-75 hover:text-neutral-600"
-            >
-              installation guides
-            </a>{" "}
-            to add Dub Embed to your website.
+            {t("view-detailed-installation-guides", {
+              component0: (
+                <a
+                  href="https://dub.co/docs/sdks/client-side/embed"
+                  target="_blank"
+                  className="underline transition-colors duration-75 hover:text-neutral-600"
+                >
+                  {t("view-detailed-installation-guides_component0")}
+                </a>
+              ),
+            })}
           </p>
         </div>
       </div>
@@ -73,7 +78,7 @@ function EmbedDocsSheetContent({ setIsOpen }: EmbedDocsSheetProps) {
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Close"
+            text={t("close")}
             className="w-fit"
           />
         </div>

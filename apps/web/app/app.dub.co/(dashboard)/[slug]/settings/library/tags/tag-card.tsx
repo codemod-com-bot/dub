@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { TagProps } from "@/lib/types";
@@ -25,6 +26,10 @@ export function TagCard({
 }: {
   tag: TagProps & { _count?: { links: number } };
 }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/library/tags",
+  );
+
   const { id, slug } = useWorkspace();
 
   const linksCount = tag._count?.links;
@@ -116,7 +121,7 @@ export function TagCard({
             content={
               <div className="grid w-full gap-px p-2 sm:w-48">
                 <Button
-                  text="Edit"
+                  text={t("edit-button")}
                   variant="outline"
                   onClick={() => {
                     setOpenPopover(false);
@@ -127,7 +132,7 @@ export function TagCard({
                   className="h-9 px-2 font-medium"
                 />
                 <Button
-                  text="Copy Tag ID"
+                  text={t("copy-tag-id")}
                   variant="outline"
                   onClick={() => copyTagId()}
                   icon={
@@ -141,7 +146,7 @@ export function TagCard({
                   className="h-9 px-2 font-medium"
                 />
                 <Button
-                  text="Delete"
+                  text={t("delete-button")}
                   variant="danger-outline"
                   onClick={handleDelete}
                   icon={<Delete className="h-4 w-4" />}

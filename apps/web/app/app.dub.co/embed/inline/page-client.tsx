@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { PartnerSaleResponse } from "@/lib/types";
 import { HeroBackground } from "@/ui/partners/hero-background";
@@ -31,6 +32,8 @@ export function EmbedInlinePageClient({
   earnings: number;
   hasPartnerProfile: boolean;
 }) {
+  const t = useTranslations("app.dub.co/embed/inline");
+
   const [copied, copyToClipboard] = useCopyToClipboard();
 
   const { data: sales, isLoading } = useSWR<PartnerSaleResponse[]>(
@@ -55,13 +58,13 @@ export function EmbedInlinePageClient({
           )}
           <span className="flex items-center gap-2 text-sm text-neutral-500">
             <MoneyBill2 className="size-4" />
-            Refer and earn
+            {t("refer-and-earn")}
           </span>
           <div className="relative mt-24 text-lg text-neutral-900 sm:max-w-[50%]">
             <ProgramCommissionDescription program={program} />
           </div>
           <span className="mb-1.5 mt-6 block text-sm text-neutral-800">
-            Referral link
+            {t("referral-link")}
           </span>
           <div className="xs:flex-row relative flex flex-col items-center gap-2">
             <input
@@ -101,13 +104,15 @@ export function EmbedInlinePageClient({
             target="_blank"
             className="mt-2 flex items-center justify-center gap-2 rounded-lg border-neutral-100 bg-white px-4 py-1.5 transition-colors hover:border-neutral-200 active:bg-neutral-50 md:absolute md:bottom-3 md:right-3 md:mt-0 md:translate-x-0 md:border md:drop-shadow-sm"
           >
-            <p className="text-sm text-neutral-600">Powered by</p>
+            <p className="text-sm text-neutral-600">{t("powered-by")}</p>
             <Wordmark className="h-4" />
           </a>
         </div>
         <div className="mt-5">
           <>
-            <h2 className="text-sm font-semibold text-neutral-900">Activity</h2>
+            <h2 className="text-sm font-semibold text-neutral-900">
+              {t("activity")}
+            </h2>
             <Activity
               clicks={link.clicks}
               leads={link.leads}
@@ -115,7 +120,7 @@ export function EmbedInlinePageClient({
             />
             <div className="mt-4">
               <h2 className="text-sm font-semibold text-neutral-900">
-                Recent sales
+                {t("recent-sales")}
               </h2>
               <SalesList
                 sales={sales}
@@ -134,7 +139,7 @@ export function EmbedInlinePageClient({
                       "mt-3 flex h-10 items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm",
                     )}
                   >
-                    Withdraw earnings
+                    {t("withdraw-earnings")}
                   </a>
                 ) : (
                   <a
@@ -145,7 +150,7 @@ export function EmbedInlinePageClient({
                       "mt-3 flex h-10 items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm",
                     )}
                   >
-                    Create partner account
+                    {t("create-partner-account")}
                   </a>
                 ))}
             </div>

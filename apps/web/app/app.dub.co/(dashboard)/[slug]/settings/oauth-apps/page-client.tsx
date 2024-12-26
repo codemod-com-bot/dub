@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -12,6 +13,10 @@ import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 export default function OAuthAppsPageClient() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/oauth-apps",
+  );
+
   const router = useRouter();
   const { slug, id: workspaceId, role } = useWorkspace();
 
@@ -30,12 +35,14 @@ export default function OAuthAppsPageClient() {
       <div className="flex flex-wrap justify-between gap-6">
         <div className="flex items-center gap-x-2">
           <h1 className="text-2xl font-semibold tracking-tight text-black">
-            OAuth Applications
+            {t("oauth-applications")}
           </h1>
           <InfoTooltip
             content={
               <TooltipContent
-                title="Learn how to use OAuth applications to build integrations with Dub."
+                title={t(
+                  "learn-how-to-use-oauth-applications-to-build-integrations-with-dub",
+                )}
                 href="https://dub.co/docs/integrations/quickstart"
                 target="_blank"
                 cta="Learn more"
@@ -46,7 +53,7 @@ export default function OAuthAppsPageClient() {
         <div className="flex w-full items-center gap-3 sm:w-auto">
           <Button
             className="flex h-10 items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm"
-            text="Create OAuth App"
+            text={t("create-oauth-app")}
             onClick={() => router.push(`/${slug}/settings/oauth-apps/new`)}
             disabledTooltip={permissionsError}
           />
@@ -63,7 +70,10 @@ export default function OAuthAppsPageClient() {
             </div>
           ) : (
             <div className="flex flex-col items-center gap-4 rounded-xl border border-gray-200 py-10">
-              <EmptyState icon={Cube} title={"No OAuth applications found"} />
+              <EmptyState
+                icon={Cube}
+                title={t("no-oauth-applications-found")}
+              />
             </div>
           )
         ) : (
