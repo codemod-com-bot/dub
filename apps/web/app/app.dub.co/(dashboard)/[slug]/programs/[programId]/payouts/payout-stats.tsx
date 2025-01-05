@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import usePayoutsCount from "@/lib/swr/use-payouts-count";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -10,6 +11,10 @@ import { cn, currencyFormatter } from "@dub/utils";
 import Link from "next/link";
 
 export function PayoutStats() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/payouts",
+  );
+
   const { slug, payoutMethodId } = useWorkspace();
   const { payoutInvoiceSheet, setIsOpen } = usePayoutInvoiceSheet();
 
@@ -51,10 +56,12 @@ export function PayoutStats() {
         <div className="flex flex-col p-4">
           <div className="flex justify-between gap-5">
             <div className="p-1">
-              <div className="text-sm text-neutral-500">Pending payouts</div>
+              <div className="text-sm text-neutral-500">
+                {t("pending-payouts")}
+              </div>
             </div>
             <Button
-              text="Confirm payouts"
+              text={t("confirm-payouts")}
               className="h-7 w-fit px-2"
               onClick={() => setIsOpen(true)}
               disabled={confirmButtonDisabled}
@@ -63,7 +70,7 @@ export function PayoutStats() {
                   "You have no pending payouts that match the minimum payout requirement for partners that have payouts enabled."
                 ) : !payoutMethodId ? (
                   <TooltipContent
-                    title="You must have a valid ACH bank account payment method to send payouts."
+                    title={t("valid-ach-bank-account-required")}
                     cta="Add payment method"
                     href={`/${slug}/settings/billing`}
                   />
@@ -85,7 +92,7 @@ export function PayoutStats() {
                 content={
                   <div className="w-64">
                     <div className="border-b border-neutral-200 p-3 text-sm font-medium text-neutral-700">
-                      Pending payouts
+                      {t("pending-payouts-whitespace")}
                     </div>
                     <div className="grid gap-1 p-3">
                       {[
@@ -131,7 +138,7 @@ export function PayoutStats() {
         <div className="flex flex-col p-4">
           <div className="flex justify-between gap-5">
             <div className="p-1">
-              <div className="text-sm text-neutral-500">Total paid</div>
+              <div className="text-sm text-neutral-500">{t("total-paid")}</div>
             </div>
             <Link
               href={`/${slug}/settings/billing/invoices?type=payout`}
@@ -140,7 +147,7 @@ export function PayoutStats() {
                 "flex h-7 items-center rounded-md border px-2 text-sm",
               )}
             >
-              View invoices
+              {t("view-invoices")}
             </Link>
           </div>
           <div className="mt-2 text-2xl text-neutral-800">

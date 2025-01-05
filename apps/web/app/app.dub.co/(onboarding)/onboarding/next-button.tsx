@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { OnboardingStep } from "@/lib/onboarding/types";
 import { Button, ButtonProps } from "@dub/ui";
@@ -8,12 +9,14 @@ export function NextButton({
   step,
   ...rest
 }: { step: OnboardingStep } & ButtonProps) {
+  const t = useTranslations("app.dub.co/(onboarding)/onboarding");
+
   const { continueTo, isLoading, isSuccessful } = useOnboardingProgress();
 
   return (
     <Button
       variant="primary"
-      text="Next"
+      text={t("next-button")}
       onClick={() => continueTo(step)}
       loading={isLoading || isSuccessful}
       {...rest}

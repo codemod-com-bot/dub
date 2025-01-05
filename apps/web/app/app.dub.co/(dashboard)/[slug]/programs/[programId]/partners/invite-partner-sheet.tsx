@@ -10,6 +10,7 @@ import {
   Sheet,
   useMediaQuery,
 } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -25,6 +26,10 @@ interface InvitePartnerFormData {
 }
 
 function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/partners",
+  );
+
   const { program } = useProgram();
   const { id: workspaceId, slug } = useWorkspace();
   const { isMobile } = useMediaQuery();
@@ -115,7 +120,7 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Invite partner
+            {t("invite-partner")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button
@@ -129,13 +134,15 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
           <div className="flex flex-col gap-4">
             <div>
               <label htmlFor="email" className="flex items-center space-x-2">
-                <h2 className="text-sm font-medium text-gray-900">Email</h2>
+                <h2 className="text-sm font-medium text-gray-900">
+                  {t("email-label")}
+                </h2>
               </label>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <input
                   {...register("email")}
                   className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="panic@thedis.co"
+                  placeholder={t("panic-email")}
                   required
                   type="email"
                   autoComplete="off"
@@ -147,14 +154,14 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
             <div>
               <div className="flex items-center justify-between">
                 <h2 className="text-sm font-medium text-gray-900">
-                  Referral link
+                  {t("referral-link-label")}
                 </h2>
                 <a
                   href={`/${slug}/programs/${program?.id}/settings`}
                   target="_blank"
                   className="text-sm text-gray-500 underline-offset-2 hover:underline"
                 >
-                  Settings
+                  {t("settings-label")}
                 </a>
               </div>
 
@@ -193,7 +200,9 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
             </div>
 
             <div className="mt-8">
-              <h2 className="text-sm font-medium text-gray-900">Preview</h2>
+              <h2 className="text-sm font-medium text-gray-900">
+                {t("preview-button")}
+              </h2>
               <div className="mt-2 overflow-hidden rounded-md border border-neutral-200">
                 <div className="grid gap-4 p-6 pb-10">
                   <BlurImage
@@ -204,31 +213,37 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
                     height={48}
                   />
                   <h3 className="font-medium text-gray-900">
-                    {program?.name || "Dub"} invited you to join Dub Partners
+                    {program?.name || "Dub"}
+                    {t("invitation-message")}
                   </h3>
                   <p className="text-sm text-gray-500">
-                    {program?.name || "Dub"} uses Dub Partners to power their
-                    partnership programs and wants to partner with great people
-                    like yourself!
+                    {program?.name || "Dub"}
+                    {t("partnership-description")}
                   </p>
                   <Button
                     type="button"
-                    text="Accept invite"
+                    text={t("accept-invite-button")}
                     className="w-fit"
                   />
                 </div>
                 <div className="grid gap-1 border-t border-gray-200 bg-gray-50 px-6 py-4">
                   <p className="text-sm text-gray-500">
-                    <strong className="font-medium text-gray-900">
-                      From:{" "}
-                    </strong>
-                    system@dub.co
+                    {t("from-address-label", {
+                      component0: (
+                        <strong className="font-medium text-gray-900">
+                          {t("from-address-label_component0")}
+                        </strong>
+                      ),
+                    })}
                   </p>
                   <p className="text-sm text-gray-500">
-                    <strong className="font-medium text-gray-900">
-                      Subject:{" "}
-                    </strong>
-                    You've been invited to Dub Partners
+                    {t("subject-label", {
+                      component0: (
+                        <strong className="font-medium text-gray-900">
+                          {t("subject-label_component0")}
+                        </strong>
+                      ),
+                    })}
                   </p>
                 </div>
               </div>
@@ -242,14 +257,14 @@ function InvitePartnerSheetContent({ setIsOpen }: InvitePartnerSheetProps) {
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Cancel"
+            text={t("cancel-button")}
             className="w-fit"
             disabled={isExecuting}
           />
           <Button
             type="submit"
             variant="primary"
-            text="Send invite"
+            text={t("send-invite-button")}
             className="w-fit"
             loading={isExecuting}
           />

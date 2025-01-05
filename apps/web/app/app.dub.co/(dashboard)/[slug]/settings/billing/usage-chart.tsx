@@ -4,6 +4,7 @@ import { Bars, TimeSeriesChart, XAxis, YAxis } from "@dub/ui/charts";
 import { CircleDollar, CursorRays, Hyperlink } from "@dub/ui/icons";
 import { formatDate, nFormatter } from "@dub/utils";
 import { LinearGradient } from "@visx/gradient";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { ComponentProps, Fragment, useMemo } from "react";
 
@@ -31,6 +32,8 @@ const resourceEmptyStates: Record<
 };
 
 export function UsageChart() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/billing");
+
   const searchParams = useSearchParams();
   const resource =
     RESOURCES.find((r) => r === searchParams.get("tab")) ?? "events";
@@ -117,7 +120,11 @@ export function UsageChart() {
         )
       ) : (
         <div className="flex size-full items-center justify-center text-sm text-neutral-500">
-          {loading ? <LoadingSpinner /> : <p>Failed to load usage data</p>}
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <p>{t("failed-to-load-usage-data")}</p>
+          )}
         </div>
       )}
     </div>

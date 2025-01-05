@@ -11,6 +11,7 @@ import {
 } from "@dub/ui";
 import { APP_DOMAIN_WITH_NGROK, fetcher } from "@dub/utils";
 import { ArrowRight, ServerOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
   Dispatch,
@@ -30,6 +31,8 @@ function ImportBitlyModal({
   showImportBitlyModal: boolean;
   setShowImportBitlyModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const router = useRouter();
   const { slug } = useParams() as { slug?: string };
   const searchParams = useSearchParams();
@@ -96,16 +99,17 @@ function ImportBitlyModal({
         <div className="flex items-center space-x-3 py-4">
           <img
             src="https://assets.dub.co/misc/icons/bitly.svg"
-            alt="Bitly logo"
+            alt={t("bitly-logo")}
             className="h-10 w-10 rounded-full"
           />
           <ArrowRight className="h-5 w-5 text-gray-600" />
           <Logo />
         </div>
-        <h3 className="text-lg font-medium">Import Your Bitly Links</h3>
+        <h3 className="text-lg font-medium">{t("import-your-bitly-links")}</h3>
         <p className="text-center text-sm text-gray-500">
-          Easily import all your existing Bitly links into{" "}
-          {process.env.NEXT_PUBLIC_APP_NAME} with just a few clicks.
+          {t("import-existing-bitly-links", {
+            process_env_NEXT_PUBLIC_APP_NAME: process.env.NEXT_PUBLIC_APP_NAME,
+          })}
         </p>
       </div>
 
@@ -113,7 +117,7 @@ function ImportBitlyModal({
         {isLoading || !workspaceId ? (
           <div className="flex flex-col items-center justify-center space-y-4 bg-none">
             <LoadingSpinner />
-            <p className="text-sm text-gray-500">Connecting to Bitly</p>
+            <p className="text-sm text-gray-500">{t("connecting-to-bitly")}</p>
           </div>
         ) : groups ? (
           <form
@@ -155,7 +159,7 @@ function ImportBitlyModal({
                   <div key={guid} className="flex flex-col space-y-2">
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-medium text-gray-700">
-                        Domains
+                        {t("domains-label")}
                       </p>
                       <Tooltip content="Your Bitly group ID">
                         <p className="cursor-default text-xs uppercase text-gray-400 transition-colors hover:text-gray-700">
@@ -193,7 +197,9 @@ function ImportBitlyModal({
                     {tags?.length > 0 && (
                       <div className="flex items-center justify-between space-x-2 rounded-md py-1 pl-2 pr-4">
                         <p className="text-xs text-gray-500">
-                          {tags.length} tags found. Import all?
+                          {t("tags-found-import-all", {
+                            tags_length: tags.length,
+                          })}
                         </p>
                         <Switch
                           fn={() => {
@@ -215,14 +221,13 @@ function ImportBitlyModal({
                 <div className="flex flex-col items-center justify-center gap-2 pb-2">
                   <ServerOff className="h-6 w-6 text-gray-500" />
                   <p className="text-center text-sm text-gray-500">
-                    It looks like you don't have any Bitly groups with custom
-                    domains (non bit.ly domains).
+                    {t("no-bitly-groups-with-custom-domains")}
                   </p>
                 </div>
               )}
             </div>
             <Button
-              text="Confirm import"
+              text={t("confirm-import")}
               loading={importing}
               disabled={selectedDomains.length === 0}
             />
@@ -230,19 +235,19 @@ function ImportBitlyModal({
               href={bitlyOAuthURL}
               className="text-center text-xs text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-800"
             >
-              Sign in to a different Bitly account?
+              {t("sign-in-different-bitly-account")}
             </a>
           </form>
         ) : (
           <div className="flex flex-col space-y-2">
             <Button
-              text="Sign in with Bitly"
+              text={t("sign-in-with-bitly")}
               variant="secondary"
               loading={redirecting}
               icon={
                 <img
                   src="https://assets.dub.co/misc/icons/bitly.svg"
-                  alt="Bitly logo"
+                  alt={t("bitly-logo-duplicate")}
                   className="h-5 w-5 rounded-full border border-gray-200"
                 />
               }
@@ -256,7 +261,7 @@ function ImportBitlyModal({
               target="_blank"
               className="text-center text-xs text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-800"
             >
-              Read the guide
+              {t("read-the-guide")}
             </a>
           </div>
         )}

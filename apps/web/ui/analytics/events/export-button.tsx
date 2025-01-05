@@ -1,10 +1,13 @@
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Button, Download, TooltipContent } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { useContext } from "react";
 import { toast } from "sonner";
 import { EventsContext } from "./events-provider";
 
 export default function ExportButton({ onClick }: { onClick?: () => void }) {
+  const t = useTranslations("../ui/analytics/events");
+
   const { exportQueryString } = useContext(EventsContext);
   const { slug, plan, conversionEnabled } = useWorkspace();
 
@@ -36,11 +39,11 @@ export default function ExportButton({ onClick }: { onClick?: () => void }) {
       variant="outline"
       icon={<Download className="h-4 w-4 shrink-0" />}
       className="h-9 justify-start px-2 text-black"
-      text="Download as CSV"
+      text={t("download-as-csv")}
       disabledTooltip={
         needsHigherPlan && (
           <TooltipContent
-            title="Upgrade to our Business Plan to enable CSV downloads for events in your workspace."
+            title={t("upgrade-business-plan-csv-downloads")}
             cta="Upgrade to Business"
             href={`/${slug}/upgrade`}
           />

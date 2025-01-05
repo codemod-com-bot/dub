@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function PartnerInvite({
@@ -29,10 +30,14 @@ export default function PartnerInvite({
     logo: string | null;
   };
 }) {
+  const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>Sign up for {program.name}</Preview>
+      <Preview>
+        {t("sign-up-for-program-name", { program_name: program.name })}
+      </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -45,12 +50,15 @@ export default function PartnerInvite({
             </Section>
 
             <Heading className="mx-0 p-0 text-lg font-medium text-black">
-              {program.name} invited you to join Dub Partners
+              {t("program-name-invited-you-to-join-dub-partners", {
+                program_name: program.name,
+              })}
             </Heading>
 
             <Text className="text-sm leading-6 text-gray-600">
-              {program.name} uses Dub Partners to power their partnership
-              programs and wants to partner with great people like yourself!
+              {t("program-name-uses-dub-partners-for-partnerships", {
+                program_name: program.name,
+              })}
             </Text>
 
             <Section className="mb-12 mt-8">
@@ -58,7 +66,7 @@ export default function PartnerInvite({
                 className="rounded-md bg-neutral-900 px-4 py-3 text-[12px] font-medium text-white no-underline"
                 href="https://partners.dub.co"
               >
-                Accept Invite
+                {t("accept-invite")}
               </Link>
             </Section>
             <Footer email={email} />

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { X } from "@/ui/shared/icons";
 import { Button } from "@dub/ui";
@@ -8,6 +9,8 @@ import { useState } from "react";
 import { Drawer } from "vaul";
 
 export function ProgramsPageClient() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/programs");
+
   notFound(); // TODO: remove this once we support multiple programs
 
   return (
@@ -23,7 +26,7 @@ export function ProgramsPageClient() {
           <div className="scrollbar-hide flex size-full grow flex-col overflow-y-auto rounded-lg bg-white">
             <div className="flex items-center justify-between border-b border-neutral-200 px-8 py-5">
               <Drawer.Title className="text-xl font-medium text-zinc-900">
-                Create program
+                {t("create-program")}
               </Drawer.Title>
               <Drawer.Close asChild>
                 <Button
@@ -57,6 +60,8 @@ const commissionTypes = [
 ];
 
 const CreateOrUpdateProgramForm = () => {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/programs");
+
   const [commissionType, setCommissionType] = useState("one-off");
 
   return (
@@ -64,21 +69,20 @@ const CreateOrUpdateProgramForm = () => {
       <div className="flex-1 space-y-8">
         <div className="flex flex-col gap-4">
           <h3 className="text-base font-semibold leading-[17.60px] text-neutral-900">
-            Summary
+            {t("summary")}
           </h3>
           <p className="rounded-md border border-neutral-200 bg-[#f9f9f9] p-4 text-sm font-normal leading-[18.20px] text-neutral-900">
-            Earn $10.00 for each conversion, and again for every conversion of
-            the customers lifetime.
+            {t("earn-conversion-rewards")}
           </p>
         </div>
 
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <h3 className="text-base font-semibold leading-[17.60px] text-neutral-900">
-              Commission
+              {t("commission")}
             </h3>
             <p className="text-sm font-normal leading-[21px] text-neutral-600">
-              Set how the partner will get rewarded
+              {t("partner-reward-settings")}
             </p>
           </div>
           <p className="space-y-6">
@@ -135,10 +139,10 @@ const CreateOrUpdateProgramForm = () => {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <h3 className="text-base font-semibold leading-[17.60px] text-neutral-900">
-              Payout
+              {t("payout")}
             </h3>
             <p className="text-sm font-normal leading-[21px] text-neutral-600">
-              Set how much the partner will get rewarded
+              {t("reward-amount-settings")}
             </p>
           </div>
 
@@ -148,15 +152,15 @@ const CreateOrUpdateProgramForm = () => {
                 htmlFor="commissionType"
                 className="text-sm font-medium text-neutral-800"
               >
-                Payout model
+                {t("payout-model")}
               </label>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <select
                   className="block w-full rounded-md border-neutral-300 text-neutral-800 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
                   required
                 >
-                  <option value="flat">Flat</option>
-                  <option value="percentage">Percentage</option>
+                  <option value="flat">{t("flat")}</option>
+                  <option value="percentage">{t("percentage")}</option>
                 </select>
               </div>
             </div>
@@ -166,7 +170,7 @@ const CreateOrUpdateProgramForm = () => {
                 htmlFor="duration"
                 className="text-sm font-medium text-neutral-800"
               >
-                Amount
+                {t("amount")}
               </label>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <input
@@ -182,7 +186,7 @@ const CreateOrUpdateProgramForm = () => {
                 htmlFor="duration"
                 className="text-sm font-medium text-neutral-800"
               >
-                Minimum payout
+                {t("minimum-payout")}
               </label>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <input
@@ -192,7 +196,7 @@ const CreateOrUpdateProgramForm = () => {
                 />
               </div>
               <p className="mt-2 text-sm text-neutral-500">
-                Minimum payout is $100
+                {t("minimum-payout-amount")}
               </p>
             </div>
           </p>
@@ -201,7 +205,7 @@ const CreateOrUpdateProgramForm = () => {
 
       <div className="flex items-center justify-end border-t border-neutral-200 bg-neutral-50 px-8 py-5">
         <div>
-          <Button text="Save changes" className="h-8" />
+          <Button text={t("save-changes")} className="h-8" />
         </div>
       </div>
     </div>

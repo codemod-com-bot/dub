@@ -2,6 +2,7 @@ import { submitOAuthAppForReview } from "@/lib/actions/submit-oauth-app-for-revi
 import useWorkspace from "@/lib/swr/use-workspace";
 import { OAuthAppProps } from "@/lib/types";
 import { BlurImage, Button, Logo, Modal } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import {
   Dispatch,
@@ -25,6 +26,8 @@ function SubmitOAuthAppModal({
   setShowSubmitOAuthAppModal: Dispatch<SetStateAction<boolean>>;
   oAuthApp: Pick<OAuthAppProps, "id" | "name" | "logo" | "slug"> | undefined;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const workspace = useWorkspace();
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
 
@@ -63,12 +66,11 @@ function SubmitOAuthAppModal({
         )}
 
         <h3 className="text-lg font-medium">
-          Submit {oAuthApp.name} for review
+          {t("submit-oauth-app-for-review", { oAuthApp_name: oAuthApp.name })}
         </h3>
 
         <p className="text-center text-sm text-gray-500">
-          Please provide any additional information or comments for us to review
-          your app.
+          {t("additional-information-comments-for-review")}
         </p>
       </div>
 

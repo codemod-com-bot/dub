@@ -1,6 +1,7 @@
 import useWorkspace from "@/lib/swr/use-workspace";
 import { DomainProps } from "@/lib/types";
 import { Button, LinkLogo, Modal, useMediaQuery } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -20,6 +21,8 @@ function DeleteDomainModal({
   setShowDeleteDomainModal: Dispatch<SetStateAction<boolean>>;
   props: DomainProps;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { id } = useWorkspace();
   const [deleting, setDeleting] = useState(false);
   const domain = props.slug;
@@ -33,20 +36,22 @@ function DeleteDomainModal({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 text-center sm:px-16">
         <LinkLogo apexDomain={domain} />
-        <h3 className="text-lg font-medium">Delete {domain}</h3>
+        <h3 className="text-lg font-medium">
+          {t("delete-domain", { domain: domain })}
+        </h3>
         <div className="space-y-2 text-sm text-gray-500">
-          <p>
-            Deleting this domain will delete all associated links as well as
-            their anaytics, permanently.
-          </p>
+          <p>{t("deleting-domain-warning")}</p>
           {Boolean(props.registeredDomain) && (
-            <p>The domain will also be provisioned back to Dub.</p>
+            <p>{t("domain-provisioning-back")}</p>
           )}
           <p>
-            <strong className="font-semibold text-gray-700">
-              This action can't be undone
-            </strong>{" "}
-            – proceed with caution.
+            {t("action-undo-warning", {
+              component0: (
+                <strong className="font-semibold text-gray-700">
+                  {t("action-undo-warning_component0")}
+                </strong>
+              ),
+            })}
           </p>
         </div>
       </div>
@@ -78,8 +83,15 @@ function DeleteDomainModal({
       >
         <div>
           <label htmlFor="verification" className="block text-sm text-gray-700">
-            To verify, type{" "}
-            <span className="font-semibold">confirm delete {domain}</span> below
+            {t("confirm-delete-instruction", {
+              component0: (
+                <span className="font-semibold">
+                  {t("confirm-delete-instruction_component0", {
+                    domain: domain,
+                  })}
+                </span>
+              ),
+            })}
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
@@ -95,7 +107,11 @@ function DeleteDomainModal({
           </div>
         </div>
 
-        <Button variant="danger" text="Confirm delete" loading={deleting} />
+        <Button
+          variant="danger"
+          text={t("confirm-delete-button")}
+          loading={deleting}
+        />
       </form>
     </Modal>
   );

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { UtmTemplateWithUserProps } from "@/lib/types";
@@ -20,6 +21,10 @@ export const TemplatesListContext = createContext<{
 });
 
 export default function WorkspaceUtmTemplatesClient() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/library/utm",
+  );
+
   const { id: workspaceId } = useWorkspace();
 
   const { data: templates, isLoading } = useSWR<UtmTemplateWithUserProps[]>(
@@ -64,8 +69,8 @@ export default function WorkspaceUtmTemplatesClient() {
         ) : (
           <AnimatedEmptyState
             className="mt-6"
-            title="No UTM Templates Found"
-            description="Create shared templates to streamline UTM campaign management across your team"
+            title={t("no-utm-templates-found")}
+            description={t("create-shared-templates")}
             cardContent={
               <>
                 <DiamondTurnRight className="size-4 text-neutral-700" />

@@ -1,6 +1,7 @@
 import useWorkspace from "@/lib/swr/use-workspace";
 import { DomainProps } from "@/lib/types";
 import { Button, LinkLogo, Modal, useToastWithUndo } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   MouseEvent,
@@ -48,6 +49,8 @@ function ArchiveDomainModal({
   setShowArchiveDomainModal: Dispatch<SetStateAction<boolean>>;
   props: DomainProps;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const toastWithUndo = useToastWithUndo();
 
   const { id: workspaceId } = useWorkspace();
@@ -118,7 +121,7 @@ function ArchiveDomainModal({
             target="_blank"
             className="text-sm text-gray-500 underline"
           >
-            Learn more
+            {t("learn-more")}
           </a>
         </p>
       </div>

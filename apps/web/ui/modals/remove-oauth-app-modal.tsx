@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { OAuthAppProps } from "@/lib/types";
 import { BlurImage, Button, Logo, Modal, useMediaQuery } from "@dub/ui";
@@ -25,6 +26,8 @@ function RemoveOAuthAppModal({
       >
     | undefined;
 }) {
+const t = useTranslations("../ui/modals");
+
   const router = useRouter();
   const { isMobile } = useMediaQuery();
   const [deleting, setDeleting] = useState(false);
@@ -65,7 +68,7 @@ function RemoveOAuthAppModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Workspace logo"
+            alt={t('workspace-logo')}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -73,11 +76,8 @@ function RemoveOAuthAppModal({
         ) : (
           <Logo />
         )}
-        <h3 className="text-lg font-medium">Delete {oAuthApp.name}</h3>
-        <p className="text-center text-sm text-gray-500">
-          Deleting this application will invalidate any access tokens authorized
-          by users. Are you sure you want to continue?
-        </p>
+        <h3 className="text-lg font-medium">{t('delete-oauth-app', { "oAuthApp_name": oAuthApp.name })}</h3>
+        <p className="text-center text-sm text-gray-500">{t('deleting-application-warning')}</p>
       </div>
 
       <form
@@ -93,11 +93,8 @@ function RemoveOAuthAppModal({
         className="flex flex-col space-y-6 bg-gray-50 px-4 py-8 text-left sm:px-16"
       >
         <div>
-          <label htmlFor="verification" className="block text-sm text-gray-700">
-            To verify, type{" "}
-            <span className="font-semibold text-black">{oAuthApp.name}</span>{" "}
-            below
-          </label>
+          <label htmlFor="verification" className="block text-sm text-gray-700">{t('verification-input-prompt', { "component0": {t('verification-input-prompt_component0', { "_oAuthApp_name_": <>{oAuthApp.name}</> })} })}
+            </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
               type="text"
@@ -113,7 +110,7 @@ function RemoveOAuthAppModal({
         </div>
 
         <Button
-          text="Confirm delete"
+          text={t('confirm-delete')}
           variant="danger"
           loading={deleting}
           autoFocus={!isMobile}

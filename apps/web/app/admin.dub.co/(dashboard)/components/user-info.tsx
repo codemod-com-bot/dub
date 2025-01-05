@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 import { Badge, Copy, Globe2, Tick, useCopyToClipboard } from "@dub/ui";
 import { capitalize, nFormatter } from "@dub/utils";
 import { toast } from "sonner";
@@ -22,15 +24,17 @@ export interface UserInfoProps {
 }
 
 export default function UserInfo({ data }: { data: UserInfoProps }) {
+  const t = useTranslations("admin.dub.co/(dashboard)/components");
+
   return (
     <div className="grid gap-2">
       <LoginLinkCopyButton text={data.email} url={data.email} />
       <LoginLinkCopyButton
-        text="app.dub.co login link"
+        text={t("app-dub-co-login-link")}
         url={data.impersonateUrl.app}
       />
       <LoginLinkCopyButton
-        text="partners.dub.co login link"
+        text={t("partners-dub-co-login-link")}
         url={data.impersonateUrl.partners}
       />
       {Object.keys(data.defaultDomainLinks).length > 0 && (
@@ -57,27 +61,27 @@ export default function UserInfo({ data }: { data: UserInfoProps }) {
               <Badge className="lowercase">{workspace.slug}</Badge>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="font-medium text-gray-700">ID</span>
+              <span className="font-medium text-gray-700">{t("id")}</span>
               <span className="text-gray-500">{workspace.id}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="font-medium text-gray-700">Plan</span>
+              <span className="font-medium text-gray-700">{t("plan")}</span>
               <span className="text-gray-500">
                 {capitalize(workspace.plan)}
               </span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="font-medium text-gray-700">Domains</span>
+              <span className="font-medium text-gray-700">{t("domains")}</span>
               <span className="text-gray-500">{workspace.domains}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="font-medium text-gray-700">Links</span>
+              <span className="font-medium text-gray-700">{t("links")}</span>
               <span className="text-gray-500">
                 {nFormatter(workspace.links, { full: true })}
               </span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="font-medium text-gray-700">Clicks</span>
+              <span className="font-medium text-gray-700">{t("clicks")}</span>
               <span className="text-gray-500">
                 {nFormatter(workspace.clicks, { full: true })}
               </span>

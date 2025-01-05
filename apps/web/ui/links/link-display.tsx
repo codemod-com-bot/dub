@@ -15,6 +15,7 @@ import {
 import { cn } from "@dub/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useContext, useState } from "react";
 import LinkSort from "./link-sort";
 import {
@@ -24,6 +25,8 @@ import {
 } from "./links-display-provider";
 
 export default function LinkDisplay() {
+  const t = useTranslations("../ui/links");
+
   const {
     viewMode,
     setViewMode,
@@ -77,7 +80,7 @@ export default function LinkDisplay() {
           <div className="flex h-16 items-center justify-between gap-2 px-4">
             <span className="flex items-center gap-2">
               <ArrowsOppositeDirectionY className="h-4 w-4 text-gray-800" />
-              Ordering
+              {t("ordering")}
             </span>
             <div>
               <LinkSort />
@@ -88,10 +91,10 @@ export default function LinkDisplay() {
               <div className="flex w-6 items-center justify-center">
                 <BoxArchive className="size-4 text-gray-800 group-hover:hidden" />
                 <kbd className="hidden rounded border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-500 group-hover:block">
-                  A
+                  {t("option-a")}
                 </kbd>
               </div>
-              Show archived links
+              {t("show-archived-links")}
             </div>
             <div>
               <Switch
@@ -110,7 +113,7 @@ export default function LinkDisplay() {
           </div>
           <div className="p-4">
             <span className="text-xs uppercase text-gray-500">
-              Display Properties
+              {t("display-properties")}
             </span>
             <div className="mt-4 flex flex-wrap gap-2">
               {linkDisplayProperties.map((property) => {
@@ -163,13 +166,13 @@ export default function LinkDisplay() {
                   <Button
                     className="h-8 w-auto px-2"
                     variant="outline"
-                    text="Reset to default"
+                    text={t("reset-to-default")}
                     onClick={reset}
                   />
                   <Button
                     className="h-8 w-auto px-2"
                     variant="primary"
-                    text="Set as default"
+                    text={t("set-as-default")}
                     onClick={persist}
                   />
                 </div>
@@ -195,7 +198,7 @@ export default function LinkDisplay() {
                 </div>
               )}
             </div>
-            <span className="grow text-left">Display</span>
+            <span className="grow text-left">{t("display")}</span>
             <ChevronDown
               className={cn("h-4 w-4 text-gray-400 transition-transform", {
                 "rotate-180": openPopover,

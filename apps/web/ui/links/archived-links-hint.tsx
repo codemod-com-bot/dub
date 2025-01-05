@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import useLinksCount from "@/lib/swr/use-links-count";
 import { Button, Tooltip } from "@dub/ui";
 import { BoxArchive } from "@dub/ui/icons";
@@ -15,6 +16,8 @@ export default function ArchivedLinksHint() {
 }
 
 function ArchivedLinksHintHelper() {
+const t = useTranslations("../ui/links");
+
   const { data: count } = useLinksCount<number>();
   const { data: totalCount } = useLinksCount<number>({ showArchived: true });
   const archivedCount = totalCount - count;
@@ -28,19 +31,13 @@ function ArchivedLinksHintHelper() {
         content={
           <div className="px-3 py-2 text-sm text-gray-500">
             <div className="flex items-center gap-4">
-              <span>
-                You have{" "}
-                <span className="font-medium text-gray-950">
-                  {archivedCount}
-                </span>{" "}
-                archived {pluralize("link", archivedCount)} that match
-                {archivedCount === 1 && "es"} the applied filters
-              </span>
+              <span>{t('archived-count-message', { "component0": {t('archived-count-message_component0', { "_archivedCount_": <>{archivedCount}</> })} })}
+                {pluralize("link", archivedCount)}{t('match-description')}{archivedCount === 1 && "es"}{t('applied-filters-description')}</span>
               <div>
                 <Button
                   className="h-6 px-2"
                   variant="secondary"
-                  text="Show archived links"
+                  text={t('show-archived-links')}
                   onClick={() => setShowArchived(true)}
                 />
               </div>

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useSAML from "@/lib/swr/use-saml";
 import useSCIM from "@/lib/swr/use-scim";
@@ -23,6 +24,8 @@ export default function WorkspaceSecurityClient() {
 }
 
 const SAMLSection = () => {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/security");
+
   const { plan } = useWorkspace();
   const { SAMLModal, setShowSAMLModal } = useSAMLModal();
   const { RemoveSAMLModal, setShowRemoveSAMLModal } = useRemoveSAMLModal();
@@ -68,10 +71,12 @@ const SAMLSection = () => {
       <div className="rounded-lg border border-gray-200 bg-white">
         <div className="relative flex flex-col space-y-6 p-5 sm:p-10">
           <div className="flex flex-col space-y-3">
-            <h2 className="text-xl font-medium">SAML Single Sign-On</h2>
+            <h2 className="text-xl font-medium">{t("saml-single-sign-on")}</h2>
             <p className="text-sm text-gray-500">
-              Set up SAML Single Sign-On (SSO) to allow your team to sign in to{" "}
-              {process.env.NEXT_PUBLIC_APP_NAME} with your identity provider.
+              {t("saml-sso-setup-instructions", {
+                process_env_NEXT_PUBLIC_APP_NAME:
+                  process.env.NEXT_PUBLIC_APP_NAME,
+              })}
             </p>
           </div>
 
@@ -108,7 +113,7 @@ const SAMLSection = () => {
                         className="rounded-md p-2 text-left text-sm font-medium text-red-600 transition-all duration-75 hover:bg-red-600 hover:text-white"
                       >
                         <IconMenu
-                          text="Remove"
+                          text={t("remove-button")}
                           icon={<ShieldOff className="h-4 w-4" />}
                         />
                       </button>
@@ -126,18 +131,18 @@ const SAMLSection = () => {
                     }}
                     className="rounded-md px-1 py-2 transition-all duration-75 hover:bg-gray-100 active:bg-gray-200"
                   >
-                    <span className="sr-only">Edit</span>
+                    <span className="sr-only">{t("edit-button")}</span>
                     <ThreeDots className="h-5 w-5 text-gray-500" />
                   </button>
                 </Popover>
               ) : (
                 <Button
-                  text="Configure"
+                  text={t("configure-button")}
                   disabled={plan !== "enterprise"}
                   {...(plan !== "enterprise" && {
                     disabledTooltip: (
                       <TooltipContent
-                        title="SAML SSO is only available on Enterprise plans. Upgrade to get started."
+                        title={t("saml-sso-enterprise-warning")}
                         cta="Contact sales"
                         href="https://dub.co/enterprise"
                         target="_blank"
@@ -157,7 +162,7 @@ const SAMLSection = () => {
             target="_blank"
             className="text-sm text-gray-400 underline underline-offset-4 transition-colors hover:text-gray-700"
           >
-            Learn more about SAML SSO.
+            {t("learn-more-saml-sso")}
           </a>
         </div>
       </div>
@@ -166,6 +171,8 @@ const SAMLSection = () => {
 };
 
 const SCIMSection = () => {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/security");
+
   const { plan } = useWorkspace();
   const { SCIMModal, setShowSCIMModal } = useSCIMModal();
   const { RemoveSCIMModal, setShowRemoveSCIMModal } = useRemoveSCIMModal();
@@ -212,10 +219,9 @@ const SCIMSection = () => {
       <div className="rounded-lg border border-gray-200 bg-white">
         <div className="relative flex flex-col space-y-6 p-5 sm:p-10">
           <div className="flex flex-col space-y-3">
-            <h2 className="text-xl font-medium">Directory Sync</h2>
+            <h2 className="text-xl font-medium">{t("directory-sync")}</h2>
             <p className="text-sm text-gray-500">
-              Automatically provision and deprovision users from your identity
-              provider.
+              {t("directory-sync-instructions")}
             </p>
           </div>
 
@@ -252,7 +258,7 @@ const SCIMSection = () => {
                         className="rounded-md p-2 text-sm font-medium text-gray-500 transition-all duration-75 hover:bg-gray-100"
                       >
                         <IconMenu
-                          text="View configuration"
+                          text={t("view-configuration-button")}
                           icon={<FolderSync className="h-4 w-4" />}
                         />
                       </button>
@@ -264,7 +270,7 @@ const SCIMSection = () => {
                         className="rounded-md p-2 text-left text-sm font-medium text-red-600 transition-all duration-75 hover:bg-red-600 hover:text-white"
                       >
                         <IconMenu
-                          text="Remove"
+                          text={t("remove-button-duplicate")}
                           icon={<ShieldOff className="h-4 w-4" />}
                         />
                       </button>
@@ -282,18 +288,20 @@ const SCIMSection = () => {
                     }}
                     className="rounded-md px-1 py-2 transition-all duration-75 hover:bg-gray-100 active:bg-gray-200"
                   >
-                    <span className="sr-only">Edit</span>
+                    <span className="sr-only">
+                      {t("edit-button-duplicate")}
+                    </span>
                     <ThreeDots className="h-5 w-5 text-gray-500" />
                   </button>
                 </Popover>
               ) : (
                 <Button
-                  text="Configure"
+                  text={t("configure-button-duplicate")}
                   disabled={plan !== "enterprise"}
                   {...(plan !== "enterprise" && {
                     disabledTooltip: (
                       <TooltipContent
-                        title="SCIM Directory Sync is only available on Enterprise plans. Upgrade to get started."
+                        title={t("scim-directory-sync-enterprise-warning")}
                         cta="Contact sales"
                         href="https://dub.co/enterprise"
                         target="_blank"
@@ -313,7 +321,7 @@ const SCIMSection = () => {
             target="_blank"
             className="text-sm text-gray-400 underline underline-offset-4 transition-colors hover:text-gray-700"
           >
-            Learn more about SCIM Directory Sync.
+            {t("learn-more-scim-directory-sync")}
           </a>
         </div>
       </div>

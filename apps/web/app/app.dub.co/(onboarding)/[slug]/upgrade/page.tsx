@@ -1,10 +1,13 @@
 import { Wordmark } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { PlanSelector } from "../../onboarding/(steps)/plan/plan-selector";
 import { StepPage } from "../../onboarding/(steps)/step-page";
 import ExitButton from "./exit-button";
 
 export default function Plan() {
+  const t = useTranslations("app.dub.co/(onboarding)/[slug]/upgrade");
+
   return (
     <div className="relative flex flex-col items-center">
       <ExitButton />
@@ -24,7 +27,7 @@ export default function Plan() {
               target="_blank"
               className="w-full text-center text-sm text-gray-500 transition-colors hover:text-gray-700"
             >
-              Looking for enterprise?
+              {t("looking-for-enterprise")}
             </a>
           </div>
         </StepPage>
