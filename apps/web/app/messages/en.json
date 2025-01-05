@@ -1,0 +1,335 @@
+{
+  "../lib/qr": {
+    "logo": "Logo"
+  },
+  "app.dub.co/(onboarding)/[slug]/upgrade": {
+    "looking-for-enterprise": "Looking for enterprise?"
+  },
+  "app.dub.co/(onboarding)/onboarding/(steps)/domain": {
+    "connect-custom-domain": "Connect a custom domain",
+    "claim-free-domain-link_component0": ".link",
+    "claim-free-domain-link": "Claim a free {component0}  domain",
+    "continue": "Continue",
+    "empty-string": "",
+    "paid-plan-required": " Paid plan required"
+  },
+  "../emails": {
+    "your-dub-co-verification-code": "Your Dub.co Verification Code",
+    "dub-identifier": "Dub",
+    "confirm-email-address-prompt": "Please confirm your email address",
+    "enter-code-on-verify-page": "Enter this code on the Dub verify page to complete your sign up:",
+    "code-expiration-notice": "This code expires in 10 minutes.",
+    "domain-deleted": "Domain Deleted",
+    "dub-quote": "Dub",
+    "domain-deleted-newline": "Domain Deleted",
+    "domain-invalid-notice_component0": "{_domain_}",
+    "domain-invalid-notice_component1": "{workspaceSlug}↗",
+    "domain-invalid-notice": "Your domain {component0} for your Dub.co workspace {component1}  has been invalid for 30 days. As a result, it has been deleted from Dub.",
+    "restore-domain-instructions": "If you would like to restore the domain, you can easily create it again on Dub.co with the link below.",
+    "add-domain-button": "Add a domain",
+    "ignore-email-notice": "If you did not want to keep using this domain on Dub.co anyway, you can simply ignore this email.",
+    "new-webhook-added": "New webhook added",
+    "dub-co-name": "Dub.co",
+    "new-webhook-added-whitespace": "New webhook added",
+    "webhook-added-notification_component0": "{_webhook_name_}",
+    "webhook-added-notification": "Webhook with the name {component0} has been added to your Dub.co workspace {workspace_name}.",
+    "view-webhook-button": "View Webhook",
+    "delete-webhook-notification_component0": "{_strong_delete_this_webhook_strong_}",
+    "delete-webhook-notification": "If you did not create this webhook, you can {component0}  from your account.",
+    "delete-this-webhook": "delete this webhook",
+    "your-provider-links-imported": "Your {provider} links have been imported",
+    "some-provider-links-failed-import": "Some {provider} links have failed to import",
+    "following-links": "The following",
+    "links-failed-import-workspace_component0": "{workspaceName}↗",
+    "links-failed-import-workspace": " links from {provider} failed to import into your Dub.co workspace, {component0} .",
+    "link-label": "Link",
+    "error-label": "Error",
+    "more-errors-message": "...and {errorLinks_length_MAX_ERROR_LINKS} more errors",
+    "csv-import-help-message": "Please reply to this email for additional help with your CSV import.",
+    "workspace-introduction": "Your Dub.co workspace,",
+    "workspace-exceeded-plan-limit": " has exceeded the",
+    "plan-limit-notification": " Plan limit of",
+    "link-clicks-per-month-notification": " link clicks/month.",
+    "clicks-limit-exceeded-title": "Clicks Limit Exceeded",
+    "workspace-exceeded-plan-details_component0": "{_strong_name_strong_}",
+    "workspace-exceeded-plan-details_component1": " Plan",
+    "workspace-exceeded-plan-details_component2": " link clicks/month",
+    "workspace-exceeded-plan-details_component3": " link clicks",
+    "workspace-exceeded-plan-details": "Your Dub.co workspace, {component0}  has exceeded the {component1} limit of {component2}. You have used {component3}  across all your links in your current billing cycle.",
+    "existing-links-continuation_component0": "{nextPlan_name} plan",
+    "existing-links-continuation": "All your existing links will continue to work, and we are still collecting data on them, but you'll need to upgrade to the {component0}  to view their stats.",
+    "upgrade-plan-button": "Upgrade my plan",
+    "email-respect-notification": "To respect your inbox, {type,select,true{we will only send you one more email about this in 3 days} false{this will be the last time we'll email you about this for the current billing cycle}} . Feel free to ignore this email if you don't plan on upgrading, or reply to let us know if you have any questions!",
+    "domain-transferred": "Domain Transferred",
+    "domain-transferred-newline": "Domain Transferred",
+    "domain-transferred-with-code_component0": "{_domain_}",
+    "domain-transferred-with-code": "Your domain {component0}",
+    "workspace-domain-transfer-link_component0": "{newWorkspace_name}↗",
+    "workspace-domain-transfer-link": " has been transferred to the workspace {component0}",
+    "links-count-message": "and its {linksCount,select,true{{linksCount}} false{}} links",
+    "invalid-domain-configuration": "Invalid Domain Configuration",
+    "invalid-domain-configuration-whitespace": "Invalid Domain Configuration",
+    "domain-invalid-notification_component0": "{_domain_}",
+    "domain-invalid-notification_component1": "{workspaceSlug}↗",
+    "domain-invalid-notification": "Your domain {component0} for your Dub.co workspace {component1}  has been invalid for {invalidDays} days.",
+    "domain-deletion-warning": "If your domain remains unconfigured for 30 days, it will be automatically deleted from Dub.co. Please click the link below to configure your domain.",
+    "configure-domain-button": "Configure domain",
+    "domain-deletion-option_component0": "delete it",
+    "domain-deletion-option": "If you do not want to keep this domain on Dub.co, you can {component0}  or simply ignore this email. To respect your inbox,",
+    "dub-workspace-usage": "Your Dub workspace, {name} has used",
+    "links-limit-percentage": "% of its links limit for the month.",
+    "dub-name": "Dub",
+    "dub-links-limit-alert-title": "Dub.co Links Limit Alert",
+    "workspace-links-usage-message_component0": "{_strong_name_strong_}",
+    "workspace-links-usage-message_component1": "%",
+    "workspace-links-usage-message": "Your Dub.co workspace, {component0}  has used {component1} of the monthly links limit included in the",
+    "total-links-created-message_component0": " links",
+    "total-links-created-message": " plan. You have created a total of {component0}  (out of a maximum of",
+    "current-billing-cycle-links": "  links) in your current billing cycle.",
+    "current-plan-notification": "Since you're on the",
+    "links-creation-continued-notification": " plan, you will still be able to create links even after you hit your limit. We're planning to introduce on-demand billing for overages in the future, but for now, you can continue to create links without any interruption.",
+    "upgrade-plan-notification-existing-links_component0": "{nextPlan_name} plan",
+    "upgrade-plan-notification-existing-links": "All your existing links will continue to work, and we are still collecting data on them, but you'll need to upgrade the {component0}  add more links.",
+    "upgrade-plan-notification-limit-reached_component0": "{nextPlan_name} plan",
+    "upgrade-plan-notification-limit-reached": "Once you hit your limit, you'll need to upgrade to the {component0}  to add more links.",
+    "upgrade-my-plan-button": "Upgrade my plan",
+    "your-provider-links-imported-whitespace": "Your {provider} links have been imported",
+    "successful-links-imported_component0": " links",
+    "successful-links-imported_component1": "{workspaceName}↗",
+    "successful-links-imported": "We have successfully {component0}  from {provider} into your Dub.co workspace, {component1}  , for the",
+    "imported-domains_component0": "{_domains_join_}",
+    "imported-domains": " {component0}.",
+    "created-label": "Created",
+    "view-more-label": "View",
+    "more-links-label": " more links",
+    "configure-domain-instructions_component0": "configured your",
+    "configure-domain-instructions": "If you haven't already {component0} , you will need to do it before you can start using your links."
+  },
+  "../ui/partners/lander-blocks": {
+    "empty-string": ""
+  },
+  "../ui/partners": {
+    "invitation-status-invited": "Invited",
+    "accept-invite-button": "Accept invite"
+  },
+  "app.dub.co/(share)/share/[dashboardId]": {
+    "password-label": "PASSWORD",
+    "incorrect-password-message": "Incorrect password",
+    "submit-button": "Submit"
+  },
+  "app.dub.co/(dashboard)/[slug]/programs/[programId]/payouts": {
+    "no-payouts-found": "No payouts found",
+    "view-sales": "View sales"
+  },
+  "app.dub.co/(dashboard)/[slug]/settings/library/tags": {
+    "edit-action": "Edit",
+    "copy-tag-id": "Copy Tag ID",
+    "delete-action": "Delete"
+  },
+  "app.dub.co/(dashboard)/[slug]/programs/[programId]": {
+    "revenue": "Revenue",
+    "failed-to-load-data": "Failed to load data",
+    "revenue-duplicate": "Revenue"
+  },
+  "../ui/modals/import-csv-modal": {
+    "columns-found": "Columns found:"
+  },
+  "../ui/auth/login": {
+    "email-address-panic": "panic@thedis.co",
+    "password-optional": "Password (optional)",
+    "forgot-password": "Forgot password?"
+  },
+  "../ui/shared": {
+    "upgrade-to-next-plan": "Upgrade to {nextPlan_name}"
+  },
+  "../ui/modals": {
+    "invite-teammates-title": "Invite Teammates",
+    "invite-teammates": "Invite Teammates",
+    "invite-teammates-description_component0": "different roles and permissions",
+    "invite-teammates-description": "Invite teammates with {component0} . Invitations will be valid for 14 days.",
+    "congratulations-claim-success": "Congratulations! You've claimed",
+    "domain-registration-info_component0": "Learn more.",
+    "domain-registration-info": "Your domain is now registered and ready to use, though it may take some time for the domain configuration to propagate globally. {component0}",
+    "start-using-domain": "Start using your domain",
+    "template-name": "Template Name",
+    "new-template": "New Template",
+    "parameters": "Parameters",
+    "create-template": "Create template",
+    "workspace-logo": "Workspace logo",
+    "delete-oauth-app": "Delete {oAuthApp_name}",
+    "deletion-warning": "Deleting this application will invalidate any access tokens authorized by users. Are you sure you want to continue?",
+    "verification-prompt_component0": "{_oAuthApp_name_}",
+    "verification-prompt": "To verify, type {component0}  below",
+    "confirm-delete": "Confirm delete",
+    "change-teammate-role": "Change Teammate Role",
+    "change-role-confirmation_component0": "{_name_email_}",
+    "change-role-confirmation_component1": "{_workspaceName_}",
+    "change-role-confirmation_component2": "{_role_}",
+    "change-role-confirmation": "This will change {component0}''s role in {component1} to {component2}. Are you sure you want to continue?",
+    "confirm-action": "Confirm",
+    "configure-saml": "Configure SAML",
+    "select-provider-configure-saml": "Select a provider to configure SAML for your {process_env_NEXT_PUBLIC_APP_NAME} workspace.",
+    "saml-provider": "SAML Provider",
+    "select-a-provider": "Select a provider",
+    "read-guide-current-provider-sso": "Read the guide on {currentProvider_name} SSO",
+    "learn-more-saml-sso": "Learn more about SAML SSO",
+    "choose-xml-file-upload": "Choose an .xml file to upload",
+    "https-url": "https://",
+    "save-changes": "Save changes",
+    "transfer-shortlink": "Transfer {shortlink}",
+    "transfer-link-analytics": "Transfer this link and its analytics to another {APP_NAME} workspace. Link tags will not be transferred.",
+    "confirm-transfer": "Confirm transfer",
+    "export-links": "Export links",
+    "export-workspace-links-csv": "Export this workspace's links to a CSV file",
+    "date-range": "Date Range",
+    "columns": "Columns",
+    "apply-current-filters": "Apply current filters",
+    "export-links-string": "Export links",
+    "directory-provider-title": "Directory Provider",
+    "directory-provider-description": "Your directory provider is the IDP you use to manage your users.",
+    "select-provider-title": "Select a provider",
+    "read-guide-scim": "Read the guide on {currentProvider_name} SCIM",
+    "directory-provider-description-duplicate-1": "Your directory provider is the IDP you use to manage your users.",
+    "directory-provider-description-duplicate-2": "Your directory provider is the IDP you use to manage your users.",
+    "save-changes-button": "Save changes",
+    "delete-api-key": "Delete API Key",
+    "confirm-delete-api-key": "This will permanently delete the API key for and revoke all access to your account. Are you sure you want to continue?",
+    "action-delete": "Delete"
+  },
+  "app.dub.co/(dashboard)/account/settings/security": {
+    "password": "Password"
+  },
+  "../ui/modals/link-builder": {
+    "link-successfully-cloaked": "Your link will be successfully cloaked.",
+    "cloak-link-with-nextjs-rewrites_component0": "Next.js Rewrites",
+    "cloak-link-with-nextjs-rewrites_component1": "Learn more.",
+    "cloak-link-with-nextjs-rewrites": "We will try to cloak it with {component0} , but it might not work as expected. {component1}",
+    "link-preview-title": "Link Preview",
+    "customize-link-appearance": "Customize how your links look when shared on social media to improve click-through rates.",
+    "enter-link-for-preview": "Enter a link to generate a preview",
+    "from-hostname": "From {hostname}",
+    "link-password": "Link Password",
+    "restrict-access-encrypt-password": "Restrict access to your short links by encrypting it with a password.",
+    "press-p-to-open-quickly_component0": "P",
+    "press-p-to-open-quickly": "Press {component0}  to open this quickly",
+    "shortcut-key-p": "P",
+    "password-label": "Password",
+    "create-password": "Create password",
+    "remove-password": "Remove password",
+    "cancel-button": "Cancel",
+    "targeting": "Targeting",
+    "press-g-to-open-quickly_component0": "G",
+    "press-g-to-open-quickly": "Press {component0} to open this quickly",
+    "key-g": "G",
+    "geo-targeting": "Geo Targeting",
+    "redirect-users-by-location": "Redirect your users to different links based on their location.",
+    "country": "Country",
+    "example-url": "https://example.com",
+    "add-location": "Add location",
+    "ios-targeting": "iOS Targeting",
+    "redirect-ios-users": "Redirect your iOS users to a different link.",
+    "ios-app-url": "https://apps.apple.com/app/1611158928",
+    "android-targeting": "Android Targeting",
+    "redirect-android-users": "Redirect your Android users to a different link.",
+    "android-app-url": "https://play.google.com/store/apps/details?id=com.disney.disneyplus",
+    "remove-targeting": "Remove targeting",
+    "cancel": "Cancel"
+  },
+  "app.dub.co/(dashboard)/[slug]/settings/integrations/[integrationSlug]": {
+    "integrations-title": "Integrations",
+    "uninstall-integration-button": "Uninstall Integration",
+    "uninstall-integration-warning": "You cannot uninstall the Stripe integration from here. Please visit the Stripe dashboard to uninstall the app.",
+    "installed-by-label": "INSTALLED BY",
+    "developer-label": "DEVELOPER",
+    "website-label": "WEBSITE",
+    "manage-button": "Manage",
+    "enable-button": "Enable",
+    "enable-dub-conversions-warning": "To use this integration, you need to have Dub Conversions enabled for your workspace.",
+    "overview-title": "Overview"
+  },
+  "app.dub.co/(dashboard)/[slug]/settings/webhooks/new": {
+    "back-to-webhooks": "Back to webhooks"
+  },
+  "app.dub.co/(auth)/auth/saml": {
+    "saml-authentication": "SAML Authentication"
+  },
+  "app.dub.co/(dashboard)/[slug]/settings/billing/invoices": {
+    "invoices-title": "Invoices",
+    "invoices-history-description": "A history of all your Dub invoices",
+    "invoices-no-invoices-found": "No invoices found",
+    "invoices-no-invoices-yet": "You don't have any invoices yet",
+    "invoices-total": "Total",
+    "invoices-view-invoice": "View invoice"
+  },
+  "app.dub.co/(auth)/oauth/authorize": {
+    "select-workspace-api-access": "Select a workspace to grant API access to",
+    "create-new-workspace": "Create new workspace",
+    "decline-action": "Decline",
+    "authorize-action": "Authorize"
+  },
+  "../ui/links": {
+    "branded-links-verification-message": "Your branded links won't work until you verify your domain.",
+    "link-comments-label": "Link comments"
+  },
+  "../ui/layout/sidebar": {
+    "my-link": "My link",
+    "performance": "Performance",
+    "workspaces-title": "Workspaces",
+    "create-new-workspace": "Create new workspace"
+  },
+  "partners.dub.co/(dashboard)/settings/payouts": {
+    "no-payouts-found": "No payouts found",
+    "no-payouts-initiated-for-program": "No payouts have been initiated for this program yet."
+  },
+  "partners.dub.co/(dashboard)/programs/[programSlug]/sales": {
+    "no-sales-found": "No sales found",
+    "no-sales-for-program-yet": "No sales have been made for this program yet.",
+    "no-sales-found-duplicate": "No sales found",
+    "no-sales-for-program-yet-duplicate": "No sales have been made for this program yet."
+  },
+  "../ui/analytics": {
+    "no-data-available": "No data available"
+  },
+  "partners.dub.co/(auth)": {
+    "partner-label": "Partner",
+    "copyright-symbol": "©",
+    "company-name": " Dub Technologies, Inc.",
+    "privacy-policy-link": "Privacy Policy",
+    "terms-of-service-link": "Terms of Service",
+    "website-url": "app.dub.co"
+  },
+  "../ui/analytics/events": {
+    "real-time-events-stream": "Real-time Events Stream",
+    "qr-scan": "QR scan",
+    "qr-scan-alt": "QR scan",
+    "link-click": "Link click",
+    "link-click-alt": "Link click",
+    "unknown-status": "Unknown",
+    "currency-usd": "USD",
+    "no-events-recorded": "No events recorded"
+  },
+  "partners.dub.co/(apply)/apply/[programSlug]": {
+    "affiliate-program-title": "Affiliate Program",
+    "join-affiliate-program": "Join the {program_name} affiliate program",
+    "share-program-revenue-earnings": "Share {program_name} with your audience and for each subscription generated through your referral, you'll earn a share of the revenue on any plans they purchase."
+  },
+  "../ui/layout/help": {
+    "how-can-we-help": "👋 How can we help?",
+    "search-articles-guides": "Search articles, guides, and more...",
+    "cant-find-what-you-are-looking-for": "Can't find what you're looking for?",
+    "send-us-a-message": "Send us a message and we'll get back to you as soon as possible.",
+    "contact-us": "Contact us",
+    "help-center": "Help center"
+  },
+  "partners.dub.co/(auth)/auth/reset-password/[token]": {
+    "invalid-reset-token": "Invalid Reset Token",
+    "password-reset-token-invalid-or-expired": "The password reset token is invalid or expired. Please request a new one.",
+    "reset-your-password-prompt": "Reset your password",
+    "enter-new-password-prompt": "Enter a new password for your account."
+  },
+  "../ui/domains": {
+    "primary-button-label": " Primary",
+    "premium-button-label": " Premium",
+    "no-redirect-configured-message": "No redirect configured"
+  }
+}

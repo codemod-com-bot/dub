@@ -2,6 +2,7 @@ import { getProgram } from "@/lib/fetchers/get-program";
 import { programLanderSchema } from "@/lib/zod/schemas/program-lander";
 import { BLOCK_COMPONENTS } from "@/ui/partners/lander-blocks";
 import { cn } from "@dub/utils";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { CSSProperties } from "react";
 import { ApplyButton } from "./apply-button";
@@ -13,6 +14,10 @@ export default async function ApplyPage({
 }: {
   params: { programSlug: string };
 }) {
+  const t = await getTranslations(
+    "partners.dub.co/(apply)/apply/[programSlug]",
+  );
+
   const program = await getProgram({ slug: programSlug });
 
   if (!program || !program.landerData) {
@@ -44,7 +49,7 @@ export default async function ApplyPage({
               "animate-slide-up-fade [--offset:5px] [animation-duration:1s] [animation-fill-mode:both]",
             )}
           >
-            Affiliate Program
+            {t("affiliate-program-title")}
           </span>
           <h1
             className={cn(
@@ -52,7 +57,7 @@ export default async function ApplyPage({
               "animate-slide-up-fade [--offset:5px] [animation-delay:100ms] [animation-duration:1s] [animation-fill-mode:both]",
             )}
           >
-            Join the {program.name} affiliate program
+            {t("join-affiliate-program", { program_name: program.name })}
           </h1>
           <p
             className={cn(
@@ -60,9 +65,9 @@ export default async function ApplyPage({
               "animate-slide-up-fade [--offset:5px] [animation-delay:200ms] [animation-duration:1s] [animation-fill-mode:both]",
             )}
           >
-            Share {program.name} with your audience and for each subscription
-            generated through your referral, you'll earn a share of the revenue
-            on any plans they purchase.
+            {t("share-program-revenue-earnings", {
+              program_name: program.name,
+            })}
           </p>
           {/* <p className="text-xs text-neutral-500">
               Read our{" "}
