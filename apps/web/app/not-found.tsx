@@ -1,8 +1,11 @@
 import { NewBackground } from "@/ui/shared/new-background";
 import { Wordmark } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function NotFound() {
+  const t = useTranslations("");
+
   return (
     <>
       <div className="relative z-10 flex h-screen w-screen flex-col items-center justify-center gap-6">
@@ -16,7 +19,7 @@ export default function NotFound() {
           href="/"
           className="flex h-9 w-fit items-center justify-center rounded-md border border-black bg-black px-4 text-sm text-white hover:bg-gray-800 hover:ring-4 hover:ring-gray-200"
         >
-          Go back home
+          {t("go-back-home")}
         </Link>
       </div>
       <NewBackground showAnimation />

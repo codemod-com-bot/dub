@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWebhooks from "@/lib/swr/use-webhooks";
@@ -11,6 +12,8 @@ import { Webhook } from "lucide-react";
 import { redirect, useRouter } from "next/navigation";
 
 export default function WebhooksPageClient() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/webhooks");
+
   const router = useRouter();
   const { slug, plan, role, conversionEnabled, flags } = useWorkspace();
 
@@ -33,8 +36,8 @@ export default function WebhooksPageClient() {
       <div className="rounded-md border border-gray-200 bg-white p-10">
         <EmptyState
           icon={Webhook}
-          title="Webhooks"
-          description="Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in Dub."
+          title={t("webhooks-title")}
+          description={t("webhooks-description")}
           learnMore="https://d.to/webhooks"
           buttonText="Upgrade to Business"
           buttonLink={`/${slug}/upgrade`}
@@ -48,12 +51,12 @@ export default function WebhooksPageClient() {
       <div className="flex flex-wrap justify-between gap-6">
         <div className="flex items-center gap-x-2">
           <h1 className="text-2xl font-semibold tracking-tight text-black">
-            Webhooks
+            {t("webhooks-title-plain")}
           </h1>
           <InfoTooltip
             content={
               <TooltipContent
-                title="Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in Dub."
+                title={t("webhooks-description-duplicate")}
                 href="https://d.to/webhooks"
                 target="_blank"
                 cta="Learn more"
@@ -64,7 +67,7 @@ export default function WebhooksPageClient() {
         <div className="flex w-full items-center gap-3 sm:w-auto">
           <Button
             className="flex h-10 items-center justify-center whitespace-nowrap rounded-lg border px-4 text-sm"
-            text="Create Webhook"
+            text={t("create-webhook-button")}
             onClick={() => router.push(`/${slug}/settings/webhooks/new`)}
             disabledTooltip={permissionsError}
           />
@@ -83,8 +86,8 @@ export default function WebhooksPageClient() {
             <div className="flex flex-col items-center gap-4 rounded-xl border border-gray-200 py-10">
               <EmptyState
                 icon={Webhook}
-                title="You haven't set up any webhooks yet."
-                description="Webhooks allow you to receive HTTP requests whenever a specific event (eg: someone clicked your link) occurs in Dub."
+                title={t("no-webhooks-message")}
+                description={t("webhooks-description-repeated")}
                 learnMore="https://d.to/webhooks"
               />
             </div>

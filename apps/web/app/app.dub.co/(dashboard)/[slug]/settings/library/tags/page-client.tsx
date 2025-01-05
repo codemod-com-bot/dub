@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useTags from "@/lib/swr/use-tags";
 import useTagsCount from "@/lib/swr/use-tags-count";
@@ -26,6 +27,10 @@ export const TagsListContext = createContext<{
 });
 
 export default function WorkspaceTagsClient() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/library/tags",
+  );
+
   const { searchParams, queryParams } = useRouterStuff();
 
   const { AddEditTagModal, AddTagButton } = useAddEditTagModal();
@@ -66,8 +71,8 @@ export default function WorkspaceTagsClient() {
 
         {!loading && tags?.length === 0 ? (
           <AnimatedEmptyState
-            title="No tags found"
-            description="Create tags to organize your links"
+            title={t("no-tags-found")}
+            description={t("create-tags-to-organize-links")}
             cardContent={
               <>
                 <div className="flex size-7 items-center justify-center rounded-md border border-neutral-200 bg-neutral-50">

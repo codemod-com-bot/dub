@@ -9,6 +9,7 @@ import {
 import { Dots } from "@dub/ui/icons";
 import { cn } from "@dub/utils";
 import { Settings } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useContext, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { LinkFormData, LinkModalContext } from ".";
@@ -19,6 +20,8 @@ import { usePasswordModal } from "./password-modal";
 import { useTargetingModal } from "./targeting-modal";
 
 export function MoreDropdown() {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { isMobile } = useMediaQuery();
 
   const { conversionEnabled } = useContext(LinkModalContext);
@@ -136,10 +139,10 @@ export function MoreDropdown() {
                         data.externalId && "text-blue-500",
                       )}
                     />
-                    Advanced Settings
+                    {t("advanced-settings")}
                   </div>
                   <kbd className="hidden size-6 cursor-default items-center justify-center rounded-md border border-gray-200 font-sans text-xs text-gray-800 sm:flex">
-                    A
+                    {t("letter-a")}
                   </kbd>
                 </div>
               }

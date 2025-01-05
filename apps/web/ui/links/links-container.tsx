@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useLinks from "@/lib/swr/use-links";
 import useLinksCount from "@/lib/swr/use-links-count";
@@ -74,6 +75,8 @@ function LinksList({
   loading?: boolean;
   compact: boolean;
 }) {
+  const t = useTranslations("../ui/links");
+
   const searchParams = useSearchParams();
 
   const { pagination, setPagination } = usePagination();
@@ -115,8 +118,8 @@ function LinksList({
         <LinkNotFound />
       ) : (
         <AnimatedEmptyState
-          title="No links found"
-          description="Start creating short links for your marketing campaigns, referral programs, and more."
+          title={t("no-links-found")}
+          description={t("start-creating-short-links")}
           cardContent={
             <>
               <Hyperlink className="size-4 text-neutral-700" />

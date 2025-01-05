@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { IntervalOptions } from "@/lib/analytics/types";
 import SimpleDateRangePicker from "@/ui/shared/simple-date-range-picker";
@@ -34,6 +35,8 @@ export function EarningsChart({
   color,
   error,
 }: EarningsChartProps) {
+  const t = useTranslations("../ui/partners");
+
   const id = useId();
 
   const data = useMemo(
@@ -49,7 +52,9 @@ export function EarningsChart({
     <div>
       <div className="flex flex-col-reverse items-start justify-between gap-4 md:flex-row">
         <div>
-          <span className="block text-sm text-neutral-500">Earnings</span>
+          <span className="block text-sm text-neutral-500">
+            {t("earnings-label")}
+          </span>
           <div className="mt-1.5">
             {total !== undefined ? (
               <span className="text-2xl leading-none text-neutral-800">
@@ -94,7 +99,9 @@ export function EarningsChart({
                           color ? `bg-[${color}]` : "bg-violet-500",
                         )}
                       />
-                      <p className="capitalize text-gray-600">Earnings</p>
+                      <p className="capitalize text-gray-600">
+                        {t("earnings-label-duplicate")}
+                      </p>
                     </div>
                     <p className="text-right font-medium text-gray-900">
                       {currencyFormatter(d.values.earnings, {
@@ -137,7 +144,7 @@ export function EarningsChart({
           <div className="flex size-full items-center justify-center">
             {error ? (
               <span className="text-sm text-neutral-500">
-                Failed to load earnings data.
+                {t("failed-to-load-earnings-data")}
               </span>
             ) : (
               <LoadingSpinner />

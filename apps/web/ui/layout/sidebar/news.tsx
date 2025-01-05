@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { useLocalStorage, useMediaQuery } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -18,6 +19,8 @@ const SCALE_FACTOR = 0.03;
 const OPACITY_FACTOR = 0.1;
 
 export function News({ articles }: { articles: NewsArticle[] }) {
+  const t = useTranslations("../ui/layout/sidebar");
+
   const [dismissedNews, setDismissedNews] = useLocalStorage<string[]>(
     "dismissed-news",
     [],
@@ -82,7 +85,7 @@ export function News({ articles }: { articles: NewsArticle[] }) {
           </div>
         ))}
         <div className="pointer-events-none invisible" aria-hidden>
-          <NewsCard title="Title" description="Description" />
+          <NewsCard title={t("title")} description={t("description")} />
         </div>
         {showCompleted && !cardCount && (
           <div
@@ -92,7 +95,7 @@ export function News({ articles }: { articles: NewsArticle[] }) {
             <div className="animate-fade-in absolute inset-0 rounded-lg border border-neutral-300 [animation-delay:2.3s] [animation-direction:reverse] [animation-duration:0.2s]" />
             <AnimatedLogo className="w-1/3 text-neutral-500" />
             <span className="animate-fade-in text-xs font-medium text-neutral-500 [animation-delay:2.3s] [animation-direction:reverse] [animation-duration:0.2s]">
-              You're all caught up!
+              {t("caught-up-message")}
             </span>
           </div>
         )}
@@ -118,6 +121,8 @@ function NewsCard({
   href?: string;
   active?: boolean;
 }) {
+  const t = useTranslations("../ui/layout/sidebar");
+
   const { isMobile } = useMediaQuery();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -244,7 +249,7 @@ function NewsCard({
           {image && (
             <Image
               src={image}
-              alt=""
+              alt={t("empty-string")}
               fill
               sizes="10vw"
               className="rounded object-cover object-center"
@@ -264,14 +269,14 @@ function NewsCard({
               target="_blank"
               className="font-medium text-neutral-700 transition-colors duration-75 hover:text-neutral-900"
             >
-              Read more
+              {t("read-more")}
             </Link>
             <button
               type="button"
               onClick={dismiss}
               className="text-neutral-600 transition-colors duration-75 hover:text-neutral-900"
             >
-              Dismiss
+              {t("dismiss")}
             </button>
           </div>
         </div>

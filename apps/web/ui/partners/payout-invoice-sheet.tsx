@@ -8,6 +8,7 @@ import useWorkspace from "@/lib/swr/use-workspace";
 import { X } from "@/ui/shared/icons";
 import { Button, Sheet, Table, useRouterStuff, useTable } from "@dub/ui";
 import { cn, currencyFormatter, DICEBEAR_AVATAR_URL } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import { useParams } from "next/navigation";
 import { Dispatch, Fragment, SetStateAction, useMemo, useState } from "react";
@@ -18,6 +19,8 @@ interface PayoutInvoiceSheetProps {
 }
 
 function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
+  const t = useTranslations("../ui/partners");
+
   const { id: workspaceId, slug } = useWorkspace();
   const { programId } = useParams<{ programId: string }>();
 
@@ -143,7 +146,7 @@ function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Payout invoice
+            {t("payout-invoice")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button
@@ -155,7 +158,7 @@ function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
         </div>
         <div className="flex flex-col gap-4 p-6">
           <div className="text-base font-medium text-neutral-900">
-            Invoice details
+            {t("invoice-details")}
           </div>
           <div className="grid grid-cols-2 gap-3 text-sm">
             {Object.entries(invoiceData).map(([key, value]) => (
@@ -179,7 +182,7 @@ function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Close"
+            text={t("close-button")}
             className="w-fit"
           />
           <Button
@@ -196,7 +199,7 @@ function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
                 programId,
               });
             }}
-            text="Confirm payout"
+            text={t("confirm-payout")}
             className="w-fit"
             disabled={pendingPayouts?.length === 0}
           />

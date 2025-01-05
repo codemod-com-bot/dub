@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function UpgradeEmail({
@@ -23,11 +24,13 @@ export default function UpgradeEmail({
   email: string;
   plan: string;
 }) {
+  const t = useTranslations("../emails");
+
   const planDetails = getPlanDetails(plan);
   return (
     <Html>
       <Head />
-      <Preview>Thank you for upgrading to Dub.co {plan}!</Preview>
+      <Preview>{t("thank-you-upgrading-to-dub-co", { plan: plan })}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -35,47 +38,53 @@ export default function UpgradeEmail({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t("dub")}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Thank you for upgrading to Dub.co {plan}!
+              {t("thank-you-upgrading-to-dub-co-with-plan", { plan: plan })}
             </Heading>
             <Section className="my-8">
               <Img
                 src="https://assets.dub.co/misc/thank-you-thumbnail.jpg"
-                alt="Thank you"
+                alt={t("thank-you-message")}
                 className="max-w-[500px]"
               />
             </Section>
             <Text className="text-sm leading-6 text-black">
-              Hey{name && ` ${name}`}!
+              {t("greeting")}
+              {name && ` ${name}`}
+              {t("exclamation")}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              My name is Steven, and I'm the founder of Dub. I wanted to
-              personally reach out to thank you for upgrading to{" "}
-              <Link
-                href={planDetails.link}
-                className="font-medium text-blue-600 no-underline"
-              >
-                Dub.co {plan}
-              </Link>
-              !
+              {t("founder-introduction-and-thank-you", {
+                component0: (
+                  <Link
+                    href={planDetails.link}
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {t("founder-introduction-and-thank-you_component0", {
+                      plan: plan,
+                    })}
+                  </Link>
+                ),
+              })}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              As you might already know, we are fully{" "}
-              <Link
-                href="https://d.to/github"
-                className="font-medium text-blue-600 no-underline"
-              >
-                open-source
-              </Link>{" "}
-              business. Your support means the world to us and helps us continue
-              to build and improve Dub.co.
+              {t("open-source-business-support", {
+                component0: (
+                  <Link
+                    href="https://d.to/github"
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {t("open-source-business-support_component0")}
+                  </Link>
+                ),
+              })}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              On the {plan} plan, you now have access to:
+              {t("plan-access-details", { plan: plan })}
             </Text>
             {planDetails.features.map((feature) => (
               <Text className="ml-1 text-sm leading-4 text-black">
@@ -88,11 +97,10 @@ export default function UpgradeEmail({
               </Text>
             ))}
             <Text className="text-sm leading-6 text-black">
-              Let me know if you have any questions or feedback. I'm always
-              happy to help!
+              {t("offer-help-and-feedback")}
             </Text>
             <Text className="text-sm font-light leading-6 text-gray-400">
-              Steven from Dub
+              {t("steven-from-dub")}
             </Text>
             <Footer email={email} marketing />
           </Container>

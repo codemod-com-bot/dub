@@ -1,9 +1,12 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { CopyButton } from "@dub/ui";
 import { useSession } from "next-auth/react";
 
 export default function UserId() {
+  const t = useTranslations("../ui/account");
+
   const { data: session } = useSession() as
     | {
         data: { user: { id: string } };
@@ -15,9 +18,9 @@ export default function UserId() {
       <div className="rounded-lg border border-gray-200 bg-white">
         <div className="relative flex flex-col space-y-6 p-5 sm:p-10">
           <div className="flex flex-col space-y-3">
-            <h2 className="text-xl font-medium">Your User ID</h2>
+            <h2 className="text-xl font-medium">{t("user-id")}</h2>
             <p className="text-sm text-gray-500">
-              This is your unique account identifier on Dub.
+              {t("account-identifier-description")}
             </p>
           </div>
           {session?.user?.id ? (

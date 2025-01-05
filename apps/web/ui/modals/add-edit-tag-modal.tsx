@@ -13,6 +13,7 @@ import {
   useMediaQuery,
 } from "@dub/ui";
 import { capitalize, cn, pluralize } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import posthog from "posthog-js";
 import {
   Dispatch,
@@ -35,6 +36,8 @@ function AddEditTagModal({
   setShowAddEditTagModal: Dispatch<SetStateAction<boolean>>;
   props?: TagProps;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { id: workspaceId } = useWorkspace();
   const { isMobile } = useMediaQuery();
 
@@ -84,18 +87,22 @@ function AddEditTagModal({
         <Logo />
         <div className="flex flex-col space-y-1 text-center">
           <h3 className="text-lg font-medium">
-            {props ? "Edit" : "Create"} tag
+            {props ? "Edit" : "Create"}
+            {t("tag-placeholder")}
           </h3>
           <p className="text-sm text-gray-500">
-            Use tags to organize your links.{" "}
-            <a
-              href="https://dub.co/help/article/how-to-use-tags#what-is-a-tag"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-4 hover:text-gray-800"
-            >
-              Learn more
-            </a>
+            {t("use-tags-to-organize-links", {
+              component0: (
+                <a
+                  href="https://dub.co/help/article/how-to-use-tags#what-is-a-tag"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4 hover:text-gray-800"
+                >
+                  {t("use-tags-to-organize-links_component0")}
+                </a>
+              ),
+            })}
           </p>
         </div>
       </div>
@@ -149,7 +156,9 @@ function AddEditTagModal({
       >
         <div>
           <label htmlFor="name" className="flex items-center space-x-2">
-            <p className="block text-sm font-medium text-gray-700">Tag Name</p>
+            <p className="block text-sm font-medium text-gray-700">
+              {t("tag-name")}
+            </p>
           </label>
           <div className="mt-2 flex rounded-md shadow-sm">
             <input
@@ -160,7 +169,7 @@ function AddEditTagModal({
               autoFocus={!isMobile}
               autoComplete="off"
               className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-              placeholder="New Tag"
+              placeholder={t("new-tag-label")}
               value={name}
               onChange={(e) => {
                 setData({ ...data, name: e.target.value });
@@ -171,7 +180,9 @@ function AddEditTagModal({
 
         <div>
           <label htmlFor="name" className="flex items-center space-x-2">
-            <p className="block text-sm font-medium text-gray-700">Tag Color</p>
+            <p className="block text-sm font-medium text-gray-700">
+              {t("tag-color")}
+            </p>
             <InfoTooltip content={`A color to make your tag stand out.`} />
           </label>
           <RadioGroup
@@ -218,6 +229,8 @@ function AddTagButton({
 }: {
   setShowAddEditTagModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { slug, plan, tagsLimit } = useWorkspace();
   const { tags } = useTags();
   const exceededTags = tags && tagsLimit && tags.length >= tagsLimit;
@@ -226,7 +239,7 @@ function AddTagButton({
     <div>
       <Button
         variant="primary"
-        text="Create tag"
+        text={t("create-tag-button")}
         className="h-9 rounded-lg"
         disabledTooltip={
           exceededTags ? (

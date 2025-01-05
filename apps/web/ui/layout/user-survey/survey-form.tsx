@@ -14,6 +14,7 @@ import {
 import { Globe } from "@dub/ui/icons";
 import { cn } from "@dub/utils";
 import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useContext, useState } from "react";
 import { UserSurveyContext } from ".";
 
@@ -55,6 +56,8 @@ export default function SurveyForm({
 }: {
   onSubmit: (source: string) => void;
 }) {
+  const t = useTranslations("../ui/layout/user-survey");
+
   const { isMobile } = useMediaQuery();
 
   const [source, setSource] = useState<string | undefined>(undefined);
@@ -66,7 +69,7 @@ export default function SurveyForm({
     <div className="grid gap-4">
       <Wordmark className="h-8" />
       <p className="text-sm font-medium text-gray-800">
-        Where did you hear about Dub?
+        {t("where-did-you-hear-about-dub")}
       </p>
       <form
         onSubmit={(e) => {
@@ -139,7 +142,7 @@ export default function SurveyForm({
                   autoFocus={!isMobile}
                   autoComplete="off"
                   className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Reddit, Indie Hackers, etc."
+                  placeholder={t("source-of-information")}
                   value={otherSource}
                   onChange={(e) => setOtherSource(e.target.value)}
                 />
@@ -152,7 +155,7 @@ export default function SurveyForm({
             className="mt-4 h-9"
             variant="primary"
             type="submit"
-            text="Submit"
+            text={t("submit-button")}
             loading={status === "loading"}
             disabled={
               status === "success" ||

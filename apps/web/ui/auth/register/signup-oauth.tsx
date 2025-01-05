@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Button, Github, Google } from "@dub/ui";
 import { signIn } from "next-auth/react";
@@ -10,6 +11,8 @@ export const SignUpOAuth = ({
 }: {
   methods: ("email" | "google" | "github")[];
 }) => {
+  const t = useTranslations("../ui/auth/register");
+
   const searchParams = useSearchParams();
   const next = searchParams?.get("next");
   const [clickedGoogle, setClickedGoogle] = useState(false);
@@ -28,7 +31,7 @@ export const SignUpOAuth = ({
       {methods.includes("google") && (
         <Button
           variant="secondary"
-          text="Continue with Google"
+          text={t("continue-with-google")}
           onClick={() => {
             setClickedGoogle(true);
             signIn("google", {
@@ -42,7 +45,7 @@ export const SignUpOAuth = ({
       {methods.includes("github") && (
         <Button
           variant="secondary"
-          text="Continue with GitHub"
+          text={t("continue-with-github")}
           onClick={() => {
             setClickedGithub(true);
             signIn("github", {

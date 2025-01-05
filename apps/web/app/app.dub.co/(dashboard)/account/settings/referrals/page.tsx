@@ -4,6 +4,7 @@ import LayoutLoader from "@/ui/layout/layout-loader";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { DubWidget } from "@dub/embed-react";
 import { CursorRays, Hyperlink, InvoiceDollar, UserCheck } from "@dub/ui/icons";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 export const dynamic = "auto";
@@ -16,14 +17,18 @@ export default function ReferralsPage() {
   );
 }
 async function ReferralsPageRSC() {
+  const t = await getTranslations(
+    "app.dub.co/(dashboard)/account/settings/referrals",
+  );
+
   const session = await getSession();
   const referralLinkId = session?.user.referralLinkId;
 
   if (!referralLinkId)
     return (
       <AnimatedEmptyState
-        title="Refer a friend"
-        description="Activate your referral link to share the word about Dub and earn cash rewards"
+        title={t("refer-a-friend")}
+        description={t("activate-referral-link")}
         cardContent={
           <>
             <Hyperlink className="size-4 text-neutral-700" />

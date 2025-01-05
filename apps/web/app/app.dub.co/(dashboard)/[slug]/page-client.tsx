@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useLinks from "@/lib/swr/use-links";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -53,6 +54,8 @@ export default function WorkspaceLinksClient() {
 }
 
 function WorkspaceLinks() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]");
+
   const router = useRouter();
 
   const { LinkBuilder, CreateLinkButton } = useLinkBuilder();
@@ -96,16 +99,16 @@ function WorkspaceLinks() {
                           <Tag className="size-6 text-gray-700" />
                         </div>
                         <p className="mt-2 font-medium text-gray-950">
-                          No tags found
+                          {t("no-tags-found")}
                         </p>
                         <p className="mx-auto mt-1 w-full max-w-[180px] text-gray-700">
-                          Add tags to organize your links
+                          {t("add-tags-to-organize-links")}
                         </p>
                         <div>
                           <Button
                             className="mt-1 h-8"
                             onClick={() => setShowAddEditTagModal(true)}
-                            text="Add tag"
+                            text={t("add-tag")}
                           />
                         </div>
                       </div>
@@ -116,10 +119,10 @@ function WorkspaceLinks() {
                           <Globe className="size-6 text-gray-700" />
                         </div>
                         <p className="mt-2 font-medium text-gray-950">
-                          No domains found
+                          {t("no-domains-found")}
                         </p>
                         <p className="mx-auto mt-1 w-full max-w-[180px] text-gray-700">
-                          Add a custom domain to match your brand
+                          {t("add-custom-domain")}
                         </p>
                         <div>
                           <Button
@@ -127,7 +130,7 @@ function WorkspaceLinks() {
                             onClick={() =>
                               router.push(`/${slug}/settings/domains`)
                             }
-                            text="Add domain"
+                            text={t("add-domain")}
                           />
                         </div>
                       </div>
@@ -168,6 +171,8 @@ function WorkspaceLinks() {
 }
 
 const MoreLinkOptions = () => {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]");
+
   const router = useRouter();
   const { slug } = useWorkspace();
   const { isMobile } = useMediaQuery();
@@ -187,7 +192,7 @@ const MoreLinkOptions = () => {
           <div className="w-full md:w-52">
             <div className="grid gap-px p-2">
               <p className="mb-1.5 mt-1 flex items-center gap-2 px-1 text-xs font-medium text-gray-500">
-                Import Links
+                {t("import-links")}
               </p>
               <ImportOption
                 onClick={() => {
@@ -197,11 +202,11 @@ const MoreLinkOptions = () => {
                 setOpenPopover={setOpenPopover}
               >
                 <IconMenu
-                  text="Import from Bitly"
+                  text={t("import-from-bitly")}
                   icon={
                     <img
                       src="https://assets.dub.co/misc/icons/bitly.svg"
-                      alt="Bitly logo"
+                      alt={t("bitly-logo")}
                       className="h-4 w-4"
                     />
                   }
@@ -215,11 +220,11 @@ const MoreLinkOptions = () => {
                 setOpenPopover={setOpenPopover}
               >
                 <IconMenu
-                  text="Import from Rebrandly"
+                  text={t("import-from-rebrandly")}
                   icon={
                     <img
                       src="https://assets.dub.co/misc/icons/rebrandly.svg"
-                      alt="Rebrandly logo"
+                      alt={t("rebrandly-logo")}
                       className="h-4 w-4"
                     />
                   }
@@ -233,11 +238,11 @@ const MoreLinkOptions = () => {
                 setOpenPopover={setOpenPopover}
               >
                 <IconMenu
-                  text="Import from Short.io"
+                  text={t("import-from-shortio")}
                   icon={
                     <img
                       src="https://assets.dub.co/misc/icons/short.svg"
-                      alt="Short.io logo"
+                      alt={t("shortio-logo")}
                       className="h-4 w-4"
                     />
                   }
@@ -251,7 +256,7 @@ const MoreLinkOptions = () => {
                 setOpenPopover={setOpenPopover}
               >
                 <IconMenu
-                  text="Import from CSV"
+                  text={t("import-from-csv")}
                   icon={<TableIcon className="size-4" />}
                 />
               </ImportOption>
@@ -259,7 +264,7 @@ const MoreLinkOptions = () => {
             <div className="border-t border-gray-200" />
             <div className="grid gap-px p-2">
               <p className="mb-1.5 mt-1 flex items-center gap-2 px-1 text-xs font-medium text-gray-500">
-                Export Links
+                {t("export-links")}
               </p>
               <button
                 onClick={() => {
@@ -269,7 +274,7 @@ const MoreLinkOptions = () => {
                 className="w-full rounded-md p-2 hover:bg-gray-100 active:bg-gray-200"
               >
                 <IconMenu
-                  text="Export as CSV"
+                  text={t("export-as-csv")}
                   icon={<Download className="h-4 w-4" />}
                 />
               </button>
@@ -300,13 +305,15 @@ function ImportOption({
   setOpenPopover: Dispatch<SetStateAction<boolean>>;
   onClick: () => void;
 }) {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]");
+
   const { slug, exceededLinks, nextPlan } = useWorkspace();
 
   return exceededLinks ? (
     <Tooltip
       content={
         <TooltipContent
-          title="Your workspace has exceeded its monthly links limit. We're still collecting data on your existing links, but you need to upgrade to add more links."
+          title={t("workspace-links-limit-exceeded")}
           cta={`Upgrade to ${nextPlan.name}`}
           href={`/${slug}/upgrade`}
         />

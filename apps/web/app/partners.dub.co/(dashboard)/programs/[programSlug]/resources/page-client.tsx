@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { MaxWidthWrapper } from "@dub/ui";
@@ -7,11 +8,15 @@ import { FileZip2, Palette2, Post } from "@dub/ui/icons";
 const emptyStateIcons = [Post, Palette2, FileZip2];
 
 export function ResourcesPageClient() {
+  const t = useTranslations(
+    "partners.dub.co/(dashboard)/programs/[programSlug]/resources",
+  );
+
   return (
     <MaxWidthWrapper>
       <AnimatedEmptyState
-        title="Resources"
-        description="Partner guides and materials to boost promotion and earnings"
+        title={t("resources-title")}
+        description={t("partner-guides-promotion-earnings")}
         cardContent={(idx) => {
           const Icon = emptyStateIcons[idx % emptyStateIcons.length];
           return (

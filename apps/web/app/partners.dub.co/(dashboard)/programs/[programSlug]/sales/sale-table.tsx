@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useProgramEnrollment from "@/lib/swr/use-program-enrollment";
 import { PartnerSaleResponse } from "@/lib/types";
@@ -17,6 +18,10 @@ import { currencyFormatter, fetcher, formatDate } from "@dub/utils";
 import useSWR from "swr";
 
 export function SaleTablePartner({ limit }: { limit?: number }) {
+  const t = useTranslations(
+    "partners.dub.co/(dashboard)/programs/[programSlug]/sales",
+  );
+
   const { programEnrollment } = useProgramEnrollment();
   const { queryParams, searchParamsObj, getQueryString } = useRouterStuff();
 
@@ -116,8 +121,8 @@ export function SaleTablePartner({ limit }: { limit?: number }) {
     rowCount: salesCount?.count || 0,
     emptyState: (
       <AnimatedEmptyState
-        title="No sales found"
-        description="No sales have been made for this program yet."
+        title={t("no-sales-found")}
+        description={t("no-sales-made-for-program")}
         cardContent={() => (
           <>
             <CircleDollar className="size-4 text-neutral-700" />
@@ -144,8 +149,8 @@ export function SaleTablePartner({ limit }: { limit?: number }) {
         />
       ) : (
         <AnimatedEmptyState
-          title="No sales found"
-          description="No sales have been made for this program yet."
+          title={t("duplicate-no-sales-found")}
+          description={t("duplicate-no-sales-made-for-program")}
           cardContent={() => (
             <>
               <CircleDollar className="size-4 text-neutral-700" />

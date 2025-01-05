@@ -1,10 +1,15 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@dub/ui";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export function CTAButtons() {
+  const t = useTranslations(
+    "partners.dub.co/(apply)/apply/[programSlug]/application/success",
+  );
+
   const router = useRouter();
   const { data: session, status } = useSession();
 
@@ -26,7 +31,7 @@ export function CTAButtons() {
         <Button
           type="button"
           variant="secondary"
-          text="Log in to Dub Partners"
+          text={t("log-in-to-dub-partners")}
           onClick={() => router.push("/login")}
         />
       )}

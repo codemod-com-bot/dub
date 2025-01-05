@@ -8,6 +8,7 @@ import {
   formatDate,
 } from "@dub/utils";
 import { addDays } from "date-fns";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useMemo } from "react";
 
@@ -88,6 +89,8 @@ export function ProgramCard({
 }
 
 function ProgramCardEarnings({ program }: { program: ProgramProps }) {
+  const t = useTranslations("../ui/partners");
+
   const { data: analytics } = usePartnerAnalytics({
     programId: program.id,
   });
@@ -109,7 +112,7 @@ function ProgramCardEarnings({ program }: { program: ProgramProps }) {
     <div className="mt-4 grid h-24 grid-cols-[min-content,minmax(0,1fr)] gap-4 rounded-md border border-neutral-100 bg-neutral-50 p-5">
       <div>
         <div className="whitespace-nowrap text-sm text-neutral-500">
-          Earnings
+          {t("earnings")}
         </div>
         {analytics ? (
           <div className="mt-1 text-2xl font-medium leading-none text-neutral-800">

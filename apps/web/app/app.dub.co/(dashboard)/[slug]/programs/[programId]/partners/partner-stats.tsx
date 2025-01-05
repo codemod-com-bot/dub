@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import usePartnersCount from "@/lib/swr/use-partners-count";
 import { PartnerStatusBadges } from "@/ui/partners/partner-status-badges";
@@ -13,6 +14,10 @@ interface PartnerCount {
 }
 
 export function PartnerStats() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/partners",
+  );
+
   const { slug, programId } = useParams();
   const { queryParams } = useRouterStuff();
 
@@ -34,7 +39,7 @@ export function PartnerStats() {
   return (
     <div className="xs:grid-cols-4 xs:divide-x xs:divide-y-0 grid divide-y divide-neutral-200 overflow-hidden rounded-lg border border-neutral-200">
       <ProgramStatsFilter
-        label="All"
+        label={t("all-items")}
         href={`/${slug}/programs/${programId}/partners`}
         count={all}
         icon={Users}
@@ -42,7 +47,7 @@ export function PartnerStats() {
         error={!!error}
       />
       <ProgramStatsFilter
-        label="Top partners"
+        label={t("top-partners")}
         href={
           queryParams({
             set: {
@@ -58,7 +63,7 @@ export function PartnerStats() {
         error={!!error}
       />
       <ProgramStatsFilter
-        label="Approved"
+        label={t("approved-status")}
         href={
           queryParams({
             set: { status: "approved" },
@@ -71,7 +76,7 @@ export function PartnerStats() {
         error={!!error}
       />
       <ProgramStatsFilter
-        label="Pending"
+        label={t("pending-status")}
         href={
           queryParams({
             set: { status: "pending" },

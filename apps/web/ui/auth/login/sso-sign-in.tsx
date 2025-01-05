@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Button, InfoTooltip, useMediaQuery } from "@dub/ui";
 import { Lock } from "lucide-react";
@@ -8,6 +9,8 @@ import { toast } from "sonner";
 import { LoginFormContext } from "./login-form";
 
 export const SSOSignIn = () => {
+  const t = useTranslations("../ui/auth/login");
+
   const { isMobile } = useMediaQuery();
 
   const {
@@ -47,7 +50,7 @@ export const SSOSignIn = () => {
           <div className="mb-4 mt-1 border-t border-gray-300" />
           <div className="flex items-center space-x-2">
             <h2 className="text-sm font-medium text-gray-900">
-              Workspace Slug
+              {t("workspace-slug")}
             </h2>
             <InfoTooltip
               content={`This is your workspace's unique identifier on ${process.env.NEXT_PUBLIC_APP_NAME}. E.g. app.dub.co/acme is "acme".`}
@@ -58,7 +61,7 @@ export const SSOSignIn = () => {
             name="slug"
             autoFocus={!isMobile}
             type="text"
-            placeholder="my-team"
+            placeholder={t("my-team")}
             autoComplete="off"
             required
             className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
@@ -67,7 +70,7 @@ export const SSOSignIn = () => {
       )}
 
       <Button
-        text="Continue with SAML SSO"
+        text={t("continue-with-saml-sso")}
         variant="secondary"
         icon={<Lock className="size-4" />}
         {...(!showSSOOption && {

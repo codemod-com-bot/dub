@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { sendOtpAction } from "@/lib/actions/send-otp";
 import z from "@/lib/zod";
@@ -13,6 +14,8 @@ import { useRegisterContext } from "./context";
 type SignUpProps = z.infer<typeof signUpSchema>;
 
 export const SignUpEmail = () => {
+  const t = useTranslations("../ui/auth/register");
+
   const { setStep, setEmail, setPassword } = useRegisterContext();
 
   const {
@@ -43,7 +46,7 @@ export const SignUpEmail = () => {
         <div className="flex flex-col space-y-4">
           <Input
             type="email"
-            placeholder="Work Email"
+            placeholder={t("work-email")}
             autoComplete="email"
             required
             {...register("email")}
@@ -51,7 +54,7 @@ export const SignUpEmail = () => {
           />
           <Input
             type="password"
-            placeholder="Password"
+            placeholder={t("password")}
             required
             {...register("password")}
             error={errors.password?.message}
