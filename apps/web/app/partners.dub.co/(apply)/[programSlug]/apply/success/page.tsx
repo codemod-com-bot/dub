@@ -5,6 +5,7 @@ import { BoltFill, CursorRays, LinesY, MoneyBills2 } from "@dub/ui/icons";
 import { DICEBEAR_AVATAR_URL } from "@dub/utils";
 import { subDays } from "date-fns";
 import { Store } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { CSSProperties } from "react";
 import { Header } from "../../header";
@@ -45,6 +46,10 @@ export default async function SuccessPage({
   params: { programSlug: string };
   searchParams: { applicationId?: string; enrollmentId?: string };
 }) {
+  const t = await getTranslations(
+    "partners.dub.co/(apply)/[programSlug]/apply/success",
+  );
+
   const program = await getProgram({ slug: programSlug });
 
   if (!program) {
@@ -87,29 +92,38 @@ export default async function SuccessPage({
       <div className="p-6">
         <div className="grid grid-cols-1 gap-5 sm:pt-20">
           <h1 className="text-4xl font-semibold">
-            Application {hasPartnerProfile ? "submitted" : "saved"}
+            {t("application-status-submitted-or-saved", {
+              hasPartnerProfileSubmittedSaved: hasPartnerProfile
+                ? "submitted"
+                : "saved",
+            })}
           </h1>
           <div className="flex flex-col gap-4 text-base text-neutral-700">
             {hasPartnerProfile && (
               <p>
-                Your application has been submitted for review.
+                {t("application-submitted-for-review")}
                 {application && (
                   <>
-                    {" "}
-                    You'll receive an update at{" "}
-                    <strong className="font-semibold">
-                      {application.email}
-                    </strong>
-                    .
+                    {t("update-receive-email-notification", {
+                      component0: (
+                        <strong className="font-semibold">
+                          {application.email}
+                        </strong>
+                      ),
+                    })}
                   </>
                 )}
               </p>
             )}
             {!hasPartnerProfile && (
               <p>
-                Complete your account setup on{" "}
-                <strong className="font-semibold">Dub Partners</strong> to
-                finish submitting your application.
+                {t("complete-account-setup-dub-partners", {
+                  component0: (
+                    <strong className="font-semibold">
+                      {t("complete-account-setup-dub-partners_component0")}
+                    </strong>
+                  ),
+                })}
               </p>
             )}
           </div>
@@ -127,7 +141,7 @@ export default async function SuccessPage({
               <img
                 className="size-10 shrink-0 rounded-full"
                 src={program.logo || `${DICEBEAR_AVATAR_URL}${program.name}`}
-                alt={`${program.name} logo`}
+                alt={t("program-logo", { programName: program.name })}
               />
               <BoltFill className="shrink-0 text-[var(--brand)] opacity-30" />
               <Logo className="size-10 shrink-0" />

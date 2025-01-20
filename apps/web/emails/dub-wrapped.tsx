@@ -16,6 +16,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function DubWrapped({
@@ -93,6 +94,8 @@ export default function DubWrapped({
     count: number;
   }[];
 }) {
+  const t = useTranslations("../emails");
+
   const dubStats = [
     {
       item: "126M clicks tracked",
@@ -149,29 +152,35 @@ export default function DubWrapped({
     <Html>
       <Head />
       <Preview>
-        In 2024, you created {nFormatter(stats["Total Links"], { full: true })}{" "}
-        links on Dub and got {nFormatter(stats["Total Clicks"], { full: true })}{" "}
-        clicks.
+        {t("in-2024-you-created")}
+        {nFormatter(stats["Total Links"], { full: true })}
+        {t("links-on-dub")}
+        {nFormatter(stats["Total Clicks"], { full: true })}
+        {t("total-clicks")}
       </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
-              <Img src={DUB_WORDMARK} height="32" alt="Dub" className="my-0" />
+              <Img
+                src={DUB_WORDMARK}
+                height="32"
+                alt={t("dub-name")}
+                className="my-0"
+              />
             </Section>
             <Heading className="mx-0 mb-4 mt-8 p-0 text-xl font-semibold text-black">
-              Dub Year in Review 🎊
+              {t("dub-year-in-review")}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              As we put a wrap on 2024, we wanted to say thank you for your
-              support! Here's a look back at your activity in 2024:
+              {t("thank-you-message")}
             </Text>
 
             <Section className="my-8 rounded-lg border border-solid border-gray-200 p-2">
               <div>
                 <Img
                   src="https://assets.dub.co/misc/year-in-review-header.jpg"
-                  alt="header"
+                  alt={t("header-title")}
                   className="max-w-[500px] rounded-lg"
                 />
                 <div className="-mt-[90px] mb-[30px] text-center">
@@ -195,12 +204,12 @@ export default function DubWrapped({
               </Row>
               <div className="grid gap-2 px-4">
                 <StatTable
-                  title="Top Links"
+                  title={t("top-links-title")}
                   value={topLinks}
                   workspaceSlug={workspace.slug}
                 />
                 <StatTable
-                  title="Top Countries"
+                  title={t("top-countries-title")}
                   value={topCountries}
                   workspaceSlug={workspace.slug}
                 />
@@ -208,11 +217,10 @@ export default function DubWrapped({
             </Section>
 
             <Heading className="mx-0 mb-4 mt-8 p-0 text-xl font-semibold text-black">
-              Your contribution 📈
+              {t("your-contribution-message")}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Thanks to customers like you, we had an incredible year as well,
-              seeing record activity and link clicks:
+              {t("customer-thank-you-message")}
             </Text>
             {dubStats.map((stat) => (
               <Text
@@ -227,17 +235,17 @@ export default function DubWrapped({
             ))}
             <Img
               src="https://assets.dub.co/misc/year-in-review-2024.jpg"
-              alt="Thank you"
+              alt={t("thank-you-header")}
               className="max-w-[500px] rounded-lg"
             />
 
             <Hr className="mx-0 my-6 w-full border border-gray-200" />
 
             <Heading className="mx-0 mb-4 mt-8 p-0 text-xl font-semibold text-black">
-              What we shipped 🚢
+              {t("what-we-shipped-title")}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Here's a rundown of what we shipped in 2024:
+              {t("rundown-of-shipped-items")}
             </Text>
 
             {shippedItems.map((item) => (
@@ -266,32 +274,36 @@ export default function DubWrapped({
             <Hr className="mx-0 my-6 w-full border border-gray-200" />
 
             <Text className="text-sm leading-6 text-black">
-              You can also check out more updates on our{" "}
-              <Link
-                href="https://ship.dub.co/blog"
-                className="text-black underline underline-offset-2"
-              >
-                blog
-              </Link>{" "}
-              and{" "}
-              <Link
-                href="https://ship.dub.co/changelog"
-                className="text-black underline underline-offset-2"
-              >
-                changelog
-              </Link>
-              .
+              {t("check-out-updates", {
+                component0: (
+                  <Link
+                    href="https://ship.dub.co/blog"
+                    className="text-black underline underline-offset-2"
+                  >
+                    {t("check-out-updates_component0")}
+                  </Link>
+                ),
+                component1: (
+                  <Link
+                    href="https://ship.dub.co/changelog"
+                    className="text-black underline underline-offset-2"
+                  >
+                    {t("check-out-updates_component1")}
+                  </Link>
+                ),
+              })}
+
               <br />
               <br />
-              Thank you again, and happy holidays!
+              {t("happy-holidays-message")}
             </Text>
             <Img
               src="https://assets.dub.co/misc/email-signature.png"
-              alt="Email signature"
+              alt={t("email-signature")}
               className="max-w-[200px]"
             />
             <Text className="text-sm leading-6 text-black">
-              and the Dub team 🎄
+              {t("from-dub-team")}
             </Text>
 
             <Footer email={email} marketing />

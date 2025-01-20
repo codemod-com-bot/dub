@@ -5,6 +5,7 @@ import { PartnerProgramInviteProps } from "@/lib/types";
 import { ProgramCommissionDescription } from "@/ui/partners/program-commission-description";
 import { BlurImage, Button, StatusBadge } from "@dub/ui";
 import { DICEBEAR_AVATAR_URL } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 
@@ -13,6 +14,8 @@ export function ProgramInviteCard({
 }: {
   invite: PartnerProgramInviteProps;
 }) {
+  const t = useTranslations("../ui/partners");
+
   const { partner } = usePartnerProfile();
   const { executeAsync, isExecuting } = useAction(acceptProgramInviteAction, {
     onSuccess: () => {
@@ -31,7 +34,7 @@ export function ProgramInviteCard({
         icon={null}
         className="absolute left-4 top-4 rounded-full py-0.5"
       >
-        Invited
+        {t("invitation-status-invited")}
       </StatusBadge>
       <div className="flex size-10 items-center justify-center rounded-full border border-neutral-200 bg-white">
         <BlurImage
@@ -57,7 +60,7 @@ export function ProgramInviteCard({
         </p>
       </div>
       <Button
-        text="Accept invite"
+        text={t("accept-invite-button")}
         className="h-8"
         loading={isExecuting}
         onClick={() =>

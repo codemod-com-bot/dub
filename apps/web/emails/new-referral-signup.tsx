@@ -13,6 +13,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function NewReferralSignup({
@@ -28,11 +29,13 @@ export default function NewReferralSignup({
     slug: string;
   };
 }) {
+  const t = useTranslations("../emails");
+
   const referralLink = `https://refer.dub.co/${workspace.slug}`;
   return (
     <Html>
       <Head />
-      <Preview>New referral signup</Preview>
+      <Preview>{t("new-referral-signup")}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -45,36 +48,39 @@ export default function NewReferralSignup({
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              New referral signup
+              {t("new-referral-signup-whitespace")}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Congratulations – someone just signed up for Dub using your
-              referral link:{" "}
-              <a
-                href={referralLink}
-                className="text-semibold font-medium text-black underline"
-              >
-                {getPrettyUrl(referralLink)}
-              </a>
+              {t("congratulations-referral-signup", {
+                component0: (
+                  <a
+                    href={referralLink}
+                    className="text-semibold font-medium text-black underline"
+                  >
+                    {getPrettyUrl(referralLink)}
+                  </a>
+                ),
+              })}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              As a thank you from us for spreading the word about Dub, you've
-              earned an additional {REFERRAL_CLICKS_QUOTA_BONUS} clicks quota
-              for your{" "}
-              <a
-                href={`https://app.dub.co/${workspace.slug}`}
-                className="text-semibold font-medium text-black underline"
-              >
-                {workspace.name}
-              </a>{" "}
-              workspace on Dub.
+              {t("thank-you-referral-bonus", {
+                REFERRAL_CLICKS_QUOTA_BONUS: REFERRAL_CLICKS_QUOTA_BONUS,
+                component0: (
+                  <a
+                    href={`https://app.dub.co/${workspace.slug}`}
+                    className="text-semibold font-medium text-black underline"
+                  >
+                    {workspace.name}
+                  </a>
+                ),
+              })}
             </Text>
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={`https://app.dub.co/${workspace.slug}`}
               >
-                View your referral stats
+                {t("view-referral-stats")}
               </Link>
             </Section>
             <Footer email={email} />

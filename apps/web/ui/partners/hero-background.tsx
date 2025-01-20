@@ -1,4 +1,5 @@
 import { BlurImage } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export function HeroBackground({
@@ -8,6 +9,8 @@ export function HeroBackground({
   logo?: string | null;
   color?: string | null;
 }) {
+  const t = useTranslations("../ui/partners");
+
   const heroGradient = color
     ? `conic-gradient(from 45deg at 65% 70%, ${color} 0deg, ${color} 72deg, ${color} 144deg, ${color} 197.89deg, ${color} 260.96deg, ${color} 360deg)`
     : "conic-gradient(from 45deg at 65% 70%, #855AFC 0deg, #3A8BFD 72deg, #00FFF9 144deg, #5CFF80 197.89deg, #EAB308 260.96deg, #FF0000 360deg)";
@@ -23,7 +26,7 @@ export function HeroBackground({
         />
         <Image
           src="https://assets.dub.co/misc/referrals-hero-background.svg"
-          alt="Refer and earn"
+          alt={t("refer-and-earn")}
           width={1200}
           height={630}
           className="relative"
@@ -37,7 +40,7 @@ export function HeroBackground({
         {logo && (
           <BlurImage
             src={logo}
-            alt="Program Logo"
+            alt={t("program-logo")}
             width={1200}
             height={1200}
             className="absolute right-[9.9%] top-[49.9%] size-10 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-white sm:size-20 sm:drop-shadow-lg"

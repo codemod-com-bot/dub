@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { mutatePrefix } from "@/lib/swr/mutate";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -114,6 +115,8 @@ function LinkBuilderInner({
   duplicateProps,
   homepageDemo,
 }: LinkBuilderProps) {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const params = useParams() as { slug?: string };
   const { slug } = params;
   const searchParams = useSearchParams();
@@ -300,7 +303,9 @@ function LinkBuilderInner({
                     if (error.message.includes("Upgrade to")) {
                       toast.custom(() => (
                         <UpgradeRequiredToast
-                          title={`You've discovered a ${nextPlan.name} feature!`}
+                          title={t("feature-discovered", {
+                            nextPlanName: nextPlan.name,
+                          })}
                           message={error.message}
                         />
                       ));
@@ -437,12 +442,12 @@ function LinkBuilderInner({
                         htmlFor="comments"
                         className="block text-sm font-medium text-gray-700"
                       >
-                        Comments
+                        {t("comments-header")}
                       </label>
                       <InfoTooltip
                         content={
                           <SimpleTooltipContent
-                            title="Use comments to add context to your short links – for you and your team."
+                            title={t("comments-context")}
                             cta="Learn more."
                             href="https://dub.co/help/article/link-comments"
                           />
@@ -458,7 +463,7 @@ function LinkBuilderInner({
                           name="comments"
                           minRows={3}
                           className="mt-2 block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                          placeholder="Add comments"
+                          placeholder={t("add-comments-button")}
                           value={field.value ?? ""}
                           onChange={(e) => field.onChange(e.target.value)}
                           onKeyDown={handleKeyDown}
@@ -498,7 +503,7 @@ function LinkBuilderInner({
               {homepageDemo ? (
                 <Button
                   disabledTooltip="This is a demo link. You can't edit it."
-                  text="Save changes"
+                  text={t("save-changes-button")}
                   className="h-8 w-fit"
                 />
               ) : (
@@ -530,6 +535,8 @@ export function CreateLinkButton({
 }: {
   setShowLinkBuilder: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { slug, nextPlan, exceededLinks } = useWorkspace();
 
   useKeyboardShortcut("c", () => setShowLinkBuilder(true));
@@ -564,12 +571,12 @@ export function CreateLinkButton({
 
   return (
     <Button
-      text="Create link"
+      text={t("create-link-button")}
       shortcut="C"
       disabledTooltip={
         exceededLinks ? (
           <TooltipContent
-            title="Your workspace has exceeded its monthly links limit. We're still collecting data on your existing links, but you need to upgrade to add more links."
+            title={t("links-limit-exceeded")}
             cta={`Upgrade to ${nextPlan.name}`}
             href={`/${slug}/upgrade`}
           />

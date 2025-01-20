@@ -11,6 +11,7 @@ import {
 import { cn } from "@dub/utils";
 import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
 import { ChevronRight, Lock, Play } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useContext, useMemo } from "react";
 import AnalyticsAreaChart from "./analytics-area-chart";
@@ -226,6 +227,8 @@ export default function Main() {
 }
 
 function ConversionTrackingPaywall() {
+  const t = useTranslations("../ui/analytics");
+
   const { slug } = useWorkspace();
 
   return (
@@ -238,7 +241,7 @@ function ConversionTrackingPaywall() {
         >
           <BlurImage
             src="https://assets.dub.co/blog/conversion-analytics.png"
-            alt="thumbnail"
+            alt={t("thumbnail-label")}
             fill
             className="object-cover"
           />
@@ -247,18 +250,20 @@ function ConversionTrackingPaywall() {
           </div>
         </Link>
         <h2 className="mt-7 text-base font-semibold text-neutral-700">
-          Conversion Tracking
+          {t("conversion-tracking-title")}
         </h2>
         <p className="mt-4 max-w-sm text-center text-sm text-neutral-500">
-          Want to see how your clicks are converting to revenue? Upgrade to our
-          Business Plan and start tracking conversion events with Dub.{" "}
-          <Link
-            href="https://d.to/conversions"
-            target="_blank"
-            className="underline transition-colors duration-75 hover:text-neutral-700"
-          >
-            Learn more
-          </Link>
+          {t("conversion-tracking-description", {
+            component0: (
+              <Link
+                href="https://d.to/conversions"
+                target="_blank"
+                className="underline transition-colors duration-75 hover:text-neutral-700"
+              >
+                {t("conversion-tracking-description_component0")}
+              </Link>
+            ),
+          })}
         </p>
         <Link
           href={`/${slug}/upgrade`}
@@ -267,7 +272,7 @@ function ConversionTrackingPaywall() {
             "mt-4 flex h-8 items-center justify-center whitespace-nowrap rounded-lg border px-3 text-sm",
           )}
         >
-          Upgrade to Business
+          {t("upgrade-business-plan")}
         </Link>
       </div>
     </div>

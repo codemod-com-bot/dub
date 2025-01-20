@@ -9,6 +9,7 @@ import {
   Logo,
   Modal,
 } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import {
   Dispatch,
@@ -28,6 +29,8 @@ function SendTestWebhookModal({
   setShowSendTestWebhookModal: Dispatch<SetStateAction<boolean>>;
   webhook: WebhookProps | undefined;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const workspace = useWorkspace();
   const [selectedTrigger, setSelectedTrigger] =
     useState<InputSelectItemProps | null>(null);
@@ -56,9 +59,9 @@ function SendTestWebhookModal({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 text-center sm:px-16">
         <Logo />
-        <h3 className="text-lg font-medium">Send test webhook event</h3>
+        <h3 className="text-lg font-medium">{t("send-test-webhook-event")}</h3>
         <p className="text-center text-sm text-gray-500">
-          Choose a webhook event to send to your receiver endpoint
+          {t("choose-webhook-event-to-send")}
         </p>
       </div>
       <form
@@ -87,7 +90,7 @@ function SendTestWebhookModal({
           />
           <Button
             disabled={!selectedTrigger}
-            text="Send test webhook"
+            text={t("send-test-webhook")}
             loading={isExecuting}
           />
         </div>

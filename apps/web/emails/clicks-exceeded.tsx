@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import { WorkspaceProps } from "../lib/types";
 import Footer from "./components/footer";
 
@@ -31,6 +32,8 @@ export default function ClicksExceeded({
   workspace: Partial<WorkspaceProps>;
   type: "firstUsageLimitEmail" | "secondUsageLimitEmail";
 }) {
+  const t = useTranslations("../emails");
+
   const { slug, name, usage, usageLimit, plan } = workspace;
   const nextPlan = getNextPlan(plan as string);
 
@@ -38,9 +41,13 @@ export default function ClicksExceeded({
     <Html>
       <Head />
       <Preview>
-        Your Dub.co workspace, {name || ""} has exceeded the{" "}
-        {capitalize(plan) || ""} Plan limit of {nFormatter(usageLimit)} link
-        clicks/month.
+        {t("your-dub-workspace")}
+        {name || ""}
+        {t("exceeded-plan-limit")}
+        {capitalize(plan) || ""}
+        {t("plan-limit-of")}
+        {nFormatter(usageLimit)}
+        {t("link-clicks-per-month")}
       </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
@@ -49,55 +56,67 @@ export default function ClicksExceeded({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t("dub")}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Clicks Limit Exceeded
+              {t("clicks-limit-exceeded")}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Your Dub.co workspace,{" "}
-              <Link
-                href={`https://app.dub.co/${slug}`}
-                className="text-black underline"
-              >
-                <strong>{name}</strong>
-              </Link>{" "}
-              has exceeded the
-              <strong> {capitalize(plan)} Plan </strong>
-              limit of{" "}
-              <strong>{nFormatter(usageLimit)} link clicks/month</strong>. You
-              have used{" "}
-              <strong>{nFormatter(usage, { digits: 2 })} link clicks</strong>{" "}
-              across all your links in your current billing cycle.
+              {t("workspace-exceeded-plan-limit", {
+                component0: (
+                  <Link
+                    href={`https://app.dub.co/${slug}`}
+                    className="text-black underline"
+                  >
+                    <strong>{name}</strong>
+                  </Link>
+                ),
+                component1: (
+                  <strong>
+                    {t("workspace-exceeded-plan-limit_component1")}
+                    {capitalize(plan)}
+                    {t("workspace-exceeded-plan-limit_component1")}
+                  </strong>
+                ),
+                component2: (
+                  <strong>
+                    {nFormatter(usageLimit)}
+                    {t("workspace-exceeded-plan-limit_component2")}
+                  </strong>
+                ),
+                component3: (
+                  <strong>
+                    {nFormatter(usage, { digits: 2 })}
+                    {t("workspace-exceeded-plan-limit_component3")}
+                  </strong>
+                ),
+              })}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              All your existing links will continue to work, and we are still
-              collecting data on them, but you'll need to upgrade to the{" "}
-              <Link
-                href={nextPlan.link}
-                className="font-medium text-blue-600 no-underline"
-              >
-                {nextPlan.name} plan
-              </Link>{" "}
-              to view their stats.
+              {t("upgrade-plan-to-view-stats", {
+                component0: (
+                  <Link
+                    href={nextPlan.link}
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {nextPlan.name}
+                    {t("upgrade-plan-to-view-stats_component0")}
+                  </Link>
+                ),
+              })}
             </Text>
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={`https://app.dub.co/${slug}/upgrade`}
               >
-                Upgrade my plan
+                {t("upgrade-my-plan")}
               </Link>
             </Section>
             <Text className="text-sm leading-6 text-black">
-              To respect your inbox,{" "}
-              {type === "firstUsageLimitEmail"
-                ? "we will only send you one more email about this in 3 days"
-                : "this will be the last time we'll email you about this for the current billing cycle"}
-              . Feel free to ignore this email if you don't plan on upgrading,
-              or reply to let us know if you have any questions!
+              {t("email-notification-about-upgrade")}
             </Text>
             <Footer email={email} />
           </Container>

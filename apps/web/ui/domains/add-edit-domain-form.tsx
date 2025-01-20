@@ -26,6 +26,7 @@ import {
   QrCode,
   TextCursorInput,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import posthog from "posthog-js";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -87,6 +88,8 @@ export function AddEditDomainForm({
   showAdvancedOptions?: boolean;
   className?: string;
 }) {
+  const t = useTranslations("../ui/domains");
+
   const { id: workspaceId, plan } = useWorkspace();
   const [lockDomain, setLockDomain] = useState(true);
   const [domainStatus, setDomainStatus] = useState<DomainStatus>(
@@ -180,7 +183,7 @@ export function AddEditDomainForm({
         if (error.message.includes("Upgrade to Pro")) {
           toast.custom(() => (
             <UpgradeRequiredToast
-              title="You've discovered a Pro feature!"
+              title={t("pro-feature-discovered")}
               message={error.message}
             />
           ));
@@ -204,12 +207,12 @@ export function AddEditDomainForm({
         <div className="flex items-center justify-between">
           <label htmlFor="domain" className="flex items-center gap-x-2">
             <h2 className="text-sm font-medium text-neutral-700">
-              Your domain
+              {t("your-domain")}
             </h2>
             <InfoTooltip
               content={
                 <SimpleTooltipContent
-                  title="Not sure which domain to use?"
+                  title={t("domain-usage-question")}
                   cta="Check out our guide"
                   href="https://dub.co/help/article/choosing-a-custom-domain"
                 />
@@ -227,7 +230,7 @@ export function AddEditDomainForm({
               }}
             >
               <Lock className="h-3 w-3" />
-              <p>Unlock</p>
+              <p>{t("unlock")}</p>
             </button>
           )}
         </div>
@@ -314,7 +317,7 @@ export function AddEditDomainForm({
                             {proFeature && plan === "free" && (
                               <Badge className="flex items-center space-x-1 bg-white">
                                 <Crown size={12} />
-                                <p className="uppercase">Pro</p>
+                                <p className="uppercase">{t("pro")}</p>
                               </Badge>
                             )}
                           </div>
@@ -381,7 +384,7 @@ export function AddEditDomainForm({
                           <input
                             {...register(id)}
                             className="block w-full rounded-md border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
-                            placeholder="https://yourwebsite.com"
+                            placeholder={t("website-url")}
                           />
                         )}
                       </div>

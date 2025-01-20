@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { updateNotificationPreference } from "@/lib/actions/update-notification-preference";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -32,6 +33,10 @@ const notifications: {
 ];
 
 export default function NotificationsSettingsPageClient() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/notifications",
+  );
+
   const { id: workspaceId } = useWorkspace();
   const { executeAsync } = useAction(updateNotificationPreference);
 
@@ -73,12 +78,10 @@ export default function NotificationsSettingsPageClient() {
     <div>
       <div className="max-w-screen-sm pb-8">
         <h2 className="text-xl font-semibold tracking-tight text-black">
-          Workspace Notifications
+          {t("workspace-notifications-title")}
         </h2>
         <p className="mt-3 text-sm text-gray-500">
-          Adjust your personal notification preferences and choose which updates
-          you want to receive. These settings will only be applied to your
-          personal account.
+          {t("personal-notification-preferences-description")}
         </p>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-3">

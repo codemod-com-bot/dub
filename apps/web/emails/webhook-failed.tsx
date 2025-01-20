@@ -13,6 +13,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function WebhookFailed({
@@ -38,10 +39,12 @@ export default function WebhookFailed({
     consecutiveFailures: number;
   };
 }) {
+  const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>Webhook is failing to deliver</Preview>
+      <Preview>{t("webhook-failing-deliver")}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -54,23 +57,27 @@ export default function WebhookFailed({
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Webhook is failing to deliver
+              {t("webhook-failing-deliver-whitespace")}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Your webhook <strong>{webhook.url}</strong> has failed to deliver{" "}
-              {webhook.consecutiveFailures} times and will be disabled after{" "}
-              {WEBHOOK_FAILURE_DISABLE_THRESHOLD} consecutive failures.
+              {t("webhook-url-failed-deliver", {
+                component0: <strong>{webhook.url}</strong>,
+              })}
+              {webhook.consecutiveFailures}
+              {t("webhook-failure-disable-threshold", {
+                WEBHOOK_FAILURE_DISABLE_THRESHOLD:
+                  WEBHOOK_FAILURE_DISABLE_THRESHOLD,
+              })}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              Please review the webhook details and update the URL if necessary
-              to restore functionality.
+              {t("review-webhook-details")}
             </Text>
             <Section className="mb-8 mt-4 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={`https://app.dub.co/${workspace.slug}/settings/webhooks/${webhook.id}/edit`}
               >
-                Edit Webhook
+                {t("edit-webhook")}
               </Link>
             </Section>
             <Footer email={email} />

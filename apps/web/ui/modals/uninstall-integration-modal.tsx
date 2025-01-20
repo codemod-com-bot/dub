@@ -8,6 +8,7 @@ import {
   TokenAvatar,
   useMediaQuery,
 } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   Dispatch,
@@ -27,6 +28,8 @@ function UninstallIntegrationModal({
   setShowUninstallIntegrationModal: Dispatch<SetStateAction<boolean>>;
   integration: InstalledIntegrationInfoProps;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const router = useRouter();
   const [removing, setRemoving] = useState(false);
   const { id: workspaceId, logo } = useWorkspace();
@@ -42,7 +45,7 @@ function UninstallIntegrationModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Workspace logo"
+            alt={t("workspace-logo")}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -50,10 +53,9 @@ function UninstallIntegrationModal({
         ) : (
           <Logo />
         )}
-        <h3 className="text-lg font-medium">Uninstall Integration</h3>
+        <h3 className="text-lg font-medium">{t("uninstall-integration")}</h3>
         <p className="text-center text-sm text-gray-500">
-          This will remove the integration from your workspace. Are you sure you
-          want to continue?
+          {t("uninstall-integration-confirmation")}
         </p>
       </div>
 
@@ -62,7 +64,7 @@ function UninstallIntegrationModal({
           {integration.logo ? (
             <BlurImage
               src={integration.logo}
-              alt={`Logo for ${integration.name}`}
+              alt={t("integration-logo", { integrationName: integration.name })}
               className="size-8 rounded-full border border-gray-200"
               width={20}
               height={20}
@@ -76,7 +78,7 @@ function UninstallIntegrationModal({
           </div>
         </div>
         <Button
-          text="Confirm"
+          text={t("confirm-button")}
           variant="danger"
           autoFocus={!isMobile}
           loading={removing}

@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function WorkspaceInvite({
@@ -29,11 +30,16 @@ export default function WorkspaceInvite({
   workspaceUser: string | null;
   workspaceUserEmail: string | null;
 }) {
+  const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
       <Preview>
-        Join {workspaceName} on {appName}
+        {t("join-workspace-on-app", {
+          workspaceName: workspaceName,
+          appName: appName,
+        })}
       </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
@@ -47,24 +53,33 @@ export default function WorkspaceInvite({
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Join {workspaceName} on {appName}
+              {t("join-workspace-on-app-duplicate", {
+                workspaceName: workspaceName,
+                appName: appName,
+              })}
             </Heading>
             {workspaceUser && workspaceUserEmail ? (
               <Text className="text-sm leading-6 text-black">
-                <strong>{workspaceUser}</strong> (
-                <Link
-                  className="text-blue-600 no-underline"
-                  href={`mailto:${workspaceUserEmail}`}
-                >
-                  {workspaceUserEmail}
-                </Link>
-                ) has invited you to join the <strong>{workspaceName}</strong>{" "}
-                workspace on {appName}!
+                {t("invitation-to-join-workspace", {
+                  component0: <strong>{workspaceUser}</strong>,
+                  component1: (
+                    <Link
+                      className="text-blue-600 no-underline"
+                      href={`mailto:${workspaceUserEmail}`}
+                    >
+                      {workspaceUserEmail}
+                    </Link>
+                  ),
+                  component2: <strong>{workspaceName}</strong>,
+                  appName: appName,
+                })}
               </Text>
             ) : (
               <Text className="text-sm leading-6 text-black">
-                You have been invited to join the{" "}
-                <strong>{workspaceName}</strong> workspace on {appName}!
+                {t("invitation-to-join-workspace-notification", {
+                  component0: <strong>{workspaceName}</strong>,
+                  appName: appName,
+                })}
               </Text>
             )}
             <Section className="mb-8 text-center">
@@ -72,11 +87,11 @@ export default function WorkspaceInvite({
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={url}
               >
-                Join Workspace
+                {t("join-workspace-button")}
               </Link>
             </Section>
             <Text className="text-sm leading-6 text-black">
-              or copy and paste this URL into your browser:
+              {t("copy-url-instructions")}
             </Text>
             <Text className="max-w-sm flex-wrap break-words font-medium text-purple-600 no-underline">
               {url.replace(/^https?:\/\//, "")}

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { BlurImage, Popup, PopupContext } from "@dub/ui";
 import { motion } from "framer-motion";
@@ -22,6 +23,8 @@ export default function ChangelogPopup() {
 }
 
 export function ChangelogPopupInner() {
+  const t = useTranslations("../ui/layout");
+
   const { hidePopup } = useContext(PopupContext);
 
   return (
@@ -49,7 +52,7 @@ export function ChangelogPopupInner() {
         <div className="border-b border-gray-200">
           <BlurImage
             src={CHANGELOG_IMAGE_URL}
-            alt="Root Domain Links"
+            alt={t("root-domain-links")}
             className="aspect-[1200/630] object-cover"
             width={1200}
             height={630}

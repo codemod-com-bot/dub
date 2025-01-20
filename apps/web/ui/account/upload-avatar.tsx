@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Button, FileUpload, getUserAvatarUrl } from "@dub/ui";
 import { useSession } from "next-auth/react";
@@ -6,6 +7,8 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function UploadAvatar() {
+  const t = useTranslations("../ui/account");
+
   const { data: session, update } = useSession();
 
   const [image, setImage] = useState<string | null>();
@@ -41,9 +44,11 @@ export default function UploadAvatar() {
       className="rounded-lg border border-gray-200 bg-white"
     >
       <div className="flex flex-col space-y-3 p-5 sm:p-10">
-        <h2 className="text-xl font-medium">Your Avatar</h2>
+        <h2 className="text-xl font-medium">{t("your-avatar")}</h2>
         <p className="text-sm text-gray-500">
-          This is your avatar image on {process.env.NEXT_PUBLIC_APP_NAME}.
+          {t("avatar-image-description", {
+            processEnvNextPublicAppName: process.env.NEXT_PUBLIC_APP_NAME,
+          })}
         </p>
         <div className="mt-1">
           <FileUpload
@@ -63,12 +68,11 @@ export default function UploadAvatar() {
 
       <div className="flex items-center justify-between space-x-4 rounded-b-lg border-t border-gray-200 bg-gray-50 p-3 sm:px-10">
         <p className="text-sm text-gray-500">
-          Square image recommended. Accepted file types: .png, .jpg. Max file
-          size: 2MB.
+          {t("image-upload-recommendations")}
         </p>
         <div className="shrink-0">
           <Button
-            text="Save changes"
+            text={t("save-changes-button")}
             loading={uploading}
             disabled={!image || session?.user?.image === image}
           />

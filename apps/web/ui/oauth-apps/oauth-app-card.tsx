@@ -2,9 +2,12 @@ import useWorkspace from "@/lib/swr/use-workspace";
 import { OAuthAppProps } from "@/lib/types";
 import { BlurImage, TokenAvatar } from "@dub/ui";
 import { formatDate } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function OAuthAppCard(oAuthApp: OAuthAppProps) {
+  const t = useTranslations("../ui/oauth-apps");
+
   const { slug } = useWorkspace();
 
   return (
@@ -17,7 +20,7 @@ export default function OAuthAppCard(oAuthApp: OAuthAppProps) {
           {oAuthApp.logo ? (
             <BlurImage
               src={oAuthApp.logo}
-              alt={`Logo for ${oAuthApp.name}`}
+              alt={t("logo-for-oauth-app", { oAuthAppName: oAuthApp.name })}
               className="size-6 rounded-full"
               width={20}
               height={20}
@@ -29,10 +32,13 @@ export default function OAuthAppCard(oAuthApp: OAuthAppProps) {
         <div>
           <p className="font-semibold text-gray-700">{oAuthApp.name}</p>
           <div className="flex items-center gap-1 text-sm text-gray-500">
-            Last updated
-            <span className="font-medium text-gray-700">
-              {formatDate(oAuthApp.updatedAt, { year: undefined })}
-            </span>
+            {t("last-updated-date", {
+              component0: (
+                <span className="font-medium text-gray-700">
+                  {formatDate(oAuthApp.updatedAt, { year: undefined })}
+                </span>
+              ),
+            })}
           </div>
         </div>
       </div>

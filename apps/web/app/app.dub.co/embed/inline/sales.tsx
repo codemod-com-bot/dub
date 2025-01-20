@@ -8,10 +8,13 @@ import {
   formatDateTime,
   TAB_ITEM_ANIMATION_SETTINGS,
 } from "@dub/utils";
+import { useTranslations } from "next-intl";
 
 import { motion } from "framer-motion";
 import useSWR from "swr";
 export function EmbedSales({ salesCount }: { salesCount: number }) {
+  const t = useTranslations("app.dub.co/embed/inline");
+
   const { pagination, setPagination } = usePagination(SALES_PAGE_SIZE);
   const { data: sales, isLoading } = useSWR<PartnerSaleResponse[]>(
     `/api/embed/sales?page=${pagination.pageIndex}`,
@@ -70,8 +73,7 @@ export function EmbedSales({ salesCount }: { salesCount: number }) {
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <Gift className="size-6 text-neutral-400" />
         <p className="max-w-sm text-balance text-center text-xs text-neutral-400">
-          No sales yet. When you refer a friend and they make a purchase,
-          they'll show up here.
+          {t("no-sales-yet-referral-message")}
         </p>
       </div>
     ),

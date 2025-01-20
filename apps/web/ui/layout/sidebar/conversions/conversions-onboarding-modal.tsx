@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { X } from "@/ui/shared/icons";
 import { ConversionTrackingToggleSwitch } from "@/ui/workspaces/conversion-tracking-toggle";
@@ -224,6 +225,8 @@ function ModalPage({
 }
 
 function PaymentProcessorSelection() {
+  const t = useTranslations("../ui/layout/sidebar/conversions");
+
   const { setPaymentProcessorIndex, setAuthProviderIndex } = useContext(
     ConversionOnboardingModalContext,
   );
@@ -234,10 +237,10 @@ function PaymentProcessorSelection() {
         <CircleDollar className="size-8 [&_*]:stroke-1 [&_circle]:hidden" />
       </div>
       <h3 className="mt-6 text-lg font-semibold text-neutral-800">
-        Set up conversion tracking
+        {t("setup-conversion-tracking")}
       </h3>
       <p className="mt-2 text-base text-neutral-500">
-        Select your payment processor to view our setup guides.
+        {t("select-payment-processor-setup-guides")}
       </p>
       <div
         className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
@@ -273,6 +276,8 @@ function PaymentProcessorSelection() {
 }
 
 function AuthProviderSelection() {
+  const t = useTranslations("../ui/layout/sidebar/conversions");
+
   const authProviders = AUTH_PROVIDERS.filter(({ hidden }) => !hidden);
 
   const {
@@ -293,7 +298,7 @@ function AuthProviderSelection() {
       </h3>
 
       <p className="mt-5 text-sm leading-none text-neutral-500">
-        Select your auth provider
+        {t("select-auth-provider")}
       </p>
       <div
         className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-[repeat(var(--cols),minmax(0,1fr))] sm:gap-2"
@@ -323,7 +328,7 @@ function AuthProviderSelection() {
           className="text-sm leading-none text-neutral-500 underline transition-colors duration-75 hover:text-neutral-700"
           onClick={() => setPaymentProcessorIndex(null)}
         >
-          Back to payment processors
+          {t("back-to-payment-processors")}
         </button>
       </div>
     </div>
@@ -331,6 +336,8 @@ function AuthProviderSelection() {
 }
 
 function Docs() {
+  const t = useTranslations("../ui/layout/sidebar/conversions");
+
   const id = useId();
 
   const {
@@ -402,7 +409,7 @@ function Docs() {
               {thumbnail ? (
                 <BlurImage
                   src={thumbnail}
-                  alt={`${label} thumbnail`}
+                  alt={t("thumbnail-label", { label: label })}
                   className="aspect-[1200/630] w-full max-w-[240px] rounded-lg bg-neutral-800 object-cover"
                   width={1200}
                   height={630}
@@ -427,11 +434,10 @@ function Docs() {
             htmlFor={`${id}-switch`}
             className="block select-none text-pretty text-sm font-semibold text-neutral-900"
           >
-            Enable conversion tracking for future links
+            {t("enable-conversion-tracking-future-links")}
           </label>
           <p className="mt-1 text-xs text-neutral-500">
-            This only affects links made with the link builder. You can update
-            this behavior later in your workspace settings.
+            {t("link-builder-behavior-update-notice")}
           </p>
         </div>
         <ConversionTrackingToggleSwitch id={`${id}-switch`} />
@@ -446,10 +452,7 @@ function Docs() {
               setPaymentProcessorIndex(null);
           }}
         >
-          Back to{" "}
-          {paymentProcessor.name === "Shopify"
-            ? "payment processors"
-            : "auth providers"}
+          {t("back-to-payment-or-auth-providers")}
         </button>
       </div>
     </div>

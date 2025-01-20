@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import {
   ANALYTICS_SALE_UNIT,
@@ -94,6 +95,8 @@ export default function AnalyticsProvider({
   demoPage?: boolean;
   dashboardProps?: AnalyticsDashboardProps;
 }>) {
+  const t = useTranslations("../ui/analytics");
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { id: workspaceId, slug, domains } = useWorkspace();
@@ -296,7 +299,7 @@ export default function AnalyticsProvider({
           ) {
             toast.custom(() => (
               <UpgradeRequiredToast
-                title="Upgrade for more analytics"
+                title={t("upgrade-more-analytics")}
                 message={errorMessage}
               />
             ));

@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import { WorkspaceProps } from "../lib/types";
 import Footer from "./components/footer";
 
@@ -29,6 +30,8 @@ export default function LinksLimitAlert({
   email: string;
   workspace: Partial<WorkspaceProps>;
 }) {
+  const t = useTranslations("../emails");
+
   const { slug, name, linksUsage, linksLimit, plan } = workspace as {
     slug: string;
     name: string;
@@ -43,8 +46,10 @@ export default function LinksLimitAlert({
     <Html>
       <Head />
       <Preview>
-        Your Dub workspace, {name} has used {percentage.toString()}% of its
-        links limit for the month.
+        {t("workspace-usage-alert", {
+          name: name,
+          percentageToString: percentage.toString(),
+        })}
       </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
@@ -53,59 +58,77 @@ export default function LinksLimitAlert({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t("dub-name")}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Dub.co Links Limit Alert
+              {t("links-limit-alert-title")}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Your Dub.co workspace,{" "}
-              <Link
-                href={`https://app.dub.co/${slug}`}
-                className="text-black underline"
-              >
-                <strong>{name}</strong>
-              </Link>{" "}
-              has used <strong>{percentage.toString()}%</strong> of the monthly
-              links limit included in the {capitalize(plan)} plan. You have
-              created a total of{" "}
-              <strong>{nFormatter(linksUsage, { full: true })} links</strong>{" "}
-              (out of a maximum of {nFormatter(linksLimit, { full: true })}{" "}
-              links) in your current billing cycle.
+              {t("workspace-links-usage-notification", {
+                component0: (
+                  <Link
+                    href={`https://app.dub.co/${slug}`}
+                    className="text-black underline"
+                  >
+                    <strong>{name}</strong>
+                  </Link>
+                ),
+                component1: (
+                  <strong>
+                    {t("workspace-links-usage-notification_component1", {
+                      percentageToString: percentage.toString(),
+                    })}
+                  </strong>
+                ),
+              })}
+              {capitalize(plan)}
+              {t("total-links-created", {
+                component0: (
+                  <strong>
+                    {nFormatter(linksUsage, { full: true })}
+                    {t("total-links-created_component0")}
+                  </strong>
+                ),
+              })}
+              {nFormatter(linksLimit, { full: true })}
+              {t("links-remaining-notification")}
             </Text>
 
             {plan === "business-max" || plan === "enterprise" ? (
               <Text className="text-sm leading-6 text-black">
-                Since you're on the {capitalize(plan)} plan, you will still be
-                able to create links even after you hit your limit. We're
-                planning to introduce on-demand billing for overages in the
-                future, but for now, you can continue to create links without
-                any interruption.
+                {t("current-plan-notification")}
+                {capitalize(plan)}
+                {t("links-creation-ability-notification")}
               </Text>
             ) : percentage === 100 ? (
               <Text className="text-sm leading-6 text-black">
-                All your existing links will continue to work, and we are still
-                collecting data on them, but you'll need to upgrade the{" "}
-                <Link
-                  href={nextPlan.link}
-                  className="font-medium text-blue-600 no-underline"
-                >
-                  {nextPlan.name} plan
-                </Link>{" "}
-                add more links.
+                {t("upgrade-plan-notification", {
+                  component0: (
+                    <Link
+                      href={nextPlan.link}
+                      className="font-medium text-blue-600 no-underline"
+                    >
+                      {nextPlan.name}
+                      {t("upgrade-plan-notification_component0")}
+                    </Link>
+                  ),
+                })}
               </Text>
             ) : (
               <Text className="text-sm leading-6 text-black">
-                Once you hit your limit, you'll need to upgrade to the{" "}
-                <Link
-                  href={nextPlan.link}
-                  className="font-medium text-blue-600 no-underline"
-                >
-                  {nextPlan.name} plan
-                </Link>{" "}
-                to add more links.
+                {t("limit-reached-upgrade-notification", {
+                  component0: (
+                    <Link
+                      href={nextPlan.link}
+                      className="font-medium text-blue-600 no-underline"
+                    >
+                      {nextPlan.name}
+                      {t("limit-reached-upgrade-notification_component0")}
+                    </Link>
+                  ),
+                })}
               </Text>
             )}
             <Section className="mb-8 text-center">
@@ -113,7 +136,7 @@ export default function LinksLimitAlert({
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={`https://app.dub.co/${slug}/upgrade`}
               >
-                Upgrade my plan
+                {t("upgrade-my-plan-button")}
               </Link>
             </Section>
             <Footer email={email} />

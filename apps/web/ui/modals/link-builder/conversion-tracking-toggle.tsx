@@ -7,6 +7,7 @@ import {
   TooltipContent,
   useKeyboardShortcut,
 } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
 import { LinkFormData } from ".";
 
@@ -15,6 +16,8 @@ const isNew =
   new Date().getTime() - new Date("2025-01-13").getTime() < 30 * 86_400_000;
 
 export function ConversionTrackingToggle() {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { slug, plan } = useWorkspace();
   const { watch, setValue } = useFormContext<LinkFormData>();
 
@@ -33,15 +36,15 @@ export function ConversionTrackingToggle() {
       <div className="flex items-center gap-2">
         {isNew && (
           <div className="rounded-full border border-green-200 bg-green-100 px-2 py-0.5 text-[0.625rem] uppercase leading-none text-green-900">
-            New
+            {t("new-button")}
           </div>
         )}
         <span className="flex select-none items-center gap-1 text-sm font-medium text-gray-700">
-          Conversion Tracking
+          {t("conversion-tracking-title")}
           <InfoTooltip
             content={
               <SimpleTooltipContent
-                title="View analytics on conversions from your short links."
+                title={t("view-analytics-conversions")}
                 cta="Learn more."
                 href="https://dub.co/docs/conversions/quickstart"
               />
@@ -59,7 +62,7 @@ export function ConversionTrackingToggle() {
         disabledTooltip={
           conversionsEnabled ? undefined : (
             <TooltipContent
-              title="Conversion tracking is only available on Business plans and above."
+              title={t("conversion-tracking-business-plans")}
               cta="Upgrade to Business"
               href={
                 slug ? `/${slug}/upgrade?exit=close` : "https://dub.co/pricing"

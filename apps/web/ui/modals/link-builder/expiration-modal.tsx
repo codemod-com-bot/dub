@@ -15,6 +15,7 @@ import {
   getDateTimeLocal,
   parseDateTime,
 } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -35,6 +36,8 @@ function ExpirationModal({
   showExpirationModal: boolean;
   setShowExpirationModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { isMobile } = useMediaQuery();
   const id = useId();
 
@@ -95,11 +98,11 @@ function ExpirationModal({
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-medium">Link Expiration</h3>
+            <h3 className="text-lg font-medium">{t("link-expiration")}</h3>
             <ProBadgeTooltip
               content={
                 <SimpleTooltipContent
-                  title="Set an expiration date for your links – after which it won't be accessible."
+                  title={t("set-expiration-date-description")}
                   cta="Learn more."
                   href="https://dub.co/help/article/link-expiration"
                 />
@@ -110,14 +113,19 @@ function ExpirationModal({
             <Tooltip
               content={
                 <div className="px-2 py-1 text-xs text-gray-700">
-                  Press <strong className="font-medium text-gray-950">E</strong>{" "}
-                  to open this quickly
+                  {t("shortcut-key-e-description", {
+                    component0: (
+                      <strong className="font-medium text-gray-950">
+                        {t("shortcut-key-e-description_component0")}
+                      </strong>
+                    ),
+                  })}
                 </div>
               }
               side="right"
             >
               <kbd className="flex size-6 cursor-default items-center justify-center rounded-md border border-gray-200 font-sans text-xs text-gray-950">
-                E
+                {t("shortcut-key-e")}
               </kbd>
             </Tooltip>
           </div>
@@ -130,7 +138,7 @@ function ExpirationModal({
               htmlFor={`${id}-expiresAt`}
               className="block text-sm font-medium text-gray-700"
             >
-              Date and Time
+              {t("date-and-time-label")}
             </label>
           </div>
           <div className="mt-2 flex w-full items-center justify-between rounded-md border border-gray-300 bg-white shadow-sm transition-all focus-within:border-gray-800 focus-within:outline-none focus-within:ring-1 focus-within:ring-gray-500">
@@ -138,7 +146,7 @@ function ExpirationModal({
               ref={inputRef}
               id={`${id}-expiresAt`}
               type="text"
-              placeholder='E.g. "tomorrow at 5pm" or "in 2 hours"'
+              placeholder={t("example-expiration-input")}
               defaultValue={expiresAt ? formatDateTime(expiresAt) : ""}
               onBlur={(e) => {
                 if (e.target.value.length > 0) {
@@ -189,12 +197,12 @@ function ExpirationModal({
               htmlFor={`${id}-expiredUrl`}
               className="block text-sm font-medium text-gray-700"
             >
-              Expiration URL
+              {t("expiration-url-label")}
             </label>
             <InfoTooltip
               content={
                 <SimpleTooltipContent
-                  title="Redirect users to a specific URL when the link has expired."
+                  title={t("expiration-url-redirect-description")}
                   cta="Learn more."
                   href="https://dub.co/help/article/link-expiration#setting-a-custom-expiration-url"
                 />
@@ -206,7 +214,7 @@ function ExpirationModal({
               id={`${id}-expiredUrl`}
               type="text"
               autoFocus={!isMobile}
-              placeholder="https://example.com"
+              placeholder={t("example-expiration-url")}
               className={`${
                 errors.expiredUrl
                   ? "border-red-300 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
@@ -222,7 +230,7 @@ function ExpirationModal({
           target="_blank"
           className="group mt-2 flex items-center text-xs text-gray-500 hover:text-gray-700"
         >
-          Set a default expiration URL for your domain
+          {t("default-expiration-url-description")}
         </a>
 
         <div className="mt-6 flex items-center justify-between">
@@ -237,7 +245,7 @@ function ExpirationModal({
                   setShowExpirationModal(false);
                 }}
               >
-                Remove expiration
+                {t("remove-expiration-button")}
               </button>
             )}
           </div>
@@ -245,7 +253,7 @@ function ExpirationModal({
             <Button
               type="button"
               variant="secondary"
-              text="Cancel"
+              text={t("cancel-button")}
               className="h-9 w-fit"
               onClick={() => {
                 reset();

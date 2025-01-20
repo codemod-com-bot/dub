@@ -22,6 +22,7 @@ import {
   Twitter,
 } from "@dub/ui/icons";
 import { cn, getDomainWithoutWWW, resizeImage } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   ChangeEvent,
   ComponentType,
@@ -71,6 +72,8 @@ const tabComponents: Record<Tab, ComponentType<OGPreviewProps>> = {
 };
 
 export function LinkPreview() {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { slug, plan } = useWorkspace();
   const { watch, setValue } = useFormContext<LinkFormData>();
   const { proxy, title, description, image, url, password } = watch();
@@ -101,12 +104,12 @@ export function LinkPreview() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <h2 className="text-sm font-medium text-gray-700">
-            Custom Link Preview
+            {t("custom-link-preview-title")}
           </h2>
           <InfoTooltip
             content={
               <SimpleTooltipContent
-                title="Customize how your links look when shared on social media to improve click-through rates. When enabled, the preview settings below will be shown publicly (instead of the URL's original metatags)."
+                title={t("customize-link-appearance-description")}
                 cta="Learn more."
                 href="https://dub.co/help/article/custom-link-previews"
               />
@@ -122,7 +125,7 @@ export function LinkPreview() {
               "Enter a URL to enable custom link previews."
             ) : !plan || plan === "free" ? (
               <TooltipContent
-                title="Custom Link Previews are only available on the Pro plan and above."
+                title={t("custom-link-previews-pro-plan-warning")}
                 cta="Upgrade to Pro"
                 href={
                   slug
@@ -190,6 +193,8 @@ export const ImagePreview = ({
   image: string | null;
   onImageChange: (image: string) => void;
 }) => {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { isMobile } = useMediaQuery();
 
   const { generatingMetatags } = useContext(LinkModalContext);
@@ -275,7 +280,7 @@ export const ImagePreview = ({
           <div className="pointer-events-none relative flex size-full flex-col items-center justify-center gap-2">
             <NucleoPhoto className="size-5 text-gray-700" />
             <p className="max-w-32 text-center text-xs text-gray-700">
-              Enter a link to generate a preview
+              {t("enter-link-to-generate-preview")}
             </p>
           </div>
         </div>
@@ -418,6 +423,8 @@ function LinkedInOGPreview({ title, hostname, children }: OGPreviewProps) {
 }
 
 function XOGPreview({ title, hostname, children }: OGPreviewProps) {
+  const t = useTranslations("../ui/modals/link-builder");
+
   return (
     <div>
       <div className="group relative overflow-hidden rounded-2xl border border-gray-300">
@@ -431,7 +438,9 @@ function XOGPreview({ title, hostname, children }: OGPreviewProps) {
         </div>
       </div>
       {hostname && (
-        <p className="mt-1 text-xs text-[#606770]">From {hostname}</p>
+        <p className="mt-1 text-xs text-[#606770]">
+          {t("from-hostname", { hostname: hostname })}
+        </p>
       )}
     </div>
   );

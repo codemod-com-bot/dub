@@ -2,31 +2,36 @@ import useProgramMetrics from "@/lib/swr/use-program-metrics";
 import { Icon } from "@dub/ui";
 import { Check2, CurrencyDollar, MoneyBills2, Users } from "@dub/ui/icons";
 import NumberFlow from "@number-flow/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export function ProgramMetrics() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]",
+  );
+
   const { metrics, error } = useProgramMetrics();
 
   return (
     <div className="grid grid-cols-1 divide-neutral-200 rounded-lg border border-neutral-200 max-md:divide-y md:grid-cols-4 md:divide-x">
       <Stat
         icon={Users}
-        label="Partners"
+        label={t("partners-label")}
         tab="partners"
         value={metrics?.partnersCount}
         error={error}
       />
       <Stat
         icon={Check2}
-        label="Sales"
+        label={t("sales-label")}
         tab="sales"
         value={metrics?.salesCount}
         error={error}
       />
       <Stat
         icon={CurrencyDollar}
-        label="Revenue"
+        label={t("revenue-label")}
         value={metrics?.revenue}
         tab="sales"
         error={error}
@@ -34,7 +39,7 @@ export function ProgramMetrics() {
       />
       <Stat
         icon={MoneyBills2}
-        label="Payouts"
+        label={t("payouts-label")}
         tab="payouts"
         value={metrics?.payouts}
         error={error}

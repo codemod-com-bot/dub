@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { X } from "@/ui/shared/icons";
 import { BlurImage, Button } from "@dub/ui";
@@ -24,6 +25,8 @@ export function ConversionOnboardingPopup({
   onCTA: () => void;
   onDismiss: () => void;
 }) {
+  const t = useTranslations("../ui/layout/sidebar/conversions");
+
   const arrowRef = useRef<SVGSVGElement>(null);
 
   const { refs, floatingStyles, context } = useFloating({
@@ -69,7 +72,7 @@ export function ConversionOnboardingPopup({
             >
               <BlurImage
                 src="https://assets.dub.co/blog/conversion-analytics.png"
-                alt="thumbnail"
+                alt={t("thumbnail-key")}
                 fill
                 className="object-cover"
               />
@@ -86,25 +89,24 @@ export function ConversionOnboardingPopup({
             </button>
           </div>
           <h2 className="mt-4 text-sm font-semibold text-neutral-700">
-            Conversion analytics unlocked
+            {t("conversion-analytics-unlocked")}
           </h2>
           <p className="mt-1.5 text-xs text-neutral-500">
-            Follow our guides to get set up and track your short link
-            conversions
+            {t("follow-guides-setup-track-conversions")}
           </p>
           <div className="mt-4 grid w-full grid-cols-2 gap-2">
             <Button
               type="button"
               variant="secondary"
               className="h-7 text-xs"
-              text="Maybe later"
+              text={t("maybe-later-key")}
               onClick={onDismiss}
             />
             <Button
               type="button"
               variant="primary"
               className="h-7 text-xs"
-              text="View guides"
+              text={t("view-guides-key")}
               onClick={onCTA}
             />
           </div>

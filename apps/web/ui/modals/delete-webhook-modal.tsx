@@ -1,6 +1,7 @@
 import useWorkspace from "@/lib/swr/use-workspace";
 import { WebhookProps } from "@/lib/types";
 import { BlurImage, Button, Logo, Modal, useMediaQuery } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   Dispatch,
@@ -21,6 +22,8 @@ function DeleteWebhookModal({
   setShowDeleteWebhookModal: Dispatch<SetStateAction<boolean>>;
   webhook: Pick<WebhookProps, "id" | "name" | "url"> | undefined;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const router = useRouter();
   const { isMobile } = useMediaQuery();
   const [deleting, setDeleting] = useState(false);
@@ -62,7 +65,7 @@ function DeleteWebhookModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Workspace logo"
+            alt={t("workspace-logo")}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -70,10 +73,12 @@ function DeleteWebhookModal({
         ) : (
           <Logo />
         )}
-        <h3 className="text-lg font-medium">Delete {webhook.name}</h3>
+        <h3 className="text-lg font-medium">
+          {t("delete-action")}
+          {webhook.name}
+        </h3>
         <p className="text-center text-sm text-gray-500">
-          This will stop all events from being sent to the endpoint and remove
-          all webhook logs
+          {t("stop-events-warning")}
         </p>
       </div>
 
@@ -91,9 +96,11 @@ function DeleteWebhookModal({
       >
         <div>
           <label htmlFor="verification" className="block text-sm text-gray-700">
-            To verify, type{" "}
-            <span className="font-semibold text-black">{webhook.name}</span>{" "}
-            below
+            {t("verification-instruction", {
+              component0: (
+                <span className="font-semibold text-black">{webhook.name}</span>
+              ),
+            })}
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
@@ -110,7 +117,7 @@ function DeleteWebhookModal({
         </div>
 
         <Button
-          text="Confirm delete"
+          text={t("confirm-delete")}
           variant="danger"
           loading={deleting}
           autoFocus={!isMobile}

@@ -2,6 +2,7 @@ import AddEditIntegrationForm from "@/ui/oauth-apps/add-edit-integration-form";
 import { prisma } from "@dub/prisma";
 import { MaxWidthWrapper } from "@dub/ui";
 import { ChevronLeft } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -10,6 +11,10 @@ export default async function IntegrationManagePage({
 }: {
   params: { slug: string; integrationSlug: string };
 }) {
+  const t = await getTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations/[integrationSlug]/manage",
+  );
+
   // this is only available for Dub workspace for now
   // we might open this up to other workspaces in the future
   if (params.slug !== "dub") {
@@ -31,7 +36,7 @@ export default async function IntegrationManagePage({
       >
         <ChevronLeft className="size-4" />
         <p className="text-sm font-medium text-gray-500">
-          Back to integrations
+          {t("back-to-integrations")}
         </p>
       </Link>
 

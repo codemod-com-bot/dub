@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { AnimatedSizeContainer, useLocalStorage } from "@dub/ui";
 import { useSearchParams } from "next/navigation";
@@ -73,6 +74,8 @@ export default function LoginForm({
   methods?: AuthMethod[];
   redirectTo?: string;
 }) {
+  const t = useTranslations("../ui/auth/login");
+
   const searchParams = useSearchParams();
   const [showPasswordField, setShowPasswordField] = useState(false);
   const [showSSOOption, setShowSSOOption] = useState(false);
@@ -163,17 +166,18 @@ export default function LoginForm({
                   authMethod === lastUsedAuthMethod && (
                     <div className="text-center text-xs">
                       <span className="text-gray-500">
-                        You signed in with{" "}
-                        {lastUsedAuthMethod.charAt(0).toUpperCase() +
-                          lastUsedAuthMethod.slice(1)}{" "}
-                        last time
+                        {t("signed-in-with-auth-method", {
+                          lastUsedAuthMethodCharAt0ToUpperCaseLastUsedAuthMethodSlice1:
+                            lastUsedAuthMethod.charAt(0).toUpperCase() +
+                            lastUsedAuthMethod.slice(1),
+                        })}
                       </span>
                     </div>
                   )}
                 <div className="my-2 flex flex-shrink items-center justify-center gap-2">
                   <div className="grow basis-0 border-b border-gray-300" />
                   <span className="text-xs font-normal uppercase leading-none text-gray-500">
-                    or
+                    {t("or-separator")}
                   </span>
                   <div className="grow basis-0 border-b border-gray-300" />
                 </div>
@@ -187,7 +191,7 @@ export default function LoginForm({
                   onClick={() => setShowPasswordField(false)}
                   className="font-semibold text-gray-500 transition-colors hover:text-black"
                 >
-                  Continue with another method
+                  {t("continue-with-another-method")}
                 </button>
               </div>
             ) : (

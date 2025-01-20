@@ -13,6 +13,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function DomainTransferred({
@@ -26,10 +27,12 @@ export default function DomainTransferred({
   newWorkspace: Pick<Project, "name" | "slug">;
   linksCount: number;
 }) {
+  const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>Domain Transferred</Preview>
+      <Preview>{t("domain-transferred")}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -37,25 +40,31 @@ export default function DomainTransferred({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t("dub-quotation")}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Domain Transferred
+              {t("domain-transferred-newline")}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Your domain <code className="text-purple-600">{domain}</code>{" "}
+              {t("domain-transferred-with-code", {
+                component0: <code className="text-purple-600">{domain}</code>,
+              })}
               {linksCount > 0 && (
-                <>and its {linksCount > 0 ? linksCount : ""} links </>
+                <>{t("links-count-message", { linksCount: linksCount })}</>
               )}
-              has been transferred to the workspace{" "}
-              <Link
-                href={`https://app.dub.co/${newWorkspace.slug}/settings/domains`}
-                className="font-medium text-blue-600 no-underline"
-              >
-                {newWorkspace.name}↗
-              </Link>
+              {t("workspace-domain-transfer-link", {
+                component0: (
+                  <Link
+                    href={`https://app.dub.co/${newWorkspace.slug}/settings/domains`}
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {newWorkspace.name}
+                    {t("workspace-domain-transfer-link_component0")}
+                  </Link>
+                ),
+              })}
             </Text>
             <Footer email={email} />
           </Container>

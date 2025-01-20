@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Program } from "@dub/prisma/client";
 import { Button, useScroll, Wordmark } from "@dub/ui";
@@ -18,6 +19,8 @@ export function Header({
   showLogin?: boolean;
   showApply?: boolean;
 }) {
+  const t = useTranslations("partners.dub.co/(apply)/[programSlug]");
+
   const router = useRouter();
   const pathname = usePathname();
   const { data: session, status } = useSession();
@@ -55,7 +58,7 @@ export function Header({
             <Button
               type="button"
               variant="secondary"
-              text="Log in"
+              text={t("log-in-button")}
               className="animate-fade-in h-8 w-fit text-neutral-600"
             />
           </Link>
@@ -64,7 +67,7 @@ export function Header({
           <Link href={`/${slug}/apply`}>
             <Button
               type="button"
-              text="Apply"
+              text={t("apply-button")}
               className="animate-fade-in h-8 w-fit border-[var(--brand)] bg-[var(--brand)] hover:bg-[var(--brand)] hover:ring-[var(--brand-ring)]"
             />
           </Link>

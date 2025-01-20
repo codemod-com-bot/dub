@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function NewSaleCreated({
@@ -45,6 +46,8 @@ export default function NewSaleCreated({
     earnings: number;
   };
 }) {
+  const t = useTranslations("../emails");
+
   const linkToSale = `https://partners.dub.co/${partner.id}/${program.id}/sales`;
 
   const earningsInDollars = currencyFormatter(sale.earnings / 100, {
@@ -61,7 +64,7 @@ export default function NewSaleCreated({
     <Html>
       <Head />
       <Preview>
-        You just made a {earningsInDollars} sale via your referral link{" "}
+        {t("sale-made-referral", { earningsInDollars: earningsInDollars })}
         {getPrettyUrl(partner.referralLink)}
       </Preview>
       <Tailwind>
@@ -76,27 +79,35 @@ export default function NewSaleCreated({
             </Section>
 
             <Heading className="mx-0 p-0 text-lg font-medium text-black">
-              You just made a {earningsInDollars} referral sale!
+              {t("referral-sale-notification", {
+                earningsInDollars: earningsInDollars,
+              })}
             </Heading>
 
             <Text className="text-sm leading-6 text-gray-600">
-              Congratulations! Someone made a{" "}
-              <strong className="text-black">{saleAmountInDollars}</strong>{" "}
-              purchase on <strong className="text-black">{program.name}</strong>{" "}
-              using your referral link (
-              <a
-                href={partner.referralLink}
-                className="text-semibold font-medium text-black underline"
-              >
-                {getPrettyUrl(partner.referralLink)}
-              </a>
-              ).
+              {t("purchase-notification-referral", {
+                component0: (
+                  <strong className="text-black">{saleAmountInDollars}</strong>
+                ),
+                component1: (
+                  <strong className="text-black">{program.name}</strong>
+                ),
+                component2: (
+                  <a
+                    href={partner.referralLink}
+                    className="text-semibold font-medium text-black underline"
+                  >
+                    {getPrettyUrl(partner.referralLink)}
+                  </a>
+                ),
+              })}
             </Text>
             <Text className="text-sm leading-6 text-gray-600">
-              Your received{" "}
-              <strong className="text-black">{earningsInDollars}</strong> in
-              commission for this sale and it will be included in your next
-              payout.
+              {t("commission-received-notification", {
+                component0: (
+                  <strong className="text-black">{earningsInDollars}</strong>
+                ),
+              })}
             </Text>
 
             <Section className="mb-12 mt-8">
@@ -104,7 +115,7 @@ export default function NewSaleCreated({
                 className="rounded-md bg-neutral-900 px-4 py-3 text-[12px] font-medium text-white no-underline"
                 href={linkToSale}
               >
-                View sale
+                {t("view-sale-link")}
               </Link>
             </Section>
             <Footer email={email} />

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useUsers from "@/lib/swr/use-users";
@@ -31,6 +32,8 @@ import { toast } from "sonner";
 const tabs: Array<"Members" | "Invitations"> = ["Members", "Invitations"];
 
 export default function WorkspacePeopleClient() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/people");
+
   const { setShowInviteTeammateModal, InviteTeammateModal } =
     useInviteTeammateModal({ showSavedInvites: true });
 
@@ -51,14 +54,14 @@ export default function WorkspacePeopleClient() {
       <div className="rounded-lg border border-gray-200 bg-white">
         <div className="flex flex-col items-center justify-between space-y-3 p-5 sm:flex-row sm:space-y-0 sm:p-10">
           <div className="flex flex-col space-y-3">
-            <h2 className="text-xl font-medium">People</h2>
+            <h2 className="text-xl font-medium">{t("people")}</h2>
             <p className="text-sm text-gray-500">
-              Teammates that have access to this workspace.
+              {t("teammates-access-workspace")}
             </p>
           </div>
           <div className="flex space-x-2">
             <Button
-              text="Invite"
+              text={t("invite-button")}
               onClick={() => setShowInviteTeammateModal(true)}
               className="h-9"
               disabledTooltip={
@@ -111,12 +114,14 @@ export default function WorkspacePeopleClient() {
               <div className="flex flex-col items-center justify-center py-10">
                 <img
                   src="https://assets.dub.co/misc/video-park.svg"
-                  alt="No invitations sent"
+                  alt={t("no-invitations-sent-message")}
                   width={300}
                   height={300}
                   className="pointer-events-none -my-8"
                 />
-                <p className="text-sm text-gray-500">No invitations sent</p>
+                <p className="text-sm text-gray-500">
+                  {t("no-invitations-sent")}
+                </p>
               </div>
             )
           ) : (
@@ -135,6 +140,8 @@ const UserCard = ({
   user: WorkspaceUserProps;
   currentTab: "Members" | "Invitations";
 }) => {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/people");
+
   const [openPopover, setOpenPopover] = useState(false);
 
   const { role: userRole } = useWorkspace();
@@ -195,7 +202,7 @@ const UserCard = ({
             </div>
           </div>
 
-          {expiredInvite && <Badge variant="gray">Expired</Badge>}
+          {expiredInvite && <Badge variant="gray">{t("expired-status")}</Badge>}
         </div>
         <div className="flex items-center gap-x-3">
           {currentTab === "Members" ? (
@@ -218,8 +225,8 @@ const UserCard = ({
                     setShowEditRoleModal(true);
                   }}
                 >
-                  <option value="owner">Owner</option>
-                  <option value="member">Member</option>
+                  <option value="owner">{t("owner-role")}</option>
+                  <option value="member">{t("member-role")}</option>
                 </select>
               )
             )
@@ -235,7 +242,8 @@ const UserCard = ({
                 className="text-right text-xs text-gray-500 sm:min-w-28"
                 suppressHydrationWarning
               >
-                Invited {timeAgo(createdAt)}
+                {t("invited-user-message")}
+                {timeAgo(createdAt)}
               </p>
             </>
           )}
@@ -244,7 +252,7 @@ const UserCard = ({
             content={
               <div className="grid w-full gap-1 p-2 sm:w-48">
                 <Button
-                  text="Copy User ID"
+                  text={t("copy-user-id-button")}
                   variant="outline"
                   onClick={() => copyUserId()}
                   icon={
