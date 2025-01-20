@@ -16,6 +16,7 @@ import {
 } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { useCompletion } from "ai/react";
+import { useTranslations } from "next-intl";
 import posthog from "posthog-js";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -35,6 +36,8 @@ function getTagOption(tag: TagProps) {
 }
 
 export function TagSelect() {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { slug, mutate: mutateWorkspace, exceededAI } = useWorkspace();
   const { workspaceId } = useContext(LinkModalContext);
 
@@ -152,11 +155,13 @@ export function TagSelect() {
     <div>
       <div className="mb-1 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-medium text-gray-700">Tags</p>
+          <p className="text-sm font-medium text-gray-700">{t("tags-title")}</p>
           <InfoTooltip
             content={
               <SimpleTooltipContent
-                title={`Tags are used to organize your links in your ${process.env.NEXT_PUBLIC_APP_NAME} dashboard.`}
+                title={t("tags-description", {
+                  processEnvNextPublicAppName: process.env.NEXT_PUBLIC_APP_NAME,
+                })}
                 cta="Learn more."
                 href="https://dub.co/help/article/how-to-use-tags"
               />
@@ -168,7 +173,7 @@ export function TagSelect() {
           target="_blank"
           className="text-sm text-gray-400 underline-offset-2 transition-all hover:text-gray-600 hover:underline"
         >
-          Manage
+          {t("manage-tags")}
         </a>
       </div>
       <Combobox
@@ -217,7 +222,9 @@ export function TagSelect() {
         ) : loadingTags && availableTags === undefined && tags.length ? (
           <div className="my-px h-6 w-1/4 animate-pulse rounded bg-gray-200" />
         ) : (
-          <span className="my-px block py-0.5">Select tags...</span>
+          <span className="my-px block py-0.5">
+            {t("select-tags-placeholder")}
+          </span>
         )}
       </Combobox>
       <AnimatedSizeContainer

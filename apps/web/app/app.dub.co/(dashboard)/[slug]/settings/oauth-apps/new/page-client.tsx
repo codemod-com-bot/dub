@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -9,6 +10,10 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default function NewOAuthAppPageClient() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/oauth-apps/new",
+  );
+
   const { slug, role } = useWorkspace();
 
   const { error: permissionsError } = clientAccessCheck({
@@ -29,7 +34,7 @@ export default function NewOAuthAppPageClient() {
         >
           <ChevronLeft className="size-4" />
           <p className="text-sm font-medium text-gray-500">
-            Back to OAuth Apps
+            {t("back-to-oauth-apps")}
           </p>
         </Link>
       </MaxWidthWrapper>

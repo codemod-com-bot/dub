@@ -1,5 +1,6 @@
 import { Button, Modal, useRouterStuff, useScrollProgress } from "@dub/ui";
 import { cn, getPlanDetails, PLANS, PRO_PLAN } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { usePlausible } from "next-plausible";
 import { useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
@@ -22,6 +23,8 @@ function WelcomeModal({
   showWelcomeModal: boolean;
   setShowWelcomeModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { queryParams } = useRouterStuff();
   const searchParams = useSearchParams();
 
@@ -98,7 +101,9 @@ function WelcomeModal({
               {plan && (
                 <>
                   <h2 className="mb-2 mt-6 text-base font-medium text-gray-950">
-                    Explore the benefits of your {plan.name} plan
+                    {t("explore-benefits-of-your")}
+                    {plan.name}
+                    {t("your-plan")}
                   </h2>
                   <PlanFeatures plan={plan.name} />
                 </>
@@ -113,7 +118,7 @@ function WelcomeModal({
           <Button
             type="button"
             variant="primary"
-            text="Get started"
+            text={t("get-started")}
             className="mt-2"
             onClick={() =>
               queryParams({

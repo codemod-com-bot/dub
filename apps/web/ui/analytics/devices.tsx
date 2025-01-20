@@ -5,6 +5,7 @@ import {
 import { DeviceTabs } from "@/lib/analytics/types";
 import { useRouterStuff } from "@dub/ui";
 import { Cube, CursorRays, MobilePhone, Window } from "@dub/ui/icons";
+import { useTranslations } from "next-intl";
 import { useContext, useState } from "react";
 import { AnalyticsCard } from "./analytics-card";
 import { AnalyticsLoadingSpinner } from "./analytics-loading-spinner";
@@ -14,6 +15,8 @@ import DeviceIcon from "./device-icon";
 import { useAnalyticsFilterOption } from "./utils";
 
 export default function Devices() {
+  const t = useTranslations("../ui/analytics");
+
   const { queryParams, searchParams } = useRouterStuff();
 
   const { selectedTab, saleUnit } = useContext(AnalyticsContext);
@@ -78,7 +81,7 @@ export default function Devices() {
             />
           ) : (
             <div className="flex h-[300px] items-center justify-center">
-              <p className="text-sm text-gray-600">No data available</p>
+              <p className="text-sm text-gray-600">{t("no-data-available")}</p>
             </div>
           )
         ) : (

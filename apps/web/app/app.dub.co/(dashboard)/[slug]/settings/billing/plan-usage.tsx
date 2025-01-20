@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useTags from "@/lib/swr/use-tags";
 import useUsers from "@/lib/swr/use-users";
@@ -26,6 +27,8 @@ import { CSSProperties, useMemo } from "react";
 import { UsageChart } from "./usage-chart";
 
 export default function PlanUsage() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/billing");
+
   const {
     slug,
     plan,
@@ -67,25 +70,29 @@ export default function PlanUsage() {
     <div className="rounded-lg border border-neutral-200 bg-white">
       <div className="flex flex-col items-start justify-between gap-y-4 p-6 md:p-8 xl:flex-row">
         <div>
-          <h2 className="text-xl font-medium">Plan and Usage</h2>
+          <h2 className="text-xl font-medium">{t("plan-and-usage")}</h2>
           <p className="mt-1 text-balance text-sm leading-normal text-neutral-500">
-            You are currently on the{" "}
+            {t("current-plan-notice")}
             {plan ? (
               <PlanBadge plan={plan} />
             ) : (
               <span className="rounded-full bg-neutral-200 px-2 py-0.5 text-xs text-neutral-200">
-                load
+                {t("load-notice")}
               </span>
-            )}{" "}
-            plan.
+            )}
+            {t("current-plan-details")}
             {billingStart && billingEnd && (
               <>
-                {" "}
-                Current billing cycle:{" "}
-                <span className="font-medium text-black">
-                  {billingStart} - {billingEnd}
-                </span>
-                .
+                {t("billing-cycle-info", {
+                  component0: (
+                    <span className="font-medium text-black">
+                      {t("billing-cycle-info_component0", {
+                        billingStart: billingStart,
+                        billingEnd: billingEnd,
+                      })}
+                    </span>
+                  ),
+                })}
               </>
             )}
           </p>
@@ -98,7 +105,7 @@ export default function PlanUsage() {
               "flex h-8 w-full items-center justify-center rounded-md border px-4 text-sm",
             )}
           >
-            View invoices
+            {t("view-invoices")}
           </Link>
           {stripeId && <ManageSubscriptionButton />}
         </div>
@@ -109,21 +116,21 @@ export default function PlanUsage() {
             <UsageTabCard
               id="events"
               icon={CursorRays}
-              title="Events tracked"
+              title={t("events-tracked")}
               usage={usage}
               limit={usageLimit}
             />
             <UsageTabCard
               id="links"
               icon={Hyperlink}
-              title="Links created"
+              title={t("links-created")}
               usage={linksUsage}
               limit={linksLimit}
             />
             <UsageTabCard
               id="revenue"
               icon={CircleDollar}
-              title="Revenue tracked"
+              title={t("revenue-tracked")}
               usage={salesUsage}
               limit={salesLimit}
               unit="$"
@@ -135,19 +142,19 @@ export default function PlanUsage() {
         </div>
         <div className="grid grid-cols-1 divide-y divide-neutral-200 sm:divide-x sm:divide-y-0 md:grid-cols-3">
           <UsageCategory
-            title="Custom Domains"
+            title={t("custom-domains")}
             icon={Globe}
             usage={domains?.length}
             usageLimit={domainsLimit}
           />
           <UsageCategory
-            title="Tags"
+            title={t("tags")}
             icon={Tag}
             usage={tags?.length}
             usageLimit={tagsLimit}
           />
           <UsageCategory
-            title="Teammates"
+            title={t("teammates")}
             icon={Users}
             usage={users?.filter((user) => !user.isMachine).length}
             usageLimit={usersLimit}
@@ -168,7 +175,8 @@ export default function PlanUsage() {
               "flex h-8 w-fit items-center justify-center rounded-md border px-3 text-sm",
             )}
           >
-            Upgrade to {nextPlan.name}
+            {t("upgrade-notice")}
+            {nextPlan.name}
           </Link>
         </div>
       )}

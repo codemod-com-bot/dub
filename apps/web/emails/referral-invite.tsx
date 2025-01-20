@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function ReferralInvite({
@@ -27,10 +28,12 @@ export default function ReferralInvite({
   workspaceUser: string | null;
   workspaceUserEmail: string | null;
 }) {
+  const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>Sign up for {appName}</Preview>
+      <Preview>{t("sign-up-for-app-name", { appName: appName })}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -43,22 +46,26 @@ export default function ReferralInvite({
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Sign up for {appName}
+              {t("sign-up-for-app-name-with-whitespace", { appName: appName })}
             </Heading>
             {workspaceUser && workspaceUserEmail ? (
               <Text className="text-sm leading-6 text-black">
-                <strong>{workspaceUser}</strong> (
-                <Link
-                  className="text-blue-600 no-underline"
-                  href={`mailto:${workspaceUserEmail}`}
-                >
-                  {workspaceUserEmail}
-                </Link>
-                ) has invited you to start using {appName}!
+                {t("workspace-user-invitation", {
+                  component0: <strong>{workspaceUser}</strong>,
+                  component1: (
+                    <Link
+                      className="text-blue-600 no-underline"
+                      href={`mailto:${workspaceUserEmail}`}
+                    >
+                      {workspaceUserEmail}
+                    </Link>
+                  ),
+                  appName: appName,
+                })}
               </Text>
             ) : (
               <Text className="text-sm leading-6 text-black">
-                You have been invited to start using {appName}!
+                {t("invitation-to-start-using-app-name", { appName: appName })}
               </Text>
             )}
             <Section className="mb-8 text-center">
@@ -66,11 +73,11 @@ export default function ReferralInvite({
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={url}
               >
-                Learn More
+                {t("learn-more")}
               </Link>
             </Section>
             <Text className="text-sm leading-6 text-black">
-              or copy and paste this URL into your browser:
+              {t("copy-url-to-browser")}
             </Text>
             <Text className="max-w-sm flex-wrap break-words font-medium text-purple-600 no-underline">
               {url.replace(/^https?:\/\//, "")}

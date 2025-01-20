@@ -13,6 +13,7 @@ import {
   useMediaQuery,
 } from "@dub/ui";
 import { cn } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -42,6 +43,10 @@ const actionTypes = [
 ];
 
 function AddPartnerSheetContent({ setIsOpen }: AddPartnerSheetProps) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/partners",
+  );
+
   const { program } = useProgram();
   const { id: workspaceId, slug } = useWorkspace();
   const { isMobile } = useMediaQuery();
@@ -127,7 +132,7 @@ function AddPartnerSheetContent({ setIsOpen }: AddPartnerSheetProps) {
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Add partner
+            {t("add-partner")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button
@@ -186,17 +191,20 @@ function AddPartnerSheetContent({ setIsOpen }: AddPartnerSheetProps) {
               <div>
                 <label htmlFor="name" className="flex items-center space-x-2">
                   <h2 className="text-sm font-medium text-neutral-900">
-                    Name{" "}
-                    <span className="font-normal text-neutral-500">
-                      (required)
-                    </span>
+                    {t("name-required", {
+                      component0: (
+                        <span className="font-normal text-neutral-500">
+                          {t("name-required_component0")}
+                        </span>
+                      ),
+                    })}
                   </h2>
                 </label>
                 <div className="relative mt-2 rounded-md shadow-sm">
                   <input
                     {...register("name")}
                     className="block w-full rounded-md border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
-                    placeholder="John Doe"
+                    placeholder={t("john-doe")}
                     type="text"
                     autoComplete="off"
                     autoFocus={!isMobile}
@@ -208,18 +216,20 @@ function AddPartnerSheetContent({ setIsOpen }: AddPartnerSheetProps) {
             <div>
               <label htmlFor="email" className="flex items-center space-x-2">
                 <h2 className="text-sm font-medium text-neutral-900">
-                  Email{" "}
-                  <span className="font-normal text-neutral-500">
-                    ({selectedActionType === "enroll" ? "optional" : "required"}
-                    )
-                  </span>
+                  {t("email-optional-required", {
+                    component0: (
+                      <span className="font-normal text-neutral-500">
+                        {t("email-optional-required_component0")}
+                      </span>
+                    ),
+                  })}
                 </h2>
               </label>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <input
                   {...register("email")}
                   className="block w-full rounded-md border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
-                  placeholder="panic@thedis.co"
+                  placeholder={t("panic-email")}
                   type="email"
                   autoComplete="off"
                   autoFocus={!isMobile && selectedActionType !== "invite"}
@@ -227,8 +237,7 @@ function AddPartnerSheetContent({ setIsOpen }: AddPartnerSheetProps) {
               </div>
               {selectedActionType === "enroll" && (
                 <p className="mt-1 text-xs text-neutral-500">
-                  Partner will be able to claim their profile by signing up to
-                  Dub Partners with this email
+                  {t("partner-profile-claim")}
                 </p>
               )}
             </div>
@@ -236,14 +245,14 @@ function AddPartnerSheetContent({ setIsOpen }: AddPartnerSheetProps) {
             <div>
               <div className="flex items-center justify-between">
                 <h2 className="text-sm font-medium text-neutral-900">
-                  Referral link
+                  {t("referral-link")}
                 </h2>
                 <a
                   href={`/${slug}/programs/${program?.id}/settings`}
                   target="_blank"
                   className="text-sm text-neutral-500 underline-offset-2 hover:underline"
                 >
-                  Settings
+                  {t("settings")}
                 </a>
               </div>
 
@@ -284,7 +293,9 @@ function AddPartnerSheetContent({ setIsOpen }: AddPartnerSheetProps) {
 
           {selectedActionType === "invite" && (
             <div className="mt-8">
-              <h2 className="text-sm font-medium text-neutral-900">Preview</h2>
+              <h2 className="text-sm font-medium text-neutral-900">
+                {t("preview")}
+              </h2>
               <div className="mt-2 overflow-hidden rounded-md border border-neutral-200">
                 <div className="grid gap-4 p-6 pb-10">
                   <BlurImage
@@ -295,31 +306,37 @@ function AddPartnerSheetContent({ setIsOpen }: AddPartnerSheetProps) {
                     height={48}
                   />
                   <h3 className="font-medium text-neutral-900">
-                    {program?.name || "Dub"} invited you to join Dub Partners
+                    {program?.name || "Dub"}
+                    {t("invitation-message")}
                   </h3>
                   <p className="text-sm text-neutral-500">
-                    {program?.name || "Dub"} uses Dub Partners to power their
-                    partnership programs and wants to partner with great people
-                    like yourself!
+                    {program?.name || "Dub"}
+                    {t("partnership-programs")}
                   </p>
                   <Button
                     type="button"
-                    text="Accept invite"
+                    text={t("accept-invite")}
                     className="w-fit"
                   />
                 </div>
                 <div className="grid gap-1 border-t border-neutral-200 bg-neutral-50 px-6 py-4">
                   <p className="text-sm text-neutral-500">
-                    <strong className="font-medium text-neutral-900">
-                      From:{" "}
-                    </strong>
-                    system@dub.co
+                    {t("from-email", {
+                      component0: (
+                        <strong className="font-medium text-neutral-900">
+                          {t("from-email_component0")}
+                        </strong>
+                      ),
+                    })}
                   </p>
                   <p className="text-sm text-neutral-500">
-                    <strong className="font-medium text-neutral-900">
-                      Subject:{" "}
-                    </strong>
-                    You've been invited to Dub Partners
+                    {t("subject-invitation", {
+                      component0: (
+                        <strong className="font-medium text-neutral-900">
+                          {t("subject-invitation_component0")}
+                        </strong>
+                      ),
+                    })}
                   </p>
                 </div>
               </div>
@@ -333,7 +350,7 @@ function AddPartnerSheetContent({ setIsOpen }: AddPartnerSheetProps) {
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Cancel"
+            text={t("cancel")}
             className="w-fit"
             disabled={isExecuting}
           />

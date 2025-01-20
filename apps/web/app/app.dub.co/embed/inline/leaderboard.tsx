@@ -9,9 +9,12 @@ import {
 } from "@dub/utils";
 import { cn } from "@dub/utils/src/functions";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import useSWR from "swr";
 
 export function EmbedLeaderboard() {
+  const t = useTranslations("app.dub.co/embed/inline");
+
   const { data: partners, isLoading } = useSWR<
     z.infer<typeof LeaderboardPartnerSchema>[]
   >("/api/embed/leaderboard", fetcher, {
@@ -62,8 +65,8 @@ export function EmbedLeaderboard() {
     ],
     emptyState: (
       <AnimatedEmptyState
-        title="No partners found"
-        description="No partners have been added to this program yet."
+        title={t("no-partners-found")}
+        description={t("no-partners-added-yet")}
         cardContent={() => (
           <>
             <Users className="size-4 text-neutral-700" />

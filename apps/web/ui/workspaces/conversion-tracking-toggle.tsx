@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -8,6 +9,8 @@ import { toast } from "sonner";
 import { mutate } from "swr";
 
 export function ConversionTrackingToggle() {
+  const t = useTranslations("../ui/workspaces");
+
   const id = useId();
 
   return (
@@ -21,11 +24,10 @@ export function ConversionTrackingToggle() {
             htmlFor={`${id}-switch`}
             className="block text-pretty font-medium"
           >
-            Workspace-level conversion tracking
+            {t("workspace-level-conversion-tracking")}
           </label>
           <p className="mt-1 flex items-center gap-1 text-sm text-gray-500">
-            Enable conversion tracking for all future links in this workspace.
-            This only affects links made with the link builder.
+            {t("enable-conversion-tracking-future-links")}
           </p>
         </div>
       </div>
@@ -37,6 +39,8 @@ export function ConversionTrackingToggle() {
 export function ConversionTrackingToggleSwitch(
   props: ComponentProps<typeof Switch>,
 ) {
+  const t = useTranslations("../ui/workspaces");
+
   const {
     slug: workspaceSlug,
     plan,
@@ -64,7 +68,7 @@ export function ConversionTrackingToggleSwitch(
       disabledTooltip={
         plan === "free" || plan === "pro" ? (
           <TooltipContent
-            title="You can only enable conversion tracking on Business plans and above."
+            title={t("conversion-tracking-business-plans")}
             cta="Upgrade to Business"
             href={`/${workspaceSlug}/upgrade`}
           />

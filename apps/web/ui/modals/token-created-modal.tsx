@@ -1,4 +1,5 @@
 import { Button, Copy, Modal, Tick, useCopyToClipboard } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -17,6 +18,8 @@ function TokenCreatedModal({
   setShowTokenCreatedModal: Dispatch<SetStateAction<boolean>>;
   token: string;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const [copied, copyToClipboard] = useCopyToClipboard();
 
   return (
@@ -26,16 +29,17 @@ function TokenCreatedModal({
       className="max-w-md"
     >
       <div className="space-y-2 border-b border-neutral-200 px-4 py-4 sm:px-6">
-        <h3 className="text-lg font-medium">API Key Created</h3>
+        <h3 className="text-lg font-medium">{t("api-key-created")}</h3>
         <p className="text-sm text-neutral-500">
-          For security reasons, we will only show you the key once. Please copy
-          and store it somewhere safe.
+          {t("api-key-security-notice")}
         </p>
       </div>
 
       <div className="flex flex-col space-y-4 bg-neutral-50 px-4 py-8 sm:px-6">
         <div className="flex flex-col gap-1">
-          <h2 className="text-sm font-medium text-neutral-800">API key</h2>
+          <h2 className="text-sm font-medium text-neutral-800">
+            {t("api-key-label")}
+          </h2>
           <div className="flex items-center justify-between rounded-md border border-neutral-200 bg-white p-2">
             <p className="font-mono text-sm text-neutral-500">{token}</p>
             <button
@@ -57,7 +61,10 @@ function TokenCreatedModal({
             </button>
           </div>
         </div>
-        <Button text="Done" onClick={() => setShowTokenCreatedModal(false)} />
+        <Button
+          text={t("done-button-label")}
+          onClick={() => setShowTokenCreatedModal(false)}
+        />
       </div>
     </Modal>
   );

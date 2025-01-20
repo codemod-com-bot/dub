@@ -1,4 +1,5 @@
 import { Grid, Wordmark } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 
 export default function CustomPartnerAuthLayout({
@@ -8,6 +9,10 @@ export default function CustomPartnerAuthLayout({
   params: { programSlug: string };
   children: React.ReactNode;
 }) {
+  const t = useTranslations(
+    "partners.dub.co/(auth)/(custom)/[programSlug]/login",
+  );
+
   if (programSlug !== "framer") {
     redirect("/login");
   }
@@ -28,7 +33,7 @@ export default function CustomPartnerAuthLayout({
             target="_blank"
             className="mt-4 flex items-center justify-center gap-1.5 text-neutral-500 transition-colors duration-75 hover:text-neutral-700"
           >
-            <p className="text-xs font-medium">Powered by</p>
+            <p className="text-xs font-medium">{t("powered-by")}</p>
             <Wordmark className="h-3.5 text-neutral-900" />
           </a>
 
@@ -38,14 +43,14 @@ export default function CustomPartnerAuthLayout({
               target="_blank"
               className="hover:text-gray-800"
             >
-              Privacy Policy
+              {t("privacy-policy")}
             </a>
             <a
               href="https://dub.co/legal/terms"
               target="_blank"
               className="hover:text-gray-800"
             >
-              Terms of Service
+              {t("terms-of-service")}
             </a>
           </div>
         </div>

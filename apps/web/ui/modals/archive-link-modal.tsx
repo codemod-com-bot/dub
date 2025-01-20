@@ -3,6 +3,7 @@ import useWorkspace from "@/lib/swr/use-workspace";
 import { LinkProps } from "@/lib/types";
 import { Button, LinkLogo, Modal, useToastWithUndo } from "@dub/ui";
 import { getApexDomain, linkConstructor } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   MouseEvent,
@@ -52,6 +53,8 @@ function ArchiveLinkModalInner({
   setShowArchiveLinkModal,
   props,
 }: ArchiveLinkModalProps) {
+  const t = useTranslations("../ui/modals");
+
   const toastWithUndo = useToastWithUndo();
 
   const { id: workspaceId } = useWorkspace();
@@ -132,7 +135,11 @@ function ArchiveLinkModalInner({
           onClick={handleArchiveRequest}
           autoFocus
           loading={archiving}
-          text={`Confirm ${props.archived ? "unarchive" : "archive"}`}
+          text={t("confirm-archive-unarchive", {
+            propsArchivedUnarchiveArchive: props.archived
+              ? "unarchive"
+              : "archive",
+          })}
         />
       </div>
     </>

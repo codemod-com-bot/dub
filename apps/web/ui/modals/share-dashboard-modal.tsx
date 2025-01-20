@@ -21,6 +21,7 @@ import {
   getPrettyUrl,
   linkConstructor,
 } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -45,6 +46,8 @@ function ShareDashboardModalInner({
   domain,
   _key: key,
 }: ShareDashboardModalProps) {
+  const t = useTranslations("../ui/modals");
+
   const { id: workspaceId } = useWorkspace();
   const [isRemoving, setIsRemoving] = useState(false);
 
@@ -183,7 +186,7 @@ function ShareDashboardModalInner({
   return (
     <>
       <h3 className="border-b border-gray-200 px-4 py-4 text-lg font-medium sm:px-6">
-        Share dashboard
+        {t("share-dashboard")}
       </h3>
       <div className="bg-gray-50 px-6 pb-6 pt-4">
         <LinkCard link={link} isError={Boolean(linkError)} />
@@ -196,7 +199,7 @@ function ShareDashboardModalInner({
               <label className="flex cursor-pointer items-center justify-between gap-2 pt-6">
                 <span className="flex items-center gap-2 text-sm text-gray-600">
                   <Globe className="size-4" />
-                  Enable public sharing
+                  {t("enable-public-sharing")}
                 </span>
                 <Switch
                   checked={checked}
@@ -227,17 +230,17 @@ function ShareDashboardModalInner({
                         ) : (
                           <Copy className="h-4 w-4 text-gray-500" />
                         )}
-                        Copy link
+                        {t("copy-link")}
                       </button>
                     </div>
                     <form
                       className="grid w-full gap-3 px-px pt-4"
                       onSubmit={handleSubmit(handleUpdate)}
                     >
-                      <p className="text-base font-medium">Settings</p>
+                      <p className="text-base font-medium">{t("settings")}</p>
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-sm text-gray-600">
-                          Search engine indexing
+                          {t("search-engine-indexing")}
                         </p>
                         <Switch
                           checked={watch("doIndex")}
@@ -250,7 +253,7 @@ function ShareDashboardModalInner({
                       </div>
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-sm text-gray-600">
-                          Password protection
+                          {t("password-protection")}
                         </p>
                         <Switch
                           checked={watch("password") !== null}
@@ -273,7 +276,7 @@ function ShareDashboardModalInner({
                         type="submit"
                         loading={isSubmitting}
                         disabled={!isDirty}
-                        text="Save changes"
+                        text={t("save-changes")}
                         className="h-9"
                       />
                     </form>
@@ -301,10 +304,14 @@ function LinkCard({
   link: LinkProps | undefined;
   isError: boolean;
 }) {
+  const t = useTranslations("../ui/modals");
+
   return (
     <div className="flex items-center gap-3 rounded-lg border border-neutral-300 bg-white p-3">
       {isError ? (
-        <span className="text-sm text-gray-400">Failed to load link</span>
+        <span className="text-sm text-gray-400">
+          {t("failed-to-load-link")}
+        </span>
       ) : link === undefined ? (
         <>
           <div className="m-px size-9 animate-pulse rounded-full bg-gray-200" />
@@ -352,7 +359,7 @@ function LinkCard({
                 </a>
               ) : (
                 <span className="truncate text-gray-400">
-                  No URL configured
+                  {t("no-url-configured")}
                 </span>
               )}
             </div>

@@ -1,5 +1,6 @@
 import { LoadingSpinner, useMediaQuery } from "@dub/ui";
 import { fetcher } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
 import useSWR from "swr";
@@ -13,6 +14,8 @@ export default function UnsplashSearch({
   onImageSelected: (image: string) => void;
   setOpenPopover: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const [search, setSearch] = useState("");
   const [debouncedQuery] = useDebounce(search, 500);
   const { data } = useSWR<Basic[]>(
@@ -39,7 +42,7 @@ export default function UnsplashSearch({
           type="text"
           name="search"
           id="search"
-          placeholder="Search for an image..."
+          placeholder={t("search-for-an-image-placeholder")}
           autoFocus={!isMobile}
           autoComplete="off"
           value={search}
@@ -75,15 +78,18 @@ export default function UnsplashSearch({
                   className="absolute h-full w-full object-cover"
                 />
                 <p className="absolute bottom-0 left-0 right-0 line-clamp-1 w-full bg-black bg-opacity-10 p-1 text-xs text-white">
-                  by{" "}
-                  <a
-                    className="underline underline-offset-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={`${photo.user.links.html}?utm_source=dub.co&utm_medium=referral`}
-                  >
-                    {photo.user.name}
-                  </a>
+                  {t("image-credits-link", {
+                    component0: (
+                      <a
+                        className="underline underline-offset-2"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={`${photo.user.links.html}?utm_source=dub.co&utm_medium=referral`}
+                      >
+                        {photo.user.name}
+                      </a>
+                    ),
+                  })}
                 </p>
               </button>
             ))}
@@ -91,7 +97,9 @@ export default function UnsplashSearch({
         ) : (
           <div className="flex h-[90%] items-center justify-center">
             <p className="text-center text-sm text-gray-500">
-              No results found. <br /> Maybe try tweaking your search query?
+              {t("no-results-found-message")}
+              <br />
+              {t("suggestion-for-search-query")}
             </p>
           </div>
         )

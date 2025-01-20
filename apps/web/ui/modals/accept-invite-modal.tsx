@@ -2,6 +2,7 @@ import { mutatePrefix } from "@/lib/swr/mutate";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Button, Logo, Modal } from "@dub/ui";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import {
@@ -20,6 +21,8 @@ function AcceptInviteModal({
   showAcceptInviteModal: boolean;
   setShowAcceptInviteModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { slug } = useParams() as { slug: string };
   const [accepting, setAccepting] = useState(false);
   const { error } = useWorkspace();
@@ -35,13 +38,16 @@ function AcceptInviteModal({
         <>
           <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 sm:px-16">
             <Logo />
-            <h3 className="text-lg font-medium">Workspace Invitation</h3>
+            <h3 className="text-lg font-medium">{t("workspace-invitation")}</h3>
             <p className="text-center text-sm text-gray-500">
-              You've been invited to join and collaborate on the{" "}
-              <span className="font-mono text-purple-600">
-                {slug || "......"}
-              </span>{" "}
-              workspace on {process.env.NEXT_PUBLIC_APP_NAME}
+              {t("workspace-invitation-details", {
+                component0: (
+                  <span className="font-mono text-purple-600">
+                    {slug || "......"}
+                  </span>
+                ),
+                processEnvNextPublicAppName: process.env.NEXT_PUBLIC_APP_NAME,
+              })}
             </p>
           </div>
           <div className="flex flex-col space-y-6 bg-gray-50 px-4 py-8 text-left sm:px-16">
@@ -68,7 +74,7 @@ function AcceptInviteModal({
                 });
               }}
               loading={accepting}
-              text="Accept invite"
+              text={t("accept-invite-button")}
             />
           </div>
         </>
@@ -77,15 +83,15 @@ function AcceptInviteModal({
           <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 px-4 py-4 pt-8 sm:px-16">
             <Logo />
             <h3 className="text-lg font-medium">
-              Workspace Invitation Expired
+              {t("workspace-invitation-expired")}
             </h3>
             <p className="text-center text-sm text-gray-500">
-              This invite has expired or is no longer valid.
+              {t("invite-expired-message")}
             </p>
           </div>
           <div className="flex flex-col space-y-6 bg-gray-50 px-4 py-8 text-left sm:px-16">
             <Button
-              text="Back to dashboard"
+              text={t("back-to-dashboard-button")}
               onClick={() => {
                 router.push("/");
                 setShowAcceptInviteModal(false);

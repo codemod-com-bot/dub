@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import usePartnersCount from "@/lib/swr/use-partners-count";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -40,6 +41,10 @@ import { partnersColumns, useColumnVisibility } from "./use-column-visibility";
 import { usePartnerFilters } from "./use-partner-filters";
 
 export function PartnerTable() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/partners",
+  );
+
   const { programId } = useParams();
   const { id: workspaceId } = useWorkspace();
   const { queryParams, searchParams, getQueryString } = useRouterStuff();
@@ -256,7 +261,7 @@ export function PartnerTable() {
         <Table {...tableProps} table={table} />
       ) : (
         <AnimatedEmptyState
-          title="No partners found"
+          title={t("no-partners-found")}
           description={
             isFiltered
               ? "No partners found for the selected filters."
@@ -275,6 +280,10 @@ export function PartnerTable() {
 }
 
 function RowMenuButton({ row }: { row: Row<EnrolledPartnerProps> }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/partners",
+  );
+
   const router = useRouter();
   const { slug, programId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -288,7 +297,7 @@ function RowMenuButton({ row }: { row: Row<EnrolledPartnerProps> }) {
           <Command.List className="flex w-screen flex-col gap-1 p-1.5 text-sm sm:w-auto sm:min-w-[130px]">
             <MenuItem
               icon={MoneyBill2}
-              label="View sales"
+              label={t("view-sales")}
               onSelect={() => {
                 router.push(
                   `/${slug}/programs/${programId}/sales?partnerId=${row.original.id}`,

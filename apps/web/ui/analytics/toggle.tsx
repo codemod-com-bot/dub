@@ -63,6 +63,7 @@ import {
   nFormatter,
 } from "@dub/utils";
 import { readStreamableValue } from "ai/rsc";
+import { useTranslations } from "next-intl";
 import posthog from "posthog-js";
 import {
   ComponentProps,
@@ -897,13 +898,20 @@ function UpgradeTooltip({
   rangeLabel: string;
   plan?: string;
 }) {
+  const t = useTranslations("../ui/analytics");
+
   const { slug } = useWorkspace();
 
   const isAllTime = rangeLabel === "All Time";
 
   return (
     <TooltipContent
-      title={`${rangeLabel} can only be viewed on a ${isAllTime ? "Business" : getNextPlan(plan).name} plan or higher. Upgrade now to view more stats.`}
+      title={t("range-label-view-restriction", {
+        rangeLabel: rangeLabel,
+        isAllTimeBusinessGetNextPlanPlanName: isAllTime
+          ? "Business"
+          : getNextPlan(plan).name,
+      })}
       cta={`Upgrade to ${isAllTime ? "Business" : getNextPlan(plan).name}`}
       href={slug ? `/${slug}/upgrade` : APP_DOMAIN}
     />

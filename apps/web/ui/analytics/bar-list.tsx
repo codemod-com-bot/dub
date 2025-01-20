@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { LinkProps } from "@/lib/types";
 import { LinkifyTooltipContent, Tooltip, useMediaQuery } from "@dub/ui";
@@ -43,6 +44,8 @@ export default function BarList({
   setShowModal: Dispatch<SetStateAction<boolean>>;
   limit?: number;
 }) {
+  const t = useTranslations("../ui/analytics");
+
   const [search, setSearch] = useState("");
 
   // TODO: mock pagination for better perf in React
@@ -92,7 +95,7 @@ export default function BarList({
             type="text"
             autoFocus={!isMobile}
             className="w-full rounded-md border border-gray-300 py-2 pl-10 text-black placeholder:text-gray-400 focus:border-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-200 sm:text-sm"
-            placeholder={`Search ${tab}...`}
+            placeholder={t("search-tab-placeholder", { tab: tab })}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>

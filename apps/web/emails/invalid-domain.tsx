@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function InvalidDomain({
@@ -27,12 +28,14 @@ export default function InvalidDomain({
   invalidDays: number;
   appDomain: string;
 }): JSX.Element {
+  const t = useTranslations("../emails");
+
   const notificationSettingsUrl = `https://app.${appDomain}/${workspaceSlug}/settings/notifications`;
 
   return (
     <Html>
       <Head />
-      <Preview>Invalid Domain Configuration</Preview>
+      <Preview>{t("invalid-domain-configuration")}</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -40,51 +43,52 @@ export default function InvalidDomain({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t("dub-quote")}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Invalid Domain Configuration
+              {t("invalid-domain-configuration-newline")}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              Your domain <code className="text-purple-600">{domain}</code> for
-              your Dub.co workspace{" "}
-              <Link
-                href={`https://app.dub.co/${workspaceSlug}`}
-                className="font-medium text-blue-600 no-underline"
-              >
-                {workspaceSlug}↗
-              </Link>{" "}
-              has been invalid for {invalidDays} days.
+              {t("domain-invalid-notification", {
+                component0: <code className="text-purple-600">{domain}</code>,
+                component1: (
+                  <Link
+                    href={`https://app.dub.co/${workspaceSlug}`}
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {t("domain-invalid-notification_component1", {
+                      workspaceSlug: workspaceSlug,
+                    })}
+                  </Link>
+                ),
+                invalidDays: invalidDays,
+              })}
             </Text>
             <Text className="text-sm leading-6 text-black">
-              If your domain remains unconfigured for 30 days, it will be
-              automatically deleted from Dub.co. Please click the link below to
-              configure your domain.
+              {t("domain-deletion-warning")}
             </Text>
             <Section className="my-8 text-center">
               <Link
                 className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={`https://app.dub.co/${workspaceSlug}/settings/domains`}
               >
-                Configure domain
+                {t("configure-domain-action")}
               </Link>
             </Section>
             <Text className="text-sm leading-6 text-black">
-              If you do not want to keep this domain on Dub.co, you can{" "}
-              <Link
-                href={`https://app.dub.co/${workspaceSlug}/settings/domains`}
-                className="font-medium text-blue-600 no-underline"
-              >
-                delete it
-              </Link>{" "}
-              or simply ignore this email. To respect your inbox,{" "}
-              {invalidDays < 28
-                ? `we will only send you one more email about this in ${
-                    28 - invalidDays
-                  } days.`
-                : "this will be the last time we will email you about this."}
+              {t("domain-deletion-option", {
+                component0: (
+                  <Link
+                    href={`https://app.dub.co/${workspaceSlug}/settings/domains`}
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {t("domain-deletion-option_component0")}
+                  </Link>
+                ),
+                "28InvalidDays": 28 - invalidDays,
+              })}
             </Text>
             <Footer
               email={email}

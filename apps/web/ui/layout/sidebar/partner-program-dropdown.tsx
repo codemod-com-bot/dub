@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import usePartnerProfile from "@/lib/swr/use-partner-profile";
 import useProgramEnrollments from "@/lib/swr/use-program-enrollments";
@@ -37,6 +38,8 @@ const LINKS = [
 ];
 
 export function PartnerProgramDropdown() {
+  const t = useTranslations("../ui/layout/sidebar");
+
   const { programSlug } = useParams() as { programSlug?: string };
 
   const { partner } = usePartnerProfile();
@@ -110,7 +113,7 @@ export function PartnerProgramDropdown() {
                       "truncate text-xs capitalize leading-tight text-neutral-600",
                     )}
                   >
-                    Partner
+                    {t("partner-title")}
                   </div>
                 </div>
               </Link>
@@ -225,6 +228,8 @@ function ProgramList({
   selectedProgram?: ProgramProps;
   setOpenPopover: (open: boolean) => void;
 }) {
+  const t = useTranslations("../ui/layout/sidebar");
+
   const pathname = usePathname();
 
   const href = useCallback(
@@ -238,7 +243,9 @@ function ProgramList({
   return (
     <div>
       <div className="flex items-center justify-between pb-1">
-        <p className="px-1 text-xs font-medium text-neutral-500">Programs</p>
+        <p className="px-1 text-xs font-medium text-neutral-500">
+          {t("programs-title")}
+        </p>
       </div>
       <div className="flex flex-col gap-0.5">
         {programs.map(({ slug, name, logo }) => {
@@ -272,7 +279,7 @@ function ProgramList({
                     "truncate text-xs capitalize leading-tight text-neutral-600",
                   )}
                 >
-                  Program
+                  {t("program-title")}
                 </div>
               </div>
               {selectedProgram?.slug === slug ? (

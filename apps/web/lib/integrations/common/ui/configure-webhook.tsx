@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -24,6 +25,8 @@ export function ConfigureWebhook({
   webhookId: string;
   supportedEvents: WebhookTrigger[]; // Not all integrations support all events.
 }) {
+  const t = useTranslations("../lib/integrations/common/ui");
+
   const [saving, setSaving] = useState(false);
   const { id: workspaceId, plan, role } = useWorkspace();
 
@@ -95,17 +98,19 @@ export function ConfigureWebhook({
       <div className="w-full rounded-lg border border-gray-200 bg-white">
         <div className="flex items-center gap-x-2 border-b border-gray-200 px-6 py-4">
           <Link className="size-4" />
-          <p className="text-sm font-medium text-gray-700">Webhook events</p>
+          <p className="text-sm font-medium text-gray-700">
+            {t("webhook-events")}
+          </p>
         </div>
 
         <div className="p-4">
           <div>
             <label htmlFor="triggers" className="flex flex-col gap-1">
               <h2 className="text-sm font-medium text-gray-900">
-                Workspace level events
+                {t("workspace-level-events")}
               </h2>
               <span className="text-xs text-gray-500">
-                These events are triggered at the workspace level.
+                {t("workspace-level-events-description")}
               </span>
             </label>
             <div className="mt-3 flex flex-col gap-2">
@@ -154,13 +159,16 @@ export function ConfigureWebhook({
           <div className="mt-6">
             <label htmlFor="triggers" className="flex flex-col gap-1">
               <h2 className="text-sm font-medium text-gray-900">
-                Link level events{" "}
-                <span className="rounded bg-yellow-100 px-1 py-0.5 text-xs font-medium text-yellow-800">
-                  High traffic
-                </span>
+                {t("link-level-events-high-traffic", {
+                  component0: (
+                    <span className="rounded bg-yellow-100 px-1 py-0.5 text-xs font-medium text-yellow-800">
+                      {t("link-level-events-high-traffic_component0")}
+                    </span>
+                  ),
+                })}
               </h2>
               <span className="text-xs text-gray-500">
-                These events are triggered at the link level.
+                {t("link-level-events-description")}
               </span>
             </label>
             <div className="mt-3 flex flex-col gap-2">
@@ -193,7 +201,7 @@ export function ConfigureWebhook({
             {enableLinkSelection || linkIds.length ? (
               <div className="mt-4">
                 <h2 className="text-sm font-medium text-gray-900">
-                  Choose links we should send events for
+                  {t("choose-links-for-events")}
                 </h2>
                 <div className="mt-3">
                   <LinksSelector
@@ -215,7 +223,7 @@ export function ConfigureWebhook({
         <div className="flex items-center justify-end rounded-b-lg border-t border-gray-200 bg-gray-50 px-4 py-3">
           <div className="shrink-0">
             <Button
-              text="Save changes"
+              text={t("save-changes")}
               loading={saving}
               type="submit"
               {...(permissionsError && {

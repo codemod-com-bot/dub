@@ -4,6 +4,7 @@ import { Prisma } from "@dub/prisma/client";
 import { Wordmark } from "@dub/ui";
 import { currencyFormatter } from "@dub/utils";
 import { constructMetadata } from "@dub/utils/src/functions";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 
@@ -53,6 +54,8 @@ export default async function ApplyLayout({
   children,
   params: { programSlug },
 }: PropsWithChildren<{ params: { programSlug: string } }>) {
+  const t = await getTranslations("partners.dub.co/(apply)/[programSlug]");
+
   const program = await getProgram({ slug: programSlug });
 
   if (!program || !program.landerData) {
@@ -67,7 +70,8 @@ export default async function ApplyLayout({
         {/* Footer */}
         <footer className="mt-14 flex flex-col items-center gap-4 py-6 text-center text-xs text-neutral-500">
           <span className="flex items-center gap-1.5">
-            Powered by <Wordmark className="h-3.5" />
+            {t("powered-by")}
+            <Wordmark className="h-3.5" />
           </span>
           <span className="flex items-center gap-2">
             <a
@@ -75,7 +79,7 @@ export default async function ApplyLayout({
               target="_blank"
               className="transition-colors duration-75 hover:text-neutral-600"
             >
-              Terms of Service
+              {t("terms-of-service")}
             </a>
             <span className="text-base text-neutral-200">&bull;</span>
             <a
@@ -83,7 +87,7 @@ export default async function ApplyLayout({
               target="_blank"
               className="transition-colors duration-75 hover:text-neutral-600"
             >
-              Privacy Policy
+              {t("privacy-policy")}
             </a>
           </span>
         </footer>

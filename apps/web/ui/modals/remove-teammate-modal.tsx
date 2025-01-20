@@ -2,6 +2,7 @@ import useWorkspace from "@/lib/swr/use-workspace";
 import { UserProps } from "@/lib/types";
 import { Avatar, BlurImage, Button, Logo, Modal, useMediaQuery } from "@dub/ui";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   Dispatch,
@@ -24,6 +25,8 @@ function RemoveTeammateModal({
   user: UserProps;
   invite?: boolean;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const router = useRouter();
   const [removing, setRemoving] = useState(false);
   const { id: workspaceId, name: workspaceName, logo } = useWorkspace();
@@ -40,7 +43,7 @@ function RemoveTeammateModal({
         {logo ? (
           <BlurImage
             src={logo}
-            alt="Workspace logo"
+            alt={t("workspace-logo")}
             className="h-10 w-10 rounded-full"
             width={20}
             height={20}
@@ -56,20 +59,25 @@ function RemoveTeammateModal({
               : "Remove Teammate"}
         </h3>
         <p className="text-center text-sm text-gray-500">
-          {invite
-            ? "This will revoke "
-            : session?.user?.email === email
-              ? "You're about to leave "
-              : "This will remove "}
-          <span className="font-semibold text-black">
-            {session?.user?.email === email ? workspaceName : name || email}
-          </span>
-          {invite
-            ? "'s invitation to join your workspace. "
-            : session?.user?.email === email
-              ? ". You will lose all access to this workspace. "
-              : " from your workspace. "}
-          Are you sure you want to continue?
+          {t("leave-workspace-confirmation", {
+            inviteThisWillRevokeSessionUserEmailEmailYouReAboutToLeaveThisWillRemove:
+              invite
+                ? "This will revoke "
+                : session?.user?.email === email
+                  ? "You're about to leave "
+                  : "This will remove ",
+            component0: (
+              <span className="font-semibold text-black">
+                {session?.user?.email === email ? workspaceName : name || email}
+              </span>
+            ),
+            inviteSInvitationToJoinYourWorkspaceSessionUserEmailEmailYouWillLoseAllAccessToThisWorkspaceFromYourWorkspace:
+              invite
+                ? "'s invitation to join your workspace. "
+                : session?.user?.email === email
+                  ? ". You will lose all access to this workspace. "
+                  : " from your workspace. ",
+          })}
         </p>
       </div>
 
@@ -82,7 +90,7 @@ function RemoveTeammateModal({
           </div>
         </div>
         <Button
-          text="Confirm"
+          text={t("confirm-button")}
           variant="danger"
           autoFocus={!isMobile}
           loading={removing}

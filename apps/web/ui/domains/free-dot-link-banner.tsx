@@ -1,10 +1,13 @@
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Grid, useLocalStorage } from "@dub/ui";
 import { LinkBroken } from "@dub/ui/icons";
+import { useTranslations } from "next-intl";
 import { useRegisterDomainModal } from "../modals/register-domain-modal";
 import { X } from "../shared/icons";
 
 export function FreeDotLinkBanner() {
+  const t = useTranslations("../ui/domains");
+
   const { id: workspaceId } = useWorkspace();
   const [show, setShow] = useLocalStorage(
     `show-free-dot-link-banner:${workspaceId}`,
@@ -30,15 +33,22 @@ export function FreeDotLinkBanner() {
               <LinkBroken className="m-px size-4 text-green-800" />
             </div>
             <p className="text-sm text-gray-900">
-              Claim a free <span className="font-semibold">.link</span> domain,
-              free for 1 year.{" "}
-              <a
-                href="https://dub.co/help/article/free-dot-link-domain"
-                target="_blank"
-                className="text-gray-700 underline transition-colors hover:text-black"
-              >
-                Learn more
-              </a>
+              {t("claim-free-link-domain", {
+                component0: (
+                  <span className="font-semibold">
+                    {t("claim-free-link-domain_component0")}
+                  </span>
+                ),
+                component1: (
+                  <a
+                    href="https://dub.co/help/article/free-dot-link-domain"
+                    target="_blank"
+                    className="text-gray-700 underline transition-colors hover:text-black"
+                  >
+                    {t("claim-free-link-domain_component1")}
+                  </a>
+                ),
+              })}
             </p>
           </div>
 
@@ -48,7 +58,7 @@ export function FreeDotLinkBanner() {
               className="whitespace-nowrap rounded-md border border-green-700/50 px-3 py-1 text-sm text-gray-800 transition-colors hover:bg-green-500/10"
               onClick={() => setShowRegisterDomainModal(true)}
             >
-              Claim Domain
+              {t("claim-domain")}
             </button>
           </div>
           <button

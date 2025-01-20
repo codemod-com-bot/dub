@@ -1,4 +1,5 @@
 import { Hr, Link, Tailwind, Text } from "@react-email/components";
+import { useTranslations } from "next-intl";
 
 export default function Footer({
   email,
@@ -9,26 +10,30 @@ export default function Footer({
   marketing?: boolean;
   notificationSettingsUrl?: string;
 }) {
+  const t = useTranslations("../emails/components");
+
   if (marketing) {
     return (
       <Tailwind>
         <Hr className="mx-0 my-6 w-full border border-gray-200" />
         <Text className="text-[12px] leading-6 text-gray-500">
-          We send out product update emails once a month – no spam, no nonsense.
-          Don't want to get these emails?{" "}
-          <Link
-            className="text-gray-700 underline"
-            href="https://app.dub.co/account/settings"
-          >
-            Unsubscribe here.
-          </Link>
+          {t("product-update-email-notice", {
+            component0: (
+              <Link
+                className="text-gray-700 underline"
+                href="https://app.dub.co/account/settings"
+              >
+                {t("product-update-email-notice_component0")}
+              </Link>
+            ),
+          })}
         </Text>
         <Text className="text-[12px] text-gray-500">
-          Dub Technologies, Inc.
+          {t("company-name")}
           <br />
-          2261 Market Street STE 5906
+          {t("company-address-line-1")}
           <br />
-          San Francisco, CA 941114
+          {t("company-address-line-2")}
         </Text>
       </Tailwind>
     );
@@ -38,29 +43,31 @@ export default function Footer({
     <Tailwind>
       <Hr className="mx-0 my-6 w-full border border-gray-200" />
       <Text className="text-[12px] leading-6 text-gray-500">
-        This email was intended for <span className="text-black">{email}</span>.
-        If you were not expecting this email, you can ignore this email. If you
-        are concerned about your account's safety, please reply to this email to
-        get in touch with us.
+        {t("email-intended-recipient-notice", {
+          component0: <span className="text-black">{email}</span>,
+        })}
       </Text>
 
       {notificationSettingsUrl && (
         <Text className="text-[12px] leading-6 text-gray-500">
-          Don’t want to get these emails?{" "}
-          <Link
-            className="text-gray-700 underline"
-            href={notificationSettingsUrl}
-          >
-            Adjust your notification settings
-          </Link>
+          {t("adjust-notification-settings-link", {
+            component0: (
+              <Link
+                className="text-gray-700 underline"
+                href={notificationSettingsUrl}
+              >
+                {t("adjust-notification-settings-link_component0")}
+              </Link>
+            ),
+          })}
         </Text>
       )}
       <Text className="text-[12px] text-gray-500">
-        Dub Technologies, Inc.
+        {t("company-name-repeated")}
         <br />
-        2261 Market Street STE 5906
+        {t("company-address-line-1-repeated")}
         <br />
-        San Francisco, CA 941114
+        {t("company-address-line-2-repeated")}
       </Text>
     </Tailwind>
   );

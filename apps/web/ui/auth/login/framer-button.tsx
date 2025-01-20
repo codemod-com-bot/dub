@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -8,13 +9,15 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export const FramerButton = () => {
+  const t = useTranslations("../ui/auth/login");
+
   const searchParams = useSearchParams();
   const next = searchParams?.get("next");
   const [clicked, setClicked] = useState(false);
 
   return (
     <Button
-      text="Login with Framer"
+      text={t("login-with-framer")}
       variant="secondary"
       onClick={() => {
         setClicked(true);

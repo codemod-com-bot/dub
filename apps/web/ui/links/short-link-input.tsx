@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { LinkProps } from "@/lib/types";
@@ -409,6 +410,8 @@ function DefaultDomainPrompt({
   url?: string;
   onChange: (domain: string) => void;
 }) {
+  const t = useTranslations("../ui/links");
+
   if (!url || !domain) return null;
 
   const urlDomain = getDomainWithoutWWW(url);
@@ -434,8 +437,9 @@ function DefaultDomainPrompt({
     >
       <ArrowTurnRight2 className="size-3.5" />
       <p>
-        Use <strong className="font-semibold">{domainSlug}</strong> domain
-        instead?
+        {t("use-domain-instead", {
+          component0: <strong className="font-semibold">{domainSlug}</strong>,
+        })}
       </p>
     </button>
   );

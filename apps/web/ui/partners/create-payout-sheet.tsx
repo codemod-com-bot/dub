@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { createManualPayoutAction } from "@/lib/actions/partners/create-manual-payout";
 import { AnalyticsResponseOptions } from "@/lib/analytics/types";
@@ -85,6 +86,8 @@ function CreatePayoutSheetContent({
   setIsOpen,
   partnerId,
 }: CreatePayoutSheetProps) {
+  const t = useTranslations("../ui/partners");
+
   const dateRangePickerId = useId();
   const { program } = useProgram();
   const { data: partners } = usePartners();
@@ -351,7 +354,7 @@ function CreatePayoutSheetContent({
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Create manual payout
+            {t("create-manual-payout")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button
@@ -367,7 +370,7 @@ function CreatePayoutSheetContent({
               htmlFor={dateRangePickerId}
               className="block text-sm font-medium text-gray-900"
             >
-              Payout period {payoutType === "custom" ? "(optional)" : ""}
+              {t("payout-period-custom-optional")}
             </label>
             <DateRangePicker
               id={dateRangePickerId}
@@ -439,7 +442,7 @@ function CreatePayoutSheetContent({
               htmlFor="type"
               className="flex items-center space-x-2 text-sm font-medium text-gray-900"
             >
-              Reward type
+              {t("reward-type")}
             </label>
             <select
               {...register("type", { required: true })}
@@ -479,14 +482,14 @@ function CreatePayoutSheetContent({
               htmlFor="amount"
               className="flex justify-between text-sm font-medium text-neutral-800"
             >
-              Reward amount
+              {t("reward-amount")}
               {payoutType === "sales" && (
                 <a
                   href={`/${slug}/programs/${programId}/settings`}
                   target="_blank"
                   className="font-normal text-gray-400 underline-offset-2 transition-all hover:text-gray-600 hover:underline"
                 >
-                  Manage
+                  {t("manage")}
                 </a>
               )}
             </label>
@@ -528,12 +531,12 @@ function CreatePayoutSheetContent({
               htmlFor="description"
               className="flex items-center space-x-2 text-sm font-medium text-gray-900"
             >
-              Description (optional)
+              {t("description-optional")}
             </label>
             <textarea
               {...register("description")}
               className="block w-full rounded-md border-gray-300 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-              placeholder="A note to partner about this payout. Max 190 characters."
+              placeholder={t("note-to-partner")}
               maxLength={190}
               onKeyDown={handleKeyDown}
             />
@@ -541,7 +544,9 @@ function CreatePayoutSheetContent({
 
           {partnerId && Object.entries(invoiceData).length > 0 && (
             <div className="flex flex-col gap-2">
-              <p className="text-sm font-medium text-neutral-800">Summary</p>
+              <p className="text-sm font-medium text-neutral-800">
+                {t("summary")}
+              </p>
               <div className="grid grid-cols-2 gap-3 rounded-md border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-600">
                 {Object.entries(invoiceData).map(([key, value]) => (
                   <Fragment key={key}>
@@ -563,14 +568,14 @@ function CreatePayoutSheetContent({
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Cancel"
+            text={t("cancel")}
             className="w-fit"
             disabled={isExecuting}
           />
           <Button
             type="submit"
             variant="primary"
-            text="Create payout"
+            text={t("create-payout")}
             className="w-fit"
             loading={isExecuting}
             disabled={buttonDisabled}

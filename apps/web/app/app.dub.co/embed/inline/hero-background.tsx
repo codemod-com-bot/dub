@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { BlurImage } from "@dub/ui";
 import { useId } from "react";
@@ -10,6 +11,8 @@ export function HeroBackground({
   logo?: string | null;
   color?: string | null;
 }) {
+  const t = useTranslations("app.dub.co/embed/inline");
+
   const id = useId();
 
   const backgroundColor = color || "#737373";
@@ -22,7 +25,7 @@ export function HeroBackground({
         {logo && (
           <BlurImage
             src={logo}
-            alt="Program Logo"
+            alt={t("program-logo")}
             fill
             className="absolute object-cover object-center"
           />

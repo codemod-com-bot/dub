@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { createProgramApplicationAction } from "@/lib/actions/partners/create-program-application";
 import { Program } from "@dub/prisma/client";
@@ -25,6 +26,8 @@ export function ProgramApplicationForm({
 }: {
   program: Pick<Program, "id" | "slug" | "name">;
 }) {
+  const t = useTranslations("partners.dub.co/(apply)/[programSlug]/apply");
+
   const { isMobile } = useMediaQuery();
   const router = useRouter();
   const { data: session } = useSession();
@@ -91,7 +94,9 @@ export function ProgramApplicationForm({
       className="flex flex-col gap-6"
     >
       <label>
-        <span className="text-sm font-medium text-gray-800">Name</span>
+        <span className="text-sm font-medium text-gray-800">
+          {t("name-label")}
+        </span>
         <input
           type="text"
           className={cn(
@@ -100,7 +105,7 @@ export function ProgramApplicationForm({
               ? "border-red-400 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
               : "border-gray-300 text-gray-900 placeholder-gray-400 focus:border-[var(--brand)] focus:ring-[var(--brand)]",
           )}
-          placeholder="Acme, Inc."
+          placeholder={t("company-name-example")}
           autoFocus={!isMobile}
           {...register("name", {
             required: true,
@@ -109,7 +114,9 @@ export function ProgramApplicationForm({
       </label>
 
       <label>
-        <span className="text-sm font-medium text-gray-800">Email</span>
+        <span className="text-sm font-medium text-gray-800">
+          {t("email-label")}
+        </span>
         <input
           type="email"
           className={cn(
@@ -118,7 +125,7 @@ export function ProgramApplicationForm({
               ? "border-red-400 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
               : "border-gray-300 text-gray-900 placeholder-gray-400 focus:border-[var(--brand)] focus:ring-[var(--brand)]",
           )}
-          placeholder="panic@thedis.co"
+          placeholder={t("email-example")}
           {...register("email", {
             required: true,
           })}
@@ -127,8 +134,13 @@ export function ProgramApplicationForm({
 
       <label>
         <span className="text-sm font-medium text-gray-800">
-          Website / Social media channel
-          <span className="font-normal text-neutral-500"> (optional)</span>
+          {t("website-social-media-channel", {
+            component0: (
+              <span className="font-normal text-neutral-500">
+                {t("website-social-media-channel_component0")}
+              </span>
+            ),
+          })}
         </span>
         <input
           type="text"
@@ -138,14 +150,15 @@ export function ProgramApplicationForm({
               ? "border-red-400 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
               : "border-gray-300 text-gray-900 placeholder-gray-400 focus:border-[var(--brand)] focus:ring-[var(--brand)]",
           )}
-          placeholder="https://example.com"
+          placeholder={t("website-example")}
           {...register("website")}
         />
       </label>
 
       <label>
         <span className="text-sm font-medium text-gray-800">
-          How do you plan to promote {program.name}?
+          {t("promotion-plan-question")}
+          {program.name}?
         </span>
         <ReactTextareaAutosize
           className={cn(
@@ -162,8 +175,13 @@ export function ProgramApplicationForm({
 
       <label>
         <span className="text-sm font-medium text-gray-800">
-          Any additional questions or comments?
-          <span className="font-normal text-neutral-500"> (optional)</span>
+          {t("additional-questions-comments", {
+            component0: (
+              <span className="font-normal text-neutral-500">
+                {t("additional-questions-comments_component0")}
+              </span>
+            ),
+          })}
         </span>
         <ReactTextareaAutosize
           className={cn(
@@ -179,7 +197,7 @@ export function ProgramApplicationForm({
       </label>
 
       <Button
-        text="Submit application"
+        text={t("submit-application-button")}
         className="mt-4 enabled:border-[var(--brand)] enabled:bg-[var(--brand)] enabled:hover:bg-[var(--brand)] enabled:hover:ring-[var(--brand-ring)]"
         loading={isLoading}
       />

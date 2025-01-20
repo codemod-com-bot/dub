@@ -15,6 +15,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 const MAX_ERROR_LINKS = 20;
@@ -36,10 +37,14 @@ export function LinksImportErrors({
   workspaceName: string;
   workspaceSlug: string;
 }) {
+  const t = useTranslations("../emails");
+
   return (
     <Html>
       <Head />
-      <Preview>Your {provider} links have been imported</Preview>
+      <Preview>
+        {t("your-provider-links-imported", { provider: provider })}
+      </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
@@ -47,32 +52,39 @@ export function LinksImportErrors({
               <Img
                 src={DUB_WORDMARK}
                 height="40"
-                alt="Dub"
+                alt={t("dub-quote")}
                 className="mx-auto my-0"
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Some {provider} links have failed to import
+              {t("some-provider-links-failed-to-import", {
+                provider: provider,
+              })}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              The following{" "}
-              {Intl.NumberFormat("en-us").format(errorLinks.length)} links from{" "}
-              {provider} failed to import into your Dub.co workspace,{" "}
-              <Link
-                href={`https://app.dub.co/${workspaceSlug}`}
-                className="font-medium text-blue-600 no-underline"
-              >
-                {workspaceName}↗
-              </Link>
-              .
+              {t("following-links")}
+              {Intl.NumberFormat("en-us").format(errorLinks.length)}
+              {t("links-failed-to-import", {
+                provider: provider,
+                component0: (
+                  <Link
+                    href={`https://app.dub.co/${workspaceSlug}`}
+                    className="font-medium text-blue-600 no-underline"
+                  >
+                    {t("links-failed-to-import_component0", {
+                      workspaceName: workspaceName,
+                    })}
+                  </Link>
+                ),
+              })}
             </Text>
             <Section>
               <Row className="pb-2">
                 <Column align="left" className="text-sm text-gray-500">
-                  Link
+                  {t("link-label")}
                 </Column>
                 <Column align="right" className="text-sm text-gray-500">
-                  Error
+                  {t("error-label")}
                 </Column>
               </Row>
               {errorLinks
@@ -103,13 +115,14 @@ export function LinksImportErrors({
             {errorLinks.length > MAX_ERROR_LINKS && (
               <Section className="my-8 text-center">
                 <Text className="text-sm leading-6 text-black">
-                  ...and {errorLinks.length - MAX_ERROR_LINKS} more errors
+                  {t("and-more-errors")}
+                  {errorLinks.length - MAX_ERROR_LINKS}
+                  {t("more-errors")}
                 </Text>
               </Section>
             )}
             <Text className="text-sm leading-6 text-black">
-              Please reply to this email for additional help with your CSV
-              import.
+              {t("reply-for-help-with-csv-import")}
             </Text>
             <Footer email={email} />
           </Container>

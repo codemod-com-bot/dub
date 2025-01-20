@@ -14,6 +14,7 @@ import {
 import { Pen2, QRCode as QRCodeIcon } from "@dub/ui/icons";
 import { DUB_QR_LOGO, linkConstructor } from "@dub/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useMemo, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDebounce } from "use-debounce";
@@ -21,6 +22,8 @@ import { LinkFormData } from ".";
 import { QRCodeDesign, useLinkQRModal } from "../link-qr-modal";
 
 export function QRCodePreview() {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { isMobile } = useMediaQuery();
   const {
     id: workspaceId,
@@ -77,11 +80,13 @@ export function QRCodePreview() {
       <LinkQRModal />
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="text-sm font-medium text-gray-700">QR Code</h2>
+          <h2 className="text-sm font-medium text-gray-700">
+            {t("qr-code-title")}
+          </h2>
           <InfoTooltip
             content={
               <SimpleTooltipContent
-                title="Set a custom QR code design to improve click-through rates."
+                title={t("custom-qr-code-design-description")}
                 cta="Learn more."
                 href="https://dub.co/help/article/custom-qr-codes"
               />
@@ -123,7 +128,7 @@ export function QRCodePreview() {
           <div className="flex size-full flex-col items-center justify-center gap-2">
             <QRCodeIcon className="size-5 text-gray-700" />
             <p className="max-w-32 text-center text-xs text-gray-700">
-              Enter a short link to generate a QR code
+              {t("enter-short-link-prompt")}
             </p>
           </div>
         )}

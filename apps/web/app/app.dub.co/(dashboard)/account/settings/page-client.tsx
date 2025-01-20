@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import DeleteAccountSection from "@/ui/account/delete-account";
 import UpdateDefaultWorkspace from "@/ui/account/update-default-workspace";
@@ -11,13 +12,15 @@ import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
 export default function SettingsPageClient() {
+  const t = useTranslations("app.dub.co/(dashboard)/account/settings");
+
   const { data: session, update, status } = useSession();
 
   return (
     <>
       <Form
-        title="Your Name"
-        description={`This will be your display name on ${APP_NAME}.`}
+        title={t("your-name-label")}
+        description={t("display-name-description", { APP_NAME: APP_NAME })}
         inputAttrs={{
           name: "name",
           defaultValue:
@@ -45,8 +48,8 @@ export default function SettingsPageClient() {
         }
       />
       <Form
-        title="Your Email"
-        description={`This will be the email you use to log in to ${APP_NAME} and receive notifications.`}
+        title={t("your-email-label")}
+        description={t("login-email-description", { APP_NAME: APP_NAME })}
         inputAttrs={{
           name: "email",
           type: "email",

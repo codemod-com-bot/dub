@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useLinks from "@/lib/swr/use-links";
 import { LinkProps } from "@/lib/types";
@@ -30,6 +31,8 @@ export function LinksSelector({
   setSelectedLinkIds: (ids: string[]) => void;
   disabled?: boolean;
 }) {
+  const t = useTranslations("../ui/webhooks");
+
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 500);
 
@@ -83,7 +86,7 @@ export function LinksSelector({
       }}
     >
       {selectedLinkIds.length === 0 ? (
-        <div className="py-0.5">Select links...</div>
+        <div className="py-0.5">{t("select-links")}</div>
       ) : selectedLinks && selectedOptions ? (
         <div className="flex flex-wrap gap-2">
           {selectedOptions.slice(0, 10).map((option) => (

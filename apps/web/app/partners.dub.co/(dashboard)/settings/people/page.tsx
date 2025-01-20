@@ -1,15 +1,18 @@
 import { PageContent } from "@/ui/layout/page-content";
+import { useTranslations } from "next-intl";
 
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { MaxWidthWrapper, UserCheck } from "@dub/ui";
 
 export default function PeopleSettings() {
+  const t = useTranslations("partners.dub.co/(dashboard)/settings/people");
+
   return (
     <PageContent title="People" hideReferButton>
       <MaxWidthWrapper>
         <AnimatedEmptyState
-          title="People"
-          description="Add and manage teammates to this partner profile"
+          title={t("people-label")}
+          description={t("add-manage-teammates")}
           cardContent={
             <>
               <UserCheck className="size-4 text-neutral-700" />

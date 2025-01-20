@@ -16,6 +16,7 @@ import {
   Text,
 } from "@react-email/components";
 import { Link2, MousePointerClick } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Footer from "./components/footer";
 
 export default function ClicksSummary({
@@ -61,13 +62,18 @@ export default function ClicksSummary({
     clicks: number;
   }[];
 }) {
+  const t = useTranslations("../emails");
+
   const notificationSettingsUrl = `https://app.${appDomain}/${workspaceSlug}/settings/notifications`;
 
   return (
     <Html>
       <Head />
       <Preview>
-        Your 30-day {appName} summary for {workspaceName}
+        {t("summary-30-day-appname-workspacename", {
+          appName: appName,
+          workspaceName: workspaceName,
+        })}
       </Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-white font-sans">
@@ -81,14 +87,29 @@ export default function ClicksSummary({
               />
             </Section>
             <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-black">
-              Your 30-day {appName} summary for {workspaceName}
+              {t("summary-30-day-appname-workspacename-alt", {
+                appName: appName,
+                workspaceName: workspaceName,
+              })}
             </Heading>
             <Text className="text-sm leading-6 text-black">
-              In the last 30 days, your {appName} workspace,{" "}
-              <strong>{workspaceName}</strong> received{" "}
-              <strong>{nFormatter(totalClicks)} link clicks</strong>. You also
-              created <strong>{createdLinks} new links</strong> during that
-              time.
+              {t("workspace-activity-summary", {
+                appName: appName,
+                component0: <strong>{workspaceName}</strong>,
+                component1: (
+                  <strong>
+                    {nFormatter(totalClicks)}
+                    {t("workspace-activity-summary_component1")}
+                  </strong>
+                ),
+                component2: (
+                  <strong>
+                    {t("workspace-activity-summary_component2", {
+                      createdLinks: createdLinks,
+                    })}
+                  </strong>
+                ),
+              })}
             </Text>
             <Section>
               <Row>
@@ -97,7 +118,8 @@ export default function ClicksSummary({
                     <MousePointerClick className="h-5 w-5 text-blue-600" />
                   </div>
                   <p className="text-sm font-semibold text-black">
-                    {nFormatter(totalClicks)} clicks
+                    {nFormatter(totalClicks)}
+                    {t("clicks-label")}
                   </p>
                 </Column>
                 <Column align="center">
@@ -105,7 +127,8 @@ export default function ClicksSummary({
                     <Link2 className="h-5 w-5 text-green-600" />
                   </div>
                   <p className="text-sm font-semibold text-black">
-                    {nFormatter(createdLinks)} new links
+                    {nFormatter(createdLinks)}
+                    {t("new-links-label")}
                   </p>
                 </Column>
               </Row>
@@ -113,15 +136,17 @@ export default function ClicksSummary({
             {topLinks.length > 0 && (
               <>
                 <Text className="text-sm leading-6 text-black">
-                  Here are your top {topLinks.length} best performing links:
+                  {t("top-performing-links-intro", {
+                    topLinksLength: topLinks.length,
+                  })}
                 </Text>
                 <Section>
                   <Row className="pb-2">
                     <Column align="left" className="text-sm text-gray-500">
-                      Link
+                      {t("link-header")}
                     </Column>
                     <Column align="right" className="text-sm text-gray-500">
-                      Clicks
+                      {t("clicks-header")}
                     </Column>
                   </Row>
                   {topLinks.map(({ link, clicks }, index) => {
@@ -157,9 +182,7 @@ export default function ClicksSummary({
             {createdLinks === 0 ? (
               <>
                 <Text className="text-sm leading-6 text-black">
-                  It looks like you haven't created any links in the last 30
-                  days. If there's anything that we can do to help, please reply
-                  to this email to get in touch with us.
+                  {t("no-links-created-message")}
                 </Text>
 
                 <Section className="my-8 text-center">
@@ -167,21 +190,21 @@ export default function ClicksSummary({
                     className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                     href={`https://app.${appDomain}/${workspaceSlug}`}
                   >
-                    Start creating links
+                    {t("start-creating-links-button")}
                   </Link>
                 </Section>
               </>
             ) : (
               <>
                 <Text className="mt-10 text-sm leading-6 text-black">
-                  You can view your full stats by clicking the button below.
+                  {t("view-full-stats-message")}
                 </Text>
                 <Section className="my-8 text-center">
                   <Link
                     className="rounded-full bg-black px-6 py-3 text-center text-[12px] font-semibold text-white no-underline"
                     href={`https://app.${appDomain}/${workspaceSlug}/analytics?interval=30d`}
                   >
-                    View my stats
+                    {t("view-my-stats-button")}
                   </Link>
                 </Section>
               </>

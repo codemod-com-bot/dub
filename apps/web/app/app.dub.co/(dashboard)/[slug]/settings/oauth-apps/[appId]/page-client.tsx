@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { generateClientSecret } from "@/lib/actions/generate-client-secret";
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
@@ -26,6 +27,10 @@ import { toast } from "sonner";
 import useSWR from "swr";
 
 export default function OAuthAppManagePageClient({ appId }: { appId: string }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/oauth-apps/[appId]",
+  );
+
   const searchParams = useSearchParams();
   const { slug, id: workspaceId, role } = useWorkspace();
   const [openPopover, setOpenPopover] = useState(false);
@@ -76,7 +81,7 @@ export default function OAuthAppManagePageClient({ appId }: { appId: string }) {
         >
           <ChevronLeft className="size-4" />
           <p className="text-sm font-medium text-gray-500">
-            Back to OAuth Apps
+            {t("back-to-oauth-apps")}
           </p>
         </Link>
         <div className="flex justify-between gap-2 sm:items-center">
@@ -96,7 +101,9 @@ export default function OAuthAppManagePageClient({ appId }: { appId: string }) {
                 {oAuthApp?.logo ? (
                   <BlurImage
                     src={oAuthApp.logo}
-                    alt={`Logo for ${oAuthApp.name}`}
+                    alt={t("logo-for-oauth-app", {
+                      oAuthAppName: oAuthApp.name,
+                    })}
                     className="size-8 rounded-full border border-gray-200"
                     width={20}
                     height={20}
@@ -133,7 +140,7 @@ export default function OAuthAppManagePageClient({ appId }: { appId: string }) {
                 />
                 {!oAuthApp?.verified && (
                   <Button
-                    text="Submit for review"
+                    text={t("submit-for-review")}
                     variant="outline"
                     icon={<Upload className="h-4 w-4" />}
                     className="h-9 justify-start px-2"
@@ -144,7 +151,7 @@ export default function OAuthAppManagePageClient({ appId }: { appId: string }) {
                   />
                 )}
                 <Button
-                  text="Remove application"
+                  text={t("remove-application")}
                   variant="danger-outline"
                   icon={<Trash className="h-4 w-4" />}
                   className="h-9 justify-start px-2"

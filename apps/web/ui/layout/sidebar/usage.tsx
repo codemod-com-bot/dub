@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import ManageSubscriptionButton from "@/ui/workspaces/manage-subscription-button";
@@ -26,6 +27,8 @@ export function Usage() {
 }
 
 function UsageInner() {
+  const t = useTranslations("../ui/layout/sidebar");
+
   const {
     usage,
     usageLimit,
@@ -85,14 +88,14 @@ function UsageInner() {
             className="group flex items-center gap-0.5 text-sm font-normal text-neutral-500 transition-colors hover:text-neutral-700"
             href={`/${slug}/settings/billing`}
           >
-            Usage
+            {t("usage")}
             <ChevronRight className="size-3 text-neutral-400 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-neutral-500" />
           </Link>
 
           <div className="mt-4 flex flex-col gap-4">
             <UsageRow
               icon={CursorRays}
-              label="Events"
+              label={t("events-label")}
               usage={usage}
               limit={usageLimit}
               showNextPlan={hovered}
@@ -101,7 +104,7 @@ function UsageInner() {
             />
             <UsageRow
               icon={Hyperlink}
-              label="Links"
+              label={t("links-label")}
               usage={linksUsage}
               limit={linksLimit}
               showNextPlan={hovered}
@@ -112,7 +115,7 @@ function UsageInner() {
               <UsageRow
                 ref={setSalesRef}
                 icon={CircleDollar}
-                label="Sales"
+                label={t("sales-label")}
                 usage={salesUsage}
                 limit={salesLimit}
                 showNextPlan={hovered}
@@ -145,7 +148,7 @@ function UsageInner() {
 
           {paymentFailedAt ? (
             <ManageSubscriptionButton
-              text="Update Payment Method"
+              text={t("update-payment-method")}
               variant="primary"
               className="mt-4 w-full"
               onMouseEnter={() => {

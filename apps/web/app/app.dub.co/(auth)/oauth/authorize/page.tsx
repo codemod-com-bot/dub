@@ -7,6 +7,7 @@ import { BlurImage, Logo } from "@dub/ui";
 import { CircleWarning, CubeSettings } from "@dub/ui/icons";
 import { HOME_DOMAIN, constructMetadata } from "@dub/utils";
 import { ArrowLeftRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { AuthorizeForm } from "./authorize-form";
@@ -25,6 +26,8 @@ export default async function Authorize({
 }: {
   searchParams?: z.infer<typeof authorizeRequestSchema>;
 }) {
+  const t = await getTranslations("app.dub.co/(auth)/oauth/authorize");
+
   const session = await getSession();
 
   if (!session) {
@@ -38,7 +41,7 @@ export default async function Authorize({
     return (
       <EmptyState
         icon={CubeSettings}
-        title="Invalid OAuth Request"
+        title={t("invalid-oauth-request")}
         description={error}
       />
     );
@@ -52,7 +55,9 @@ export default async function Authorize({
             {integration.logo ? (
               <BlurImage
                 src={integration.logo}
-                alt={`Logo for ${integration.name}`}
+                alt={t("logo-for-integration", {
+                  integrationName: integration.name,
+                })}
                 className="size-12 rounded-full border border-gray-200"
                 width={20}
                 height={20}
@@ -68,25 +73,29 @@ export default async function Authorize({
         </div>
 
         <p className="text-md">
-          <span className="font-bold">{integration.name}</span> is requesting
-          API access to a workspace on Dub.
+          {t("integration-requesting-api-access", {
+            component0: <span className="font-bold">{integration.name}</span>,
+          })}
         </p>
         <span className="text-xs text-gray-500">
-          Built by{" "}
-          <a
-            href={integration.website}
-            target="_blank"
-            rel="noreferrer"
-            className="underline"
-          >
-            {integration.developer}
-          </a>
+          {t("built-by-integration-developer-link", {
+            component0: (
+              <a
+                href={integration.website}
+                target="_blank"
+                rel="noreferrer"
+                className="underline"
+              >
+                {integration.developer}
+              </a>
+            ),
+          })}
         </span>
 
         {!integration.verified && (
           <div className="flex items-center gap-2 rounded-md bg-yellow-50 p-2 text-sm text-yellow-700">
             <CircleWarning className="size-4" />
-            <span>Dub hasn't verified this app</span>
+            <span>{t("app-not-verified-by-dub")}</span>
           </div>
         )}
       </div>

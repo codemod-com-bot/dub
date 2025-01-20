@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -31,6 +32,8 @@ export default function AddEditWebhookForm({
   webhook: WebhookProps | null;
   newSecret?: string;
 }) {
+  const t = useTranslations("../ui/webhooks");
+
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const { slug: workspaceSlug, id: workspaceId, role } = useWorkspace();
@@ -121,7 +124,7 @@ export default function AddEditWebhookForm({
       >
         <div>
           <label htmlFor="name" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">Name</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t("name")}</h2>
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
             <input
@@ -136,7 +139,7 @@ export default function AddEditWebhookForm({
               onChange={(e) => setData({ ...data, name: e.target.value })}
               autoFocus
               autoComplete="off"
-              placeholder="Webhook name"
+              placeholder={t("webhook-name")}
               disabled={updateDisabled}
             />
           </div>
@@ -144,7 +147,7 @@ export default function AddEditWebhookForm({
 
         <div>
           <label htmlFor="url" className="flex items-center space-x-2">
-            <h2 className="text-sm font-medium text-gray-900">URL</h2>
+            <h2 className="text-sm font-medium text-gray-900">{t("url")}</h2>
           </label>
           <div className="relative mt-2 rounded-md shadow-sm">
             <input
@@ -158,7 +161,7 @@ export default function AddEditWebhookForm({
               value={url}
               onChange={(e) => setData({ ...data, url: e.target.value })}
               autoComplete="off"
-              placeholder="Webhook URL"
+              placeholder={t("webhook-url")}
               disabled={updateDisabled}
             />
           </div>
@@ -167,7 +170,7 @@ export default function AddEditWebhookForm({
         <div className="space-y-2">
           <label className="flex items-center space-x-2">
             <h2 className="text-sm font-medium text-gray-900">
-              Signing secret
+              {t("signing-secret")}
             </h2>
             <InfoTooltip content="A secret token used to sign the webhook payload." />
           </label>
@@ -184,10 +187,10 @@ export default function AddEditWebhookForm({
         <div className="rounded-md border border-gray-200 p-4">
           <label htmlFor="triggers" className="flex flex-col gap-1">
             <h2 className="text-sm font-medium text-gray-900">
-              Workspace level events
+              {t("workspace-level-events")}
             </h2>
             <span className="text-xs text-gray-500">
-              These events are triggered at the workspace level.
+              {t("workspace-level-events-description")}
             </span>
           </label>
           <div className="mt-3 flex flex-col gap-2">
@@ -221,13 +224,16 @@ export default function AddEditWebhookForm({
         <div className="rounded-md border border-gray-200 p-4">
           <label htmlFor="triggers" className="flex flex-col gap-1">
             <h2 className="text-sm font-medium text-gray-900">
-              Link level events{" "}
-              <span className="rounded bg-yellow-100 px-1 py-0.5 text-xs font-medium text-yellow-800">
-                High traffic
-              </span>
+              {t("link-level-events-high-traffic", {
+                component0: (
+                  <span className="rounded bg-yellow-100 px-1 py-0.5 text-xs font-medium text-yellow-800">
+                    {t("link-level-events-high-traffic_component0")}
+                  </span>
+                ),
+              })}
             </h2>
             <span className="text-xs text-gray-500">
-              These events are triggered at the link level.
+              {t("link-level-events-description")}
             </span>
           </label>
           <div className="mt-3 flex flex-col gap-2">
@@ -260,7 +266,7 @@ export default function AddEditWebhookForm({
           {enableLinkSelection || linkIds.length ? (
             <div className="mt-4">
               <h2 className="text-sm font-medium text-gray-900">
-                Choose links we should send events for
+                {t("choose-links-for-events")}
               </h2>
               <div className="mt-3">
                 <LinksSelector
