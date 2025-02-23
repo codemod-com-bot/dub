@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import {
   Cards,
@@ -39,6 +40,8 @@ const OPTIONS = [
 ];
 
 export function Personalization() {
+  const t = useTranslations("../ui/placeholders/feature-graphics");
+
   return (
     <div
       className="size-full overflow-clip [mask-image:linear-gradient(black_70%,transparent)]"
@@ -46,7 +49,7 @@ export function Personalization() {
       tabIndex={-1}
     >
       <div className="mx-3.5 flex cursor-default flex-col gap-3 rounded-xl border border-neutral-200 bg-white p-5 shadow-[0_20px_20px_0_#00000017]">
-        <h3 className="text-base font-medium">Link customization</h3>
+        <h3 className="text-base font-medium">{t("link-customization")}</h3>
 
         <div className="flex flex-col gap-2.5">
           {OPTIONS.map(({ label, icon: Icon, checked }) => (

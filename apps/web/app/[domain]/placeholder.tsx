@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { ButtonLink } from "@/ui/placeholders/button-link";
 import { CTA } from "@/ui/placeholders/cta";
@@ -16,6 +17,8 @@ const UTM_PARAMS = {
 };
 
 export default function PlaceholderContent() {
+  const t = useTranslations("[domain]");
+
   const { domain } = useParams() as { domain: string };
 
   return (
@@ -34,7 +37,7 @@ export default function PlaceholderContent() {
               "animate-slide-up-fade motion-reduce:animate-fade-in [--offset:20px] [animation-duration:1s] [animation-fill-mode:both]",
             )}
           >
-            Welcome to Dub
+            {t("welcome-to-dub")}
           </h1>
           <p
             className={cn(
@@ -42,8 +45,7 @@ export default function PlaceholderContent() {
               "animate-slide-up-fade motion-reduce:animate-fade-in [--offset:10px] [animation-delay:200ms] [animation-duration:1s] [animation-fill-mode:both]",
             )}
           >
-            This custom domain is powered by Dub &ndash; the link management
-            platform designed for modern marketing teams.
+            {t("custom-domain-powered-by-dub")}
           </p>
         </div>
 
@@ -54,7 +56,7 @@ export default function PlaceholderContent() {
           )}
         >
           <ButtonLink variant="primary" href="https://d.to/register">
-            Try Dub today
+            {t("try-dub-today")}
           </ButtonLink>
           <ButtonLink
             variant="secondary"
@@ -64,7 +66,7 @@ export default function PlaceholderContent() {
               utm_content: "Learn more",
             })}
           >
-            Learn more
+            {t("learn-more")}
           </ButtonLink>
         </div>
       </Hero>

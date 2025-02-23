@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspaces from "@/lib/swr/use-workspaces";
 import { ModalContext } from "@/ui/modals/modal-provider";
@@ -7,17 +8,21 @@ import { FREE_WORKSPACES_LIMIT } from "@dub/utils";
 import { useContext } from "react";
 
 export default function CreateWorkspaceButton() {
+  const t = useTranslations("../ui/workspaces");
+
   const { setShowAddWorkspaceModal } = useContext(ModalContext);
   const { freeWorkspaces, exceedingFreeWorkspaces } = useWorkspaces();
 
   return (
     <div>
       <Button
-        text="Create workspace"
+        text={t("create-workspace")}
         disabledTooltip={
           exceedingFreeWorkspaces ? (
             <TooltipContent
-              title={`You can only create up to ${FREE_WORKSPACES_LIMIT} free workspaces. Additional workspaces require a paid plan.`}
+              title={t("free-workspaces-limit-message", {
+                FREE_WORKSPACES_LIMIT: FREE_WORKSPACES_LIMIT,
+              })}
               cta="Upgrade to Pro"
               href={
                 freeWorkspaces

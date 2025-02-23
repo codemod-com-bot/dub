@@ -1,6 +1,9 @@
 import { cn } from "@dub/utils";
+import { useTranslations } from "next-intl";
 
 export function Collaboration() {
+  const t = useTranslations("../ui/placeholders/feature-graphics");
+
   return (
     <div
       className="size-full pt-5 [mask-image:linear-gradient(black_50%,transparent)]"
@@ -10,7 +13,7 @@ export function Collaboration() {
         <div className="absolute -top-px left-1/2 flex h-7 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_2px_4px_#EA590D80]">
           <BadgeCap />
           <div className="-mx-px flex h-full items-center bg-orange-600 px-2 font-mono text-sm tracking-wide text-white">
-            SAML SSO
+            {t("saml-sso")}
           </div>
           <BadgeCap className="-scale-x-100" />
         </div>

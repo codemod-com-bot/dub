@@ -1,14 +1,17 @@
 import { Logo } from "@dub/ui";
 import { cn } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export function ModalHero() {
+  const t = useTranslations("../ui/shared");
+
   return (
     <div className="relative h-48 w-full overflow-hidden bg-white">
       <BackgroundGradient className="opacity-15" />
       <Image
         src="https://assets.dub.co/misc/welcome-modal-background.svg"
-        alt="Welcome to Dub"
+        alt={t("welcome-to-dub")}
         fill
         className="object-cover object-top"
       />

@@ -12,6 +12,7 @@ import {
   Users,
 } from "@dub/ui";
 import { cn } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -27,6 +28,8 @@ export const FolderActions = ({
   folder: FolderSummary;
   onDelete?: () => void;
 }) => {
+  const t = useTranslations("../ui/folders");
+
   const router = useRouter();
   const { slug: workspaceSlug } = useWorkspace();
   const [openPopover, setOpenPopover] = useState(false);
@@ -92,7 +95,7 @@ export const FolderActions = ({
           <div className="grid w-full divide-y divide-neutral-200 sm:w-52">
             <div className="grid gap-px p-2">
               <Button
-                text="Analytics"
+                text={t("analytics")}
                 variant="outline"
                 onClick={() => {
                   setOpenPopover(false);
@@ -105,7 +108,7 @@ export const FolderActions = ({
                 className="h-9 px-2 font-medium"
               />
               <Button
-                text="Members"
+                text={t("members")}
                 variant="outline"
                 onClick={() => {
                   setOpenPopover(false);
@@ -118,7 +121,7 @@ export const FolderActions = ({
             </div>
             <div className="grid gap-px p-2">
               <Button
-                text="Copy Folder ID"
+                text={t("copy-folder-id")}
                 variant="outline"
                 onClick={() => copyFolderId()}
                 icon={
@@ -135,7 +138,7 @@ export const FolderActions = ({
               {canUpdateFolder && (
                 <>
                   <Button
-                    text="Rename"
+                    text={t("rename")}
                     variant="outline"
                     onClick={() => {
                       setOpenPopover(false);
@@ -146,7 +149,7 @@ export const FolderActions = ({
                     className="h-9 px-2 font-medium"
                   />
                   <Button
-                    text="Delete"
+                    text={t("delete")}
                     variant="danger-outline"
                     onClick={() => {
                       setOpenPopover(false);

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { FolderSwitcher } from "@/ui/folders/folder-switcher";
@@ -8,7 +9,9 @@ import { FolderSwitcher } from "@/ui/folders/folder-switcher";
  * We can remove this component when removing the linkFolders feature flag
  */
 export function LinksTitle() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]");
+
   const { flags } = useWorkspace();
 
-  return flags?.linkFolders ? <FolderSwitcher /> : <h1>Links</h1>;
+  return flags?.linkFolders ? <FolderSwitcher /> : <h1>{t("links")}</h1>;
 }

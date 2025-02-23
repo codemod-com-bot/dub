@@ -8,11 +8,16 @@ import {
   DICEBEAR_AVATAR_URL,
   fetcher,
 } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 
 export function TopPartners() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]",
+  );
+
   const { slug, programId } = useParams();
   const { id: workspaceId } = useWorkspace();
 
@@ -27,7 +32,7 @@ export function TopPartners() {
     <div className="rounded-md border border-neutral-200">
       <div className="flex items-center justify-between border-b border-neutral-200 p-5">
         <h2 className="text-base font-semibold text-neutral-900">
-          Top partners
+          {t("top-partners")}
         </h2>
 
         <Link
@@ -37,7 +42,7 @@ export function TopPartners() {
             "flex h-7 items-center rounded-lg border px-2 text-sm",
           )}
         >
-          View all
+          {t("view-all")}
         </Link>
       </div>
       <div className="p-3">
@@ -93,7 +98,7 @@ export function TopPartners() {
             </div>
           ) : (
             <div className="flex size-full items-center justify-center text-sm text-neutral-500">
-              No partners found
+              {t("no-partners-found")}
             </div>
           )}
         </div>

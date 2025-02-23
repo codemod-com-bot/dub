@@ -9,6 +9,7 @@ import { prisma } from "@dub/prisma";
 import { InputPassword, LoadingSpinner } from "@dub/ui";
 import { VerificationToken } from "@prisma/client";
 import { waitUntil } from "@vercel/functions";
+import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import ConfirmEmailChangePageClient from "./page-client";
@@ -21,14 +22,18 @@ interface PageProps {
 }
 
 export default async function ConfirmEmailChangePage(props: PageProps) {
+  const t = await getTranslations(
+    "app.dub.co/(auth)/auth/confirm-email-change/[token]",
+  );
+
   return (
     <div className="flex flex-col items-center justify-center gap-6 text-center">
       <Suspense
         fallback={
           <EmptyState
             icon={LoadingSpinner}
-            title="Verifying Email Change"
-            description="Verifying your email change request. This might take a few seconds..."
+            title={t("verifying-email-change")}
+            description={t("verifying-email-change-request")}
           />
         }
       >
@@ -42,6 +47,10 @@ const VerifyEmailChange = async ({
   params: { token },
   searchParams,
 }: PageProps) => {
+  const t = await getTranslations(
+    "app.dub.co/(auth)/auth/confirm-email-change/[token]",
+  );
+
   const tokenFound = await prisma.verificationToken.findUnique({
     where: {
       token: await hashToken(token, { secret: true }),
@@ -52,8 +61,8 @@ const VerifyEmailChange = async ({
     return (
       <EmptyState
         icon={InputPassword}
-        title="Invalid Token"
-        description="This token is invalid or expired. Please request a new one."
+        title={t("invalid-token")}
+        description={t("invalid-or-expired-token")}
       />
     );
   }
@@ -67,8 +76,8 @@ const VerifyEmailChange = async ({
     return (
       <EmptyState
         icon={InputPassword}
-        title="Email Change Request Cancelled"
-        description="Your email change request has been cancelled. No changes have been made to your account. You can close this page."
+        title={t("email-change-request-cancelled")}
+        description={t("email-change-request-cancellation-message")}
       />
     );
   }
@@ -91,8 +100,8 @@ const VerifyEmailChange = async ({
     return (
       <EmptyState
         icon={InputPassword}
-        title="Invalid Token"
-        description="This token is invalid. Please request a new one."
+        title={t("duplicate-invalid-token")}
+        description={t("request-new-token")}
       />
     );
   }

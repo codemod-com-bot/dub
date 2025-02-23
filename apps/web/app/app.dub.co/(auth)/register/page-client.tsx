@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import {
   RegisterProvider,
@@ -18,42 +19,54 @@ export default function RegisterPageClient() {
 }
 
 function SignUp() {
+  const t = useTranslations("app.dub.co/(auth)/register");
+
   return (
     <>
       <div className="w-full max-w-md overflow-hidden border-y border-neutral-200 sm:rounded-2xl sm:border sm:shadow-sm">
         <div className="border-b border-neutral-200 bg-white pb-6 pt-8 text-center">
-          <h3 className="text-lg font-semibold">Get started with Dub</h3>
+          <h3 className="text-lg font-semibold">{t("get-started-with-dub")}</h3>
         </div>
         <div className="bg-neutral-50 px-4 py-8 sm:px-16">
           <SignUpForm />
         </div>
       </div>
       <p className="mt-4 text-center text-sm text-neutral-500">
-        Already have an account?&nbsp;
-        <Link
-          href="/login"
-          className="font-semibold text-neutral-500 underline underline-offset-2 transition-colors hover:text-black"
-        >
-          Sign in
-        </Link>
+        {t("already-have-an-account-sign-in", {
+          component0: (
+            <Link
+              href="/login"
+              className="font-semibold text-neutral-500 underline underline-offset-2 transition-colors hover:text-black"
+            >
+              {t("already-have-an-account-sign-in_component0")}
+            </Link>
+          ),
+        })}
       </p>
     </>
   );
 }
 
 function Verify() {
+  const t = useTranslations("app.dub.co/(auth)/register");
+
   const { email } = useRegisterContext();
 
   return (
     <>
       <div className="w-full max-w-md overflow-hidden border-y border-neutral-200 sm:rounded-2xl sm:border sm:shadow-sm">
         <div className="flex flex-col items-center justify-center gap-3 border-b border-neutral-200 bg-white px-4 pb-6 pt-8 text-center sm:px-16">
-          <h3 className="text-xl font-semibold">Verify your email address</h3>
+          <h3 className="text-xl font-semibold">
+            {t("verify-your-email-address")}
+          </h3>
           <p className="text-sm text-neutral-500">
-            Enter the six digit verification code sent to{" "}
-            <strong className="font-medium text-neutral-600" title={email}>
-              {truncate(email, 30)}
-            </strong>
+            {t("enter-verification-code", {
+              component0: (
+                <strong className="font-medium text-neutral-600" title={email}>
+                  {truncate(email, 30)}
+                </strong>
+              ),
+            })}
           </p>
         </div>
         <div className="bg-neutral-50 px-4 py-8 sm:px-16">
@@ -61,13 +74,16 @@ function Verify() {
         </div>
       </div>
       <p className="mt-4 text-center text-sm text-neutral-500">
-        Already have an account?&nbsp;
-        <Link
-          href="/login"
-          className="font-semibold text-neutral-500 underline underline-offset-2 transition-colors hover:text-black"
-        >
-          Sign in
-        </Link>
+        {t("already-have-an-account-sign-in-duplicate", {
+          component0: (
+            <Link
+              href="/login"
+              className="font-semibold text-neutral-500 underline underline-offset-2 transition-colors hover:text-black"
+            >
+              {t("already-have-an-account-sign-in-duplicate_component0")}
+            </Link>
+          ),
+        })}
       </p>
     </>
   );

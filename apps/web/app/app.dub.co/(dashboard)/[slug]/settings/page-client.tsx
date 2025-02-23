@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -12,6 +13,8 @@ import { toast } from "sonner";
 import { mutate } from "swr";
 
 export default function WorkspaceSettingsClient() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings");
+
   const router = useRouter();
   const { id, name, slug, role } = useWorkspace();
 
@@ -25,15 +28,17 @@ export default function WorkspaceSettingsClient() {
   return (
     <>
       <Form
-        title="Workspace Name"
-        description={`This is the name of your workspace on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
+        title={t("workspace-name-label")}
+        description={t("workspace-name-description", {
+          processEnvNextPublicAppName: process.env.NEXT_PUBLIC_APP_NAME,
+        })}
         inputAttrs={{
           name: "name",
           defaultValue: name,
           placeholder: "My Workspace",
           maxLength: 32,
         }}
-        helpText="Max 32 characters."
+        helpText={t("max-characters-limit")}
         disabledTooltip={permissionsError || undefined}
         handleSubmit={(updateData) =>
           fetch(`/api/workspaces/${id}`, {
@@ -57,8 +62,10 @@ export default function WorkspaceSettingsClient() {
         }
       />
       <Form
-        title="Workspace Slug"
-        description={`This is your workspace's unique slug on ${process.env.NEXT_PUBLIC_APP_NAME}.`}
+        title={t("workspace-slug-label")}
+        description={t("workspace-slug-description", {
+          processEnvNextPublicAppName: process.env.NEXT_PUBLIC_APP_NAME,
+        })}
         inputAttrs={{
           name: "slug",
           defaultValue: slug,
@@ -66,7 +73,7 @@ export default function WorkspaceSettingsClient() {
           pattern: "^[a-z0-9-]+$",
           maxLength: 48,
         }}
-        helpText="Only lowercase letters, numbers, and dashes. Max 48 characters."
+        helpText={t("slug-format-requirements")}
         disabledTooltip={permissionsError || undefined}
         handleSubmit={(data) =>
           fetch(`/api/workspaces/${id}`, {

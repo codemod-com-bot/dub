@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useDomain from "@/lib/swr/use-domain";
 import useFolders from "@/lib/swr/use-folders";
@@ -177,6 +178,8 @@ function UnverifiedTooltip({
   _key,
   children,
 }: PropsWithChildren<{ domain: string; _key: string }>) {
+  const t = useTranslations("../ui/links");
+
   const { slug } = useWorkspace();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -190,7 +193,7 @@ function UnverifiedTooltip({
         <Tooltip
           content={
             <TooltipContent
-              title="Your branded links won't work until you verify your domain."
+              title={t("branded-links-verification-required")}
               cta="Verify your domain"
               href={`/${slug}/settings/domains`}
             />

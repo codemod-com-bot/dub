@@ -1,4 +1,5 @@
 "use client";
+import { getTranslations } from "next-intl/server";
 
 import { EmptyState, LoadingSpinner } from "@dub/ui";
 import { useSession } from "next-auth/react";
@@ -7,6 +8,10 @@ import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
 export default async function ConfirmEmailChangePageClient() {
+  const t = await getTranslations(
+    "app.dub.co/(auth)/auth/confirm-email-change/[token]",
+  );
+
   const router = useRouter();
   const { update, status } = useSession();
   const hasUpdatedSession = useRef(false);
@@ -29,8 +34,8 @@ export default async function ConfirmEmailChangePageClient() {
   return (
     <EmptyState
       icon={LoadingSpinner}
-      title="Verifying Email Change"
-      description="Verifying your email change request. This might take a few seconds..."
+      title={t("verifying-email-change")}
+      description={t("verifying-email-change-request")}
     />
   );
 }

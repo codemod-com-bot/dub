@@ -10,6 +10,7 @@ import {
   useMediaQuery,
 } from "@dub/ui";
 import { DICEBEAR_AVATAR_URL } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -20,6 +21,8 @@ interface AddFolderFormProps {
 }
 
 export const AddFolderForm = ({ onSuccess, onCancel }: AddFolderFormProps) => {
+  const t = useTranslations("../ui/folders");
+
   const workspace = useWorkspace();
   const [step, setStep] = useState(1);
   const { isMobile } = useMediaQuery();
@@ -70,7 +73,7 @@ export const AddFolderForm = ({ onSuccess, onCancel }: AddFolderFormProps) => {
         </option>
       ))}
       <option value="" key="no-access">
-        No access
+        {t("no-access")}
       </option>
     </select>
   );
@@ -84,8 +87,7 @@ export const AddFolderForm = ({ onSuccess, onCancel }: AddFolderFormProps) => {
 
         {step === 2 && (
           <p className="text-sm text-neutral-500">
-            Set the default folder access for the workspace. Individual user
-            permissions can be set in the folder settings.
+            {t("default-folder-access-description")}
           </p>
         )}
       </div>
@@ -96,7 +98,7 @@ export const AddFolderForm = ({ onSuccess, onCancel }: AddFolderFormProps) => {
             {step === 1 ? (
               <div className="mt-6">
                 <label className="text-sm font-normal text-neutral-500">
-                  Name
+                  {t("name-label")}
                 </label>
                 <div className="mt-2 flex rounded-md border border-neutral-300 bg-white">
                   <input
@@ -105,7 +107,7 @@ export const AddFolderForm = ({ onSuccess, onCancel }: AddFolderFormProps) => {
                     autoComplete="off"
                     className="block w-full rounded-md border-0 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-0 sm:text-sm"
                     aria-invalid="true"
-                    placeholder="Acme Links"
+                    placeholder={t("workspace-name-acme-links")}
                     autoFocus={!isMobile}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -121,7 +123,7 @@ export const AddFolderForm = ({ onSuccess, onCancel }: AddFolderFormProps) => {
             ) : (
               <div className="mt-6">
                 <label className="text-sm font-normal text-neutral-500">
-                  Workspace access
+                  {t("workspace-access-label")}
                 </label>
                 <div className="mt-2 flex h-10 items-center justify-between rounded-md border border-neutral-300 bg-white">
                   <div className="flex items-center gap-2 pl-2">
@@ -142,7 +144,9 @@ export const AddFolderForm = ({ onSuccess, onCancel }: AddFolderFormProps) => {
                     <Tooltip
                       content={
                         <TooltipContent
-                          title="You can only set custom folder permissions on a Business plan and above."
+                          title={t(
+                            "custom-folder-permissions-require-business-plan",
+                          )}
                           cta="Upgrade to Business"
                           href={`/${workspace.slug}/upgrade?exit=close`}
                           target="_blank"

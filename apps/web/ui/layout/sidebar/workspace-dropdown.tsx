@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspaces from "@/lib/swr/use-workspaces";
 import { PlanProps, WorkspaceProps } from "@/lib/types";
@@ -169,6 +170,8 @@ function WorkspaceList({
   workspaces: WorkspaceProps[];
   setOpenPopover: (open: boolean) => void;
 }) {
+  const t = useTranslations("../ui/layout/sidebar");
+
   const { setShowAddWorkspaceModal } = useContext(ModalContext);
   const { domain, key, programId } = useParams() as {
     domain?: string;
@@ -220,7 +223,7 @@ function WorkspaceList({
         <div className="p-2">
           <div className="flex items-center justify-between pb-1">
             <p className="px-1 text-xs font-medium text-neutral-500">
-              Workspaces
+              {t("workspaces-title")}
             </p>
           </div>
           <div className="flex flex-col gap-0.5">
@@ -278,7 +281,9 @@ function WorkspaceList({
               className="group flex w-full cursor-pointer items-center gap-x-2 rounded-md p-2 text-neutral-700 transition-all duration-75 hover:bg-neutral-200/50 active:bg-neutral-200/80"
             >
               <Plus className="mx-1.5 size-4 text-neutral-500" />
-              <span className="block truncate">Create new workspace</span>
+              <span className="block truncate">
+                {t("create-new-workspace")}
+              </span>
             </button>
           </div>
         </div>

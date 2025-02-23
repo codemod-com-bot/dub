@@ -4,6 +4,8 @@ import { prisma } from "@dub/prisma";
 import { Avatar } from "@dub/ui";
 import { cn, formatDate, truncate } from "@dub/utils";
 import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -12,15 +14,19 @@ export default function EnabledIntegrationsPage({
 }: {
   params: { slug: string };
 }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations/enabled",
+  );
+
   return (
     <div className="mx-auto flex w-full max-w-screen-md flex-col gap-8">
       <BackLink href={`/${params.slug}/settings/integrations`}>
-        Integrations
+        {t("integrations-title")}
       </BackLink>
       <h1 className="text-2xl font-semibold tracking-tight text-black">
-        Enabled Integrations
+        {t("enabled-integrations-title")}
       </h1>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>{t("loading-message")}</div>}>
         <EnabledIntegrationsPageRSC slug={params.slug} />
       </Suspense>
     </div>
@@ -28,6 +34,10 @@ export default function EnabledIntegrationsPage({
 }
 
 async function EnabledIntegrationsPageRSC({ slug }: { slug: string }) {
+  const t = await getTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations/enabled",
+  );
+
   const integrations = await prisma.integration.findMany({
     where: {
       verified: true,
@@ -72,7 +82,9 @@ async function EnabledIntegrationsPageRSC({ slug }: { slug: string }) {
               <div className="flex min-w-0 items-center justify-between gap-3">
                 <IntegrationLogo
                   src={integration.logo}
-                  alt={`Logo for ${integration.name}`}
+                  alt={t("logo-description-integration", {
+                    integrationName: integration.name,
+                  })}
                   className="size-10"
                 />
 
@@ -82,10 +94,10 @@ async function EnabledIntegrationsPageRSC({ slug }: { slug: string }) {
                   </span>
                   {installation && (
                     <span className="truncate text-[0.8125rem] text-neutral-500">
-                      Enabled{" "}
+                      {t("enabled-label")}
                       {installerName ? (
                         <>
-                          by{" "}
+                          {t("by-label")}
                           <Avatar
                             user={installation.user}
                             className="inline-block size-3 -translate-y-0.5 border-0"

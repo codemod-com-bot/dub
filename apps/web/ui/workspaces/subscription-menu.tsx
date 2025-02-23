@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import {
@@ -17,6 +18,8 @@ import { toast } from "sonner";
 import { ThreeDots } from "../shared/icons";
 
 export default function SubscriptionMenu() {
+  const t = useTranslations("../ui/workspaces");
+
   const { id: workspaceId } = useWorkspace();
   const router = useRouter();
 
@@ -56,12 +59,12 @@ export default function SubscriptionMenu() {
           <Command.List className="flex w-screen flex-col gap-1 p-1.5 text-sm sm:w-auto sm:min-w-[180px]">
             <MenuItem
               icon={CalendarRefresh}
-              label="Manage Subscription"
+              label={t("manage-subscription")}
               onSelect={() => openBillingPortal(false)}
             />
             <MenuItem
               icon={SquareXmark}
-              label="Cancel Subscription"
+              label={t("cancel-subscription")}
               onSelect={() => openBillingPortal(true)}
             />
           </Command.List>

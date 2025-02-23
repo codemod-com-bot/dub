@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { DiscountProps } from "@/lib/types";
 import { HeroBackground } from "@/ui/partners/hero-background";
@@ -44,6 +45,8 @@ export function EmbedInlinePageClient({
     sales: number;
   };
 }) {
+  const t = useTranslations("app.dub.co/embed/inline");
+
   const [copied, copyToClipboard] = useCopyToClipboard();
 
   const tabs = ["Quickstart", "Earnings", "Leaderboard", "FAQ"];
@@ -61,7 +64,7 @@ export function EmbedInlinePageClient({
           <HeroBackground logo={program.logo} color={program.brandColor} />
           <span className="flex items-center gap-2 text-sm text-neutral-500">
             <MoneyBill className="size-4" />
-            Refer and earn
+            {t("refer-and-earn")}
           </span>
           <div className="relative mt-16 text-lg text-neutral-900 sm:max-w-[50%]">
             <ProgramCommissionDescription
@@ -70,7 +73,7 @@ export function EmbedInlinePageClient({
             />
           </div>
           <span className="mb-1.5 mt-6 block text-sm text-neutral-800">
-            Referral link
+            {t("referral-link")}
           </span>
           <div className="xs:flex-row relative flex flex-col items-center gap-2">
             <input
@@ -112,7 +115,7 @@ export function EmbedInlinePageClient({
               className="flex w-fit items-center gap-1.5 rounded-md border border-black/10 bg-white px-2 py-1 text-neutral-500 transition-colors duration-75 hover:text-neutral-700"
             >
               <p className="whitespace-nowrap text-xs font-medium leading-none">
-                Powered by
+                {t("powered-by")}
               </p>
               <Wordmark className="h-3.5 text-neutral-900" />
             </a>

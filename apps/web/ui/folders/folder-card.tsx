@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import {
   useCheckFolderPermission,
@@ -14,6 +15,8 @@ import { FolderIcon } from "./folder-icon";
 import { RequestFolderEditAccessButton } from "./request-edit-button";
 
 export const FolderCard = ({ folder }: { folder: Folder }) => {
+  const t = useTranslations("../ui/folders");
+
   const { id: workspaceId, slug: workspaceSlug } = useWorkspace();
 
   const { isLoading: isPermissionsLoading } = useFolderPermissions();
@@ -52,7 +55,9 @@ export const FolderCard = ({ folder }: { folder: Folder }) => {
 
           {folder.id === "unsorted" && (
             <div className="rounded bg-neutral-100 p-1">
-              <div className="text-xs font-normal text-black">Unsorted</div>
+              <div className="text-xs font-normal text-black">
+                {t("unsorted-label")}
+              </div>
             </div>
           )}
         </span>
@@ -60,7 +65,9 @@ export const FolderCard = ({ folder }: { folder: Folder }) => {
         <div className="mt-1.5 flex items-center gap-1 text-neutral-500">
           <Globe className="size-3.5" />
           <span className="text-sm font-normal">
-            {nFormatter(folder.linkCount)} link{folder.linkCount !== 1 && "s"}
+            {nFormatter(folder.linkCount)}
+            {t("link-text")}
+            {folder.linkCount !== 1 && "s"}
           </span>
         </div>
       </div>

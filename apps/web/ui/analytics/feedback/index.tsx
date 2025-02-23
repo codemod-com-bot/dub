@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@dub/ui";
 import { AnimatePresence, motion } from "framer-motion";
@@ -8,12 +9,14 @@ import { useFormStatus } from "react-dom";
 import { submitFeedback } from "./action";
 
 export default function Feedback() {
+  const t = useTranslations("../ui/analytics/feedback");
+
   const [submitted, setSubmitted] = useState(false);
 
   return (
     <div className="scrollbar-hide relative z-0 h-[400px] overflow-scroll border border-neutral-200 bg-white px-7 py-5 sm:rounded-lg sm:border-neutral-100 sm:shadow-lg">
       <div className="mb-5 flex">
-        <h1 className="text-xl font-semibold">Feedback</h1>
+        <h1 className="text-xl font-semibold">{t("feedback-title")}</h1>
       </div>
       <AnimatePresence>
         {submitted ? (
@@ -23,7 +26,7 @@ export default function Feedback() {
             animate={{ opacity: 1, y: 0 }}
           >
             <CheckCircle className="h-8 w-8 text-green-500" />
-            <p className="text-neutral-500">Thank you for your feedback!</p>
+            <p className="text-neutral-500">{t("thank-you-feedback")}</p>
           </motion.div>
         ) : (
           <motion.form
@@ -41,12 +44,12 @@ export default function Feedback() {
                 htmlFor="email"
                 className="mb-2 block text-xs font-medium text-neutral-500"
               >
-                EMAIL
+                {t("email-label")}
               </label>
               <input
                 name="email"
                 type="email"
-                placeholder="panic@thedis.co"
+                placeholder={t("email-address")}
                 autoComplete="email"
                 className="block w-full rounded-md border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
               />
@@ -56,7 +59,7 @@ export default function Feedback() {
                 htmlFor="feedback"
                 className="mb-2 block text-xs font-medium text-neutral-500"
               >
-                FEEDBACK
+                {t("feedback-header")}
               </label>
               <textarea
                 name="feedback"
@@ -64,7 +67,7 @@ export default function Feedback() {
                 required={true}
                 rows={6}
                 className="block w-full rounded-md border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
-                placeholder="What other data would you like to see?"
+                placeholder={t("data-request-question")}
                 aria-invalid="true"
               />
             </div>
@@ -77,6 +80,8 @@ export default function Feedback() {
 }
 
 const FormButton = () => {
+  const t = useTranslations("../ui/analytics/feedback");
+
   const { pending } = useFormStatus();
-  return <Button text="Submit feedback" loading={pending} />;
+  return <Button text={t("submit-feedback-button")} loading={pending} />;
 };

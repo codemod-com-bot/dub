@@ -1,6 +1,7 @@
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Folder } from "@dub/prisma/client";
 import { Button, useMediaQuery } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -16,6 +17,8 @@ export const RenameFolderForm = ({
   onCancel,
   folder,
 }: RenameFolderFormProps) => {
+  const t = useTranslations("../ui/folders");
+
   const workspace = useWorkspace();
   const { isMobile } = useMediaQuery();
   const [isUpdating, setIsUpdating] = useState(false);
@@ -49,7 +52,9 @@ export const RenameFolderForm = ({
     <form onSubmit={onSubmit} className="bg-neutral-50">
       <div className="flex flex-col gap-6 px-4 text-left sm:px-6">
         <div className="mt-6">
-          <label className="text-sm font-normal text-neutral-500">Name</label>
+          <label className="text-sm font-normal text-neutral-500">
+            {t("name-label")}
+          </label>
           <div className="mt-2">
             <div className="flex rounded-md border border-neutral-300 bg-white">
               <input
@@ -58,7 +63,7 @@ export const RenameFolderForm = ({
                 autoComplete="off"
                 className="block w-full rounded-md border-0 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-0 sm:text-sm"
                 aria-invalid="true"
-                placeholder="Marketing"
+                placeholder={t("marketing-label")}
                 autoFocus={!isMobile}
                 value={name}
                 onChange={(e) => {
@@ -74,13 +79,13 @@ export const RenameFolderForm = ({
         <Button
           type="button"
           variant="secondary"
-          text="Cancel"
+          text={t("cancel-button")}
           className="h-9 w-fit"
           onClick={onCancel}
         />
         <Button
           type="submit"
-          text="Save"
+          text={t("save-button")}
           disabled={!name || name === folder.name}
           loading={isUpdating}
           className="h-9 w-fit"

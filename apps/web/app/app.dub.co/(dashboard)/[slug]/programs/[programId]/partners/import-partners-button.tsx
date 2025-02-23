@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useProgram from "@/lib/swr/use-program";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -9,6 +10,10 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 
 export function ImportPartnersButton() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/partners",
+  );
+
   const router = useRouter();
   const { slug, flags } = useWorkspace();
   const { program } = useProgram();
@@ -27,7 +32,7 @@ export function ImportPartnersButton() {
           <div className="w-full md:w-52">
             <div className="grid gap-px p-2">
               <p className="mb-1.5 mt-1 flex items-center gap-2 px-1 text-xs font-medium text-neutral-500">
-                Import Partners
+                {t("import-partners-title")}
               </p>
               <ImportOption
                 onClick={() => {
@@ -38,11 +43,11 @@ export function ImportPartnersButton() {
                 }}
               >
                 <IconMenu
-                  text="Import from Rewardful"
+                  text={t("import-from-rewardful")}
                   icon={
                     <img
                       src="https://assets.dub.co/misc/icons/rewardful.svg"
-                      alt="Rewardful logo"
+                      alt={t("rewardful-logo-alt")}
                       className="h-4 w-4"
                     />
                   }

@@ -5,6 +5,7 @@ import { LinkProps } from "@/lib/types";
 import { Combobox, LinkLogo } from "@dub/ui";
 import { ArrowTurnRight2 } from "@dub/ui/icons";
 import { cn, getApexDomain, linkConstructor } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 
@@ -35,6 +36,8 @@ export function PartnerLinkSelector({
   onCreate?: (search: string) => Promise<boolean>;
   error?: boolean;
 }) {
+  const t = useTranslations("../ui/partners");
+
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 500);
   const { program } = useProgram();
@@ -102,14 +105,17 @@ export function PartnerLinkSelector({
         <div className="ml-2 mt-2 flex items-center gap-1 text-xs text-neutral-500">
           <ArrowTurnRight2 className="size-3 shrink-0" />
           <span className="min-w-0 truncate">
-            Destination URL:{" "}
-            <a
-              href={selectedLink.url}
-              target="_blank"
-              className="underline-offset-2 hover:underline"
-            >
-              {selectedLink.url}
-            </a>
+            {t("destination-url-link", {
+              component0: (
+                <a
+                  href={selectedLink.url}
+                  target="_blank"
+                  className="underline-offset-2 hover:underline"
+                >
+                  {selectedLink.url}
+                </a>
+              ),
+            })}
           </span>
         </div>
       )}

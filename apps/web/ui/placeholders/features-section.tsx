@@ -1,5 +1,6 @@
 import { ExpandingArrow } from "@dub/ui";
 import { cn, createHref, UTMTags } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 import Markdown from "react-markdown";
@@ -16,18 +17,19 @@ export function FeaturesSection({
   domain: string;
   utmParams: Partial<Record<(typeof UTMTags)[number], string>>;
 }) {
+  const t = useTranslations("../ui/placeholders");
+
   return (
     <div className="mt-20">
       <div className="mx-auto w-full max-w-xl px-4 text-center">
         <div className="mx-auto flex h-7 w-fit items-center rounded-full border border-neutral-200 bg-white px-4 text-xs text-neutral-800">
-          What is Dub?
+          {t("what-is-dub")}
         </div>
         <h2 className="font-display mt-2 text-balance text-3xl font-medium text-neutral-900">
-          Powerful features for modern marketing teams
+          {t("powerful-features-modern-marketing-teams")}
         </h2>
         <p className="mt-3 text-pretty text-lg text-neutral-500">
-          Dub is more than just a link shortener. We've built a suite of
-          powerful features that gives you marketing superpowers.
+          {t("dub-suite-of-features")}
         </p>
       </div>
       <div className="mx-auto mt-14 grid w-full max-w-screen-lg grid-cols-1 px-4 sm:grid-cols-2">
@@ -80,7 +82,8 @@ export function FeaturesSection({
             </div>
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               <span className="flex items-center text-sm font-medium text-slate-900">
-                View live demo <ExpandingArrow className="size-4" />
+                {t("view-live-demo")}
+                <ExpandingArrow className="size-4" />
               </span>
             </div>
           </a>

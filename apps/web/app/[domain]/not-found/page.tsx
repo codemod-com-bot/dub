@@ -5,6 +5,7 @@ import { FeaturesSection } from "@/ui/placeholders/features-section";
 import { Hero } from "@/ui/placeholders/hero";
 import { GlobeSearch } from "@dub/ui";
 import { cn, constructMetadata, createHref } from "@dub/utils";
+import { useTranslations } from "next-intl";
 
 export const runtime = "edge";
 
@@ -26,6 +27,8 @@ export default function NotFoundLinkPage({
 }: {
   params: { domain: string };
 }) {
+  const t = useTranslations("[domain]/not-found");
+
   return (
     <main className="flex min-h-screen flex-col justify-between">
       <Hero>
@@ -39,7 +42,7 @@ export default function NotFoundLinkPage({
               "animate-slide-up-fade motion-reduce:animate-fade-in [--offset:20px] [animation-duration:1s] [animation-fill-mode:both]",
             )}
           >
-            Link not found
+            {t("link-not-found")}
           </h1>
           <p
             className={cn(
@@ -47,8 +50,7 @@ export default function NotFoundLinkPage({
               "animate-slide-up-fade motion-reduce:animate-fade-in [--offset:10px] [animation-delay:200ms] [animation-duration:1s] [animation-fill-mode:both]",
             )}
           >
-            This link has expired. Please contact the owner of this link to get
-            a new one.
+            {t("link-expired-contact-owner")}
           </p>
         </div>
 
@@ -59,7 +61,7 @@ export default function NotFoundLinkPage({
           )}
         >
           <ButtonLink variant="primary" href="https://d.to/register">
-            Try Dub today
+            {t("try-dub-today")}
           </ButtonLink>
           <ButtonLink
             variant="secondary"
@@ -69,7 +71,7 @@ export default function NotFoundLinkPage({
               utm_content: "Learn more",
             })}
           >
-            Learn more
+            {t("learn-more")}
           </ButtonLink>
         </div>
       </Hero>

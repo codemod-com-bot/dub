@@ -2,6 +2,7 @@ import useWebhooks from "@/lib/swr/use-webhooks";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Button, Combobox, useKeyboardShortcut, Webhook } from "@dub/ui";
 import { cn } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { LinkFormData } from ".";
@@ -74,6 +75,8 @@ export function WebhookSelect() {
 }
 
 const NoWebhooksFound = () => {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { slug } = useWorkspace();
 
   return (
@@ -81,15 +84,17 @@ const NoWebhooksFound = () => {
       <div className="flex items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-50 p-3">
         <Webhook className="size-6 text-neutral-700" />
       </div>
-      <p className="mt-2 font-medium text-neutral-950">No webhooks found</p>
+      <p className="mt-2 font-medium text-neutral-950">
+        {t("no-webhooks-found")}
+      </p>
       <p className="mx-auto mt-1 w-full max-w-[180px] text-neutral-700">
-        Add a webhook to receive a click event when someone clicks your link.
+        {t("add-webhook-instruction")}
       </p>
       <div>
         <Button
           className="mt-1 h-8"
           onClick={() => window.open(`/${slug}/settings/webhooks`, "_blank")}
-          text="Add webhook"
+          text={t("add-webhook-button")}
         />
       </div>
     </div>

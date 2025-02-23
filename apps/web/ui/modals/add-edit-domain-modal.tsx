@@ -4,6 +4,7 @@ import { DomainProps } from "@/lib/types";
 import { AddEditDomainForm } from "@/ui/domains/add-edit-domain-form";
 import { Button, ButtonProps, Modal, TooltipContent } from "@dub/ui";
 import { capitalize, pluralize } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -21,6 +22,8 @@ function AddEditDomainModal({
   setShowAddEditDomainModal: Dispatch<SetStateAction<boolean>>;
   props?: DomainProps;
 }) {
+  const t = useTranslations("../ui/modals");
+
   return (
     <Modal
       showModal={showAddEditDomainModal} // TODO change back to showAddEditDomainModal
@@ -29,7 +32,9 @@ function AddEditDomainModal({
       className="max-w-lg"
     >
       <h3 className="border-b border-neutral-200 px-4 py-4 text-lg font-medium sm:px-6">
-        {props ? "Update" : "Add"} Domain
+        {t("update-or-add-domain", {
+          propsUpdateAdd: props ? "Update" : "Add",
+        })}
       </h3>
       <div className="bg-neutral-50">
         <AddEditDomainForm
@@ -51,6 +56,8 @@ function AddDomainButton({
   setShowAddEditDomainModal: Dispatch<SetStateAction<boolean>>;
   buttonProps?: Partial<ButtonProps>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { slug, plan, role, domainsLimit, exceededDomains } = useWorkspace();
 
   const permissionsError = clientAccessCheck({
@@ -61,11 +68,18 @@ function AddDomainButton({
   return (
     <div>
       <Button
-        text="Add Domain"
+        text={t("add-domain-title")}
         disabledTooltip={
           exceededDomains ? (
             <TooltipContent
-              title={`You can only add up to ${domainsLimit} ${pluralize("domain", domainsLimit || 0)} on the ${capitalize(plan)} plan. Upgrade to add more domains`}
+              title={t("domain-limit-warning", {
+                domainsLimit: domainsLimit,
+                pluralizeDomainDomainsLimit0: pluralize(
+                  "domain",
+                  domainsLimit || 0,
+                ),
+                capitalizePlan: capitalize(plan),
+              })}
               cta="Upgrade"
               href={`/${slug}/upgrade`}
             />

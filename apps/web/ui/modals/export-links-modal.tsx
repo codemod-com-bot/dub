@@ -10,6 +10,7 @@ import {
   Switch,
   useRouterStuff,
 } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -51,6 +52,8 @@ function ExportLinksModal({
   showExportLinksModal: boolean;
   setShowExportLinksModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { id: workspaceId } = useWorkspace();
   const { getQueryString } = useRouterStuff();
   const dateRangePickerId = useId();
@@ -131,9 +134,9 @@ function ExportLinksModal({
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-neutral-200 px-4 py-4 pt-8 sm:px-16">
         <Logo />
         <div className="flex flex-col space-y-1 text-center">
-          <h3 className="text-lg font-medium">Export links</h3>
+          <h3 className="text-lg font-medium">{t("export-links")}</h3>
           <p className="text-sm text-neutral-500">
-            Export this workspace's links to a CSV file
+            {t("export-workspace-links-csv")}
           </p>
         </div>
       </div>
@@ -151,7 +154,7 @@ function ExportLinksModal({
                 htmlFor={dateRangePickerId}
                 className="block text-sm font-medium text-neutral-700"
               >
-                Date Range
+                {t("date-range")}
               </label>
               <DateRangePicker
                 id={dateRangePickerId}
@@ -185,7 +188,9 @@ function ExportLinksModal({
         />
 
         <div>
-          <p className="block text-sm font-medium text-neutral-700">Columns</p>
+          <p className="block text-sm font-medium text-neutral-700">
+            {t("columns")}
+          </p>
           <Controller
             name="columns"
             control={control}
@@ -226,14 +231,14 @@ function ExportLinksModal({
           render={({ field }) => (
             <div className="flex items-center justify-between gap-2">
               <span className="flex select-none items-center gap-2 text-sm font-medium text-neutral-600 group-hover:text-neutral-800">
-                Apply current filters
+                {t("apply-current-filters")}
                 <InfoTooltip content="Filter exported links by your currently selected filters" />
               </span>
               <Switch checked={field.value} fn={field.onChange} />
             </div>
           )}
         />
-        <Button loading={isLoading} text="Export links" />
+        <Button loading={isLoading} text={t("export-links-string")} />
       </form>
     </Modal>
   );

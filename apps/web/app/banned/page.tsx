@@ -5,6 +5,7 @@ import { FeaturesSection } from "@/ui/placeholders/features-section";
 import { Hero } from "@/ui/placeholders/hero";
 import { Footer, Nav, NavMobile, ShieldSlash } from "@dub/ui";
 import { cn, constructMetadata, createHref } from "@dub/utils";
+import { getTranslations } from "next-intl/server";
 
 export const runtime = "edge";
 
@@ -24,6 +25,8 @@ export default async function BannedPage({
 }: {
   params: { domain: string };
 }) {
+  const t = await getTranslations("banned");
+
   return (
     <main className="flex min-h-screen flex-col justify-between">
       <NavMobile />
@@ -40,7 +43,7 @@ export default async function BannedPage({
                 "animate-slide-up-fade motion-reduce:animate-fade-in [--offset:20px] [animation-duration:1s] [animation-fill-mode:both]",
               )}
             >
-              Banned link
+              {t("banned-link")}
             </h1>
             <p
               className={cn(
@@ -48,7 +51,7 @@ export default async function BannedPage({
                 "animate-slide-up-fade motion-reduce:animate-fade-in [--offset:10px] [animation-delay:200ms] [animation-duration:1s] [animation-fill-mode:both]",
               )}
             >
-              This link has been banned for violating our terms of service.
+              {t("banned-link-message")}
             </p>
           </div>
 
@@ -59,7 +62,7 @@ export default async function BannedPage({
             )}
           >
             <ButtonLink variant="primary" href="https://d.to/register">
-              Try Dub today
+              {t("try-dub-today")}
             </ButtonLink>
             <ButtonLink
               variant="secondary"
@@ -69,7 +72,7 @@ export default async function BannedPage({
                 utm_content: "Learn more",
               })}
             >
-              Learn more
+              {t("learn-more")}
             </ButtonLink>
           </div>
         </Hero>

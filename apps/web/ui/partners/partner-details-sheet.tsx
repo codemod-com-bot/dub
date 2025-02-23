@@ -29,6 +29,7 @@ import {
 } from "@dub/utils";
 import { formatPeriod } from "@dub/utils/src/functions/datetime";
 import { ChevronLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -50,6 +51,8 @@ function PartnerDetailsSheetContent({
   partner,
   setIsOpen,
 }: PartnerDetailsSheetProps) {
+  const t = useTranslations("../ui/partners");
+
   const [tab, setTab] = useState<Tab>("links");
 
   const { createPayoutSheet, setIsOpen: setCreatePayoutSheetOpen } =
@@ -62,7 +65,7 @@ function PartnerDetailsSheetContent({
       <div className="flex grow flex-col">
         <div className="flex items-start justify-between p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Partner details
+            {t("partner-details")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button
@@ -209,15 +212,17 @@ function PartnerDetailsSheetContent({
           ) : (
             <div className="flex flex-col gap-6 text-sm text-neutral-500">
               <h3 className="text-base font-semibold text-neutral-900">
-                About this partner
+                {t("about-this-partner")}
               </h3>
 
               <div>
-                <h4 className="font-semibold text-neutral-900">Description</h4>
+                <h4 className="font-semibold text-neutral-900">
+                  {t("description")}
+                </h4>
                 <p className="mt-1.5">
                   {partner.description || (
                     <span className="italic text-neutral-400">
-                      No description provided
+                      {t("no-description-provided")}
                     </span>
                   )}
                 </p>
@@ -242,7 +247,7 @@ function PartnerDetailsSheetContent({
             <div className="border-t border-neutral-200 p-5">
               <Button
                 variant="primary"
-                text="Create payout"
+                text={t("create-payout")}
                 onClick={() => setCreatePayoutSheetOpen(true)}
               />
             </div>
@@ -260,6 +265,8 @@ function PartnerApproval({
   partner: EnrolledPartnerProps;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/partners");
+
   const { id: workspaceId } = useWorkspace();
   const { program } = useProgram();
 
@@ -370,7 +377,7 @@ function PartnerApproval({
           <Button
             type="button"
             variant="primary"
-            text="Approve"
+            text={t("approve")}
             loading={isPending}
             onClick={async () => {
               if (!isApproving) {
@@ -445,6 +452,8 @@ function PartnerRejectButton({
 }
 
 function PartnerPayouts({ partner }: { partner: EnrolledPartnerProps }) {
+  const t = useTranslations("../ui/partners");
+
   const { slug } = useWorkspace();
   const { program } = useProgram();
 
@@ -514,7 +523,7 @@ function PartnerPayouts({ partner }: { partner: EnrolledPartnerProps }) {
               "flex h-7 items-center rounded-lg border px-2 text-sm",
             )}
           >
-            View all
+            {t("view-all")}
           </Link>
         </div>
       )}
@@ -522,8 +531,8 @@ function PartnerPayouts({ partner }: { partner: EnrolledPartnerProps }) {
   ) : (
     <AnimatedEmptyState
       className="md:min-h-80"
-      title="No payouts"
-      description="When this partner is eligible for or has received payouts, they will appear here."
+      title={t("no-payouts")}
+      description={t("partner-payout-eligibility-message")}
       cardContent={() => (
         <>
           <div className="flex size-7 items-center justify-center rounded-md border border-neutral-200 bg-neutral-50">

@@ -1,9 +1,14 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Button, useKeyboardShortcut } from "@dub/ui";
 import { useAddPartnerSheet } from "./add-partner-sheet";
 
 export function AddPartnerButton() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/partners",
+  );
+
   const { addPartnerSheet, setIsOpen: setShowAddPartnerSheet } =
     useAddPartnerSheet();
 
@@ -15,7 +20,7 @@ export function AddPartnerButton() {
       <Button
         type="button"
         onClick={() => setShowAddPartnerSheet(true)}
-        text="Add partner"
+        text={t("add-partner")}
         shortcut="P"
       />
     </>

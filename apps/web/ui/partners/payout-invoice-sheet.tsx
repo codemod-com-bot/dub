@@ -26,6 +26,7 @@ import {
   truncate,
 } from "@dub/utils";
 import { Row } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import { useParams } from "next/navigation";
 import {
@@ -43,6 +44,8 @@ interface PayoutInvoiceSheetProps {
 }
 
 function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
+  const t = useTranslations("../ui/partners");
+
   const { id: workspaceId, slug, plan } = useWorkspace();
   const { programId } = useParams<{ programId: string }>();
   const { paymentMethods, loading: paymentMethodsLoading } =
@@ -219,7 +222,9 @@ function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
         <Tooltip
           content={
             <SimpleTooltipContent
-              title={`${selectedPaymentMethod.fee * 100}% processing fee.${selectedPaymentMethod.type !== "us_bank_account" ? " Switch to ACH for a reduced fee." : ""}`}
+              title={t("processing-fee-message", {
+                selectedPaymentMethodFee100: selectedPaymentMethod.fee * 100,
+              })}
               cta="Learn more"
               href="https://d.to/payouts"
             />
@@ -331,7 +336,7 @@ function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Payout invoice
+            {t("payout-invoice-title")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button
@@ -343,7 +348,7 @@ function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
         </div>
         <div className="flex flex-col gap-4 p-6">
           <div className="text-base font-medium text-neutral-900">
-            Invoice details
+            {t("invoice-details-title")}
           </div>
           <div className="grid grid-cols-2 gap-3 text-sm">
             {Object.entries(invoiceData).map(([key, value]) => (
@@ -367,7 +372,7 @@ function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Close"
+            text={t("close-button-label")}
             className="w-fit"
           />
           <Button
@@ -391,7 +396,7 @@ function PayoutInvoiceSheetContent({ setIsOpen }: PayoutInvoiceSheetProps) {
                 payoutIds: selectedPayouts.map((p) => p.id),
               });
             }}
-            text="Confirm payout"
+            text={t("confirm-payout-button-label")}
             className="w-fit"
             disabled={selectedPayouts?.length === 0}
             disabledTooltip={

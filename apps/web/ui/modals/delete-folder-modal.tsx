@@ -1,6 +1,7 @@
 import useWorkspace from "@/lib/swr/use-workspace";
 import { Folder } from "@dub/prisma/client";
 import { Button, Modal, useMediaQuery } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { FormEvent, useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -18,6 +19,8 @@ const DeleteFolderModal = ({
   folder,
   onDelete,
 }: DeleteFolderModalProps) => {
+  const t = useTranslations("../ui/modals");
+
   const workspace = useWorkspace();
   const { isMobile } = useMediaQuery();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -53,14 +56,18 @@ const DeleteFolderModal = ({
   return (
     <Modal showModal={showModal} setShowModal={setShowModal}>
       <div className="space-y-2 border-b border-neutral-200 px-4 py-4 sm:px-6">
-        <h3 className="text-lg font-medium">Delete {folder.name}</h3>
+        <h3 className="text-lg font-medium">
+          {t("delete-action")}
+          {folder.name}
+        </h3>
         <p className="text-sm text-neutral-500">
-          All links within this folder will return to the main folder and will
-          not be deleted.{" "}
-          <strong className="font-semibold text-neutral-700">
-            This action cannot be undone
-          </strong>{" "}
-          - proceed with caution.
+          {t("delete-folder-warning", {
+            component0: (
+              <strong className="font-semibold text-neutral-700">
+                {t("delete-folder-warning_component0")}
+              </strong>
+            ),
+          })}
         </p>
       </div>
 
@@ -70,11 +77,13 @@ const DeleteFolderModal = ({
             <div className="mt-6">
               <div className="flex items-center gap-2">
                 <p className="block text-sm text-neutral-500">
-                  To verify, type{" "}
-                  <span className="font-medium text-neutral-700">
-                    {folder.name}
-                  </span>{" "}
-                  below
+                  {t("verify-folder-deletion", {
+                    component0: (
+                      <span className="font-medium text-neutral-700">
+                        {folder.name}
+                      </span>
+                    ),
+                  })}
                 </p>
               </div>
 
@@ -100,14 +109,14 @@ const DeleteFolderModal = ({
             <Button
               type="button"
               variant="secondary"
-              text="Cancel"
+              text={t("cancel-button")}
               className="h-9 w-fit"
               onClick={() => setShowModal(false)}
               disabled={isDeleting}
             />
             <Button
               type="submit"
-              text="Confirm delete"
+              text={t("confirm-delete-button")}
               variant="danger"
               loading={isDeleting}
               className="h-9 w-fit"

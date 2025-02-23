@@ -2,6 +2,7 @@ import useWorkspace from "@/lib/swr/use-workspace";
 import { Button, Logo, Modal, useMediaQuery } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import {
   Dispatch,
@@ -20,6 +21,8 @@ function DeleteWorkspaceModal({
   showDeleteWorkspaceModal: boolean;
   setShowDeleteWorkspaceModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { update } = useSession();
   const router = useRouter();
   const { slug } = useParams() as { slug: string };
@@ -58,10 +61,9 @@ function DeleteWorkspaceModal({
     >
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-neutral-200 px-4 py-4 pt-8 sm:px-16">
         <Logo />
-        <h3 className="text-lg font-medium">Delete Workspace</h3>
+        <h3 className="text-lg font-medium">{t("delete-workspace")}</h3>
         <p className="text-center text-sm text-neutral-500">
-          Warning: This will permanently delete your workspace, custom domain,
-          and all associated links and their respective stats.
+          {t("warning-permanent-delete-workspace")}
         </p>
       </div>
 
@@ -81,9 +83,11 @@ function DeleteWorkspaceModal({
             htmlFor="workspace-slug"
             className="block text-sm font-medium text-neutral-700"
           >
-            Enter the workspace slug{" "}
-            <span className="font-semibold text-black">{slug}</span> to
-            continue:
+            {t("enter-workspace-slug", {
+              component0: (
+                <span className="font-semibold text-black">{slug}</span>
+              ),
+            })}
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
@@ -109,11 +113,13 @@ function DeleteWorkspaceModal({
             htmlFor="verification"
             className="block text-sm text-neutral-700"
           >
-            To verify, type{" "}
-            <span className="font-semibold text-black">
-              confirm delete workspace
-            </span>{" "}
-            below
+            {t("verify-confirm-delete-workspace", {
+              component0: (
+                <span className="font-semibold text-black">
+                  {t("verify-confirm-delete-workspace_component0")}
+                </span>
+              ),
+            })}
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             <input
@@ -135,7 +141,7 @@ function DeleteWorkspaceModal({
         </div>
 
         <Button
-          text="Confirm delete workspace"
+          text={t("confirm-delete-workspace")}
           variant="danger"
           loading={deleting}
           {...(!isOwner && {

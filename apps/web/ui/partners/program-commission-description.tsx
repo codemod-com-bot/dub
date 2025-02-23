@@ -1,6 +1,7 @@
 import { constructRewardAmount } from "@/lib/api/sales/construct-reward-amount";
 import { DiscountProps, ProgramProps } from "@/lib/types";
 import { cn, INFINITY_NUMBER, pluralize } from "@dub/utils";
+import { useTranslations } from "next-intl";
 
 export function ProgramCommissionDescription({
   program,
@@ -19,53 +20,65 @@ export function ProgramCommissionDescription({
   amountClassName?: string;
   periodClassName?: string;
 }) {
+  const t = useTranslations("../ui/partners");
+
   return (
     <>
-      Earn{" "}
-      <strong className={cn("font-semibold", amountClassName)}>
-        {constructRewardAmount({
-          amount: program.commissionAmount,
-          type: program.commissionType,
-        })}{" "}
-      </strong>
-      for each sale
+      {t("earn-commission-amount-for-sale", {
+        component0: (
+          <strong className={cn("font-semibold", amountClassName)}>
+            {constructRewardAmount({
+              amount: program.commissionAmount,
+              type: program.commissionType,
+            })}
+            {t("earn-commission-amount-for-sale_component0")}
+          </strong>
+        ),
+      })}
       {program.commissionDuration === INFINITY_NUMBER ? (
         <strong className={cn("font-semibold", periodClassName)}>
-          {" "}
-          for the customer's lifetime.
+          {t("customer-lifetime-commission")}
         </strong>
       ) : program.commissionDuration && program.commissionDuration > 1 ? (
         <>
-          , and again{" "}
-          <strong className={cn("font-semibold", periodClassName)}>
-            every {program.commissionInterval || "cycle"} for{" "}
-            {program.commissionDuration}{" "}
-            {pluralize(
-              program.commissionInterval || "cycle",
-              program.commissionDuration,
-            )}
-          </strong>
-          .
+          {t("repeated-commission-interval", {
+            component0: (
+              <strong className={cn("font-semibold", periodClassName)}>
+                {t("repeated-commission-interval_component0")}
+                {program.commissionInterval || "cycle"}
+                {t("repeated-commission-interval_component0")}
+                {program.commissionDuration}
+                {t("repeated-commission-interval_component0")}
+                {pluralize(
+                  program.commissionInterval || "cycle",
+                  program.commissionDuration,
+                )}
+              </strong>
+            ),
+          })}
         </>
       ) : (
         "."
       )}
       {discount ? (
         <>
-          {" "}
-          Referred users get{" "}
-          <strong className={cn("font-semibold", amountClassName)}>
-            {constructRewardAmount({
-              amount: discount.amount,
-              type: discount.type,
-            })}
-          </strong>{" "}
-          off for{" "}
-          <strong className={cn("font-semibold", periodClassName)}>
-            {discount.duration
-              ? `${discount.duration} ${pluralize(discount.interval || "cycle", discount.duration)}.`
-              : "their first purchase."}
-          </strong>
+          {t("discount-for-referred-users", {
+            component0: (
+              <strong className={cn("font-semibold", amountClassName)}>
+                {constructRewardAmount({
+                  amount: discount.amount,
+                  type: discount.type,
+                })}
+              </strong>
+            ),
+            component1: (
+              <strong className={cn("font-semibold", periodClassName)}>
+                {discount.duration
+                  ? `${discount.duration} ${pluralize(discount.interval || "cycle", discount.duration)}.`
+                  : "their first purchase."}
+              </strong>
+            ),
+          })}
         </>
       ) : null}
     </>

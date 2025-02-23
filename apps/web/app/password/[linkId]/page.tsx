@@ -3,6 +3,7 @@ import { NewBackground } from "@/ui/shared/new-background";
 import { prismaEdge } from "@dub/prisma/edge";
 import { BlurImage, Wordmark } from "@dub/ui";
 import { constructMetadata, createHref, isDubDomain } from "@dub/utils";
+import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
@@ -61,6 +62,8 @@ export default async function PasswordProtectedLinkPage({
 }: {
   params: { linkId: string };
 }) {
+  const t = await getTranslations("password/[linkId]");
+
   const link = await prismaEdge.link.findUnique({
     where: {
       id: params.linkId,
@@ -112,7 +115,9 @@ export default async function PasswordProtectedLinkPage({
                 <Lock className="size-4 text-neutral-600" />
               </div>
             )}
-            <h3 className="mt-1 text-lg font-semibold">Password required</h3>
+            <h3 className="mt-1 text-lg font-semibold">
+              {t("password-required")}
+            </h3>
             <p className="w-full max-w-xs text-pretty text-sm text-neutral-500">
               {description}
             </p>
@@ -129,7 +134,7 @@ export default async function PasswordProtectedLinkPage({
           target="_blank"
           className="mt-4 block text-sm font-medium text-neutral-600 underline transition-colors duration-75 hover:text-neutral-800"
         >
-          What is Dub?
+          {t("what-is-dub")}
         </Link>
       </main>
     </>

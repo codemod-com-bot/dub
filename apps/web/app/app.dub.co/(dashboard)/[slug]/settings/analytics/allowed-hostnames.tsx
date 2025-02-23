@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -9,24 +10,28 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const AllowedHostnames = () => {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/analytics");
+
   const { allowedHostnames, loading } = useWorkspace();
 
   return (
     <div className="grid gap-5 rounded-lg border border-neutral-200 p-5">
       <div className="flex flex-col gap-1">
         <h2 className="text-xl font-semibold tracking-tight text-black">
-          Allowed Hostnames
+          {t("allowed-hostnames-title")}
         </h2>
         <p className="text-sm text-neutral-500">
-          Specify a list of hostnames where client-side click tracking will be
-          allowed on.{" "}
-          <Link
-            href="https://dub.co/docs/conversions/clicks/introduction#client-side-click-tracking"
-            target="_blank"
-            className="underline transition-colors hover:text-neutral-800"
-          >
-            Learn more.
-          </Link>
+          {t("allowed-hostnames-description", {
+            component0: (
+              <Link
+                href="https://dub.co/docs/conversions/clicks/introduction#client-side-click-tracking"
+                target="_blank"
+                className="underline transition-colors hover:text-neutral-800"
+              >
+                {t("allowed-hostnames-description_component0")}
+              </Link>
+            ),
+          })}
         </p>
       </div>
       <div className="grid grid-cols-1 gap-3">
@@ -42,6 +47,8 @@ export const AllowedHostnames = () => {
 };
 
 const AddHostnameForm = () => {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/analytics");
+
   const [hostname, setHostname] = useState("");
   const [processing, setProcessing] = useState(false);
   const { id, allowedHostnames, mutate, role } = useWorkspace();
@@ -116,7 +123,7 @@ const AddHostnameForm = () => {
       </div>
 
       <Button
-        text="Add Hostname"
+        text={t("add-hostname-button")}
         variant="primary"
         onClick={addHostname}
         disabled={!isHostnameValid || hostname.length === 0}

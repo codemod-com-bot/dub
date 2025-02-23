@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import usePartnerPayouts from "@/lib/swr/use-partner-payouts";
 import usePartnerPayoutsCount from "@/lib/swr/use-partner-payouts-count";
@@ -11,6 +12,10 @@ import { useState } from "react";
 import { PayoutDetailsSheet } from "../../settings/payouts/payout-details-sheet";
 
 export function PayoutsCard({ programId }: { programId?: string }) {
+  const t = useTranslations(
+    "partners.dub.co/(dashboard)/programs/[programSlug]",
+  );
+
   const { payouts, error } = usePartnerPayouts({
     ...(programId && { programId }),
     pageSize: "4",
@@ -38,14 +43,17 @@ export function PayoutsCard({ programId }: { programId?: string }) {
       <div className="flex flex-col gap-4 rounded-lg border border-neutral-300 p-5 pb-3">
         <div className="flex justify-between">
           <span className="block text-base font-semibold leading-none text-neutral-800">
-            Payouts
+            {t("payouts-header")}
           </span>
           {payouts?.length && (
             <Link
               href={`/settings/payouts?programId=${programId}`}
               className="text-sm font-medium leading-none text-neutral-500 hover:text-neutral-600"
             >
-              {payouts.length} of {payoutsCount} results
+              {t("payouts-results-count", {
+                payoutsLength: payouts.length,
+                payoutsCount: payoutsCount,
+              })}
             </Link>
           )}
         </div>
@@ -85,14 +93,14 @@ export function PayoutsCard({ programId }: { programId?: string }) {
             // Empty state
             <div className="flex grow flex-col items-center justify-center gap-2 p-4 text-xs text-neutral-600">
               <MoneyBills2 className="size-4" />
-              No payouts
+              {t("no-payouts-message")}
             </div>
           )
         ) : error ? (
           // Error state
           <div className="flex grow flex-col items-center justify-center gap-2 p-4 text-xs text-neutral-600">
             <CircleWarning className="size-4" />
-            Failed to load payouts
+            {t("payouts-load-failure")}
           </div>
         ) : (
           // Loading state

@@ -1,5 +1,6 @@
 import { ExpandingArrow } from "@dub/ui";
 import { cn, createHref, UTMTags } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const logos = [
@@ -31,6 +32,8 @@ export default function Logos({
   copy?: string | null;
   className?: string;
 }) {
+  const t = useTranslations("../ui/placeholders");
+
   return (
     <Link
       href={createHref("/customers", domain, {
@@ -89,7 +92,7 @@ export default function Logos({
       </div>
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <span className="flex items-center text-sm font-medium text-slate-900">
-          See more of our fantastic customers{" "}
+          {t("see-more-fantastic-customers")}
           <ExpandingArrow className="size-4" />
         </span>
       </div>

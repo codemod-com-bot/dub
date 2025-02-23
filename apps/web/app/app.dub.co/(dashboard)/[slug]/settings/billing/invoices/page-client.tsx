@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import usePrograms from "@/lib/swr/use-programs";
 import { InvoiceProps } from "@/lib/types";
@@ -18,6 +19,10 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 
 export default function WorkspaceInvoicesClient() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/billing/invoices",
+  );
+
   const { slug } = useParams();
   const { programs } = usePrograms();
   const { searchParams, queryParams } = useRouterStuff();
@@ -33,9 +38,9 @@ export default function WorkspaceInvoicesClient() {
     <div className="rounded-lg border border-neutral-200 bg-white">
       <div className="flex flex-col items-start justify-between gap-y-4 p-6 md:p-8 md:pb-2 lg:flex-row">
         <div>
-          <h2 className="text-xl font-medium">Invoices</h2>
+          <h2 className="text-xl font-medium">{t("invoices-title")}</h2>
           <p className="text-balance text-sm leading-normal text-neutral-500">
-            A history of all your Dub invoices
+            {t("invoices-history-description")}
           </p>
         </div>
       </div>
@@ -64,8 +69,8 @@ export default function WorkspaceInvoicesClient() {
             ))
           ) : (
             <AnimatedEmptyState
-              title="No invoices found"
-              description="You don't have any invoices yet"
+              title={t("no-invoices-found-message")}
+              description={t("no-invoices-yet-message")}
               cardContent={() => (
                 <>
                   <Receipt2 className="size-4 text-neutral-700" />
@@ -88,6 +93,10 @@ export default function WorkspaceInvoicesClient() {
 }
 
 const InvoiceCard = ({ invoice }: { invoice: InvoiceProps }) => {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/billing/invoices",
+  );
+
   return (
     <div className="grid grid-cols-3 gap-4 px-6 py-4 sm:px-12">
       <div className="text-sm">
@@ -102,7 +111,7 @@ const InvoiceCard = ({ invoice }: { invoice: InvoiceProps }) => {
       </div>
 
       <div className="text-left text-sm">
-        <div className="font-medium">Total</div>
+        <div className="font-medium">{t("total-label")}</div>
         <div className="flex items-center gap-1.5 text-neutral-500">
           <span className="text-sm">
             {currencyFormatter(invoice.total / 100, {
@@ -135,16 +144,16 @@ const InvoiceCard = ({ invoice }: { invoice: InvoiceProps }) => {
               "flex size-8 items-center justify-center rounded-md border text-sm sm:size-auto sm:h-9 sm:px-3",
             )}
           >
-            <p className="hidden sm:block">View invoice</p>
+            <p className="hidden sm:block">{t("view-invoice-action")}</p>
             <InvoiceDollar className="size-4 sm:hidden" />
           </a>
         ) : (
           <Button
             className="w-fit"
             variant="secondary"
-            text="View invoice"
+            text={t("view-invoice-label")}
             disabled
-            disabledTooltip="Invoice not available. Contact support if you need assistance."
+            disabledTooltip={t("invoice-not-available-support-message")}
           />
         )}
       </div>

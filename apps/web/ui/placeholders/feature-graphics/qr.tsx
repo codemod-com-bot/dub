@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import {
   ClientOnly,
@@ -13,6 +14,8 @@ import { HelpCircle } from "lucide-react";
 import { useState } from "react";
 
 export function QR() {
+  const t = useTranslations("../ui/placeholders/feature-graphics");
+
   const { isMobile } = useMediaQuery();
 
   const [hideLogo, setHideLogo] = useState(false);
@@ -24,10 +27,10 @@ export function QR() {
         aria-hidden
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-base font-medium">QR Code Design</h3>
+          <h3 className="text-base font-medium">{t("qr-code-design")}</h3>
           <div className="max-md:hidden" aria-hidden>
             <kbd className="flex size-6 cursor-default items-center justify-center rounded-md border border-neutral-200 font-sans text-xs text-neutral-950">
-              Q
+              {t("q-character")}
             </kbd>
           </div>
         </div>
@@ -36,7 +39,7 @@ export function QR() {
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-neutral-700">
-                QR Code Preview
+                {t("qr-code-preview")}
               </span>
               <HelpCircle className="size-4 text-neutral-500" />
             </div>
@@ -60,7 +63,9 @@ export function QR() {
         {/* Logo toggle */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-neutral-700">Logo</span>
+            <span className="text-sm font-medium text-neutral-700">
+              {t("logo")}
+            </span>
             <HelpCircle className="size-4 text-neutral-500" />
           </div>
           <Switch

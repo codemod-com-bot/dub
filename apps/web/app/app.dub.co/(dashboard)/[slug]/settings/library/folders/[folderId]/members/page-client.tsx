@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { updateUserRoleInFolder } from "@/lib/actions/folders/update-folder-user-role";
 import {
@@ -27,6 +28,10 @@ import { toast } from "sonner";
 import useSWR from "swr";
 
 export const FolderUsersPageClient = ({ folderId }: { folderId: string }) => {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/library/folders/[folderId]/members",
+  );
+
   const [isUpdating, setIsUpdating] = useState(false);
   const workspace = useWorkspace();
   const { canManageFolderPermissions } = getPlanCapabilities(workspace.plan);
@@ -104,7 +109,7 @@ export const FolderUsersPageClient = ({ folderId }: { folderId: string }) => {
         className="flex items-center gap-x-1"
       >
         <ChevronLeft className="size-4" />
-        <p className="text-sm font-medium text-neutral-500">Folders</p>
+        <p className="text-sm font-medium text-neutral-500">{t("folders")}</p>
       </Link>
 
       <div className="rounded-lg border border-neutral-200 bg-white">
@@ -120,7 +125,8 @@ export const FolderUsersPageClient = ({ folderId }: { folderId: string }) => {
                   <div className="flex items-center gap-1">
                     <Globe className="size-3.5 text-neutral-500" />
                     <span className="text-[13px] font-normal leading-[14.30px] text-neutral-500">
-                      {nFormatter(folder.linkCount)} link
+                      {nFormatter(folder.linkCount)}
+                      {t("link")}
                       {folder.linkCount !== 1 && "s"}
                     </span>
                   </div>
@@ -154,7 +160,7 @@ export const FolderUsersPageClient = ({ folderId }: { folderId: string }) => {
                       </option>
                     ))}
                     <option value="" key="no-access">
-                      No access
+                      {t("no-access-message")}
                     </option>
                   </select>
                 </div>
@@ -194,6 +200,10 @@ const FolderUserRow = ({
   user: FolderUser;
   folder: Folder;
 }) => {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/library/folders/[folderId]/members",
+  );
+
   const { data: session } = useSession();
   const { id: workspaceId } = useWorkspace();
   const [role, setRole] = useState<FolderUserRole>(user.role);
@@ -266,7 +276,7 @@ const FolderUserRow = ({
           ))}
 
           <option value="" key="no-access">
-            No access
+            {t("no-access")}
           </option>
         </select>
       </div>

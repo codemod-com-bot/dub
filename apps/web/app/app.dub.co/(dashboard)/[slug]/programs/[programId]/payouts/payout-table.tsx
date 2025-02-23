@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import usePayoutsCount from "@/lib/swr/use-payouts-count";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -34,6 +35,10 @@ import useSWR from "swr";
 import { usePayoutFilters } from "./use-payout-filters";
 
 export function PayoutTable() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/payouts",
+  );
+
   const { programId } = useParams();
   const { id: workspaceId } = useWorkspace();
   const { queryParams, searchParams, getQueryString } = useRouterStuff();
@@ -228,7 +233,7 @@ export function PayoutTable() {
           <Table {...table} />
         ) : (
           <AnimatedEmptyState
-            title="No payouts found"
+            title={t("no-payouts-found")}
             description={
               isFiltered
                 ? "No payouts found for the selected filters."
@@ -248,6 +253,10 @@ export function PayoutTable() {
 }
 
 function RowMenuButton({ row }: { row: Row<PayoutResponse> }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/payouts",
+  );
+
   const router = useRouter();
   const { slug, programId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -261,7 +270,7 @@ function RowMenuButton({ row }: { row: Row<PayoutResponse> }) {
           <Command.List className="flex w-screen flex-col gap-1 p-1.5 text-sm sm:w-auto sm:min-w-[130px]">
             <MenuItem
               icon={MoneyBills2}
-              label="View sales"
+              label={t("view-sales")}
               onSelect={() => {
                 router.push(
                   `/${slug}/programs/${programId}/sales?payoutId=${row.original.id}&interval=all`,

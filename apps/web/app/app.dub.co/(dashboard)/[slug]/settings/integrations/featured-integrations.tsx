@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { IntegrationLogo } from "@/ui/integrations/integration-logo";
@@ -24,6 +25,10 @@ export function FeaturedIntegrations({
 }: {
   integrations: IntegrationsWithInstallations;
 }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations",
+  );
+
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
 
@@ -63,7 +68,9 @@ export function FeaturedIntegrations({
                       <div className="overflow-hidden rounded-xl border border-neutral-200 bg-white">
                         <BlurImage
                           src={integration.screenshots![0]}
-                          alt={`Screenshot of ${integration.name}`}
+                          alt={t("screenshot-of-integration-name", {
+                            integrationName: integration.name,
+                          })}
                           width={900}
                           height={580}
                           className="aspect-[900/580] w-full overflow-hidden rounded-xl object-cover object-top [mask-image:linear-gradient(black_90%,transparent)]"
@@ -80,7 +87,9 @@ export function FeaturedIntegrations({
                         <div className="shrink-0">
                           <IntegrationLogo
                             src={integration.logo}
-                            alt={`Logo for ${integration.name}`}
+                            alt={t("logo-for-integration-name", {
+                              integrationName: integration.name,
+                            })}
                             className="size-12"
                           />
                         </div>
@@ -111,6 +120,10 @@ function CarouselNavBar({
 }: {
   featuredIntegrations: IntegrationsWithInstallations;
 }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations",
+  );
+
   const { api } = useCarousel();
 
   const autoplay = api?.plugins()?.autoplay;
@@ -155,9 +168,13 @@ function CarouselNavBar({
               >
                 <IntegrationLogo
                   src={integration.logo}
-                  alt={`Logo for ${integration.name}`}
+                  alt={t("logo-for-integration-name-duplicate", {
+                    integrationName: integration.name,
+                  })}
                 />
-                <span className="sr-only">Slide {idx + 1}</span>
+                <span className="sr-only">
+                  {t("slide-number", { idx: idx })}
+                </span>
               </button>
             );
           })}

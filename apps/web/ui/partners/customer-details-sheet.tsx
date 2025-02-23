@@ -29,6 +29,7 @@ import {
   getPrettyUrl,
 } from "@dub/utils";
 import { formatDistanceStrict } from "date-fns";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import useSWR from "swr";
@@ -39,6 +40,8 @@ interface CustomerDetailsSheetProps {
 }
 
 function CustomerDetailsSheetContent({ customer }: CustomerDetailsSheetProps) {
+  const t = useTranslations("../ui/partners");
+
   const { id: workspaceId, slug } = useWorkspace();
 
   let { data: customerActivity, isLoading } = useSWR<CustomerActivityResponse>(
@@ -55,7 +58,7 @@ function CustomerDetailsSheetContent({ customer }: CustomerDetailsSheetProps) {
       <div className="flex grow flex-col">
         <div className="flex items-start justify-between p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Customer details
+            {t("customer-details")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button

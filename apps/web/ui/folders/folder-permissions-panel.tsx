@@ -15,6 +15,7 @@ import { Avatar, BlurImage, Button, Tooltip, TooltipContent } from "@dub/ui";
 import { Globe, UserCheck } from "@dub/ui/icons";
 import { cn, DICEBEAR_AVATAR_URL, fetcher, nFormatter } from "@dub/utils";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -40,6 +41,8 @@ const FolderPermissionsPanel = ({
   setShowPanel,
   folder,
 }: FolderPermissionsPanelProps) => {
+  const t = useTranslations("../ui/folders");
+
   const { id: workspaceId, slug, logo, name, plan } = useWorkspace();
 
   const [isUpdating, setIsUpdating] = useState(false);
@@ -119,7 +122,7 @@ const FolderPermissionsPanel = ({
         </option>
       ))}
       <option value="" key="no-access">
-        No access
+        {t("no-access")}
       </option>
     </select>
   );
@@ -138,10 +141,12 @@ const FolderPermissionsPanel = ({
           <div className="scrollbar-hide flex size-full grow flex-col overflow-y-auto rounded-lg bg-zinc-50">
             <div className="flex items-center justify-between border-b border-neutral-200 px-8 py-5">
               <Drawer.Title className="text-xl font-medium text-zinc-900">
-                Folder permissions
+                {t("folder-permissions")}
               </Drawer.Title>
               <Drawer.Description className="sr-only">
-                Configure permissions for the "{folder.name}" folder
+                {t("configure-permissions-for-folder")}
+                {folder.name}
+                {t("folder-name")}
               </Drawer.Description>
               <Drawer.Close asChild>
                 <Button
@@ -168,7 +173,7 @@ const FolderPermissionsPanel = ({
                     {folder.id === "unsorted" && (
                       <div className="rounded bg-neutral-100 p-1">
                         <div className="text-xs font-normal text-black">
-                          Unsorted
+                          {t("unsorted")}
                         </div>
                       </div>
                     )}
@@ -177,7 +182,8 @@ const FolderPermissionsPanel = ({
                   <div className="mt-1.5 flex items-center gap-1 text-neutral-500">
                     <Globe className="size-3.5" />
                     <span className="text-sm font-normal">
-                      {nFormatter(folder.linkCount)} link
+                      {nFormatter(folder.linkCount)}
+                      {t("link")}
                       {folder.linkCount !== 1 && "s"}
                     </span>
                   </div>
@@ -187,7 +193,7 @@ const FolderPermissionsPanel = ({
               {/* Workspace-level access */}
               <div className="mt-6">
                 <span className="text-sm font-medium text-neutral-900">
-                  Workspace
+                  {t("workspace")}
                 </span>
                 <div className="relative mt-3 flex items-center justify-between gap-4">
                   <div className="flex min-w-12 items-center gap-2">
@@ -209,7 +215,7 @@ const FolderPermissionsPanel = ({
                     <Tooltip
                       content={
                         <TooltipContent
-                          title="You can only set custom folder permissions on a Business plan and above."
+                          title={t("custom-folder-permissions-restriction")}
                           cta="Upgrade to Business"
                           href={`/${slug}/upgrade?exit=close`}
                           target="_blank"
@@ -226,12 +232,12 @@ const FolderPermissionsPanel = ({
               {/* Users */}
               <div className="mt-4">
                 <span className="text-sm font-medium text-neutral-900">
-                  Folder Users
+                  {t("folder-users")}
                 </span>
                 {!canManageFolderPermissions ? (
                   <AnimatedEmptyState
-                    title="Folder permissions"
-                    description="Add and manage users permissions to this folder"
+                    title={t("folder-permissions-title")}
+                    description={t("add-manage-users-permissions")}
                     cardContent={
                       <>
                         <UserCheck className="size-4 text-neutral-700" />
@@ -240,7 +246,7 @@ const FolderPermissionsPanel = ({
                     }
                     className="border-none"
                     learnMoreHref={`/${slug}/upgrade`}
-                    learnMoreText="Upgrade to Business"
+                    learnMoreText={t("upgrade-to-business")}
                   />
                 ) : (
                   <div className="mt-4 grid grid-cols-[minmax(0,1fr)] gap-3">
@@ -274,6 +280,8 @@ const FolderUserRow = ({
   user: FolderUser;
   folder: Pick<Folder, "id" | "name" | "accessLevel" | "linkCount">;
 }) => {
+  const t = useTranslations("../ui/folders");
+
   const { data: session } = useSession();
   const { id: workspaceId } = useWorkspace();
   const [role, setRole] = useState<FolderUserRole>(user.role);
@@ -341,7 +349,7 @@ const FolderUserRow = ({
           ))}
 
           <option value="" key="no-access">
-            No access
+            {t("no-access-again")}
           </option>
         </select>
       </div>
