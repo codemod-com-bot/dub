@@ -1,6 +1,7 @@
 import { Grid } from "@dub/ui";
 import { cn, createHref, UTMTags } from "@dub/utils";
 import { Star, StarHalf } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 import { ButtonLink } from "./button-link";
 import Logos from "./logos";
@@ -39,6 +40,8 @@ export function CTA({
   subtitle?: ReactNode;
   className?: string;
 }) {
+  const t = useTranslations("../ui/placeholders");
+
   return (
     <div
       className={cn(
@@ -85,7 +88,9 @@ export function CTA({
                 />
               )}
             </div>
-            <p className="mt-2 text-xs text-neutral-500">{stars} out of 5</p>
+            <p className="mt-2 text-xs text-neutral-500">
+              {t("stars-rating", { stars: stars })}
+            </p>
           </a>
         ))}
       </div>
@@ -101,7 +106,7 @@ export function CTA({
 
       <div className="relative mx-auto mt-10 flex max-w-fit space-x-4">
         <ButtonLink variant="primary" href="https://d.to/register">
-          Start for free
+          {t("start-for-free")}
         </ButtonLink>
         <ButtonLink
           variant="secondary"
@@ -112,7 +117,7 @@ export function CTA({
             utm_content: "Get a demo",
           })}
         >
-          Get a demo
+          {t("get-a-demo")}
         </ButtonLink>
       </div>
 

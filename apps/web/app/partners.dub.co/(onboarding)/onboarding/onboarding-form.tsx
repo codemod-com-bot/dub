@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { onboardPartnerAction } from "@/lib/actions/partners/onboard-partner";
 import { onboardPartnerSchema } from "@/lib/zod/schemas/partners";
@@ -30,6 +31,8 @@ export function OnboardingForm({
     "name" | "email" | "description" | "country" | "image"
   > | null;
 }) {
+  const t = useTranslations("partners.dub.co/(onboarding)/onboarding");
+
   const router = useRouter();
   const { data: session } = useSession();
   const { isMobile } = useMediaQuery();
@@ -87,8 +90,13 @@ export function OnboardingForm({
     >
       <label>
         <span className="text-sm font-medium text-neutral-800">
-          Full Name
-          <span className="font-normal text-neutral-500"> (required)</span>
+          {t("full-name-required", {
+            component0: (
+              <span className="font-normal text-neutral-500">
+                {t("full-name-required_component0")}
+              </span>
+            ),
+          })}
         </span>
         <input
           type="text"
@@ -107,8 +115,13 @@ export function OnboardingForm({
 
       <label>
         <span className="text-sm font-medium text-neutral-800">
-          Email
-          <span className="font-normal text-neutral-500"> (required)</span>
+          {t("email-required", {
+            component0: (
+              <span className="font-normal text-neutral-500">
+                {t("email-required_component0")}
+              </span>
+            ),
+          })}
         </span>
         <input
           type="text"
@@ -127,8 +140,13 @@ export function OnboardingForm({
 
       <label>
         <span className="text-sm font-medium text-neutral-800">
-          Display Image
-          <span className="font-normal text-neutral-500"> (required)</span>
+          {t("display-image-required", {
+            component0: (
+              <span className="font-normal text-neutral-500">
+                {t("display-image-required_component0")}
+              </span>
+            ),
+          })}
         </span>
         <div className="flex items-center gap-5">
           <Controller
@@ -161,10 +179,10 @@ export function OnboardingForm({
                 "flex h-7 w-fit cursor-pointer items-center rounded-md border px-2 text-xs",
               )}
             >
-              Upload image
+              {t("upload-image")}
             </div>
             <p className="mt-1.5 text-xs text-neutral-500">
-              Recommended size: 160x160px
+              {t("recommended-size-160x160px")}
             </p>
           </div>
         </div>
@@ -172,8 +190,13 @@ export function OnboardingForm({
 
       <label>
         <span className="text-sm font-medium text-neutral-800">
-          Country
-          <span className="font-normal text-neutral-500"> (required)</span>
+          {t("country-required", {
+            component0: (
+              <span className="font-normal text-neutral-500">
+                {t("country-required_component0")}
+              </span>
+            ),
+          })}
         </span>
         <Controller
           control={control}
@@ -185,7 +208,7 @@ export function OnboardingForm({
 
       <label>
         <span className="text-sm font-medium text-neutral-800">
-          Description
+          {t("description")}
         </span>
         <ReactTextareaAutosize
           className={cn(
@@ -194,7 +217,7 @@ export function OnboardingForm({
               ? "border-red-300 pr-10 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500"
               : "border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:ring-neutral-500",
           )}
-          placeholder="Tell us about the kind of content you create – e.g. tech, travel, fashion, etc."
+          placeholder={t("content-description")}
           minRows={3}
           onKeyDown={handleKeyDown}
           {...register("description")}
@@ -203,7 +226,9 @@ export function OnboardingForm({
 
       <Button
         type="submit"
-        text={`${partner ? "Update" : "Create"} partner account`}
+        text={t("partner-account-action", {
+          partnerUpdateCreate: partner ? "Update" : "Create",
+        })}
         className="mt-2"
         loading={isPending || isSubmitting || isSubmitSuccessful}
       />
@@ -218,6 +243,8 @@ function CountryCombobox({
   value: string;
   onChange: (value: string) => void;
 }) {
+  const t = useTranslations("partners.dub.co/(onboarding)/onboarding");
+
   const options = useMemo(
     () =>
       Object.entries(COUNTRIES).map(([key, value]) => ({
@@ -252,8 +279,8 @@ function CountryCombobox({
         ) : undefined
       }
       caret={true}
-      placeholder="Select country"
-      searchPlaceholder="Search countries..."
+      placeholder={t("select-country")}
+      searchPlaceholder={t("search-countries")}
       matchTriggerWidth
       buttonProps={{
         className: cn(

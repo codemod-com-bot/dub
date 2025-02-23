@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useProgramEnrollment from "@/lib/swr/use-program-enrollment";
 import { PartnerEarningsResponse } from "@/lib/types";
@@ -27,6 +28,10 @@ import {
 import useSWR from "swr";
 
 export function EarningsTablePartner({ limit }: { limit?: number }) {
+  const t = useTranslations(
+    "partners.dub.co/(dashboard)/programs/[programSlug]/earnings",
+  );
+
   const { programEnrollment } = useProgramEnrollment();
   const { queryParams, searchParamsObj, getQueryString } = useRouterStuff();
 
@@ -155,8 +160,8 @@ export function EarningsTablePartner({ limit }: { limit?: number }) {
     rowCount: earningsCount?.count || 0,
     emptyState: (
       <AnimatedEmptyState
-        title="No earnings found"
-        description="No earnings have been made for this program yet."
+        title={t("no-earnings-found")}
+        description={t("no-earnings-program-yet")}
         cardContent={() => (
           <>
             <CircleDollar className="size-4 text-neutral-700" />
@@ -183,8 +188,8 @@ export function EarningsTablePartner({ limit }: { limit?: number }) {
         />
       ) : (
         <AnimatedEmptyState
-          title="No earnings found"
-          description="No earnings have been made for this program yet."
+          title={t("no-earnings-found-duplicate")}
+          description={t("no-earnings-program-yet-duplicate")}
           cardContent={() => (
             <>
               <CircleDollar className="size-4 text-neutral-700" />

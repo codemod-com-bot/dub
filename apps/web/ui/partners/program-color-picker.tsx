@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Popover, Tooltip } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -37,6 +38,8 @@ export function ProgramColorPicker({
   onChange: (color: string | null) => void;
   id?: string;
 }) {
+  const t = useTranslations("../ui/partners");
+
   const [isOpen, setIsOpen] = useState(false);
 
   const onSelect = (color: string | null) => {
@@ -52,7 +55,7 @@ export function ProgramColorPicker({
       content={
         <div className="grid grid-cols-6 gap-3 p-4">
           <div className="sr-only" tabIndex={0}>
-            Select a color
+            {t("select-a-color")}
           </div>
           <div className="col-span-6">
             <Swatch

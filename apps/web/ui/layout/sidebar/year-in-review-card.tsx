@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { cn } from "@dub/utils";
@@ -7,6 +8,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function YearInReviewCard() {
+  const t = useTranslations("../ui/layout/sidebar");
+
   const pathname = usePathname();
   const { slug, yearInReview } = useWorkspace();
 
@@ -22,10 +25,10 @@ export function YearInReviewCard() {
     >
       <div className="flex flex-col gap-1">
         <span className="line-clamp-1 font-medium text-neutral-900">
-          Dub 2024 Year in Review 🎊
+          {t("dub-2024-year-in-review")}
         </span>
         <p className="line-clamp-2 h-10 leading-5 text-neutral-500">
-          As we put a wrap on 2024, we want to say thank you for your support!
+          {t("thank-you-for-your-support-2024")}
         </p>
       </div>
       <div className="relative mt-3 aspect-[16/9] w-full shrink-0 overflow-hidden rounded border border-neutral-200 bg-neutral-100">
@@ -37,7 +40,7 @@ export function YearInReviewCard() {
         />
         <Image
           src="https://assets.dub.co/blog/2024.jpg"
-          alt="Dub logo with confetti"
+          alt={t("dub-logo-with-confetti")}
           fill
           sizes="10vw"
           className="rounded object-cover object-center"

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { formatDateTooltip } from "@/lib/analytics/format-date-tooltip";
 import { IntervalOptions } from "@/lib/analytics/types";
@@ -46,6 +47,10 @@ const ProgramOverviewContext = createContext<{
 }>({});
 
 export default function ProgramPageClient() {
+  const t = useTranslations(
+    "partners.dub.co/(dashboard)/programs/[programSlug]",
+  );
+
   const { getQueryString, searchParamsObj } = useRouterStuff();
   const { programSlug } = useParams();
 
@@ -73,7 +78,7 @@ export default function ProgramPageClient() {
         )}
         <span className="flex items-center gap-2 text-sm text-neutral-500">
           <MoneyBill className="size-4" />
-          Refer and earn
+          {t("refer-and-earn")}
         </span>
         <div className="relative mt-24 text-lg text-neutral-900 sm:max-w-[50%]">
           {program ? (
@@ -86,7 +91,7 @@ export default function ProgramPageClient() {
           )}
         </div>
         <span className="mb-1.5 mt-6 block text-sm text-neutral-800">
-          Referral link
+          {t("referral-link")}
         </span>
         <div className="xs:flex-row relative flex flex-col items-center gap-2">
           {masterLink ? (
@@ -147,16 +152,16 @@ export default function ProgramPageClient() {
 
             <PayoutsCard programId={program?.id} />
             <NumberFlowGroup>
-              <StatCard title="Clicks" event="clicks" />
-              <StatCard title="Leads" event="leads" />
-              <StatCard title="Sales" event="sales" />
+              <StatCard title={t("clicks")} event="clicks" />
+              <StatCard title={t("leads")} event="leads" />
+              <StatCard title={t("sales")} event="sales" />
             </NumberFlowGroup>
           </div>
         </ChartTooltipSync>
         <div className="mt-6">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-semibold text-neutral-900">
-              Recent earnings
+              {t("recent-earnings")}
             </h2>
             <Link
               href={`/programs/${programSlug}/earnings${getQueryString()}`}
@@ -165,7 +170,7 @@ export default function ProgramPageClient() {
                 "flex h-7 items-center rounded-lg border px-2 text-sm",
               )}
             >
-              View all
+              {t("view-all")}
             </Link>
           </div>
         </div>
@@ -178,6 +183,10 @@ export default function ProgramPageClient() {
 }
 
 function EarningsChart() {
+  const t = useTranslations(
+    "partners.dub.co/(dashboard)/programs/[programSlug]",
+  );
+
   const { programSlug } = useParams();
   const { getQueryString } = useRouterStuff();
   const { start, end, interval, color } = useContext(ProgramOverviewContext);
@@ -211,7 +220,7 @@ function EarningsChart() {
       <div className="flex flex-col-reverse items-start justify-between gap-4 md:flex-row">
         <div>
           <span className="block text-base font-semibold leading-none text-neutral-800">
-            Earnings
+            {t("earnings")}
           </span>
           <div className="mt-1">
             {total !== undefined ? (
@@ -247,7 +256,7 @@ function EarningsChart() {
           <div className="flex size-full items-center justify-center">
             {error ? (
               <span className="text-sm text-neutral-500">
-                Failed to load earnings data.
+                {t("failed-to-load-earnings-data")}
               </span>
             ) : (
               <LoadingSpinner />
@@ -266,6 +275,10 @@ function StatCard({
   title: string;
   event: "clicks" | "leads" | "sales";
 }) {
+  const t = useTranslations(
+    "partners.dub.co/(dashboard)/programs/[programSlug]",
+  );
+
   const { programSlug } = useParams();
   const { getQueryString } = useRouterStuff();
   const { start, end, interval } = useContext(ProgramOverviewContext);
@@ -321,7 +334,7 @@ function StatCard({
           <div className="flex size-full items-center justify-center">
             {error ? (
               <span className="text-sm text-neutral-500">
-                Failed to load data.
+                {t("failed-to-load-data")}
               </span>
             ) : (
               <LoadingSpinner />
@@ -421,6 +434,10 @@ function BrandedChart({
 }
 
 function ViewMoreButton({ href }: { href: string }) {
+  const t = useTranslations(
+    "partners.dub.co/(dashboard)/programs/[programSlug]",
+  );
+
   return (
     <div className="-mr-2 pr-2 [mask-image:linear-gradient(270deg,transparent,black_8px)] [mask-origin:padding-box]">
       <div className="overflow-visible transition-all duration-200 focus-within:w-[82px] focus-within:opacity-100 group-hover:w-[82px] group-hover:opacity-100 sm:w-0 sm:opacity-0">
@@ -431,7 +448,7 @@ function ViewMoreButton({ href }: { href: string }) {
             buttonVariants({ variant: "secondary" }),
           )}
         >
-          View more
+          {t("view-more")}
         </Link>
       </div>
     </div>

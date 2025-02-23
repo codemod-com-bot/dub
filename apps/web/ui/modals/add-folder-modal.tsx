@@ -1,6 +1,7 @@
 import useWorkspace from "@/lib/swr/use-workspace";
 import { FolderSummary } from "@/lib/types";
 import { Button, Modal, TooltipContent } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import {
   Dispatch,
   SetStateAction,
@@ -40,6 +41,8 @@ function AddFolderButton({
 }: {
   setShowAddFolderModal: Dispatch<SetStateAction<boolean>>;
 }) {
+  const t = useTranslations("../ui/modals");
+
   const { slug, plan } = useWorkspace();
 
   const onKeyDown = useCallback((e: KeyboardEvent) => {
@@ -60,14 +63,14 @@ function AddFolderButton({
 
   return (
     <Button
-      text="Create folder"
+      text={t("create-folder")}
       shortcut="C"
       onClick={() => setShowAddFolderModal(true)}
       className="h-9 w-fit rounded-lg"
       disabledTooltip={
         plan === "free" && (
           <TooltipContent
-            title="You can only use Link Folders on a Pro plan and above. Upgrade to Pro to continue."
+            title={t("link-folders-pro-plan-warning")}
             cta="Upgrade to Pro"
             href={`/${slug}/upgrade`}
           />

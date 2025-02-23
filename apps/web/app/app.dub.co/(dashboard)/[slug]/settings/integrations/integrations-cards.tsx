@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import IntegrationCard from "@/ui/integrations/integration-card";
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
@@ -33,6 +34,10 @@ export function IntegrationsCards({
 }: {
   integrations: IntegrationsWithInstallations;
 }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations",
+  );
+
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
 
@@ -97,8 +102,8 @@ export function IntegrationsCards({
           <motion.div key="empty" {...PRESENCE_ANIMATION}>
             <AnimatedEmptyState
               className="-mt-2"
-              title="Integration not found"
-              description="Let us know if you'd like to see it in the future."
+              title={t("integration-not-found")}
+              description={t("future-integration-request")}
               cardContent={() => (
                 <div className="flex h-24 w-full items-center justify-center sm:h-32">
                   <div className="rounded-xl bg-neutral-100/50 p-4">
@@ -114,7 +119,7 @@ export function IntegrationsCards({
                     "flex h-8 items-center rounded-md border px-2.5 text-sm",
                   )}
                 >
-                  Request integration
+                  {t("request-integration")}
                 </a>
               }
             />

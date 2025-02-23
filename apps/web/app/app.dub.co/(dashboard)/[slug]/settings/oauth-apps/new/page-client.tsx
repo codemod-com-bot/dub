@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -8,6 +9,10 @@ import { MaxWidthWrapper } from "@dub/ui";
 import { redirect } from "next/navigation";
 
 export default function NewOAuthAppPageClient() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/oauth-apps/new",
+  );
+
   const { slug, role } = useWorkspace();
 
   const { error: permissionsError } = clientAccessCheck({
@@ -23,7 +28,7 @@ export default function NewOAuthAppPageClient() {
     <>
       <MaxWidthWrapper className="grid max-w-screen-lg gap-8">
         <BackLink href={`/${slug}/settings/oauth-apps`}>
-          Back to OAuth Apps
+          {t("back-to-oauth-apps")}
         </BackLink>
       </MaxWidthWrapper>
 

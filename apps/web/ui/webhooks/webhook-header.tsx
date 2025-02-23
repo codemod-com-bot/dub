@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { enableOrDisableWebhook } from "@/lib/actions/enable-disable-webhook";
 import { clientAccessCheck } from "@/lib/api/tokens/permissions";
@@ -26,6 +27,8 @@ import { BackLink } from "../shared/back-link";
 import { WebhookStatus } from "./webhook-status";
 
 export default function WebhookHeader({ webhookId }: { webhookId: string }) {
+  const t = useTranslations("../ui/webhooks");
+
   const router = useRouter();
   const { webhook, isLoading, mutate } = useWebhook();
   const { slug, id: workspaceId, role } = useWorkspace();
@@ -85,7 +88,7 @@ export default function WebhookHeader({ webhookId }: { webhookId: string }) {
         <SendTestWebhookModal />
         <DeleteWebhookModal />
         <BackLink href={`/${slug}/settings/webhooks`}>
-          Back to webhooks
+          {t("back-to-webhooks")}
         </BackLink>
         <div className="flex justify-between gap-8 sm:items-center">
           {isLoading || !webhook ? (
@@ -126,7 +129,7 @@ export default function WebhookHeader({ webhookId }: { webhookId: string }) {
               <div className="w-screen sm:w-48">
                 <div className="grid gap-px p-2">
                   <Button
-                    text="Copy Webhook ID"
+                    text={t("copy-webhook-id")}
                     variant="outline"
                     icon={
                       copiedWebhookId ? (
@@ -140,7 +143,7 @@ export default function WebhookHeader({ webhookId }: { webhookId: string }) {
                   />
 
                   <Button
-                    text="Send test event"
+                    text={t("send-test-event")}
                     variant="outline"
                     icon={<Send className="size-4" />}
                     className="h-9 justify-start px-2"
@@ -189,7 +192,7 @@ export default function WebhookHeader({ webhookId }: { webhookId: string }) {
                   />
 
                   <Button
-                    text="Delete webhook"
+                    text={t("delete-webhook")}
                     variant="danger-outline"
                     icon={<Trash className="size-4" />}
                     className="h-9 justify-start px-2"

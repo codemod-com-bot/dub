@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useIntegrations from "@/lib/swr/use-integrations";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -14,6 +15,8 @@ import { IntegrationLogo } from "./integration-logo";
 export default function IntegrationCard(
   integration: InstalledIntegrationProps,
 ) {
+  const t = useTranslations("../ui/integrations");
+
   const { integrations: activeIntegrations } = useIntegrations();
 
   const installed = activeIntegrations?.some((i) => i.id === integration.id);
@@ -23,12 +26,14 @@ export default function IntegrationCard(
   return (
     <Wrapper integration={integration}>
       {installed ? (
-        <Badge className="bg-green-100 text-green-800">Enabled</Badge>
+        <Badge className="bg-green-100 text-green-800">{t("enabled")}</Badge>
       ) : integration.comingSoon ? (
-        <Badge className="bg-violet-100 text-violet-800">Coming Soon</Badge>
+        <Badge className="bg-violet-100 text-violet-800">
+          {t("coming-soon")}
+        </Badge>
       ) : integration.guideUrl ? (
         <Badge className="bg-blue-100 text-blue-800">
-          <span>Guide</span>
+          <span>{t("guide")}</span>
           <div className="flex w-0 justify-end overflow-hidden opacity-0 transition-[width,opacity] group-hover:w-3 group-hover:opacity-100">
             <ArrowUpRight className="size-2.5" strokeWidth={2.5} />
           </div>

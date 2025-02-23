@@ -4,6 +4,7 @@ import { BlurImage, useRouterStuff, UTM_PARAMETERS } from "@dub/ui";
 import { Note, ReferredVia } from "@dub/ui/icons";
 import { getApexDomain, GOOGLE_FAVICON_URL } from "@dub/utils";
 import { Link2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useContext, useMemo, useState } from "react";
 import { AnalyticsCard } from "./analytics-card";
 import { AnalyticsLoadingSpinner } from "./analytics-loading-spinner";
@@ -12,6 +13,8 @@ import BarList from "./bar-list";
 import { useAnalyticsFilterOption } from "./utils";
 
 export default function Referer() {
+  const t = useTranslations("../ui/analytics");
+
   const { queryParams, searchParams } = useRouterStuff();
 
   const { selectedTab, saleUnit } = useContext(AnalyticsContext);
@@ -120,7 +123,9 @@ export default function Referer() {
               />
             ) : (
               <div className="flex h-[300px] items-center justify-center">
-                <p className="text-sm text-neutral-600">No data available</p>
+                <p className="text-sm text-neutral-600">
+                  {t("no-data-available")}
+                </p>
               </div>
             )
           ) : (

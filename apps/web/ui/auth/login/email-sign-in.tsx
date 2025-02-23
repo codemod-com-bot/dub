@@ -4,6 +4,7 @@ import { InputPassword } from "@dub/ui/icons";
 import { cn } from "@dub/utils";
 import { Mail } from "lucide-react";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -12,6 +13,8 @@ import { toast } from "sonner";
 import { errorCodes, LoginFormContext } from "./login-form";
 
 export const EmailSignIn = ({ redirectTo }: { redirectTo?: string }) => {
+  const t = useTranslations("../ui/auth/login");
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams?.get("next");
@@ -125,7 +128,7 @@ export const EmailSignIn = ({ redirectTo }: { redirectTo?: string }) => {
             name="email"
             autoFocus={!isMobile && !showPasswordField}
             type="email"
-            placeholder="panic@thedis.co"
+            placeholder={t("email-address")}
             autoComplete="email"
             required
             value={email}
@@ -146,14 +149,16 @@ export const EmailSignIn = ({ redirectTo }: { redirectTo?: string }) => {
               type="password"
               autoFocus={!isMobile}
               value={password}
-              placeholder="Password (optional)"
+              placeholder={t("password-optional")}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
         )}
 
         <Button
-          text={`Continue with ${password ? "Password" : "Email"}`}
+          text={t("continue-with-password-or-email", {
+            passwordPasswordEmail: password ? "Password" : "Email",
+          })}
           variant="secondary"
           icon={
             password ? (
@@ -179,7 +184,7 @@ export const EmailSignIn = ({ redirectTo }: { redirectTo?: string }) => {
           href={`/forgot-password?email=${encodeURIComponent(email)}`}
           className="text-center text-xs text-neutral-500 transition-colors hover:text-black"
         >
-          Forgot password?
+          {t("forgot-password")}
         </Link>
       )}
     </>

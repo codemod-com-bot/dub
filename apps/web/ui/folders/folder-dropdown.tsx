@@ -6,6 +6,7 @@ import { FolderSummary } from "@/lib/types";
 import { Button, Popover, Tick, TooltipContent } from "@dub/ui";
 import { cn } from "@dub/utils";
 import { ChevronsUpDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -31,6 +32,8 @@ export const FolderDropdown = ({
   disableAutoRedirect = false,
   selectedFolderId,
 }: FolderDropdownProps) => {
+  const t = useTranslations("../ui/folders");
+
   const router = useRouter();
   const { slug, plan } = useWorkspace();
   const searchParams = useSearchParams();
@@ -82,18 +85,22 @@ export const FolderDropdown = ({
           <div className="relative mt-1 max-h-80 w-full space-y-0.5 overflow-auto rounded-md bg-white p-2 text-base sm:w-60 sm:text-sm sm:shadow-lg md:w-80">
             {!hideViewAll && (
               <div className="flex items-center justify-between px-2 pb-1">
-                <p className="text-xs font-medium text-neutral-500">Folders</p>
+                <p className="text-xs font-medium text-neutral-500">
+                  {t("folders")}
+                </p>
                 <Link
                   href={`/${slug}/settings/library/folders`}
                   onClick={() => setOpenPopover(false)}
                   className="rounded-md border border-neutral-200 px-2 py-1 text-xs transition-colors hover:bg-neutral-100"
                 >
-                  View All
+                  {t("view-all")}
                 </Link>
               </div>
             )}
 
             {[unsortedLinks, ...(folders || [])].map((folder) => {
+              const t = useTranslations("../ui/folders");
+
               return (
                 <As
                   key={folder.id}
@@ -127,7 +134,7 @@ export const FolderDropdown = ({
                     {folder.id === "unsorted" && (
                       <div className="rounded bg-neutral-100 p-1">
                         <div className="text-xs font-normal text-black">
-                          Unsorted
+                          {t("unsorted")}
                         </div>
                       </div>
                     )}
@@ -156,7 +163,7 @@ export const FolderDropdown = ({
                   shape="square"
                 />
               }
-              text="Create new folder"
+              text={t("create-new-folder")}
               className="justify-start px-2"
               onClick={() => {
                 setOpenPopover(false);
@@ -165,7 +172,7 @@ export const FolderDropdown = ({
               disabledTooltip={
                 !canAddFolder && (
                   <TooltipContent
-                    title="You can only use Link Folders on a Pro plan and above. Upgrade to Pro to continue."
+                    title={t("link-folders-pro-plan-upgrade")}
                     cta="Upgrade to Pro"
                     href={`/${slug}/upgrade`}
                   />

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { getIntegrationInstallUrl } from "@/lib/actions/get-integration-install-url";
 import { SegmentSettings } from "@/lib/integrations/segment/ui/settings";
@@ -62,6 +63,10 @@ export default function IntegrationPageClient({
 }: {
   integration: InstalledIntegrationInfoProps;
 }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations/[integrationSlug]",
+  );
+
   const { slug, id: workspaceId } = useWorkspace();
   const { isMobile } = useMediaQuery();
 
@@ -89,12 +94,16 @@ export default function IntegrationPageClient({
   return (
     <MaxWidthWrapper className="grid max-w-screen-lg grid-cols-1 gap-6">
       {integration.installed && <UninstallIntegrationModal />}
-      <BackLink href={`/${slug}/settings/integrations`}>Integrations</BackLink>
+      <BackLink href={`/${slug}/settings/integrations`}>
+        {t("integrations")}
+      </BackLink>
       <div className="flex justify-between gap-8">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <IntegrationLogo
             src={integration.logo ?? null}
-            alt={`Logo for ${integration.name}`}
+            alt={t("logo-for-integration-name", {
+              integrationName: integration.name,
+            })}
             className="size-10 sm:size-14 sm:rounded-lg"
           />
           <div>
@@ -128,7 +137,7 @@ export default function IntegrationPageClient({
             content={
               <div className="grid w-screen gap-px p-2 sm:w-48">
                 <Button
-                  text="Remove Integration"
+                  text={t("remove-integration")}
                   variant="danger-outline"
                   icon={<Trash className="size-4" />}
                   className="h-9 justify-start px-2"
@@ -138,7 +147,7 @@ export default function IntegrationPageClient({
                   {...(integration.slug === "stripe" && {
                     disabledTooltip: (
                       <TooltipContent
-                        title="You cannot uninstall the Stripe integration from here. Please visit the Stripe dashboard to uninstall the app."
+                        title={t("uninstall-stripe-integration-warning")}
                         cta="Go to Stripe"
                         href="https://dashboard.stripe.com/settings/apps/dub.co"
                         target="_blank"
@@ -242,7 +251,7 @@ export default function IntegrationPageClient({
                 "flex h-9 items-center rounded-md border px-4 text-sm",
               )}
             >
-              Manage
+              {t("manage")}
             </Link>
           )}
           {!integration.installed &&
@@ -263,7 +272,7 @@ export default function IntegrationPageClient({
                   });
                 }}
                 loading={isPending}
-                text="Enable"
+                text={t("enable")}
                 variant="primary"
                 icon={<ConnectedDots className="size-4" />}
               />
@@ -280,7 +289,10 @@ export default function IntegrationPageClient({
                   <CarouselItem key={idx}>
                     <BlurImageMemo
                       src={src}
-                      alt={`Screenshot ${idx + 1} of ${integration.name}`}
+                      alt={t("screenshot-of-integration", {
+                        idx: idx,
+                        integrationName: integration.name,
+                      })}
                       width={900}
                       height={580}
                       className="aspect-[900/580] w-[5/6] overflow-hidden rounded-md border border-neutral-200 object-cover object-top"
@@ -312,7 +324,7 @@ export default function IntegrationPageClient({
                     >
                       <BlurImageMemo
                         src={src}
-                        alt={`Screenshot ${idx + 1} thumbnail`}
+                        alt={t("screenshot-thumbnail", { idx: idx })}
                         width={900}
                         height={580}
                         className="overflow-hidden rounded-[5px] object-cover object-top"

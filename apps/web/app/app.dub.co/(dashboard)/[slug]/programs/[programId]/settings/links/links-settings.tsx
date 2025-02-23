@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { updateProgramAction } from "@/lib/actions/partners/update-program";
 import useDomains from "@/lib/swr/use-domains";
@@ -33,6 +34,10 @@ export function LinksSettings() {
 }
 
 function LinksSettingsForm({ program }: { program: ProgramProps }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/settings/links",
+  );
+
   const { id: workspaceId } = useWorkspace();
 
   const shortDomain = program.domain || "refer.dub.co";
@@ -110,7 +115,7 @@ function LinksSettingsForm({ program }: { program: ProgramProps }) {
                 htmlFor="domain"
                 className="text-sm font-medium text-neutral-800"
               >
-                Default domain
+                {t("default-domain")}
               </label>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <select
@@ -120,7 +125,7 @@ function LinksSettingsForm({ program }: { program: ProgramProps }) {
                   })}
                   disabled={loadingDomains}
                 >
-                  <option value="">Select a domain</option>
+                  <option value="">{t("select-domain")}</option>
                   {domains?.map((domain) => (
                     <option
                       value={domain.slug}
@@ -139,12 +144,12 @@ function LinksSettingsForm({ program }: { program: ProgramProps }) {
                 htmlFor="url"
                 className="text-sm font-medium text-neutral-800"
               >
-                Destination URL
+                {t("destination-url")}
               </label>
               <div className="mt-2 rounded-md shadow-sm">
                 <input
                   type="url"
-                  placeholder="https://example.com"
+                  placeholder={t("example-url")}
                   className={cn(
                     "block w-full rounded-md border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm",
                   )}
@@ -190,7 +195,7 @@ function LinksSettingsForm({ program }: { program: ProgramProps }) {
                     </span>
                   </div>
                   {linkStructure.comingSoon ? (
-                    <Badge variant="blueGradient">Coming soon</Badge>
+                    <Badge variant="blueGradient">{t("coming-soon")}</Badge>
                   ) : (
                     <CircleCheckFill
                       className={cn(
@@ -206,7 +211,7 @@ function LinksSettingsForm({ program }: { program: ProgramProps }) {
           <div className="mt-6">
             <label>
               <span className="text-sm font-medium text-neutral-800">
-                Cookie length
+                {t("cookie-length")}
               </span>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <select
@@ -218,31 +223,33 @@ function LinksSettingsForm({ program }: { program: ProgramProps }) {
                 >
                   {[7, 14, 30, 60, 90, 180].map((v) => (
                     <option value={v} key={v}>
-                      {v} days
+                      {t("cookie-duration", { v: v })}
                     </option>
                   ))}
                 </select>
               </div>
             </label>
             <p className="mt-2 text-xs text-neutral-400">
-              Days your cookie will remain active and track referrals
+              {t("cookie-activity-description")}
             </p>
           </div>
 
           <div className="mt-6">
             <span className="text-sm font-medium text-neutral-800">
-              Installation
+              {t("installation-header")}
             </span>
             <p className="mt-2 text-sm text-neutral-500">
-              View our{" "}
-              <a
-                href="https://dub.co/docs/sdks/client-side/introduction"
-                target="_blank"
-                className="underline transition-colors duration-75 hover:text-neutral-600"
-              >
-                installation guides
-              </a>{" "}
-              to add Dub Conversions to your website.
+              {t("installation-guides-link", {
+                component0: (
+                  <a
+                    href="https://dub.co/docs/sdks/client-side/introduction"
+                    target="_blank"
+                    className="underline transition-colors duration-75 hover:text-neutral-600"
+                  >
+                    {t("installation-guides-link_component0")}
+                  </a>
+                ),
+              })}
             </p>
           </div>
         </SettingsRow>
@@ -251,7 +258,7 @@ function LinksSettingsForm({ program }: { program: ProgramProps }) {
       <div className="flex items-center justify-end rounded-b-lg border-t border-neutral-200 bg-neutral-50 px-6 py-5">
         <div>
           <Button
-            text="Save changes"
+            text={t("save-changes")}
             className="h-8"
             loading={isSubmitting}
             disabled={!isValid || !isDirty}

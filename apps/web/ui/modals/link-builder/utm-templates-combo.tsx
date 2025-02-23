@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { UtmTemplateProps } from "@/lib/types";
@@ -23,6 +24,8 @@ export function UTMTemplatesCombo({
   onLoad: (params: Record<string, string>) => void;
   disabledTooltip?: string;
 }) {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const { id: workspaceId } = useWorkspace();
 
   const { setValue, getValues } = useFormContext();
@@ -90,8 +93,8 @@ export function UTMTemplatesCombo({
           </Tooltip>
         );
       }}
-      placeholder="Templates"
-      searchPlaceholder="Load or save a template..."
+      placeholder={t("templates-title")}
+      searchPlaceholder={t("load-save-template-prompt")}
       emptyState={<NoUTMTemplatesFound />}
       icon={DiamondTurnRight}
       createLabel={(search) => `Save new template: "${search}"`}
@@ -129,6 +132,8 @@ export function UTMTemplatesCombo({
 }
 
 const NoUTMTemplatesFound = () => {
+  const t = useTranslations("../ui/modals/link-builder");
+
   const router = useRouter();
   const { slug } = useWorkspace();
 
@@ -138,16 +143,16 @@ const NoUTMTemplatesFound = () => {
         <DiamondTurnRight className="size-6 text-neutral-700" />
       </div>
       <p className="mt-2 font-medium text-neutral-950">
-        No UTM templates found
+        {t("no-utm-templates-found")}
       </p>
       <p className="mx-auto mt-1 w-full max-w-[180px] text-neutral-700">
-        Add a UTM template to easily create links with the same UTM parameters.
+        {t("add-utm-template-description")}
       </p>
       <div>
         <Button
           className="mt-1 h-8"
           onClick={() => window.open(`/${slug}/settings/library/utm`, "_blank")}
-          text="Add UTM template"
+          text={t("add-utm-template-button")}
         />
       </div>
     </div>

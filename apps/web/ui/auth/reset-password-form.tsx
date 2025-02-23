@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import z from "@/lib/zod";
 import { resetPasswordSchema } from "@/lib/zod/schemas/auth";
@@ -8,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export const ResetPasswordForm = () => {
+  const t = useTranslations("../ui/auth");
+
   const router = useRouter();
   const { token } = useParams<{ token: string }>();
 
@@ -47,7 +50,7 @@ export const ResetPasswordForm = () => {
         <input type="hidden" value={token} {...register("token")} />
 
         <div className="grid w-full max-w-sm items-center gap-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t("password-label")}</Label>
           <Input
             type="password"
             {...register("password")}
@@ -66,7 +69,7 @@ export const ResetPasswordForm = () => {
         </div>
 
         <div className="grid w-full max-w-sm items-center gap-2">
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <Label htmlFor="confirmPassword">{t("confirm-password-label")}</Label>
           <Input
             type="password"
             {...register("confirmPassword")}
@@ -85,7 +88,7 @@ export const ResetPasswordForm = () => {
         </div>
 
         <Button
-          text="Reset Password"
+          text={t("reset-password-button")}
           type="submit"
           loading={isSubmitting}
           disabled={isSubmitting}

@@ -1,13 +1,18 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { AnimatedEmptyState } from "@/ui/shared/animated-empty-state";
 import { Discount } from "@dub/ui/icons";
 
 export function ProgramSettingsDiscountsPageClient() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/settings/discounts",
+  );
+
   return (
     <AnimatedEmptyState
-      title="Discounts"
-      description="Offer discounts to partners when they refer customers"
+      title={t("discounts-title")}
+      description={t("offer-discounts-to-partners")}
       cardContent={() => {
         return (
           <>

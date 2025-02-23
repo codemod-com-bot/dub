@@ -10,9 +10,12 @@ import {
   TAB_ITEM_ANIMATION_SETTINGS,
 } from "@dub/utils";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import useSWR from "swr";
 
 export function EmbedEarnings({ salesCount }: { salesCount: number }) {
+  const t = useTranslations("app.dub.co/embed/inline");
+
   const { pagination, setPagination } = usePagination(SALES_PAGE_SIZE);
   const { data: earnings, isLoading } = useSWR<PartnerEarningsResponse[]>(
     `/api/embed/commissions?page=${pagination.pageIndex}`,
@@ -85,8 +88,7 @@ export function EmbedEarnings({ salesCount }: { salesCount: number }) {
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <Gift className="size-6 text-neutral-400" />
         <p className="max-w-sm text-balance text-center text-xs text-neutral-400">
-          No earnings yet. When you refer a friend and they make a purchase,
-          they'll show up here.
+          {t("no-earnings-yet-message")}
         </p>
       </div>
     ),

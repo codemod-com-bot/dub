@@ -1,6 +1,7 @@
 import useFolders from "@/lib/swr/use-folders";
 import useWorkspace from "@/lib/swr/use-workspace";
 import { CardList, ExpandingArrow, useMediaQuery } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useContext } from "react";
@@ -11,6 +12,8 @@ import { LinkTitleColumn } from "./link-title-column";
 import { ResponseLink } from "./links-container";
 
 export function LinkCard({ link }: { link: ResponseLink }) {
+  const t = useTranslations("../ui/links");
+
   const { variant } = useContext(CardList.Context);
   const { isMobile } = useMediaQuery();
 
@@ -60,7 +63,7 @@ export function LinkCard({ link }: { link: ResponseLink }) {
                   <ExpandingArrow className="invisible -ml-1.5 size-3.5 text-neutral-500 group-hover:visible" />
                 </div>
                 <p className="text-neutral-500 underline transition-colors group-hover:text-neutral-800">
-                  Open folder
+                  {t("open-folder")}
                 </p>
               </Link>
             ),

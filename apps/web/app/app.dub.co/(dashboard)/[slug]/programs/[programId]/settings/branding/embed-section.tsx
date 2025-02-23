@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Button, Check, Copy, useCopyToClipboard } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -7,22 +8,30 @@ import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 
 export function EmbedSection() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/settings/branding",
+  );
+
   return (
     <div className="rounded-lg border border-neutral-200 bg-white px-6 py-8">
       <div>
         <h2 className="text-lg font-semibold text-neutral-900">
-          Embed snippets
+          {t("embed-snippets")}
         </h2>
         <p className="mt-2 text-sm text-neutral-600">
-          View our {/* TODO: Update link to an installation guide */}
-          <a
-            href="https://dub.co/help/category/partners"
-            target="_blank"
-            className="underline hover:text-neutral-800"
-          >
-            installation guide
-          </a>{" "}
-          to add Dub Embed to your website
+          {t("view-our-installation-guide")}
+          {/* TODO: Update link to an installation guide */}
+          {t("add-dub-embed-to-website", {
+            component0: (
+              <a
+                href="https://dub.co/help/category/partners"
+                target="_blank"
+                className="underline hover:text-neutral-800"
+              >
+                {t("add-dub-embed-to-website_component0")}
+              </a>
+            ),
+          })}
         </p>
       </div>
 

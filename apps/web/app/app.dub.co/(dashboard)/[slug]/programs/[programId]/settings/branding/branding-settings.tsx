@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { updateProgramAction } from "@/lib/actions/partners/update-program";
 import useProgram from "@/lib/swr/use-program";
@@ -30,6 +31,10 @@ export function BrandingSettings() {
 type FormData = Pick<ProgramProps, "logo" | "wordmark" | "brandColor">;
 
 function BrandingSettingsForm({ program }: { program: ProgramProps }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/settings/branding",
+  );
+
   const { id: workspaceId } = useWorkspace();
 
   const form = useForm<FormData>({
@@ -78,11 +83,10 @@ function BrandingSettingsForm({ program }: { program: ProgramProps }) {
         <div className="flex flex-col gap-6">
           <div>
             <h2 className="text-lg font-semibold text-neutral-900">
-              Branding styles
+              {t("branding-styles")}
             </h2>
             <p className="mt-2 text-sm text-neutral-600">
-              Change the default styles to match your brand across the Dub
-              Partner experiences.
+              {t("change-default-styles")}
             </p>
           </div>
 
@@ -176,7 +180,7 @@ function BrandingSettingsForm({ program }: { program: ProgramProps }) {
       <div className="flex items-center justify-end rounded-b-lg border-t border-neutral-200 bg-neutral-50 px-6 py-5">
         <div>
           <Button
-            text="Save changes"
+            text={t("save-changes")}
             className="h-8"
             loading={isSubmitting}
             disabled={!isValid || !isDirty}

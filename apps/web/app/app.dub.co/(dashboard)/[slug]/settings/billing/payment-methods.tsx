@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import usePaymentMethods from "@/lib/swr/use-payment-methods";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -12,6 +13,8 @@ import { Stripe } from "stripe";
 import { PaymentMethodTypesList } from "./payment-method-types";
 
 export default function PaymentMethods() {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/billing");
+
   const router = useRouter();
   const { slug, stripeId, partnersEnabled, plan } = useWorkspace();
   const { paymentMethods } = usePaymentMethods();
@@ -47,15 +50,15 @@ export default function PaymentMethods() {
     <div className="rounded-lg border border-neutral-200 bg-white">
       <div className="flex flex-col items-start justify-between gap-y-4 p-6 md:flex-row md:items-center md:p-8">
         <div>
-          <h2 className="text-xl font-medium">Payment methods</h2>
+          <h2 className="text-xl font-medium">{t("payment-methods")}</h2>
           <p className="text-balance text-sm leading-normal text-neutral-500">
-            Manage your payment methods on Dub
+            {t("manage-payment-methods-description")}
           </p>
         </div>
         {stripeId && (
           <Button
             variant="secondary"
-            text="Manage"
+            text={t("manage-action")}
             className="h-9 w-fit"
             onClick={() => managePaymentMethods()}
             loading={isLoading}
@@ -74,8 +77,8 @@ export default function PaymentMethods() {
             ))
           ) : (
             <AnimatedEmptyState
-              title="No payment methods found"
-              description="You haven't added any payment methods yet"
+              title={t("no-payment-methods-found")}
+              description={t("no-payment-methods-added-yet")}
               cardContent={() => (
                 <>
                   <CreditCard className="size-4 text-neutral-700" />
@@ -118,6 +121,8 @@ const PaymentMethodCard = ({
   type: Stripe.PaymentMethod.Type;
   paymentMethod?: Stripe.PaymentMethod;
 }) => {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/billing");
+
   const router = useRouter();
   const { slug } = useWorkspace();
   const [isLoading, setIsLoading] = useState(false);
@@ -162,7 +167,7 @@ const PaymentMethodCard = ({
               {paymentMethod &&
                 (type === "us_bank_account" || paymentMethod.link?.email) && (
                   <Badge className="border-transparent bg-green-200 text-[0.625rem] text-green-900">
-                    Connected
+                    {t("connected-status")}
                   </Badge>
                 )}
             </div>
@@ -173,7 +178,7 @@ const PaymentMethodCard = ({
           <Button
             variant="primary"
             className="h-9 w-fit"
-            text="Connect"
+            text={t("connect-action")}
             onClick={() => addPaymentMethod(type)}
             loading={isLoading}
           />
@@ -190,20 +195,25 @@ const RecommendedForPayoutsWrapper = ({
   recommended: boolean;
   children: React.ReactNode;
 }) => {
+  const t = useTranslations("app.dub.co/(dashboard)/[slug]/settings/billing");
+
   return recommended ? (
     <div className="rounded-[0.75rem] bg-neutral-200 p-1">
       {children}
       <span className="flex items-center gap-2 px-3 pb-1 pt-1.5 text-xs text-neutral-800">
         <MoneyBill2 className="size-3.5 shrink-0" />
         <span>
-          Recommended for Dub Partner payouts.{" "}
-          <Link
-            href="https://dub.co/help/article/how-to-set-up-bank-account"
-            target="_blank"
-            className="underline underline-offset-2 transition-colors duration-75 hover:text-neutral-900"
-          >
-            Learn more
-          </Link>
+          {t("recommended-for-partner-payouts", {
+            component0: (
+              <Link
+                href="https://dub.co/help/article/how-to-set-up-bank-account"
+                target="_blank"
+                className="underline underline-offset-2 transition-colors duration-75 hover:text-neutral-900"
+              >
+                {t("recommended-for-partner-payouts_component0")}
+              </Link>
+            ),
+          })}
         </span>
       </span>
     </div>

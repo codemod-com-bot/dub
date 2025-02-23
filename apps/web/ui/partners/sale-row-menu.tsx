@@ -12,12 +12,15 @@ import {
 import { cn } from "@dub/utils";
 import { Row } from "@tanstack/react-table";
 import { Command } from "cmdk";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
 export function SaleRowMenu({ row }: { row: Row<SaleResponse> }) {
+  const t = useTranslations("../ui/partners");
+
   const { id: workspaceId } = useWorkspace();
   const { programId } = useParams() as { programId: string };
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +65,7 @@ export function SaleRowMenu({ row }: { row: Row<SaleResponse> }) {
             {["duplicate", "fraud"].includes(row.original.status) ? (
               <MenuItem
                 icon={CircleHalfDottedClock}
-                label="Mark as pending"
+                label={t("mark-as-pending")}
                 onSelect={() => {
                   updateStatus("pending");
                   setIsOpen(false);
@@ -72,7 +75,7 @@ export function SaleRowMenu({ row }: { row: Row<SaleResponse> }) {
               <>
                 <MenuItem
                   icon={Duplicate}
-                  label="Mark as duplicate"
+                  label={t("mark-as-duplicate")}
                   onSelect={() => {
                     updateStatus("duplicate");
                     setIsOpen(false);
@@ -81,7 +84,7 @@ export function SaleRowMenu({ row }: { row: Row<SaleResponse> }) {
                 />
                 <MenuItem
                   icon={ShieldAlert}
-                  label="Mark as fraud"
+                  label={t("mark-as-fraud")}
                   onSelect={() => {
                     updateStatus("fraud");
                     setIsOpen(false);

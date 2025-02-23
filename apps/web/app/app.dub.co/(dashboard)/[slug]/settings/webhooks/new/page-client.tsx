@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useWorkspace from "@/lib/swr/use-workspace";
 import { BackLink } from "@/ui/shared/back-link";
@@ -11,6 +12,10 @@ export default function NewWebhookPageClient({
 }: {
   newSecret: string;
 }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/webhooks/new",
+  );
+
   const { slug, plan } = useWorkspace();
 
   const needsHigherPlan = plan === "free" || plan === "pro";
@@ -23,7 +28,7 @@ export default function NewWebhookPageClient({
     <>
       <MaxWidthWrapper className="grid max-w-screen-lg gap-8">
         <BackLink href={`/${slug}/settings/webhooks`}>
-          Back to webhooks
+          {t("back-to-webhooks")}
         </BackLink>
       </MaxWidthWrapper>
 

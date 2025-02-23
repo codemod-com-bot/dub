@@ -6,6 +6,7 @@ import { FeaturesSection } from "@/ui/placeholders/features-section";
 import { Hero } from "@/ui/placeholders/hero";
 import { CircleHalfDottedClock, Footer, Nav, NavMobile } from "@dub/ui";
 import { cn, constructMetadata, createHref } from "@dub/utils";
+import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 export const runtime = "edge";
@@ -27,6 +28,8 @@ export default async function ExpiredLinkPage({
 }: {
   params: { domain: string };
 }) {
+  const t = await getTranslations("expired/[domain]");
+
   const domainEdge = await getDomainViaEdge(params.domain);
 
   if (domainEdge?.expiredUrl) {
@@ -49,7 +52,7 @@ export default async function ExpiredLinkPage({
                 "animate-slide-up-fade motion-reduce:animate-fade-in [--offset:20px] [animation-duration:1s] [animation-fill-mode:both]",
               )}
             >
-              Expired link
+              {t("expired-link")}
             </h1>
             <p
               className={cn(
@@ -57,8 +60,7 @@ export default async function ExpiredLinkPage({
                 "animate-slide-up-fade motion-reduce:animate-fade-in [--offset:10px] [animation-delay:200ms] [animation-duration:1s] [animation-fill-mode:both]",
               )}
             >
-              This link has expired. Please contact the owner of this link to
-              get a new one.
+              {t("link-expired-contact-owner")}
             </p>
           </div>
 
@@ -69,7 +71,7 @@ export default async function ExpiredLinkPage({
             )}
           >
             <ButtonLink variant="primary" href="https://d.to/register">
-              Try Dub today
+              {t("try-dub-today")}
             </ButtonLink>
             <ButtonLink
               variant="secondary"
@@ -79,7 +81,7 @@ export default async function ExpiredLinkPage({
                 utm_content: "Learn more",
               })}
             >
-              Learn more
+              {t("learn-more")}
             </ButtonLink>
           </div>
         </Hero>

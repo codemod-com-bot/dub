@@ -4,6 +4,7 @@ import useWorkspace from "@/lib/swr/use-workspace";
 import { ExpandedLinkProps } from "@/lib/types";
 import { Button, InputSelect, InputSelectItemProps, LinkLogo } from "@dub/ui";
 import { getApexDomain, linkConstructor } from "@dub/utils";
+import { useTranslations } from "next-intl";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { mutate } from "swr";
@@ -20,6 +21,8 @@ export const MoveLinkForm = ({
   onSuccess,
   onCancel,
 }: MoveLinkFormProps) => {
+  const t = useTranslations("../ui/folders");
+
   const { folders } = useFolders();
   const workspace = useWorkspace();
   const [isMoving, setIsMoving] = useState(false);
@@ -101,9 +104,11 @@ export const MoveLinkForm = ({
     <>
       <div className="space-y-2 border-b border-neutral-200 px-4 py-4 sm:px-6">
         <LinkLogo apexDomain={apexDomain} />
-        <h3 className="text-lg font-medium">Move {shortlink}</h3>
+        <h3 className="text-lg font-medium">
+          {t("move-shortlink", { shortlink: shortlink })}
+        </h3>
         <p className="text-sm text-neutral-500">
-          Select a folder below to move the link to.
+          {t("select-folder-to-move-link")}
         </p>
       </div>
 
@@ -112,7 +117,7 @@ export const MoveLinkForm = ({
           <div className="flex flex-col gap-y-6 px-4 text-left sm:px-6">
             <div className="mt-6">
               <label className="text-sm font-normal text-neutral-500">
-                Folders
+                {t("folders-header")}
               </label>
               <div className="mt-2">
                 <InputSelect
@@ -133,7 +138,7 @@ export const MoveLinkForm = ({
             <Button
               type="button"
               variant="secondary"
-              text="Cancel"
+              text={t("cancel-button")}
               className="h-9 w-fit"
               onClick={onCancel}
               disabled={isMoving}

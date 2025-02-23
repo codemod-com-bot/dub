@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { LoadingSpinner } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -37,6 +38,8 @@ export default function ImpersonateWorkspace() {
 }
 
 const Form = () => {
+  const t = useTranslations("admin.dub.co/(dashboard)/components");
+
   const { pending } = useFormStatus();
 
   return (
@@ -55,7 +58,7 @@ const Form = () => {
           "block w-full rounded-r-md border-neutral-300 text-sm text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500",
           pending && "bg-neutral-100",
         )}
-        placeholder="owd"
+        placeholder={t("owd-fragment")}
         aria-invalid="true"
       />
       {pending && (

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Button, LoadingSpinner } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -67,6 +68,8 @@ export default function ImpersonateUser() {
 }
 
 const Form = () => {
+  const t = useTranslations("admin.dub.co/(dashboard)/components");
+
   const { pending } = useFormStatus();
 
   return (
@@ -82,7 +85,7 @@ const Form = () => {
           "block w-full rounded-md border-neutral-300 text-sm text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500",
           pending && "bg-neutral-100",
         )}
-        placeholder="stey@vercel.com"
+        placeholder={t("email-address-stey-vercel")}
         aria-invalid="true"
       />
       {pending && (
@@ -93,6 +96,8 @@ const Form = () => {
 };
 
 const BanButton = () => {
+  const t = useTranslations("admin.dub.co/(dashboard)/components");
+
   const { pending } = useFormStatus();
-  return <Button text="Confirm Ban" loading={pending} variant="danger" />;
+  return <Button text={t("confirm-ban")} loading={pending} variant="danger" />;
 };

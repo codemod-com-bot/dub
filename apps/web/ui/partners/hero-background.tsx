@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { BlurImage } from "@dub/ui";
 import { cn } from "@dub/utils";
@@ -11,6 +12,8 @@ export function HeroBackground({
   logo?: string | null;
   color?: string | null;
 }) {
+  const t = useTranslations("../ui/partners");
+
   const id = useId();
 
   return (
@@ -314,7 +317,7 @@ export function HeroBackground({
         {logo && (
           <BlurImage
             src={logo}
-            alt="Program Logo"
+            alt={t("program-logo")}
             fill
             className="absolute rounded-full border border-white/20 object-cover object-center"
             draggable={false}

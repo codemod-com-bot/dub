@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { LockFill, ToggleGroup } from "@dub/ui";
 import { useState } from "react";
@@ -10,12 +11,18 @@ const TABS = [
 ] as const;
 
 export function BrandingPreview() {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/programs/[programId]/settings/branding",
+  );
+
   const [tab, setTab] = useState<(typeof TABS)[number]["id"]>(TABS[0]["id"]);
 
   return (
     <div className="rounded-xl bg-neutral-50 px-8 py-6">
       <div className="flex justify-between">
-        <span className="text-sm font-semibold text-black">Preview</span>
+        <span className="text-sm font-semibold text-black">
+          {t("preview-title")}
+        </span>
         <ToggleGroup
           options={TABS.map(({ id, label }) => ({
             value: id,
@@ -49,7 +56,7 @@ export function BrandingPreview() {
               <div className="hidden grow basis-0 sm:block" />
             </div>
             <div className="flex h-60 items-center justify-center border-t border-neutral-200 bg-neutral-100/50 text-sm text-neutral-500">
-              Preview coming soon
+              {t("preview-coming-soon-message")}
             </div>
           </div>
         </div>

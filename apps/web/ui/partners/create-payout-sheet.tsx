@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { createManualPayoutAction } from "@/lib/actions/partners/create-manual-payout";
 import { AnalyticsResponseOptions } from "@/lib/analytics/types";
@@ -82,6 +83,8 @@ const schema = createManualPayoutSchema
 type FormData = z.infer<typeof schema>;
 
 function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
+  const t = useTranslations("../ui/partners");
+
   const { setIsOpen } = props;
 
   const router = useRouter();
@@ -299,7 +302,7 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
       <div>
         <div className="flex items-start justify-between border-b border-neutral-200 p-6">
           <Sheet.Title className="text-xl font-semibold">
-            Create manual payout
+            {t("create-manual-payout")}
           </Sheet.Title>
           <Sheet.Close asChild>
             <Button
@@ -313,10 +316,13 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
           {!props.partnerId && (
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium text-neutral-900">
-                Partner
-                <span className="ml-1 font-normal text-neutral-500">
-                  (required)
-                </span>
+                {t("partner-required", {
+                  component0: (
+                    <span className="ml-1 font-normal text-neutral-500">
+                      {t("partner-required_component0")}
+                    </span>
+                  ),
+                })}
               </label>
               <Combobox
                 selected={
@@ -330,8 +336,8 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
                 }}
                 options={partnerOptions}
                 caret={true}
-                placeholder="Select partners"
-                searchPlaceholder="Search..."
+                placeholder={t("select-partners")}
+                searchPlaceholder={t("search-placeholder")}
                 matchTriggerWidth
                 buttonProps={{
                   className: cn(
@@ -356,10 +362,10 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
               htmlFor={dateRangePickerId}
               className="block text-sm font-medium text-neutral-900"
             >
-              Payout period
+              {t("payout-period")}
               {payoutType === "custom" && (
                 <span className="ml-1 font-normal text-neutral-500">
-                  (optional)
+                  {t("optional-note")}
                 </span>
               )}
             </label>
@@ -433,7 +439,7 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
               htmlFor="type"
               className="flex items-center space-x-2 text-sm font-medium text-neutral-900"
             >
-              Reward type
+              {t("reward-type")}
             </label>
             <select
               {...register("type", { required: true })}
@@ -466,7 +472,7 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
               htmlFor="amount"
               className="flex justify-between text-sm font-medium text-neutral-800"
             >
-              Reward amount
+              {t("reward-amount")}
             </label>
             <div className="relative mt-2 rounded-md shadow-sm">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-neutral-400">
@@ -488,7 +494,7 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
                 placeholder="100"
               />
               <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-neutral-400">
-                USD
+                {t("currency-usd")}
                 {payoutType !== "custom" &&
                   ` per ${payoutType.replace(/s$/, "")}`}
               </span>
@@ -500,15 +506,18 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
               htmlFor="description"
               className="flex items-center space-x-2 text-sm font-medium text-neutral-900"
             >
-              Description{" "}
-              <span className="ml-1 font-normal text-neutral-500">
-                (optional)
-              </span>
+              {t("description-optional", {
+                component0: (
+                  <span className="ml-1 font-normal text-neutral-500">
+                    {t("description-optional_component0")}
+                  </span>
+                ),
+              })}
             </label>
             <textarea
               {...register("description")}
               className="block w-full rounded-md border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
-              placeholder="A note to the partner about this payout. Max 190 characters."
+              placeholder={t("note-to-partner")}
               maxLength={190}
               onKeyDown={handleKeyDown}
             />
@@ -516,7 +525,9 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
 
           {partnerId && Object.entries(invoiceData).length > 0 && (
             <div className="flex flex-col gap-2">
-              <p className="text-sm font-medium text-neutral-800">Summary</p>
+              <p className="text-sm font-medium text-neutral-800">
+                {t("summary")}
+              </p>
               <div className="grid grid-cols-2 gap-3 rounded-md border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-600">
                 {Object.entries(invoiceData).map(([key, value]) => (
                   <Fragment key={key}>
@@ -538,14 +549,14 @@ function CreatePayoutSheetContent(props: CreatePayoutSheetProps) {
             type="button"
             variant="secondary"
             onClick={() => setIsOpen(false)}
-            text="Cancel"
+            text={t("cancel-button")}
             className="w-fit"
             disabled={isPending}
           />
           <Button
             type="submit"
             variant="primary"
-            text="Create payout"
+            text={t("create-payout")}
             className="w-fit"
             loading={isPending}
             disabled={buttonDisabled}

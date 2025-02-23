@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { CopyButton } from "@dub/ui";
 
@@ -11,6 +12,8 @@ export default function OAuthAppCredentials({
   clientSecret: string | null;
   partialClientSecret: string;
 }) {
+  const t = useTranslations("../ui/oauth-apps");
+
   if (!clientId) {
     return null;
   }
@@ -19,7 +22,7 @@ export default function OAuthAppCredentials({
     <div className="flex flex-col space-y-3 text-left">
       <div className="space-y-2">
         <label className="text-sm font-medium text-neutral-500">
-          Client ID
+          {t("client-id-label")}
         </label>
         <div className="grid grid-cols-[1fr,auto] items-center gap-2 rounded-md border border-neutral-300 bg-white p-3">
           <p className="truncate font-mono text-sm text-neutral-500">
@@ -32,7 +35,7 @@ export default function OAuthAppCredentials({
       {clientSecret && (
         <div className="space-y-2">
           <label className="text-sm font-medium text-neutral-500">
-            Client Secret
+            {t("client-secret-label")}
           </label>
           <div className="flex items-center justify-between rounded-md border border-neutral-300 bg-white p-3">
             <p className="text-nowrap font-mono text-sm text-neutral-500">
@@ -43,8 +46,7 @@ export default function OAuthAppCredentials({
             </div>
           </div>
           <span className="text-xs text-red-400">
-            Be sure to copy your client secret. You won’t be able to see it
-            again.
+            {t("client-secret-warning")}
           </span>
         </div>
       )}
@@ -52,7 +54,7 @@ export default function OAuthAppCredentials({
       {!clientSecret && partialClientSecret && (
         <div className="space-y-2">
           <label className="text-sm font-medium text-neutral-500">
-            Client Secret
+            {t("client-secret-label-duplicate")}
           </label>
           <div className="flex items-center justify-between rounded-md border border-neutral-300 bg-white p-3">
             <p className="text-nowrap font-mono text-sm text-neutral-500">

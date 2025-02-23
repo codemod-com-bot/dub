@@ -1,5 +1,6 @@
 import { Folder } from "@dub/prisma/client";
 import { Modal } from "@dub/ui";
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { RenameFolderForm } from "../folders/rename-folder-form";
 
@@ -14,10 +15,12 @@ const RenameFolderModal = ({
   setShowModal,
   folder,
 }: RenameFolderModalProps) => {
+  const t = useTranslations("../ui/modals");
+
   return (
     <Modal showModal={showModal} setShowModal={setShowModal}>
       <h3 className="border-b border-neutral-200 px-4 py-4 text-lg font-medium sm:px-6">
-        Rename folder
+        {t("rename-folder")}
       </h3>
       <div>
         <RenameFolderForm

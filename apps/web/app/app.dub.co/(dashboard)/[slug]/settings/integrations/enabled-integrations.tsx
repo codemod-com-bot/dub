@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import useIntegrations from "@/lib/swr/use-integrations";
 import useWorkspace from "@/lib/swr/use-workspace";
@@ -16,6 +17,10 @@ export function EnabledIntegrations({
 }: {
   integrations: IntegrationsWithInstallations;
 }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations",
+  );
+
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
 
@@ -38,13 +43,15 @@ export function EnabledIntegrations({
         >
           <div className="flex items-center justify-between text-sm">
             <h2 className="font-medium leading-4 text-neutral-800">
-              Enabled integrations
+              {t("enabled-integrations")}
             </h2>
             <Link
               href={`/${slug}/settings/integrations/enabled`}
               className="font-medium leading-4 text-neutral-500 transition-colors duration-100 hover:text-neutral-700"
             >
-              View all ({enabledIntegrations.length})
+              {t("view-all-enabled-integrations", {
+                enabledIntegrationsLength: enabledIntegrations.length,
+              })}
             </Link>
           </div>
           <ul className="mt-4 divide-y divide-neutral-200 overflow-hidden rounded-lg border border-neutral-200">
@@ -61,6 +68,10 @@ export function EnabledIntegrations({
 }
 
 function IntegrationRow({ integration }: { integration: Integration }) {
+  const t = useTranslations(
+    "app.dub.co/(dashboard)/[slug]/settings/integrations",
+  );
+
   const { slug } = useWorkspace();
 
   return (
@@ -74,7 +85,7 @@ function IntegrationRow({ integration }: { integration: Integration }) {
       <div className="flex items-center justify-between gap-3">
         <IntegrationLogo
           src={integration.logo}
-          alt={`Logo for ${integration.name}`}
+          alt={t("logo-for-integration", { integrationName: integration.name })}
         />
 
         <span className="text-sm font-medium text-neutral-800">

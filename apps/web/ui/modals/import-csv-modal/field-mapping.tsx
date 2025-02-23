@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { generateCsvMapping } from "@/lib/ai/generate-csv-mapping";
 import { Button, IconMenu, InfoTooltip, Popover, Tooltip } from "@dub/ui";
@@ -70,6 +71,8 @@ function FieldRow({
   field: keyof typeof mappableFields;
   isStreaming: boolean;
 }) {
+  const t = useTranslations("../ui/modals/import-csv-modal");
+
   const { label, required } = mappableFields[field];
 
   const { control, watch, fileColumns, firstRows } = useCsvContext();
@@ -170,7 +173,7 @@ function FieldRow({
                     <span className="flex-1 truncate whitespace-nowrap text-left text-neutral-800">
                       {field.value || (
                         <span className="text-neutral-600">
-                          Select column...
+                          {t("select-column-placeholder")}
                         </span>
                       )}
                     </span>
@@ -191,7 +194,7 @@ function FieldRow({
           content={
             <div className="block px-4 py-3 text-sm">
               <span className="font-medium text-neutral-950">
-                Example values:
+                {t("example-values-label")}
               </span>
               <ul className="mt-0.5">
                 {examples?.map((example, idx) => (
